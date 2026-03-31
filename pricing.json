@@ -1,0 +1,154 @@
+{
+  "promo": {
+    "enabled": true,
+    "text": "First 3 months FREE on Growth & Professional plans",
+    "badge": "LIMITED TIME"
+  },
+  "plans": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "tagline": "A great start for any clinic",
+      "price": 0,
+      "original_price": 0,
+      "period": "forever",
+      "period_note": "no credit card needed",
+      "cta": "Start Free",
+      "popular": false,
+      "offer": "",
+      "detail": "Your clinic online in 5 minutes",
+      "sections": [
+        {
+          "heading": "What you get:",
+          "items": [
+            { "text": "Profile page on medihost.in", "included": true },
+            { "text": "5-page website auto-generated", "included": true },
+            { "text": "Free hosting forever", "included": true },
+            { "text": "SSL certificate included", "included": true },
+            { "text": "WhatsApp booking button", "included": true },
+            { "text": "Basic SEO + contact form", "included": true },
+            { "text": "Custom domain", "included": false },
+            { "text": "Google Business setup", "included": false },
+            { "text": "HMS / LIS / Pharmacy", "included": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "tagline": "Full digital presence + basic HMS",
+      "price": 999,
+      "original_price": 2499,
+      "period": "/mo",
+      "period_note": "+3 mo. free · domain ₹499/yr at cost",
+      "cta": "Choose plan",
+      "popular": true,
+      "offer": "Get 15 months for ₹11,988 (regular ₹29,988)",
+      "detail": "",
+      "sections": [
+        {
+          "heading": "All the benefits of Starter, plus:",
+          "items": [
+            { "text": "Custom .in domain (₹499/yr)", "included": true },
+            { "text": "Google Business (1-click setup)", "included": true },
+            { "text": "Facebook + Instagram page created", "included": true },
+            { "text": "Full analytics dashboard", "included": true },
+            { "text": "HMS Lite", "included": true, "badge": "NEW", "sub": "Appointments, queue, basic billing" },
+            { "text": "Full EMR + prescriptions", "included": false },
+            { "text": "LIS lab workflow", "included": false },
+            { "text": "AI marketing", "included": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "professional",
+      "name": "Professional",
+      "tagline": "Complete clinic management",
+      "price": 2499,
+      "original_price": 4999,
+      "period": "/mo",
+      "period_note": "+3 mo. free · domain included",
+      "cta": "Choose plan",
+      "popular": false,
+      "offer": "Get 15 months for ₹29,988 (regular ₹59,988)",
+      "detail": "",
+      "sections": [
+        {
+          "heading": "Everything in Growth, plus:",
+          "items": [
+            { "text": "AI social posts (3/week)", "included": true },
+            { "text": "AI Google review replies", "included": true },
+            { "text": "Monthly GBP posts", "included": true },
+            { "text": "Full HMS", "included": true, "badge": "NEW", "sub": "EMR, Rx, OPD, billing, RBAC, staff" },
+            { "text": "LIS", "included": true, "badge": "NEW", "sub": "NABL workflow, reports, dual verify" },
+            { "text": "Pharmacy POS", "included": false },
+            { "text": "Marketplace orders", "included": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "enterprise",
+      "name": "Enterprise",
+      "tagline": "Full platform + marketplace",
+      "price": 4999,
+      "original_price": 9999,
+      "period": "/mo",
+      "period_note": "+3 mo. free · everything unlimited",
+      "cta": "Choose plan",
+      "popular": false,
+      "offer": "Get 15 months for ₹59,988 (regular ₹1,19,988)",
+      "detail": "",
+      "sections": [
+        {
+          "heading": "Everything in Professional, plus:",
+          "items": [
+            { "text": "Pharmacy POS", "included": true, "badge": "NEW", "sub": "GST billing, inventory, Rx linking" },
+            { "text": "Hemato Marketplace orders", "included": true },
+            { "text": "TeleDoc video consultations", "included": true },
+            { "text": "Multi-branch support", "included": true },
+            { "text": "Custom website branding", "included": true },
+            { "text": "Priority WhatsApp support 24/7", "included": true }
+          ]
+        }
+      ]
+    }
+  ],
+  "comparison": {
+    "others": {
+      "label": "Others (typical annual)",
+      "total": "₹1,60,000+",
+      "period": "/yr",
+      "note": "Practo + eMedHub HMS + hosting + agency + social",
+      "items": [
+        { "label": "Practo listing", "value": "₹15,000/yr" },
+        { "label": "Website (agency)", "value": "₹15,000+" },
+        { "label": "Hosting", "value": "₹4,800/yr" },
+        { "label": "Social media mgmt", "value": "₹60,000/yr" },
+        { "label": "HMS (eMedHub)", "value": "₹96,000/yr" },
+        { "label": "AI marketing", "value": "Not available" }
+      ]
+    },
+    "medihost": {
+      "label": "MediHost Professional",
+      "total": "₹29,988",
+      "period": "/yr",
+      "note": "Website + hosting + Google + social + HMS + LIS + AI — all included",
+      "items": [
+        { "label": "Profile + website", "value": "Included" },
+        { "label": "Hosting", "value": "Free forever" },
+        { "label": "Domain (.in)", "value": "₹499/yr (cost)" },
+        { "label": "Google + social + AI", "value": "Included" },
+        { "label": "Full HMS + EMR", "value": "Included" },
+        { "label": "LIS (NABL)", "value": "Included" }
+      ]
+    },
+    "savings": {
+      "amount": "₹1,30,000+/yr",
+      "label": "vs Practo + eMedHub + agency combined",
+      "percentage": "81%"
+    }
+  }
+}

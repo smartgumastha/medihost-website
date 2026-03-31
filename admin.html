@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MediHost Admin — Pricing Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f7f9f8;--white:#fff;--dark:#0f1b15;--mint:#0FA67A;--mint-light:#e6f7f0;--text:#1a2e22;--text2:#4a6355;--text3:#7a9489;--border:#e5ebe8;--red:#e74c3c;--purple:#6C5CE7;--f:'Plus Jakarta Sans',system-ui,sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100vh}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.login-box{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:40px;width:360px;text-align:center}
+.login-box h2{font-size:24px;font-weight:800;margin-bottom:6px}
+.login-box p{font-size:14px;color:var(--text2);margin-bottom:24px}
+.login-box input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:var(--f);margin-bottom:12px;outline:none}
+.login-box input:focus{border-color:var(--mint)}
+.login-box button{width:100%;padding:14px;background:var(--mint);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f)}
+.login-box button:hover{opacity:.9}
+.login-box .err{color:var(--red);font-size:13px;margin-top:8px;display:none}
+
+.admin{display:none}
+.admin-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.admin-nav h1{font-size:18px;font-weight:800}
+.admin-nav h1 em{font-style:normal;color:var(--mint)}
+.admin-nav .actions{display:flex;gap:10px;align-items:center}
+.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:var(--f);transition:all .2s}
+.btn-mint{background:var(--mint);color:#fff}
+.btn-mint:hover{opacity:.9}
+.btn-outline{background:var(--white);border:1.5px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--mint)}
+.btn-red{background:var(--white);border:1.5px solid var(--red);color:var(--red)}
+.status{font-size:12px;color:var(--mint);font-weight:600}
+
+.admin-body{max-width:1000px;margin:24px auto;padding:0 32px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+.card h3{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.card h3 .badge{font-size:11px;background:var(--mint-light);color:var(--mint);padding:3px 10px;border-radius:99px;font-weight:600}
+.form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+.form-group input,.form-group textarea,.form-group select{padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--f);outline:none}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--mint)}
+.form-group textarea{min-height:60px;resize:vertical}
+.feature-list{margin-top:12px}
+.feature-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
+.feature-item:last-child{border-bottom:none}
+.feature-item input[type="checkbox"]{width:16px;height:16px;accent-color:var(--mint)}
+.feature-item input[type="text"]{flex:1;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--f)}
+.feature-item .del{color:var(--red);cursor:pointer;font-size:16px;padding:0 4px}
+.add-feature{color:var(--mint);font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;display:inline-block}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--dark);color:#fff;padding:14px 24px;border-radius:10px;font-size:14px;font-weight:600;display:none;z-index:100;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.preview-frame{width:100%;height:500px;border:1px solid var(--border);border-radius:10px;margin-top:16px}
+.comp-section{margin-top:16px}
+.comp-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.comp-row input{padding:8px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--f)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="login-screen">
+<div class="login-box">
+  <h2>Medi<em style="color:#0FA67A">Host</em> Admin</h2>
+  <p>Pricing & plan manager</p>
+  <input type="password" id="admin-pass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
+  <button onclick="doLogin()">Login →</button>
+  <div class="err" id="login-err">Incorrect password</div>
+</div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin" id="admin-panel">
+<div class="admin-nav">
+  <h1>Medi<em>Host</em> Admin</h1>
+  <div class="actions">
+    <span class="status" id="save-status"></span>
+    <button class="btn btn-outline" onclick="loadPricing()">Reset</button>
+    <button class="btn btn-mint" onclick="savePricing()">Save & Deploy →</button>
+    <button class="btn btn-red" onclick="doLogout()">Logout</button>
+  </div>
+</div>
+
+<div class="admin-body">
+
+  <!-- PROMO BAR -->
+  <div class="card">
+    <h3>Promo banner <span class="badge">Top bar</span></h3>
+    <div class="form-row">
+      <div class="form-group"><label>Promo text</label><input type="text" id="promo-text"></div>
+      <div class="form-group"><label>Badge text</label><input type="text" id="promo-badge"></div>
+      <div class="form-group"><label>Enabled</label><select id="promo-enabled"><option value="true">Yes - show banner</option><option value="false">No - hide banner</option></select></div>
+    </div>
+  </div>
+
+  <!-- PLANS -->
+  <div id="plans-container"></div>
+
+  <!-- COMPARISON -->
+  <div class="card">
+    <h3>Comparison section</h3>
+    <div class="form-row">
+      <div class="form-group"><label>Others total</label><input type="text" id="comp-others-total"></div>
+      <div class="form-group"><label>MediHost total</label><input type="text" id="comp-mh-total"></div>
+      <div class="form-group"><label>Savings %</label><input type="text" id="comp-savings-pct"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Savings amount</label><input type="text" id="comp-savings-amount"></div>
+      <div class="form-group"><label>Savings label</label><input type="text" id="comp-savings-label"></div>
+    </div>
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="card" style="background:var(--mint-light);border-color:#0FA67A">
+    <h3 style="color:#0FA67A">How to update pricing</h3>
+    <p style="font-size:13px;color:#0B8C66;line-height:1.6">
+      1. Edit any plan name, price, tagline, or features above.<br>
+      2. Click <strong>Save & Deploy</strong> — this saves pricing.json to your repo.<br>
+      3. The website automatically reads from pricing.json — no HTML changes needed.<br>
+      4. Changes go live in ~30 seconds after save.<br><br>
+      <strong>To add a new feature:</strong> Click "+ Add feature" under any plan.<br>
+      <strong>To remove a feature:</strong> Click the red × next to it.<br>
+      <strong>To reorder plans:</strong> Not supported yet — edit pricing.json directly for now.
+    </p>
+  </div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var ADMIN_PASSWORD = 'MediHost@2026';
+var pricingData = null;
+
+function doLogin() {
+  var pass = document.getElementById('admin-pass').value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    loadPricing();
+  } else {
+    var err = document.getElementById('login-err');
+    err.style.display = 'block';
+    setTimeout(function() { err.style.display = 'none'; }, 2000);
+  }
+}
+
+function doLogout() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-pass').value = '';
+}
+
+function loadPricing() {
+  fetch('pricing.json?t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      pricingData = data;
+      renderAdmin();
+      showToast('Pricing loaded');
+    })
+    .catch(function() {
+      pricingData = getDefaultPricing();
+      renderAdmin();
+      showToast('Using default pricing (pricing.json not found)');
+    });
+}
+
+function getDefaultPricing() {
+  return {
+    promo: { enabled: true, text: "First 3 months FREE on Growth & Professional plans", badge: "LIMITED TIME" },
+    plans: [
+      { id:"starter", name:"Starter", tagline:"A great start for any clinic", price:0, original_price:0, period:"forever", period_note:"no credit card needed", cta:"Start Free", popular:false, offer:"", detail:"Your clinic online in 5 minutes",
+        sections:[{heading:"What you get:", items:[
+          {text:"Profile page on medihost.in",included:true},{text:"5-page website auto-generated",included:true},{text:"Free hosting forever",included:true},{text:"SSL certificate",included:true},{text:"WhatsApp booking button",included:true},{text:"Basic SEO + contact form",included:true},{text:"Custom domain",included:false},{text:"Google Business",included:false},{text:"HMS / LIS / Pharmacy",included:false}
+        ]}]
+      },
+      { id:"growth", name:"Growth", tagline:"Full digital presence + basic HMS", price:999, original_price:2499, period:"/mo", period_note:"+3 mo. free", cta:"Choose plan", popular:true, offer:"Get 15 months for ₹11,988",
+        sections:[{heading:"All benefits of Starter, plus:", items:[
+          {text:"Custom .in domain (₹499/yr)",included:true},{text:"Google Business (1-click)",included:true},{text:"Facebook + Instagram page",included:true},{text:"Full analytics",included:true},{text:"HMS Lite",included:true,badge:"NEW",sub:"Appointments, queue, billing"},{text:"Full EMR",included:false},{text:"LIS",included:false},{text:"AI marketing",included:false}
+        ]}]
+      },
+      { id:"professional", name:"Professional", tagline:"Complete clinic management", price:2499, original_price:4999, period:"/mo", period_note:"+3 mo. free", cta:"Choose plan", popular:false, offer:"Get 15 months for ₹29,988",
+        sections:[{heading:"Everything in Growth, plus:", items:[
+          {text:"AI social posts (3/week)",included:true},{text:"AI review replies",included:true},{text:"Monthly GBP posts",included:true},{text:"Full HMS",included:true,badge:"NEW",sub:"EMR, Rx, OPD, billing, RBAC"},{text:"LIS",included:true,badge:"NEW",sub:"NABL workflow, reports"},{text:"Pharmacy POS",included:false}
+        ]}]
+      },
+      { id:"enterprise", name:"Enterprise", tagline:"Full platform + marketplace", price:4999, original_price:9999, period:"/mo", period_note:"+3 mo. free", cta:"Choose plan", popular:false, offer:"Get 15 months for ₹59,988",
+        sections:[{heading:"Everything in Professional, plus:", items:[
+          {text:"Pharmacy POS",included:true,badge:"NEW",sub:"GST billing, inventory"},{text:"Marketplace orders",included:true},{text:"TeleDoc video",included:true},{text:"Multi-branch",included:true},{text:"Custom branding",included:true},{text:"Priority support 24/7",included:true}
+        ]}]
+      }
+    ],
+    comparison: {
+      others: { total:"₹1,60,000+", period:"/yr" },
+      medihost: { total:"₹29,988", period:"/yr" },
+      savings: { amount:"₹1,30,000+/yr", label:"vs Practo + eMedHub + agency", percentage:"81%" }
+    }
+  };
+}
+
+function renderAdmin() {
+  var d = pricingData;
+
+  document.getElementById('promo-text').value = d.promo.text;
+  document.getElementById('promo-badge').value = d.promo.badge || '';
+  document.getElementById('promo-enabled').value = String(d.promo.enabled);
+
+  if (d.comparison) {
+    document.getElementById('comp-others-total').value = d.comparison.others.total || '';
+    document.getElementById('comp-mh-total').value = d.comparison.medihost.total || '';
+    document.getElementById('comp-savings-pct').value = d.comparison.savings.percentage || '';
+    document.getElementById('comp-savings-amount').value = d.comparison.savings.amount || '';
+    document.getElementById('comp-savings-label').value = d.comparison.savings.label || '';
+  }
+
+  var container = document.getElementById('plans-container');
+  container.innerHTML = '';
+
+  d.plans.forEach(function(plan, pi) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML =
+      '<h3>' + plan.name + ' plan' + (plan.popular ? ' <span class="badge">MOST POPULAR</span>' : '') + '</h3>' +
+      '<div class="form-row">' +
+        '<div class="form-group"><label>Plan name</label><input type="text" value="' + plan.name + '" data-plan="' + pi + '" data-field="name"></div>' +
+        '<div class="form-group"><label>Tagline</label><input type="text" value="' + plan.tagline + '" data-plan="' + pi + '" data-field="tagline"></div>' +
+        '<div class="form-group"><label>Popular?</label><select data-plan="' + pi + '" data-field="popular"><option value="false"' + (!plan.popular ? ' selected' : '') + '>No</option><option value="true"' + (plan.popular ? ' selected' : '') + '>Yes</option></select></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group"><label>Price (₹)</label><input type="number" value="' + plan.price + '" data-plan="' + pi + '" data-field="price"></div>' +
+        '<div class="form-group"><label>Original price (₹, for strikethrough)</label><input type="number" value="' + plan.original_price + '" data-plan="' + pi + '" data-field="original_price"></div>' +
+        '<div class="form-group"><label>Period</label><input type="text" value="' + plan.period + '" data-plan="' + pi + '" data-field="period" placeholder="/mo or forever"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group"><label>Period note</label><input type="text" value="' + (plan.period_note || '') + '" data-plan="' + pi + '" data-field="period_note"></div>' +
+        '<div class="form-group"><label>CTA button text</label><input type="text" value="' + plan.cta + '" data-plan="' + pi + '" data-field="cta"></div>' +
+        '<div class="form-group"><label>Offer text</label><input type="text" value="' + (plan.offer || '') + '" data-plan="' + pi + '" data-field="offer"></div>' +
+      '</div>' +
+      '<div class="feature-list" id="features-' + pi + '"></div>' +
+      '<span class="add-feature" onclick="addFeature(' + pi + ')">+ Add feature</span>';
+
+    container.appendChild(card);
+
+    var featContainer = document.getElementById('features-' + pi);
+    if (plan.sections && plan.sections[0]) {
+      plan.sections[0].items.forEach(function(item, fi) {
+        featContainer.appendChild(createFeatureRow(pi, fi, item));
+      });
+    }
+  });
+}
+
+function createFeatureRow(planIdx, featIdx, item) {
+  var div = document.createElement('div');
+  div.className = 'feature-item';
+  div.innerHTML =
+    '<input type="checkbox"' + (item.included ? ' checked' : '') + ' data-plan="' + planIdx + '" data-feat="' + featIdx + '" data-ffield="included">' +
+    '<input type="text" value="' + item.text + '" data-plan="' + planIdx + '" data-feat="' + featIdx + '" data-ffield="text">' +
+    '<input type="text" value="' + (item.badge || '') + '" style="width:50px" placeholder="Badge" data-plan="' + planIdx + '" data-feat="' + featIdx + '" data-ffield="badge">' +
+    '<span class="del" onclick="removeFeature(' + planIdx + ',' + featIdx + ',this)">×</span>';
+  return div;
+}
+
+function addFeature(planIdx) {
+  var items = pricingData.plans[planIdx].sections[0].items;
+  items.push({ text: "New feature", included: true });
+  var container = document.getElementById('features-' + planIdx);
+  container.appendChild(createFeatureRow(planIdx, items.length - 1, items[items.length - 1]));
+}
+
+function removeFeature(planIdx, featIdx, el) {
+  pricingData.plans[planIdx].sections[0].items.splice(featIdx, 1);
+  el.parentElement.remove();
+}
+
+function collectData() {
+  pricingData.promo.text = document.getElementById('promo-text').value;
+  pricingData.promo.badge = document.getElementById('promo-badge').value;
+  pricingData.promo.enabled = document.getElementById('promo-enabled').value === 'true';
+
+  document.querySelectorAll('[data-plan][data-field]').forEach(function(el) {
+    var pi = parseInt(el.getAttribute('data-plan'));
+    var field = el.getAttribute('data-field');
+    var val = el.value;
+    if (field === 'price' || field === 'original_price') val = parseInt(val) || 0;
+    if (field === 'popular') val = val === 'true';
+    pricingData.plans[pi][field] = val;
+  });
+
+  document.querySelectorAll('[data-plan][data-feat][data-ffield]').forEach(function(el) {
+    var pi = parseInt(el.getAttribute('data-plan'));
+    var fi = parseInt(el.getAttribute('data-feat'));
+    var field = el.getAttribute('data-ffield');
+    if (!pricingData.plans[pi].sections[0].items[fi]) return;
+    if (field === 'included') {
+      pricingData.plans[pi].sections[0].items[fi].included = el.checked;
+    } else {
+      pricingData.plans[pi].sections[0].items[fi][field] = el.value;
+    }
+  });
+
+  if (pricingData.comparison) {
+    pricingData.comparison.others.total = document.getElementById('comp-others-total').value;
+    pricingData.comparison.medihost.total = document.getElementById('comp-mh-total').value;
+    pricingData.comparison.savings.percentage = document.getElementById('comp-savings-pct').value;
+    pricingData.comparison.savings.amount = document.getElementById('comp-savings-amount').value;
+    pricingData.comparison.savings.label = document.getElementById('comp-savings-label').value;
+  }
+}
+
+function savePricing() {
+  collectData();
+  var json = JSON.stringify(pricingData, null, 2);
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'pricing.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById('save-status').textContent = 'Saved! Replace pricing.json in your repo and push.';
+  showToast('pricing.json downloaded — replace in repo and git push to deploy!');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(function() { t.style.display = 'none'; }, 3000);
+}
+</script>
+</body>
+</html>
