@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MediHost — Partner Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--bg2:#f7f9f8;--bg3:#eef2f0;--dark:#0f1b15;--mint:#0FA67A;--mint2:#0B8C66;--mint-l:#e6f7f0;--purple:#6C5CE7;--purple-l:#f0eeff;--text:#1a2e22;--text2:#4a6355;--text3:#7a9489;--red:#e74c3c;--border:#e5ebe8;--border2:#d0dbd5;--r:12px;--r2:16px;--f:'Plus Jakarta Sans',system-ui,sans-serif;--shadow:0 2px 12px rgba(15,27,21,.06);--shadow2:0 8px 30px rgba(15,27,21,.1);--sidebar:250px}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--bg2);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-icon{width:32px;height:32px;background:var(--mint);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff}
+.nav-word{font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-.5px}
+.nav-word em{font-style:normal;color:var(--mint)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-user{display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 12px;border-radius:8px;transition:background .2s;position:relative}
+.nav-user:hover{background:var(--bg2)}
+.nav-avatar{width:32px;height:32px;background:var(--mint-l);color:var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.nav-uname{font-size:13px;font-weight:600;color:var(--text)}
+.nav-dropdown{position:absolute;top:100%;right:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow2);min-width:160px;display:none;overflow:hidden;margin-top:4px}
+.nav-dropdown.show{display:block}
+.nav-dropdown a{display:block;padding:10px 16px;font-size:13px;color:var(--text2);font-weight:500;transition:background .2s}
+.nav-dropdown a:hover{background:var(--bg2);color:var(--mint)}
+.nav-dropdown a.danger{color:var(--red)}
+.hamburger{display:none;background:none;border:none;font-size:22px;cursor:pointer;padding:4px 8px;color:var(--text)}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:60px;left:0;bottom:0;width:var(--sidebar);background:#fff;border-right:1px solid var(--border);padding:20px 0;overflow-y:auto;z-index:998;transition:transform .3s}
+.sidebar-nav{list-style:none}
+.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 24px;font-size:14px;font-weight:500;color:var(--text2);transition:all .2s;border-left:3px solid transparent}
+.sidebar-nav li a:hover{background:var(--bg2);color:var(--mint)}
+.sidebar-nav li a.active{background:var(--mint-l);color:var(--mint);font-weight:700;border-left-color:var(--mint)}
+.sidebar-nav li a .ico{width:20px;text-align:center;font-size:16px}
+.sidebar-nav li a .badge-soon{font-size:9px;background:var(--bg3);color:var(--text3);padding:2px 6px;border-radius:99px;margin-left:auto;font-weight:600}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);padding:84px 32px 48px}
+.main-inner{max-width:900px}
+
+/* CARDS */
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:28px 24px;box-shadow:var(--shadow);margin-bottom:20px}
+.card-title{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title .ico{font-size:18px}
+
+/* WELCOME BANNER */
+.welcome{background:linear-gradient(135deg,#0B8C66,#0FA67A);border-radius:var(--r2);padding:32px 28px;color:#fff;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.welcome h2{font-size:24px;font-weight:800;margin-bottom:4px}
+.welcome .sub{font-size:14px;opacity:.85}
+.welcome .badges{display:flex;gap:8px;margin-top:10px}
+.welcome .plan-badge{background:rgba(255,255,255,.2);padding:5px 12px;border-radius:99px;font-size:12px;font-weight:600}
+.welcome .type-badge{background:rgba(255,255,255,.15);padding:5px 12px;border-radius:99px;font-size:12px;font-weight:600}
+.btn-upgrade{background:#fff;color:var(--mint);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--f);transition:all .2s}
+.btn-upgrade:hover{box-shadow:var(--shadow2);transform:translateY(-1px)}
+
+/* PROGRESS SECTION */
+.progress-ring{width:80px;height:80px;position:relative;margin:0 auto 16px}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring .bg{fill:none;stroke:var(--border);stroke-width:6}
+.progress-ring .fg{fill:none;stroke:var(--mint);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.progress-pct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;font-weight:800;color:var(--dark)}
+.checklist{list-style:none}
+.checklist li{padding:10px 0;font-size:14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.check-done{color:var(--mint);font-weight:700;font-size:16px;flex-shrink:0}
+.check-pending{color:var(--border2);font-size:16px;flex-shrink:0}
+.check-action{margin-left:auto;font-size:12px;color:var(--mint);font-weight:600;cursor:pointer;padding:4px 10px;border:1px solid var(--mint);border-radius:6px;transition:all .2s;background:none;font-family:var(--f)}
+.check-action:hover{background:var(--mint-l)}
+.check-action.soon{color:var(--text3);border-color:var(--border);cursor:default}
+.check-action.soon:hover{background:none}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:20px 16px;text-align:center}
+.stat-num{font-size:28px;font-weight:800;color:var(--dark)}
+.stat-label{font-size:12px;color:var(--text3);font-weight:600;margin-top:2px}
+.stat-note{font-size:10px;color:var(--text3);margin-top:6px;font-style:italic}
+
+/* PROFILE SECTION */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.profile-item{padding:10px 0;border-bottom:1px solid var(--border)}
+.profile-item:nth-last-child(-n+2){border-bottom:none}
+.profile-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+.profile-value{font-size:15px;font-weight:600;color:var(--dark);margin-top:2px}
+.profile-value.empty{color:var(--text3);font-style:italic;font-weight:400}
+
+/* EDIT FORM */
+.edit-form{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.edit-form.show{display:block}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.form-group input,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--f);outline:none;color:var(--text);background:#fff;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--mint)}
+.form-group input::placeholder{color:var(--text3)}
+.form-group select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a9489' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-error{font-size:12px;color:var(--red);margin-top:6px;display:none}
+.form-error.show{display:block}
+.btn-row{display:flex;gap:10px;margin-top:6px}
+.btn-save{padding:11px 24px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--f);transition:all .2s}
+.btn-save:hover{background:var(--mint2)}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+.btn-cancel{padding:11px 24px;background:#fff;color:var(--text2);border:1.5px solid var(--border2);border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f);transition:all .2s}
+.btn-cancel:hover{border-color:var(--mint);color:var(--mint)}
+
+/* PLAN SECTION */
+.current-plan{display:flex;align-items:center;gap:16px;padding:16px;background:var(--mint-l);border-radius:10px;margin-bottom:16px}
+.current-plan .plan-name{font-size:18px;font-weight:800;color:var(--dark)}
+.current-plan .plan-price{font-size:14px;color:var(--text2)}
+.current-plan .plan-price strong{color:var(--dark)}
+.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;display:none;margin-top:16px}
+.plan-grid.show{display:grid}
+.plan-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:18px 14px;cursor:pointer;transition:all .3s;position:relative}
+.plan-card:hover{border-color:var(--mint);box-shadow:var(--shadow)}
+.plan-card.selected{border-color:var(--mint);background:var(--mint-l)}
+.plan-card.pop{border-color:var(--purple)}
+.plan-card .pop-badge{position:absolute;top:-9px;right:10px;background:var(--purple);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px}
+.plan-card h4{font-size:15px;font-weight:800;color:var(--dark)}
+.plan-card .price{font-size:20px;font-weight:800;color:var(--dark);margin:4px 0}
+.plan-card .price span{font-size:12px;font-weight:400;color:var(--text3)}
+.plan-card .price.free{color:var(--mint)}
+.plan-card .desc{font-size:11px;color:var(--text3);line-height:1.4}
+.btn-change-plan{padding:10px 20px;background:#fff;color:var(--dark);border:1.5px solid var(--border2);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);transition:all .2s}
+.btn-change-plan:hover{border-color:var(--mint);color:var(--mint)}
+.btn-save-plan{padding:10px 20px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--f);transition:all .2s;display:none;margin-top:12px}
+.btn-save-plan.show{display:inline-block}
+.btn-save-plan:hover{background:var(--mint2)}
+
+/* PROFILE PAGE SECTION */
+.pub-url{font-size:13px;color:var(--text3);margin-bottom:16px}
+.pub-url a{color:var(--mint);font-weight:600}
+.preview-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r);padding:24px;text-align:center}
+.preview-card h3{font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px}
+.preview-card .ptype{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:12px}
+.preview-card .pdetails{font-size:13px;color:var(--text2);line-height:1.8}
+
+/* SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+.spinner.dark{border-color:rgba(0,0,0,.1);border-top-color:var(--mint)}
+.spinner.lg{width:36px;height:36px;border-width:3px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOADING STATE */
+.loading-state{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px}
+.loading-state p{font-size:14px;color:var(--text3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;z-index:9999;display:none;box-shadow:var(--shadow2)}
+.toast.error{background:var(--red)}
+.toast.show{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* PAGE SECTIONS (sidebar views) */
+.page-section{display:none}
+.page-section.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0);box-shadow:var(--shadow2)}
+  .main{margin-left:0;padding:76px 16px 32px}
+  .hamburger{display:block}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .profile-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .plan-grid{grid-template-columns:1fr}
+  .welcome{flex-direction:column;align-items:flex-start}
+  .nav-uname{display:none}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:997}
+  .overlay.show{display:block}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+<div style="display:flex;align-items:center;gap:14px">
+<button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+<a href="/" class="nav-brand"><div class="nav-icon">M</div><div class="nav-word">Medi<em>Host</em></div></a>
+</div>
+<div class="nav-right">
+<div class="nav-user" onclick="toggleDropdown()">
+<div class="nav-avatar" id="nav-avatar">M</div>
+<span class="nav-uname" id="nav-uname">Partner</span>
+<span style="font-size:10px;color:var(--text3)">&#9662;</span>
+<div class="nav-dropdown" id="nav-dropdown">
+<a href="javascript:void(0)" onclick="showPage('profile')">My Profile</a>
+<a href="javascript:void(0)" onclick="showPage('plan')">Plan &amp; Billing</a>
+<a href="javascript:void(0)" class="danger" onclick="logout()">Log out</a>
+</div>
+</div>
+</div>
+</div>
+</nav>
+
+<!-- MOBILE OVERLAY -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+<ul class="sidebar-nav">
+<li><a href="javascript:void(0)" class="active" data-page="dashboard" onclick="showPage('dashboard')"><span class="ico">&#9632;</span> Dashboard</a></li>
+<li><a href="javascript:void(0)" data-page="profile" onclick="showPage('profile')"><span class="ico">&#9787;</span> My Profile</a></li>
+<li><a href="javascript:void(0)" data-page="website" onclick="showPage('website')"><span class="ico">&#9733;</span> My Website <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain')"><span class="ico">&#9741;</span> Domain <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="google" onclick="showPage('google')"><span class="ico">G</span> Google Business <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="social" onclick="showPage('social')"><span class="ico">&#9829;</span> Social Media <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="analytics" onclick="showPage('analytics')"><span class="ico">&#9670;</span> Analytics <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="plan" onclick="showPage('plan')"><span class="ico">&#9830;</span> Plan &amp; Billing</a></li>
+<li><a href="https://wa.me/917993135689?text=Hi%20MediHost!%20I%20need%20help%20with%20my%20dashboard." target="_blank"><span class="ico">&#9993;</span> Support</a></li>
+</ul>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main" id="main-content">
+
+<!-- LOADING -->
+<div class="loading-state" id="loading-state">
+<div class="spinner dark lg"></div>
+<p>Loading your dashboard...</p>
+</div>
+
+<!-- ===================== DASHBOARD PAGE ===================== -->
+<div class="page-section" id="page-dashboard">
+<div class="main-inner">
+
+<!-- Welcome Banner -->
+<div class="welcome" id="welcome-banner">
+<div>
+<h2 id="welcome-name">Welcome back!</h2>
+<div class="sub">Your clinic control center</div>
+<div class="badges">
+<span class="type-badge" id="badge-type">Clinic</span>
+<span class="plan-badge" id="badge-plan">Starter Plan</span>
+</div>
+</div>
+<button class="btn-upgrade" id="btn-upgrade" onclick="showPage('plan')" style="display:none">Upgrade Plan</button>
+</div>
+
+<!-- Setup Progress -->
+<div class="card">
+<div class="card-title"><span class="ico">&#9881;</span> Setup Progress</div>
+<div class="progress-ring" id="progress-ring">
+<svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="34"/><circle class="fg" id="prog-circle" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
+<div class="progress-pct" id="progress-pct">0%</div>
+</div>
+<ul class="checklist" id="setup-checklist"></ul>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Profile Views</div><div class="stat-note">Available after go-live</div></div>
+<div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Bookings</div><div class="stat-note">Available after go-live</div></div>
+<div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Google Reviews</div><div class="stat-note">Available after go-live</div></div>
+<div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Website Visits</div><div class="stat-note">Available after go-live</div></div>
+</div>
+
+<!-- Profile Card -->
+<div class="card" id="profile-card">
+<div class="card-title" style="justify-content:space-between"><span><span class="ico">&#9787;</span> My Profile</span><button class="btn-change-plan" id="btn-edit-profile" onclick="toggleEditForm()">Edit Profile</button></div>
+<div id="profile-display">
+<div class="profile-grid" id="profile-grid"></div>
+</div>
+<div class="edit-form" id="edit-form">
+<div class="form-row">
+<div class="form-group"><label>Business Name *</label><input type="text" id="ef-business" placeholder="Dr. Sharma's Clinic"></div>
+<div class="form-group"><label>Type</label><select id="ef-type"><option value="">Select</option><option value="clinic">Clinic</option><option value="hospital">Hospital</option><option value="diagnostic_lab">Diagnostic Lab</option><option value="pharmacy">Pharmacy</option><option value="physiotherapy">Physiotherapy Center</option><option value="nursing_home">Nursing Home</option></select></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>Owner / Doctor Name *</label><input type="text" id="ef-owner" placeholder="Dr. Full Name"></div>
+<div class="form-group"><label>Email</label><input type="email" id="ef-email" placeholder="clinic@email.com"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>City *</label><input type="text" id="ef-city" placeholder="Hyderabad"></div>
+<div class="form-group"><label>Pincode *</label><input type="tel" id="ef-pincode" maxlength="6" placeholder="500001" inputmode="numeric"></div>
+</div>
+<div class="form-error" id="edit-error"></div>
+<div class="btn-row">
+<button class="btn-save" id="btn-save-profile" onclick="saveProfile()">Save Changes</button>
+<button class="btn-cancel" onclick="toggleEditForm()">Cancel</button>
+</div>
+</div>
+</div>
+
+<!-- Plan Section -->
+<div class="card" id="plan-card-dash">
+<div class="card-title" style="justify-content:space-between"><span><span class="ico">&#9830;</span> My Plan</span><button class="btn-change-plan" onclick="togglePlanPicker('dash')">Change Plan</button></div>
+<div class="current-plan">
+<div><div class="plan-name" id="plan-name-dash">Starter</div><div class="plan-price" id="plan-price-dash">Free</div></div>
+</div>
+<div class="plan-grid" id="plan-grid-dash"></div>
+<button class="btn-save-plan" id="btn-save-plan-dash" onclick="savePlan('dash')">Confirm Plan Change</button>
+</div>
+
+</div>
+</div>
+
+<!-- ===================== PROFILE PAGE ===================== -->
+<div class="page-section" id="page-profile">
+<div class="main-inner">
+<div class="card">
+<div class="card-title"><span class="ico">&#9741;</span> My Public Profile</div>
+<div class="pub-url" id="pub-url">Your profile URL: <a href="#" id="pub-link" target="_blank">medihost.in/partner</a></div>
+<div class="preview-card" id="preview-card">
+<h3 id="preview-name">Business Name</h3>
+<div class="ptype" id="preview-type">Clinic</div>
+<div class="pdetails" id="preview-details"></div>
+</div>
+<div style="text-align:center;margin-top:16px"><a id="preview-link" href="#" target="_blank" style="color:var(--mint);font-weight:700;font-size:14px">View Public Profile &rarr;</a></div>
+</div>
+
+<!-- Profile edit (reuse same card style) -->
+<div class="card" style="margin-top:20px">
+<div class="card-title" style="justify-content:space-between"><span><span class="ico">&#9787;</span> Edit Profile Details</span></div>
+<div class="form-row">
+<div class="form-group"><label>Business Name *</label><input type="text" id="pf-business" placeholder="Dr. Sharma's Clinic"></div>
+<div class="form-group"><label>Type</label><select id="pf-type"><option value="">Select</option><option value="clinic">Clinic</option><option value="hospital">Hospital</option><option value="diagnostic_lab">Diagnostic Lab</option><option value="pharmacy">Pharmacy</option><option value="physiotherapy">Physiotherapy Center</option><option value="nursing_home">Nursing Home</option></select></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>Owner / Doctor Name *</label><input type="text" id="pf-owner" placeholder="Dr. Full Name"></div>
+<div class="form-group"><label>Email</label><input type="email" id="pf-email" placeholder="clinic@email.com"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>City *</label><input type="text" id="pf-city" placeholder="Hyderabad"></div>
+<div class="form-group"><label>Pincode *</label><input type="tel" id="pf-pincode" maxlength="6" placeholder="500001" inputmode="numeric"></div>
+</div>
+<div class="form-error" id="pf-error"></div>
+<button class="btn-save" id="btn-pf-save" onclick="saveProfilePage()">Save Changes</button>
+</div>
+</div>
+
+<!-- ===================== PLAN PAGE ===================== -->
+<div class="page-section" id="page-plan">
+<div class="main-inner">
+<div class="card">
+<div class="card-title"><span class="ico">&#9830;</span> Plan &amp; Billing</div>
+<div class="current-plan">
+<div><div class="plan-name" id="plan-name-page">Starter</div><div class="plan-price" id="plan-price-page">Free</div></div>
+</div>
+<div style="margin-top:16px">
+<div class="card-title">Change Plan</div>
+<div class="plan-grid show" id="plan-grid-page"></div>
+<button class="btn-save-plan" id="btn-save-plan-page" onclick="savePlan('page')">Confirm Plan Change</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===================== COMING SOON PAGES ===================== -->
+<div class="page-section" id="page-website"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9733;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">My Website</h2><p style="color:var(--text3)">Your auto-generated website is coming soon. We'll notify you when it's ready!</p></div></div></div>
+<div class="page-section" id="page-domain"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9741;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Custom Domain</h2><p style="color:var(--text3)">Domain registration and DNS setup coming soon.</p></div></div></div>
+<div class="page-section" id="page-google"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">G</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Google Business</h2><p style="color:var(--text3)">Google Business Profile integration is under API review. We'll notify you when ready!</p></div></div></div>
+<div class="page-section" id="page-social"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9829;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Social Media</h2><p style="color:var(--text3)">Facebook &amp; Instagram page management coming soon.</p></div></div></div>
+<div class="page-section" id="page-analytics"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9670;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Analytics</h2><p style="color:var(--text3)">Profile views, booking stats, and website analytics will appear here after go-live.</p></div></div></div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+var API = 'https://app.hemato.in/backend/api';
+var partner = null;
+var partnerId = '';
+var pricingPlans = [];
+var selectedNewPlan = '';
+
+// ============================================================
+// AUTH + INIT
+// ============================================================
+function authHeaders() {
+    return { 'Authorization': 'Bearer ' + localStorage.getItem('medihost_token'), 'Content-Type': 'application/json' };
+}
+
+function authFetch(url, opts) {
+    opts = opts || {};
+    opts.headers = authHeaders();
+    return fetch(url, opts).then(function(r) {
+        if (r.status === 401) {
+            localStorage.removeItem('medihost_token');
+            localStorage.removeItem('medihost_partner_id');
+            window.location.href = 'onboard.html';
+            return null;
+        }
+        return r.json().then(function(d) { return { ok: r.ok, data: d }; });
+    });
+}
+
+function init() {
+    var token = localStorage.getItem('medihost_token');
+    if (!token) { window.location.href = 'onboard.html'; return; }
+
+    authFetch(API + '/presence/auth/me', { method: 'GET' })
+    .then(function(res) {
+        if (!res) return;
+        if (!res.ok || !res.data.success) { window.location.href = 'onboard.html'; return; }
+        partner = res.data.partner;
+        partnerId = String(partner.id);
+        renderDashboard();
+        loadPricing();
+    })
+    .catch(function() {
+        showToast('Connection error. Please refresh.', true);
+    });
+}
+
+// ============================================================
+// RENDER DASHBOARD
+// ============================================================
+function renderDashboard() {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('page-dashboard').classList.add('active');
+
+    var name = partner.business_name || 'Partner';
+    var pType = partner.partner_type || 'clinic';
+    var plan = partner.subscription_plan || 'starter';
+    var slug = partner.slug || '';
+
+    // Nav
+    document.getElementById('nav-uname').textContent = name;
+    document.getElementById('nav-avatar').textContent = name.charAt(0).toUpperCase();
+
+    // Welcome
+    document.getElementById('welcome-name').textContent = 'Welcome back, ' + name + '!';
+    document.getElementById('badge-type').textContent = formatType(pType);
+    document.getElementById('badge-plan').textContent = formatPlan(plan) + ' Plan';
+    if (plan === 'starter' || plan === 'free') {
+        document.getElementById('btn-upgrade').style.display = 'block';
+    }
+
+    // Setup checklist
+    renderChecklist();
+
+    // Profile display
+    renderProfileDisplay();
+
+    // Plan display
+    document.getElementById('plan-name-dash').textContent = formatPlan(plan);
+    document.getElementById('plan-price-dash').innerHTML = plan === 'starter' || plan === 'free' ? 'Free forever' : 'Active plan';
+    document.getElementById('plan-name-page').textContent = formatPlan(plan);
+    document.getElementById('plan-price-page').innerHTML = plan === 'starter' || plan === 'free' ? 'Free forever' : 'Active plan';
+
+    // Profile page
+    document.getElementById('pub-url').innerHTML = 'Your profile URL: <a href="https://medihost.in/' + slug + '" target="_blank" style="color:var(--mint);font-weight:600">medihost.in/' + slug + '</a>';
+    document.getElementById('pub-link').href = 'https://medihost.in/' + slug;
+    document.getElementById('preview-link').href = 'https://medihost.in/' + slug;
+    document.getElementById('preview-name').textContent = name;
+    document.getElementById('preview-type').textContent = formatType(pType);
+    document.getElementById('preview-details').innerHTML = (partner.city || '-') + ' &middot; ' + (partner.phone || '-') + (partner.email ? ' &middot; ' + partner.email : '');
+
+    // Fill profile page edit form
+    fillProfileForm('pf');
+}
+
+function renderChecklist() {
+    var status = partner.onboarding_status || 'phone_verified';
+    var plan = partner.subscription_plan || 'starter';
+    var items = [
+        { done: true, text: 'Phone verified' },
+        { done: status !== 'phone_verified', text: 'Profile created' },
+        { done: status === 'plan_selected' || status === 'active', text: 'Plan selected: ' + formatPlan(plan) },
+        { done: false, text: 'Google Business connected', action: 'connectGoogle', label: 'Connect' },
+        { done: false, text: 'Facebook page connected', action: 'connectFacebook', label: 'Connect' },
+        { done: false, text: 'Website generated', soon: true },
+        { done: false, text: 'Custom domain', soon: true },
+        { done: false, text: 'Go live!', soon: true }
+    ];
+
+    var doneCount = 0;
+    items.forEach(function(i) { if (i.done) doneCount++; });
+    var pct = Math.round((doneCount / items.length) * 100);
+
+    // Progress ring
+    var circumference = 213.6;
+    var offset = circumference - (pct / 100) * circumference;
+    document.getElementById('prog-circle').style.strokeDashoffset = offset;
+    document.getElementById('progress-pct').textContent = pct + '%';
+
+    // Checklist
+    var html = '';
+    items.forEach(function(item) {
+        html += '<li>';
+        html += item.done ? '<span class="check-done">&#10003;</span>' : '<span class="check-pending">&#9675;</span>';
+        html += '<span>' + item.text + '</span>';
+        if (!item.done && item.action) {
+            html += '<button class="check-action" onclick="' + item.action + '()">' + item.label + '</button>';
+        } else if (!item.done && item.soon) {
+            html += '<span class="check-action soon">Coming soon</span>';
+        }
+        html += '</li>';
+    });
+    document.getElementById('setup-checklist').innerHTML = html;
+}
+
+function renderProfileDisplay() {
+    var fields = [
+        { label: 'Business Name', value: partner.business_name },
+        { label: 'Type', value: formatType(partner.partner_type) },
+        { label: 'Owner', value: partner.owner_name },
+        { label: 'Phone', value: partner.phone },
+        { label: 'City', value: partner.city },
+        { label: 'Email', value: partner.email },
+    ];
+    var html = '';
+    fields.forEach(function(f) {
+        var isEmpty = !f.value || f.value === '-';
+        html += '<div class="profile-item"><div class="profile-label">' + f.label + '</div><div class="profile-value' + (isEmpty ? ' empty' : '') + '">' + (isEmpty ? 'Not set' : f.value) + '</div></div>';
+    });
+    document.getElementById('profile-grid').innerHTML = html;
+
+    // Fill edit form
+    fillProfileForm('ef');
+}
+
+function fillProfileForm(prefix) {
+    document.getElementById(prefix + '-business').value = partner.business_name || '';
+    document.getElementById(prefix + '-type').value = partner.partner_type || '';
+    document.getElementById(prefix + '-owner').value = partner.owner_name || '';
+    document.getElementById(prefix + '-email').value = partner.email || '';
+    document.getElementById(prefix + '-city').value = partner.city || '';
+    document.getElementById(prefix + '-pincode').value = partner.pincode || '';
+}
+
+// ============================================================
+// EDIT PROFILE
+// ============================================================
+function toggleEditForm() {
+    var form = document.getElementById('edit-form');
+    form.classList.toggle('show');
+    clearError('edit-error');
+}
+
+function saveProfile() { saveProfileFrom('ef', 'edit-error', 'btn-save-profile'); }
+function saveProfilePage() { saveProfileFrom('pf', 'pf-error', 'btn-pf-save'); }
+
+function saveProfileFrom(prefix, errorId, btnId) {
+    clearError(errorId);
+    var business = document.getElementById(prefix + '-business').value.trim();
+    var type = document.getElementById(prefix + '-type').value;
+    var owner = document.getElementById(prefix + '-owner').value.trim();
+    var email = document.getElementById(prefix + '-email').value.trim();
+    var city = document.getElementById(prefix + '-city').value.trim();
+    var pincode = document.getElementById(prefix + '-pincode').value.replace(/\D/g, '');
+
+    if (!business) { showError(errorId, 'Business name is required'); return; }
+    if (!owner) { showError(errorId, 'Owner name is required'); return; }
+    if (!city) { showError(errorId, 'City is required'); return; }
+    if (pincode && pincode.length !== 6) { showError(errorId, 'Enter a valid 6-digit pincode'); return; }
+
+    var btn = document.getElementById(btnId);
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    var body = { business_name: business, owner_name: owner, city: city };
+    if (type) body.partner_type = type;
+    if (email) body.email = email;
+    if (pincode) body.pincode = pincode;
+
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify(body)
+    })
+    .then(function(res) {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+        if (!res) return;
+        if (!res.ok) { showError(errorId, res.data.message || res.data.error || 'Failed to save'); return; }
+        partner = res.data.partner;
+        renderDashboard();
+        if (prefix === 'ef') toggleEditForm();
+        showToast('Profile updated!', false);
+    })
+    .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+        showError(errorId, 'Connection error, please try again');
+    });
+}
+
+// ============================================================
+// PLAN MANAGEMENT
+// ============================================================
+function loadPricing() {
+    fetch('pricing.json').then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (data && data.plans) {
+            pricingPlans = data.plans.map(function(p) {
+                return { id: p.id, name: p.name, price: p.prices.monthly, tagline: p.tagline, popular: p.popular };
+            });
+            renderPlanCards('dash');
+            renderPlanCards('page');
+            updatePlanDisplay();
+        }
+    })
+    .catch(function() {});
+}
+
+function updatePlanDisplay() {
+    var plan = partner.subscription_plan || 'starter';
+    var match = pricingPlans.find(function(p) { return p.id === plan; });
+    if (match) {
+        var priceText = match.price === 0 ? 'Free forever' : '<strong>\u20B9' + match.price.toLocaleString('en-IN') + '</strong>/mo';
+        document.getElementById('plan-name-dash').textContent = match.name;
+        document.getElementById('plan-price-dash').innerHTML = priceText;
+        document.getElementById('plan-name-page').textContent = match.name;
+        document.getElementById('plan-price-page').innerHTML = priceText;
+    }
+}
+
+function renderPlanCards(ctx) {
+    var grid = document.getElementById('plan-grid-' + ctx);
+    var html = '';
+    pricingPlans.forEach(function(p) {
+        html += '<div class="plan-card' + (p.popular ? ' pop' : '') + '" data-plan="' + p.id + '" onclick="pickPlan(\'' + p.id + '\',\'' + ctx + '\')">';
+        if (p.popular) html += '<div class="pop-badge">POPULAR</div>';
+        html += '<h4>' + p.name + '</h4>';
+        html += '<div class="price' + (p.price === 0 ? ' free' : '') + '">' + (p.price === 0 ? 'Free' : '\u20B9' + p.price.toLocaleString('en-IN') + '<span>/mo</span>') + '</div>';
+        html += '<div class="desc">' + p.tagline + '</div>';
+        html += '</div>';
+    });
+    grid.innerHTML = html;
+}
+
+function togglePlanPicker(ctx) {
+    var grid = document.getElementById('plan-grid-' + ctx);
+    grid.classList.toggle('show');
+    selectedNewPlan = '';
+    document.getElementById('btn-save-plan-' + ctx).classList.remove('show');
+    // Clear selections
+    grid.querySelectorAll('.plan-card').forEach(function(c) { c.classList.remove('selected'); });
+}
+
+function pickPlan(planId, ctx) {
+    selectedNewPlan = planId;
+    var grid = document.getElementById('plan-grid-' + ctx);
+    grid.querySelectorAll('.plan-card').forEach(function(c) {
+        c.classList.toggle('selected', c.getAttribute('data-plan') === planId);
+    });
+    var btn = document.getElementById('btn-save-plan-' + ctx);
+    if (planId !== (partner.subscription_plan || 'starter')) {
+        btn.classList.add('show');
+    } else {
+        btn.classList.remove('show');
+    }
+}
+
+function savePlan(ctx) {
+    if (!selectedNewPlan) return;
+    var btn = document.getElementById('btn-save-plan-' + ctx);
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify({ subscription_plan: selectedNewPlan, onboarding_status: 'plan_selected' })
+    })
+    .then(function(res) {
+        btn.disabled = false;
+        btn.textContent = 'Confirm Plan Change';
+        if (!res) return;
+        if (!res.ok) { showToast(res.data.message || 'Failed to update plan', true); return; }
+        partner = res.data.partner;
+        renderDashboard();
+        updatePlanDisplay();
+        togglePlanPicker(ctx);
+        showToast('Plan updated to ' + formatPlan(selectedNewPlan) + '!', false);
+    })
+    .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Confirm Plan Change';
+        showToast('Connection error', true);
+    });
+}
+
+// ============================================================
+// CONNECT PLACEHOLDERS
+// ============================================================
+function connectGoogle() {
+    showToast('Google Business API approval pending. We\'ll notify you when ready!', false);
+}
+function connectFacebook() {
+    showToast('Facebook Pages API under review. We\'ll notify you when ready!', false);
+}
+
+// ============================================================
+// NAV + SIDEBAR
+// ============================================================
+function toggleDropdown() {
+    document.getElementById('nav-dropdown').classList.toggle('show');
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+}
+
+function showPage(page) {
+    // Hide all pages
+    document.querySelectorAll('.page-section').forEach(function(p) { p.classList.remove('active'); });
+    var target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+
+    // Update sidebar active
+    document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('data-page') === page);
+    });
+
+    // Close mobile sidebar + dropdown
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('nav-dropdown').classList.remove('show');
+
+    // Refresh profile page form when navigating to it
+    if (page === 'profile' && partner) fillProfileForm('pf');
+}
+
+function logout() {
+    localStorage.removeItem('medihost_token');
+    localStorage.removeItem('medihost_partner_id');
+    window.location.href = 'onboard.html';
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+    var userEl = document.querySelector('.nav-user');
+    if (userEl && !userEl.contains(e.target)) {
+        document.getElementById('nav-dropdown').classList.remove('show');
+    }
+});
+
+// ============================================================
+// HELPERS
+// ============================================================
+function formatType(t) {
+    if (!t) return 'Clinic';
+    var map = { clinic: 'Clinic', hospital: 'Hospital', diagnostic_lab: 'Diagnostic Lab', pharmacy: 'Pharmacy', physiotherapy: 'Physiotherapy', nursing_home: 'Nursing Home' };
+    return map[t] || t.charAt(0).toUpperCase() + t.slice(1);
+}
+
+function formatPlan(p) {
+    if (!p || p === 'free') return 'Starter';
+    return p.charAt(0).toUpperCase() + p.slice(1);
+}
+
+function showToast(msg, isError) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (isError ? ' error' : '');
+    setTimeout(function() { t.classList.remove('show'); }, 3500);
+}
+
+function showError(id, msg) {
+    var el = document.getElementById(id);
+    el.textContent = msg;
+    el.classList.add('show');
+}
+
+function clearError(id) {
+    var el = document.getElementById(id);
+    el.textContent = '';
+    el.classList.remove('show');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+init();
+</script>
+</body>
+</html>
