@@ -3,22 +3,22 @@
   "billing_periods":[
     {"id":"monthly","label":"Monthly","discount":0,"months":1},
     {"id":"yearly","label":"1 Year","discount":30,"months":12,"badge":"30% OFF"},
-    {"id":"2year","label":"2 Years","discount":50,"months":24,"badge":"50% OFF","recommended":true}
+    {"id":"twoyear","label":"2 Years","discount":50,"months":24,"badge":"50% OFF","recommended":true}
   ],
   "plans":[
-    {"id":"starter","name":"Starter","tagline":"A great start for any clinic","prices":{"monthly":0,"yearly":0,"2year":0},"cta":"Start Free","popular":false,
+    {"id":"starter","name":"Starter","tagline":"A great start for any clinic","prices":{"monthly":0,"yearly":0,"twoyear":0},"cta":"Start Free","popular":false,
       "sections":[{"heading":"What you get:","items":[
         {"text":"Profile page on medihost.in","included":true},{"text":"5-page website auto-generated","included":true},{"text":"Free hosting forever","included":true},{"text":"SSL certificate","included":true},{"text":"WhatsApp booking button","included":true},{"text":"Basic SEO + contact form","included":true},{"text":"Custom domain","included":false},{"text":"Google Business","included":false},{"text":"HMS / LIS / Pharmacy","included":false}
       ]}]},
-    {"id":"growth","name":"Growth","tagline":"Full digital presence + basic HMS","prices":{"monthly":999,"yearly":699,"2year":499},"cta":"Choose plan","popular":true,
+    {"id":"growth","name":"Growth","tagline":"Full digital presence + basic HMS","prices":{"monthly":999,"yearly":699,"twoyear":499},"cta":"Choose plan","popular":true,
       "sections":[{"heading":"All benefits of Starter, plus:","items":[
         {"text":"Custom .in domain (₹499/yr)","included":true},{"text":"Google Business (1-click)","included":true},{"text":"Facebook + Instagram page","included":true},{"text":"Full analytics dashboard","included":true},{"text":"HMS Lite","included":true,"badge":"NEW","sub":"Appointments, queue, billing"},{"text":"Full EMR + prescriptions","included":false},{"text":"LIS lab workflow","included":false},{"text":"AI marketing","included":false}
       ]}]},
-    {"id":"professional","name":"Professional","tagline":"Complete clinic management","prices":{"monthly":2499,"yearly":1749,"2year":1249},"cta":"Choose plan","popular":false,
+    {"id":"professional","name":"Professional","tagline":"Complete clinic management","prices":{"monthly":2499,"yearly":1749,"twoyear":1249},"cta":"Choose plan","popular":false,
       "sections":[{"heading":"Everything in Growth, plus:","items":[
         {"text":"AI social posts (3/week)","included":true},{"text":"AI Google review replies","included":true},{"text":"Monthly GBP posts","included":true},{"text":"Full HMS","included":true,"badge":"NEW","sub":"EMR, Rx, OPD, billing, RBAC"},{"text":"LIS","included":true,"badge":"NEW","sub":"NABL workflow, reports, dual verify"},{"text":"Pharmacy POS","included":false},{"text":"Marketplace orders","included":false}
       ]}]},
-    {"id":"enterprise","name":"Enterprise","tagline":"Full platform + marketplace","prices":{"monthly":4999,"yearly":3499,"2year":2499},"cta":"Choose plan","popular":false,
+    {"id":"enterprise","name":"Enterprise","tagline":"Full platform + marketplace","prices":{"monthly":4999,"yearly":3499,"twoyear":2499},"cta":"Choose plan","popular":false,
       "sections":[{"heading":"Everything in Professional, plus:","items":[
         {"text":"Pharmacy POS","included":true,"badge":"NEW","sub":"GST billing, inventory, Rx linking"},{"text":"Hemato Marketplace orders","included":true},{"text":"TeleDoc video consultations","included":true},{"text":"Multi-branch support","included":true},{"text":"Custom website branding","included":true},{"text":"Priority WhatsApp support 24/7","included":true}
       ]}]}

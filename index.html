@@ -198,7 +198,7 @@ footer .about{font-size:12px;color:#7a9489;line-height:1.6;max-width:280px}
 <div class="billing-toggle" id="billing-toggle">
 <button class="billing-btn" data-period="monthly" onclick="setBilling('monthly')">Monthly</button>
 <button class="billing-btn has-badge" data-period="yearly" onclick="setBilling('yearly')">1 Year <span class="off-badge">30% OFF</span></button>
-<button class="billing-btn active has-badge" data-period="2year" onclick="setBilling('2year')">2 Years <span class="off-badge">50% OFF</span></button>
+<button class="billing-btn active has-badge" data-period="twoyear" onclick="setBilling('twoyear')">2 Years <span class="off-badge">50% OFF</span></button>
 </div>
 </div>
 
@@ -274,15 +274,28 @@ footer .about{font-size:12px;color:#7a9489;line-height:1.6;max-width:280px}
 
 <script>
 var pricingData = null;
-var currentBilling = '2year';
+var currentBilling = 'twoyear';
 
-fetch('pricing.json?t=' + Date.now()).then(function(r){return r.json()}).then(function(data){
+fetch('pricing.json').then(function(r){
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}).then(function(data){
   pricingData = data;
   renderPricing();
   renderComparison();
-}).catch(function(){
-  console.log('pricing.json not found, using inline defaults');
+}).catch(function(err){
+  console.error('Failed to load pricing.json:', err);
 });
+
+function getBillingInfo(periodId) {
+  var match = null;
+  if (pricingData && pricingData.billing_periods) {
+    pricingData.billing_periods.forEach(function(bp) {
+      if (bp.id === periodId) match = bp;
+    });
+  }
+  return match;
+}
 
 function setBilling(period) {
   currentBilling = period;
@@ -296,23 +309,22 @@ function renderPricing() {
   if (!pricingData) return;
   var container = document.getElementById('pricing-cards');
   var html = '';
+  var billingInfo = getBillingInfo(currentBilling);
+  var discount = billingInfo ? billingInfo.discount : 0;
+  var months = billingInfo ? billingInfo.months : 1;
 
   pricingData.plans.forEach(function(plan) {
     var price = plan.prices[currentBilling];
     var monthlyPrice = plan.prices.monthly;
     var isFree = monthlyPrice === 0;
-    var discount = 0;
     var billingNote = 'billed monthly';
     var totalBilled = '';
 
-    if (!isFree && currentBilling === 'yearly') {
-      discount = 30;
-      billingNote = 'billed ₹' + (price * 12).toLocaleString('en-IN') + '/year';
-      totalBilled = 'Get 12 months for ₹' + (price * 12).toLocaleString('en-IN') + ' (₹' + (monthlyPrice * 12).toLocaleString('en-IN') + ' monthly)';
-    } else if (!isFree && currentBilling === '2year') {
-      discount = 50;
-      billingNote = 'billed ₹' + (price * 24).toLocaleString('en-IN') + '/2 years';
-      totalBilled = 'Get 24 months for ₹' + (price * 24).toLocaleString('en-IN') + ' (₹' + (monthlyPrice * 24).toLocaleString('en-IN') + ' monthly)';
+    if (!isFree && discount > 0) {
+      var totalCost = price * months;
+      var totalMonthly = monthlyPrice * months;
+      billingNote = 'billed ₹' + totalCost.toLocaleString('en-IN') + '/' + (months === 12 ? 'year' : months + ' months');
+      totalBilled = 'Get ' + months + ' months for ₹' + totalCost.toLocaleString('en-IN') + ' (₹' + totalMonthly.toLocaleString('en-IN') + ' monthly)';
     } else if (!isFree) {
       totalBilled = '₹' + monthlyPrice.toLocaleString('en-IN') + ' billed monthly';
     }
@@ -326,7 +338,7 @@ function renderPricing() {
     } else {
       if (discount > 0) html += '<div class="plan-original">₹' + monthlyPrice.toLocaleString('en-IN') + '</div>';
       html += '<div class="plan-price">₹' + price.toLocaleString('en-IN') + '<span>/mo</span></div>';
-      if (discount > 0) html += '<span class="discount-badge">' + discount + '% OFF</span>';
+      if (discount > 0) html += '<span class="discount-badge">save ' + discount + '%</span>';
     }
     html += '</div>';
     html += '<div class="plan-period">' + (isFree ? 'forever — no credit card needed' : billingNote) + '</div>';
