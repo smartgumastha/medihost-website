@@ -451,9 +451,10 @@ function renderDashboard() {
     document.getElementById('plan-price-page').innerHTML = plan === 'starter' || plan === 'free' ? 'Free forever' : 'Active plan';
 
     // Profile page
-    document.getElementById('pub-url').innerHTML = 'Your profile URL: <a href="https://medihost.in/' + slug + '" target="_blank" style="color:var(--mint);font-weight:600">medihost.in/' + slug + '</a>';
-    document.getElementById('pub-link').href = 'https://medihost.in/' + slug;
-    document.getElementById('preview-link').href = 'https://medihost.in/' + slug;
+    var profileUrl = 'profile.html?slug=' + encodeURIComponent(slug);
+    document.getElementById('pub-url').innerHTML = 'Your profile URL: <a href="' + profileUrl + '" target="_blank" style="color:var(--mint);font-weight:600">medihost.in/' + slug + '</a>';
+    document.getElementById('pub-link').href = profileUrl;
+    document.getElementById('preview-link').href = profileUrl;
     document.getElementById('preview-name').textContent = name;
     document.getElementById('preview-type').textContent = formatType(pType);
     document.getElementById('preview-details').innerHTML = (partner.city || '-') + ' &middot; ' + (partner.phone || '-') + (partner.email ? ' &middot; ' + partner.email : '');

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MediHost — Clinic Profile</title>
+<meta name="description" content="View clinic profile on MediHost — India's healthcare website builder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--bg2:#f7f9f8;--bg3:#eef2f0;--dark:#0f1b15;--mint:#0FA67A;--mint2:#0B8C66;--mint-l:#e6f7f0;--purple:#6C5CE7;--purple-l:#f0eeff;--text:#1a2e22;--text2:#4a6355;--text3:#7a9489;--red:#e74c3c;--border:#e5ebe8;--border2:#d0dbd5;--r:12px;--r2:16px;--f:'Plus Jakarta Sans',system-ui,sans-serif;--shadow:0 2px 12px rgba(15,27,21,.06);--shadow2:0 8px 30px rgba(15,27,21,.1)}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.c{max-width:1200px;margin:0 auto;padding:0 32px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-icon{width:36px;height:36px;background:var(--mint);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff}
+.nav-word{font-size:22px;font-weight:800;color:var(--dark);letter-spacing:-.5px}
+.nav-word em{font-style:normal;color:var(--mint)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text2);transition:color .2s}
+.nav-links a:hover{color:var(--mint)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-weight:700;border:none;cursor:pointer;transition:all .25s;border-radius:10px}
+.btn-sm{padding:10px 22px;font-size:14px}
+.btn-mint{background:var(--mint);color:#fff}
+.btn-mint:hover{background:var(--mint2);transform:translateY(-1px);box-shadow:var(--shadow2)}
+
+/* HERO BANNER */
+.profile-hero{padding:100px 0 48px;background:linear-gradient(180deg,#f0fdf4 0%,#fff 100%);text-align:center}
+.profile-avatar{width:80px;height:80px;background:var(--mint);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;margin:0 auto 18px;box-shadow:0 4px 16px rgba(15,166,122,.2)}
+.profile-name{font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--dark);letter-spacing:-1px;margin-bottom:6px}
+.profile-type-badge{display:inline-block;background:var(--mint-l);color:var(--mint);font-size:12px;font-weight:700;padding:5px 14px;border-radius:99px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.profile-location{font-size:16px;color:var(--text2);margin-bottom:8px}
+.profile-location .ico{margin-right:4px}
+.profile-verified{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--mint);font-weight:600;background:var(--mint-l);padding:5px 14px;border-radius:99px}
+
+/* CONTENT */
+.profile-content{max-width:800px;margin:0 auto;padding:0 32px 60px}
+.profile-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;margin-top:-24px}
+
+/* LEFT COLUMN */
+.profile-main{display:flex;flex-direction:column;gap:20px}
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:28px 24px;box-shadow:var(--shadow)}
+.card-title{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title .ico{font-size:18px}
+
+/* ABOUT */
+.about-text{font-size:14px;color:var(--text2);line-height:1.7}
+
+/* SERVICES */
+.services-list{display:flex;flex-wrap:wrap;gap:8px}
+.service-tag{background:var(--bg2);border:1px solid var(--border);padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2)}
+
+/* TIMINGS */
+.timings-table{width:100%;border-collapse:collapse}
+.timings-table td{padding:8px 0;font-size:14px;border-bottom:1px solid var(--border)}
+.timings-table tr:last-child td{border-bottom:none}
+.timings-table .day{font-weight:600;color:var(--dark);width:120px}
+.timings-table .time{color:var(--text2)}
+.timings-table .closed{color:var(--red);font-style:italic}
+
+/* PHOTOS */
+.photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.photos-grid img{width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+
+/* RIGHT COLUMN — CONTACT CARD */
+.contact-card{position:sticky;top:84px}
+.contact-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text2)}
+.contact-item:last-child{border-bottom:none}
+.contact-item .ico{width:36px;height:36px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.contact-item a{color:var(--mint);font-weight:600}
+.btn-book{display:block;width:100%;padding:15px;text-align:center;background:var(--mint);color:#fff;border-radius:10px;font-size:16px;font-weight:700;font-family:var(--f);cursor:pointer;border:none;transition:all .25s;margin-bottom:12px}
+.btn-book:hover{background:var(--mint2);transform:translateY(-1px);box-shadow:var(--shadow2)}
+.btn-whatsapp{display:block;width:100%;padding:13px;text-align:center;background:#25d366;color:#fff;border-radius:10px;font-size:14px;font-weight:700;font-family:var(--f);cursor:pointer;border:none;transition:all .25s}
+.btn-whatsapp:hover{opacity:.9;transform:translateY(-1px)}
+.contact-map{width:100%;height:180px;border-radius:10px;border:1px solid var(--border);margin-top:12px;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px}
+
+/* EMPTY SECTION */
+.empty-section{text-align:center;padding:16px;color:var(--text3);font-size:13px;font-style:italic}
+
+/* NOT FOUND */
+.not-found{min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px;flex-direction:column;gap:16px}
+.not-found .ico{font-size:64px;margin-bottom:8px}
+.not-found h2{font-size:26px;font-weight:800;color:var(--dark)}
+.not-found p{font-size:15px;color:var(--text2);max-width:400px}
+.not-found .btn-mint{padding:14px 32px;font-size:15px;border-radius:10px;margin-top:8px}
+
+/* LOADING */
+.loading-state{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.spinner{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(0,0,0,.1);border-top-color:var(--mint);border-radius:50%;animation:spin .6s linear infinite}
+.spinner.lg{width:36px;height:36px;border-width:3px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* FOOTER */
+.profile-footer{background:var(--dark);color:#a8b5b0;padding:32px 0;text-align:center;font-size:12px}
+.profile-footer a{color:var(--mint);font-weight:600}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .profile-grid{grid-template-columns:1fr}
+  .contact-card{position:static}
+  .photos-grid{grid-template-columns:repeat(2,1fr)}
+  .profile-content{padding:0 16px 48px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav><div class="c" style="display:flex;align-items:center;justify-content:space-between;height:68px">
+<a href="/" class="nav-brand"><div class="nav-icon">M</div><div class="nav-word">Medi<em>Host</em></div></a>
+<div class="nav-links"><a href="/#pricing">Pricing</a><a href="/#features">Features</a><a href="/#types">Who it's for</a><a href="/#how">How it works</a><a href="onboard.html" class="btn btn-sm btn-mint">Get Started Free</a></div>
+</div></nav>
+
+<!-- LOADING -->
+<div class="loading-state" id="loading-state">
+<div class="spinner lg"></div>
+<p style="font-size:14px;color:var(--text3)">Loading profile...</p>
+</div>
+
+<!-- NOT FOUND (hidden) -->
+<div class="not-found" id="not-found" style="display:none">
+<div class="ico">&#128293;</div>
+<h2 id="nf-title">Profile not found</h2>
+<p id="nf-text">This clinic hasn't joined MediHost yet, or the profile link is incorrect.</p>
+<a href="onboard.html" class="btn btn-mint">Get Your Clinic on MediHost</a>
+</div>
+
+<!-- PROFILE (hidden until loaded) -->
+<div id="profile-page" style="display:none">
+
+<!-- HERO -->
+<div class="profile-hero">
+<div class="profile-avatar" id="p-avatar">C</div>
+<h1 class="profile-name" id="p-name">Clinic Name</h1>
+<div><span class="profile-type-badge" id="p-type">Clinic</span></div>
+<div class="profile-location" id="p-location"><span class="ico">&#128205;</span> City, Pincode</div>
+<div class="profile-verified">&#10003; Verified on MediHost</div>
+</div>
+
+<!-- CONTENT -->
+<div class="profile-content">
+<div class="profile-grid">
+
+<!-- LEFT -->
+<div class="profile-main">
+
+<!-- About -->
+<div class="card" id="card-about">
+<div class="card-title"><span class="ico">&#9432;</span> About</div>
+<div class="about-text" id="p-about"></div>
+</div>
+
+<!-- Services -->
+<div class="card" id="card-services">
+<div class="card-title"><span class="ico">&#9881;</span> Services</div>
+<div class="services-list" id="p-services"></div>
+</div>
+
+<!-- Timings -->
+<div class="card" id="card-timings">
+<div class="card-title"><span class="ico">&#9200;</span> Timings</div>
+<div id="p-timings"></div>
+</div>
+
+<!-- Photos -->
+<div class="card" id="card-photos">
+<div class="card-title"><span class="ico">&#128247;</span> Photos</div>
+<div class="photos-grid" id="p-photos"></div>
+</div>
+
+</div>
+
+<!-- RIGHT — CONTACT -->
+<div>
+<div class="card contact-card">
+<a class="btn-book" id="btn-book" href="tel:+91">Book Appointment</a>
+<a class="btn-whatsapp" id="btn-wa" href="#" target="_blank">WhatsApp Us</a>
+
+<div class="contact-item" id="ci-phone">
+<div class="ico">&#128222;</div>
+<div><div style="font-size:11px;color:var(--text3);font-weight:600">PHONE</div><a id="p-phone-link" href="tel:+91"></a></div>
+</div>
+<div class="contact-item" id="ci-email" style="display:none">
+<div class="ico">&#9993;</div>
+<div><div style="font-size:11px;color:var(--text3);font-weight:600">EMAIL</div><a id="p-email-link" href="mailto:"></a></div>
+</div>
+<div class="contact-item" id="ci-address">
+<div class="ico">&#128205;</div>
+<div><div style="font-size:11px;color:var(--text3);font-weight:600">ADDRESS</div><span id="p-address"></span></div>
+</div>
+
+<div class="contact-map" id="p-map">Map coming soon</div>
+</div>
+
+<!-- Owner Info -->
+<div class="card" style="margin-top:16px">
+<div class="card-title"><span class="ico">&#128100;</span> Doctor / Owner</div>
+<div style="font-size:15px;font-weight:700;color:var(--dark)" id="p-owner">Dr. Name</div>
+<div style="font-size:13px;color:var(--text3);margin-top:2px" id="p-specialization"></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="profile-footer">
+<p>Powered by <a href="/">MediHost</a> — India's healthcare website builder. <a href="onboard.html">Get your clinic online free</a>.</p>
+</div>
+
+<script>
+var API = 'https://app.hemato.in/backend/api';
+
+function init() {
+    var params = new URLSearchParams(window.location.search);
+    var slug = params.get('slug');
+
+    if (!slug) {
+        showNotFound('Profile not found', 'No clinic slug was provided in the URL.');
+        return;
+    }
+
+    fetch(API + '/presence/partners/slug/' + encodeURIComponent(slug))
+    .then(function(r) {
+        return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; });
+    })
+    .then(function(res) {
+        document.getElementById('loading-state').style.display = 'none';
+
+        if (!res.ok || res.data.error) {
+            showNotFound(
+                'This clinic hasn\'t joined MediHost yet',
+                'The profile link may be incorrect, or the clinic hasn\'t published their profile yet.'
+            );
+            return;
+        }
+
+        renderProfile(res.data);
+    })
+    .catch(function() {
+        document.getElementById('loading-state').style.display = 'none';
+        showNotFound('Connection error', 'Could not load the profile. Please try again later.');
+    });
+}
+
+function showNotFound(title, text) {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('nf-title').textContent = title;
+    document.getElementById('nf-text').textContent = text;
+    document.getElementById('not-found').style.display = 'flex';
+}
+
+function renderProfile(p) {
+    // The API may return the partner directly or inside a wrapper
+    var partner = p.partner || p;
+
+    document.getElementById('profile-page').style.display = 'block';
+
+    var name = partner.business_name || 'Clinic';
+    var type = partner.partner_type || 'clinic';
+    var city = partner.city || '';
+    var pincode = partner.pincode || '';
+    var phone = partner.phone || '';
+    var email = partner.email || '';
+    var owner = partner.owner_name || '';
+    var address1 = partner.address_line1 || '';
+    var address2 = partner.address_line2 || '';
+    var state = partner.state || '';
+    var description = partner.description || '';
+    var specialization = partner.specialization || '';
+    var services = partner.services || [];
+    var timings = partner.timings || [];
+    var photos = partner.photos || [];
+    var logoUrl = partner.logo_url || '';
+    var lat = partner.latitude;
+    var lng = partner.longitude;
+
+    // Page title
+    document.title = name + ' — MediHost';
+
+    // Avatar
+    document.getElementById('p-avatar').textContent = name.charAt(0).toUpperCase();
+
+    // Hero
+    document.getElementById('p-name').textContent = name;
+    document.getElementById('p-type').textContent = formatType(type);
+
+    var locationParts = [];
+    if (city && city !== '-') locationParts.push(city);
+    if (pincode && pincode !== '000000') locationParts.push(pincode);
+    document.getElementById('p-location').innerHTML = '<span class="ico">&#128205;</span> ' + (locationParts.length ? locationParts.join(', ') : 'India');
+
+    // About
+    if (description) {
+        document.getElementById('p-about').textContent = description;
+    } else {
+        document.getElementById('p-about').innerHTML = '<span class="empty-section">' + name + ' is a ' + formatType(type).toLowerCase() + (city && city !== '-' ? ' based in ' + city : '') + '. Contact them for appointments and more information.</span>';
+    }
+
+    // Services
+    if (services && services.length > 0 && typeof services[0] === 'string') {
+        var shtml = '';
+        services.forEach(function(s) {
+            shtml += '<span class="service-tag">' + escapeHtml(s) + '</span>';
+        });
+        document.getElementById('p-services').innerHTML = shtml;
+    } else if (services && services.length > 0 && services[0].name) {
+        var shtml2 = '';
+        services.forEach(function(s) {
+            shtml2 += '<span class="service-tag">' + escapeHtml(s.name || s) + '</span>';
+        });
+        document.getElementById('p-services').innerHTML = shtml2;
+    } else {
+        document.getElementById('card-services').style.display = 'none';
+    }
+
+    // Timings
+    if (timings && timings.length > 0) {
+        var thtml = '<table class="timings-table">';
+        timings.forEach(function(t) {
+            var day = t.day || t.label || '';
+            var time = t.time || t.hours || '';
+            var closed = t.closed || false;
+            thtml += '<tr><td class="day">' + escapeHtml(day) + '</td><td class="' + (closed ? 'closed' : 'time') + '">' + (closed ? 'Closed' : escapeHtml(time)) + '</td></tr>';
+        });
+        thtml += '</table>';
+        document.getElementById('p-timings').innerHTML = thtml;
+    } else {
+        document.getElementById('card-timings').style.display = 'none';
+    }
+
+    // Photos
+    if (photos && photos.length > 0 && typeof photos[0] === 'string') {
+        var phhtml = '';
+        photos.forEach(function(url) {
+            phhtml += '<img src="' + escapeHtml(url) + '" alt="' + escapeHtml(name) + '" loading="lazy">';
+        });
+        document.getElementById('p-photos').innerHTML = phhtml;
+    } else {
+        document.getElementById('card-photos').style.display = 'none';
+    }
+
+    // Contact
+    if (phone) {
+        var cleanPhone = phone.replace(/\D/g, '');
+        var fullPhone = cleanPhone.length === 10 ? '+91' + cleanPhone : '+' + cleanPhone;
+        document.getElementById('p-phone-link').textContent = '+91 ' + phone;
+        document.getElementById('p-phone-link').href = 'tel:' + fullPhone;
+        document.getElementById('btn-book').href = 'tel:' + fullPhone;
+        document.getElementById('btn-wa').href = 'https://wa.me/91' + cleanPhone + '?text=' + encodeURIComponent('Hi ' + name + '! I found your clinic on MediHost and would like to book an appointment.');
+    }
+
+    if (email) {
+        document.getElementById('ci-email').style.display = 'flex';
+        document.getElementById('p-email-link').textContent = email;
+        document.getElementById('p-email-link').href = 'mailto:' + email;
+    }
+
+    // Address
+    var addrParts = [];
+    if (address1 && address1 !== '-') addrParts.push(address1);
+    if (address2) addrParts.push(address2);
+    if (city && city !== '-') addrParts.push(city);
+    if (state && state !== '-') addrParts.push(state);
+    if (pincode && pincode !== '000000') addrParts.push(pincode);
+    document.getElementById('p-address').textContent = addrParts.length ? addrParts.join(', ') : 'Contact for address';
+
+    // Map
+    if (lat && lng) {
+        document.getElementById('p-map').innerHTML = '<a href="https://www.google.com/maps?q=' + lat + ',' + lng + '" target="_blank" style="color:var(--mint);font-weight:600;font-size:13px">Open in Google Maps &#8599;</a>';
+    }
+
+    // Owner
+    document.getElementById('p-owner').textContent = owner || name;
+    if (specialization) {
+        document.getElementById('p-specialization').textContent = specialization;
+    }
+}
+
+function formatType(t) {
+    if (!t) return 'Clinic';
+    var map = { clinic: 'Clinic', hospital: 'Hospital', diagnostic_lab: 'Diagnostic Lab', pharmacy: 'Pharmacy', physiotherapy: 'Physiotherapy Center', nursing_home: 'Nursing Home' };
+    return map[t] || t.charAt(0).toUpperCase() + t.slice(1);
+}
+
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+init();
+</script>
+</body>
+</html>
