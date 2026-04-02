@@ -454,8 +454,30 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         setTimeout(function() {
           if (redirectUrl) {
             window.location.href = redirectUrl;
-          } else if (data.partner && (data.partner.funnel_stage === 'active' || data.partner.funnel_stage === 'wizard_complete')) {
-            window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
+          } else if (data.partner && (data.partner.funnel_stage === 'active' || data.partner.funnel_stage === 'wizard_complete') && data.partner.hospital_id) {
+            // Partner has HMS hospital — fetch HMS token, store it, then redirect
+            MEDIHOST.apiPost('/api/presence/partner-auth/hms-token', {}).then(function(hmsData) {
+              if (hmsData.success && hmsData.hms_token) {
+                try {
+                  localStorage.setItem('mw_token', hmsData.hms_token);
+                  localStorage.setItem('mw_hospital_id', String(hmsData.hospital_id));
+                  localStorage.setItem('mw_login_data', JSON.stringify({
+                    token: hmsData.hms_token,
+                    hospitalId: String(hmsData.hospital_id),
+                    userid: String(hmsData.user_id),
+                    first_name: hmsData.first_name || '',
+                    last_name: hmsData.last_name || '',
+                    email: data.partner.email,
+                    role: 'HOSPITAL_ADMIN',
+                    role_id: 2
+                  }));
+                } catch(e) { console.error('HMS token save error:', e); }
+              }
+              window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
+            }).catch(function() {
+              // HMS token fetch failed — redirect anyway, user will need to log in again on HMS
+              window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
+            });
           } else if (data.partner && (data.partner.funnel_stage === 'password_set' || data.partner.funnel_stage === 'email_verified')) {
             window.location.href = '/onboard.html';
           } else {
