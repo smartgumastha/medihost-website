@@ -336,9 +336,17 @@ if (selectedDomain || hasDomain) {
 function selectPlan(plan) {
   selectedPlan = plan;
   var cards = document.querySelectorAll('.plan-card');
-  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].classList.remove('selected');
+    cards[i].classList.remove('featured');
+    cards[i].style.borderColor = '';
+    cards[i].style.borderWidth = '';
+  }
   var el = document.getElementById('plan' + plan.charAt(0).toUpperCase() + plan.slice(1));
-  if (el) el.classList.add('selected');
+  if (el) {
+    el.classList.add('selected');
+    el.classList.add('featured');
+  }
   updateSummary();
 }
 
@@ -412,7 +420,23 @@ function submitOrder() {
     btnText.innerHTML = 'Pay <span id="sfBtnPrice">\u20B9' + domainPrice + '</span> and start free trial';
     if (data.success) {
       if (data.token) MEDIHOST.saveAuth(data.token, data.partner);
-      window.location.href = '/verify.html?from=plans&domain=' + encodeURIComponent(selectedDomain);
+      var domainVal = finalDomain || 'your selected domain';
+      document.getElementById('mainContent').innerHTML = '<div style="max-width:480px;margin:80px auto;text-align:center;padding:20px">' +
+        '<div style="width:64px;height:64px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#0F6E56" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke="#0F6E56" stroke-width="1.5"/></svg></div>' +
+        '<h2 style="font-family:var(--heading);font-size:24px;font-weight:500;margin:0 0 8px">Check your email!</h2>' +
+        '<p style="font-size:15px;color:#666;margin:0 0 6px">We sent a verification link to</p>' +
+        '<p style="font-size:16px;font-weight:500;color:#085041;margin:0 0 20px">' + email + '</p>' +
+        '<p style="font-size:13px;color:#888;margin:0 0 24px">Click the link in the email to verify your account and start your free trial.</p>' +
+        '<div style="padding:16px;background:#E1F5EE;border-radius:12px;margin-bottom:20px;text-align:left">' +
+        '<div style="font-size:14px;font-weight:500;color:#085041;margin-bottom:6px">What happens next:</div>' +
+        '<div style="font-size:13px;color:#0F6E56;line-height:2">' +
+        '1. Verify your email (click the link)<br>' +
+        '2. Set up your clinic details<br>' +
+        '3. Your website goes live on ' + domainVal + '<br>' +
+        '4. Start managing your practice' +
+        '</div></div>' +
+        '<p style="font-size:12px;color:#888">Didn\'t receive it? Check spam or <a href="#" onclick="resendVerify(\'' + email.replace(/'/g, "\\'") + '\');return false" style="color:#0F6E56;text-decoration:underline">resend verification link</a></p>' +
+        '</div>';
     } else {
       showErr(data.error || 'Signup failed. Please try again.');
     }
@@ -427,6 +451,14 @@ function showErr(msg) {
   var el = document.getElementById('sfError');
   el.textContent = msg;
   el.classList.add('show');
+}
+
+function resendVerify(email) {
+  fetch(MEDIHOST.API_BASE + '/api/presence/partner-auth/resend-verification', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email })
+  }).then(function() { alert('Verification link resent!'); }).catch(function() { alert('Could not resend. Please try again.'); });
 }
 </script>
 </body>
