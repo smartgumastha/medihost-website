@@ -3,1134 +3,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MediHost™ — Your Clinic, Live in 10 Minutes | Free HMS, Billing, Website</title>
-<meta name="description" content="Set up your own hospital management system — patient registration, billing, reports, website — all by yourself. No developer needed. Free forever starter plan.">
-<meta name="keywords" content="hospital management system, clinic software, HMS India, patient billing, UHID, ABHA, clinic website builder, free HMS">
-<meta property="og:title" content="MediHost™ — Your Clinic, Live in 10 Minutes">
-<meta property="og:description" content="Set up your own hospital management system — patient registration, billing, reports, website — all by yourself.">
+<title>MediHost™ — Your Clinic, Live in 15 Minutes | Domain, Website, HMS, Billing</title>
+<meta name="description" content="Your own domain. Professional website. Google listing. AI-powered social posts. Online booking. Full practice management. Live in 15 minutes.">
+<meta name="keywords" content="clinic website, hospital management system, doctor website, dental website, pharmacy website, diagnostic lab website, NABL, ABDM, ABHA, HMS India">
+<meta property="og:title" content="MediHost™ — Your Practice, Fully Online in 15 Minutes">
+<meta property="og:description" content="Domain + website + Google listing + AI marketing + HMS + billing. Built for Indian healthcare.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#1D9E75;
-  --green-dark:#178A65;
-  --green-light:#E8F7F1;
-  --green-subtle:#F4FBF8;
-  --dark:#111827;
-  --gray-900:#1F2937;
-  --gray-700:#374151;
-  --gray-600:#4B5563;
-  --gray-500:#6B7280;
-  --gray-400:#9CA3AF;
-  --gray-300:#D1D5DB;
-  --gray-200:#E5E7EB;
-  --gray-100:#F3F4F6;
-  --gray-50:#F9FAFB;
-  --white:#FFFFFF;
-  --red:#EF4444;
-  --heading:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
-  --body:'Inter',system-ui,-apple-system,sans-serif;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
-  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
-  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
-  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
-  --shadow-xl:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);
-  --radius:8px;
-  --radius-lg:12px;
-  --radius-xl:16px;
+  --green:#0F6E56;--green-dark:#0A5744;--green-light:#E1F5EE;--green-sub:#9FE1CB;--green-text:#085041;
+  --dark:#111827;--gray-900:#1F2937;--gray-700:#374151;--gray-600:#4B5563;--gray-500:#6B7280;--gray-400:#9CA3AF;--gray-300:#D1D5DB;--gray-200:#E5E7EB;--gray-100:#F3F4F6;--gray-50:#F9FAFB;--white:#FFF;
+  --purple:#534AB7;--purple-light:#EEEDFE;--purple-text:#3C3489;
+  --blue:#185FA5;--blue-light:#E6F1FB;--blue-text:#0C447C;
+  --orange:#993C1D;--orange-light:#FAECE7;--orange-text:#712B13;
+  --olive:#3B6D11;--olive-light:#EAF3DE;--olive-text:#27500A;
+  --gold:#854F0B;--gold-light:#FAEEDA;--gold-text:#633806;
+  --rose:#993556;--rose-light:#FBEAF0;--rose-text:#72243E;
+  --heading:'Plus Jakarta Sans',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --r:8px;--r2:12px;
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--body);color:var(--gray-700);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--white)}
+body{font-family:var(--body);color:var(--gray-700);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.55}
 a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-.container{max-width:1180px;margin:0 auto;padding:0 24px}
-h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
+h1,h2,h3{font-family:var(--heading);color:var(--dark);line-height:1.35}
+img{max-width:100%}
 
-/* ==================== NAV ==================== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:all .3s ease}
-.nav.scrolled{border-bottom-color:var(--gray-200);box-shadow:var(--shadow-sm)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
-.nav-logo{display:flex;align-items:center;gap:2px;font-family:var(--heading);font-size:24px;font-weight:800;letter-spacing:-.5px;cursor:pointer}
-.nav-logo .medi{color:var(--dark)}
-.nav-logo .host{color:var(--green)}
-.nav-logo .tm{font-size:11px;font-weight:600;color:var(--gray-400);vertical-align:super;margin-left:1px}
-.nav-links{display:flex;align-items:center;gap:32px}
-.nav-links a{font-size:14px;font-weight:500;color:var(--gray-600);transition:color .2s}
-.nav-links a:hover{color:var(--green)}
-.nav-cta{display:flex;align-items:center;gap:16px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--heading);font-weight:600;border:none;cursor:pointer;transition:all .2s ease;text-decoration:none}
-.btn-sm{padding:10px 20px;font-size:14px;border-radius:var(--radius)}
-.btn-md{padding:12px 24px;font-size:15px;border-radius:var(--radius-lg)}
-.btn-lg{padding:16px 32px;font-size:16px;border-radius:var(--radius-lg)}
-.btn-green{background:var(--green);color:var(--white)}
-.btn-green:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
-.btn-outline{background:transparent;color:var(--dark);border:1.5px solid var(--gray-300)}
-.btn-outline:hover{border-color:var(--green);color:var(--green)}
-.btn-ghost{background:transparent;color:var(--gray-600);padding:10px 16px}
-.btn-ghost:hover{color:var(--green)}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
-.hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:all .3s}
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--gray-200);box-shadow:var(--shadow-lg);padding:16px 24px;z-index:999}
-.mobile-menu.open{display:flex;flex-direction:column;gap:8px}
-.mobile-menu a{padding:12px 0;font-size:15px;font-weight:500;color:var(--gray-700);border-bottom:1px solid var(--gray-100)}
-.mobile-menu .btn{margin-top:8px;text-align:center}
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:.5px solid var(--gray-200)}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-logo{font-family:var(--heading);font-size:19px;font-weight:800;letter-spacing:-.5px;cursor:pointer}
+.nav-logo .m{color:var(--dark)}.nav-logo .h{color:var(--green)}.nav-logo .tm{font-size:8px;color:var(--green);vertical-align:super}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{font-size:12px;font-weight:500;color:var(--gray-600);padding:6px 10px;border-radius:6px;transition:background .2s}
+.nav-link:hover{background:var(--gray-100)}
+.nav-btn-outline{font-size:12px;font-weight:600;color:var(--green);padding:6px 12px;border:1px solid var(--green);border-radius:6px;display:inline-flex;align-items:center;gap:5px;transition:background .2s}
+.nav-btn-outline:hover{background:var(--green-light)}
+.nav-btn-outline svg{width:13px;height:13px}
+.nav-btn-solid{font-size:12px;font-weight:600;color:var(--white);background:var(--green);padding:7px 14px;border-radius:6px;transition:opacity .2s}
+.nav-btn-solid:hover{opacity:.9}
 
-/* ==================== HERO ==================== */
-.hero{padding:140px 0 80px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(29,158,117,.06) 0%,transparent 70%);pointer-events:none}
-.hero-content{text-align:center;max-width:800px;margin:0 auto;position:relative;z-index:1}
-.hero h1{font-size:clamp(36px,5.5vw,64px);font-weight:800;letter-spacing:-1.5px;margin-bottom:24px;line-height:1.08}
-.hero h1 .green{color:var(--green)}
-.rotating-word{display:inline-block;min-width:180px;text-align:left;transition:opacity .4s ease,transform .4s ease}
-.rotating-word.fade-out{opacity:0;transform:translateY(-8px)}
-.rotating-word.fade-in{opacity:1;transform:translateY(0)}
-.hero .subtitle{font-size:clamp(16px,2vw,20px);color:var(--gray-500);max-width:620px;margin:0 auto 40px;line-height:1.7;font-weight:400}
-.hero-buttons{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:48px}
-.trust-badges{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
-.trust-badge{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--gray-500)}
-.trust-badge i{color:var(--green);font-size:14px}
+/* ── ANNOUNCEMENT BAR ── */
+.announce{background:var(--green-light);padding:8px 20px;text-align:center}
+.announce-inner{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.announce-item{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--green-text)}
+.announce-item b{font-weight:700}
+.announce-item svg{width:14px;height:14px;flex-shrink:0}
+.announce-div{width:1px;height:16px;background:var(--green-sub)}
+.announce-btn{display:inline-flex;align-items:center;gap:4px;background:var(--green);color:var(--white);font-size:10px;font-weight:600;padding:4px 10px;border-radius:99px;border:none;cursor:pointer;transition:opacity .2s}
+.announce-btn:hover{opacity:.9}
+.announce-btn svg{width:11px;height:11px}
 
-/* ==================== DASHBOARD PREVIEW ==================== */
-.preview-section{padding:0 0 100px;position:relative}
-.browser-frame{max-width:960px;margin:0 auto;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);border:1px solid var(--gray-200);overflow:hidden;transform:perspective(2000px) rotateX(2deg);transition:transform .5s ease}
-.browser-frame.in-view{transform:perspective(2000px) rotateX(0)}
-.browser-bar{display:flex;align-items:center;gap:12px;padding:14px 20px;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
-.browser-dots{display:flex;gap:6px}
-.browser-dots span{width:10px;height:10px;border-radius:50%}
-.browser-dots span:nth-child(1){background:#EF4444}
-.browser-dots span:nth-child(2){background:#F59E0B}
-.browser-dots span:nth-child(3){background:#22C55E}
-.browser-url{flex:1;background:var(--white);border:1px solid var(--gray-200);border-radius:6px;padding:6px 14px;font-size:12px;color:var(--gray-500);font-family:var(--body)}
-.browser-url span{color:var(--green);font-weight:500}
-.dashboard{padding:24px;background:var(--gray-50)}
-.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.dash-header h3{font-size:16px;font-weight:700;color:var(--dark)}
-.dash-header .dash-date{font-size:12px;color:var(--gray-400);font-weight:500}
-.dash-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.dash-card{background:var(--white);border-radius:var(--radius);padding:16px;border:1px solid var(--gray-200)}
-.dash-card .label{font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.dash-card .value{font-family:var(--heading);font-size:24px;font-weight:700;color:var(--dark)}
-.dash-card .change{font-size:11px;font-weight:600;color:var(--green);margin-top:4px}
-.dash-card .change.red{color:var(--red)}
-.dash-body{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
-.dash-table{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-200);overflow:hidden}
-.dash-table-header{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px 14px;background:var(--gray-50);border-bottom:1px solid var(--gray-200);font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px}
-.dash-table-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px 14px;border-bottom:1px solid var(--gray-100);font-size:12px;color:var(--gray-600);align-items:center}
-.dash-table-row:last-child{border-bottom:none}
-.dash-table-row .name{font-weight:600;color:var(--dark)}
-.dash-status{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600}
-.status-done{background:#DCFCE7;color:#16A34A}
-.status-wait{background:#FEF3C7;color:#D97706}
-.status-consult{background:#DBEAFE;color:#2563EB}
-.dash-chart{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-200);padding:16px}
-.dash-chart .chart-title{font-size:12px;font-weight:600;color:var(--dark);margin-bottom:14px}
-.chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:10px}
-.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.chart-bar{width:100%;border-radius:4px 4px 0 0;transition:height .5s ease}
-.chart-bar-label{font-size:9px;color:var(--gray-400);font-weight:500}
+/* ── HERO ── */
+.hero{max-width:620px;margin:0 auto;padding:36px 20px 0;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-text);font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:18px}
+.hero-badge svg{width:13px;height:13px}
+.hero h1{font-size:28px;font-weight:500;line-height:1.35;margin-bottom:14px}
+.hero h1 .rolling{color:var(--green);display:inline-block;min-width:180px;transition:opacity .4s,transform .4s}
+.hero h1 .rolling.fade-out{opacity:0;transform:translateY(6px)}
+.hero h1 .rolling.fade-in{opacity:1;transform:translateY(0)}
+.hero-sub{font-size:14px;color:var(--gray-500);max-width:500px;margin:0 auto 24px;line-height:1.6}
 
-/* ==================== USP SECTION ==================== */
-.usp-section{padding:100px 0;background:var(--gray-50)}
-.section-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--green-light);color:var(--green);font-size:13px;font-weight:600;border-radius:99px;margin-bottom:16px;font-family:var(--heading)}
-.section-title{font-size:clamp(28px,3.5vw,42px);font-weight:800;letter-spacing:-.5px;margin-bottom:16px}
-.section-sub{font-size:17px;color:var(--gray-500);max-width:560px;line-height:1.7}
-.section-header{text-align:center;margin-bottom:60px}
-.section-header .section-sub{margin:0 auto}
-.usp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.usp-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:28px 24px;transition:all .3s ease;cursor:default}
-.usp-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--green-light)}
-.usp-icon{width:44px;height:44px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:16px}
-.usp-card h4{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--dark)}
-.usp-card p{font-size:14px;color:var(--gray-500);line-height:1.6}
-.icon-setup{background:#EFF6FF;color:#3B82F6}
-.icon-brand{background:#FDF4FF;color:#A855F7}
-.icon-roles{background:#FFF7ED;color:#F97316}
-.icon-all{background:var(--green-light);color:var(--green)}
-.icon-branch{background:#EEF2FF;color:#6366F1}
-.icon-website{background:#F0FDFA;color:#14B8A6}
-.icon-india{background:#FEF3C7;color:#D97706}
-.icon-trial{background:#FEE2E2;color:#EF4444}
+/* ── HERO FORM ── */
+.hero-form{max-width:500px;margin:0 auto 14px;border:.5px solid var(--gray-200);border-radius:var(--r2);padding:20px 22px;background:var(--white);text-align:left}
+.hero-form label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:10px}
+.hf-row{display:flex;gap:8px;margin-bottom:8px}
+.hf-input{flex:1;padding:9px 12px;font-family:var(--body);font-size:13px;color:var(--dark);border:1px solid var(--gray-200);border-radius:var(--r);outline:none;transition:border-color .2s}
+.hf-input:focus{border-color:var(--green)}
+.hf-select{padding:9px 12px;font-family:var(--body);font-size:13px;color:var(--dark);border:1px solid var(--gray-200);border-radius:var(--r);outline:none;background:var(--white);min-width:140px}
+.hf-btn{width:100%;padding:11px;font-family:var(--heading);font-size:14px;font-weight:600;color:var(--white);background:var(--green);border:none;border-radius:var(--r);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s}
+.hf-btn:hover{opacity:.9}
+.hf-btn svg{width:15px;height:15px}
+.hf-note{text-align:center;margin-top:12px;font-size:11px;color:var(--gray-400);display:flex;align-items:center;justify-content:center;gap:5px}
+.hf-note .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.hf-note b{color:var(--green-text);font-weight:600}
 
-/* ==================== COMPARE ==================== */
-.compare-section{padding:100px 0;background:var(--white)}
-.compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:0 24px}
-.compare-table{width:100%;min-width:640px;border-collapse:separate;border-spacing:0;font-size:14px}
-.compare-table thead th{padding:16px 20px;text-align:left;font-family:var(--heading);font-weight:700;font-size:15px;border-bottom:2px solid var(--gray-200);color:var(--dark);white-space:nowrap}
-.compare-table thead th:first-child{color:var(--gray-500);font-weight:600;font-size:13px}
-.compare-table thead th.highlight{color:var(--green);position:relative}
-.compare-table thead th.highlight::before{content:'RECOMMENDED';position:absolute;top:-10px;left:20px;font-size:9px;font-weight:700;background:var(--green);color:var(--white);padding:2px 8px;border-radius:4px;letter-spacing:.5px}
-.compare-table tbody td{padding:14px 20px;border-bottom:1px solid var(--gray-100);color:var(--gray-600);font-weight:500}
-.compare-table tbody td:first-child{font-weight:600;color:var(--dark);font-size:13px}
-.compare-table .col-mh{background:var(--green-subtle)}
-.compare-table thead .col-mh{background:var(--green-light)}
-.compare-table .check{color:var(--green);font-weight:700;font-size:16px}
-.compare-table .cross{color:var(--gray-300);font-size:16px}
-.compare-table .text-green{color:var(--green);font-weight:700}
-.compare-note{text-align:center;margin-top:20px;font-size:12px;color:var(--gray-400);font-style:italic}
+/* ── PREVIEW CARD ── */
+.preview{max-width:520px;margin:0 auto 16px;border-radius:var(--r2);overflow:hidden;border:.5px solid var(--gray-200)}
+.preview-hdr{background:var(--green);padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.preview-hdr-left{color:var(--white)}
+.preview-hdr-left .ph-title{font-family:var(--heading);font-size:14px;font-weight:700}
+.preview-hdr-left .ph-sub{font-size:11px;color:var(--green-sub);margin-top:2px}
+.preview-badge{font-size:10px;font-weight:600;color:var(--white);background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px}
+.ptile{text-align:center;padding:10px 6px;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;gap:4px}
+.ptile svg{width:22px;height:22px}
+.ptile-title{font-size:11px;font-weight:700}
+.ptile-sub{font-size:9px;opacity:.75}
 
-/* ==================== STEPS ==================== */
-.steps-section{padding:100px 0;background:var(--gray-50)}
-.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;max-width:900px;margin:0 auto}
-.steps-grid::before{content:'';position:absolute;top:40px;left:calc(16.67% + 20px);right:calc(16.67% + 20px);height:2px;background:var(--gray-200);z-index:0}
-.step-card{text-align:center;padding:0 24px;position:relative;z-index:1}
-.step-num{width:80px;height:80px;border-radius:50%;background:var(--white);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-family:var(--heading);font-size:28px;font-weight:800;color:var(--green);margin:0 auto 24px;position:relative;z-index:2}
-.step-card h4{font-size:20px;font-weight:700;margin-bottom:8px}
-.step-card p{font-size:14px;color:var(--gray-500);line-height:1.6;max-width:240px;margin:0 auto}
+/* ── DOMAIN LINKS ── */
+.domain-links{text-align:center;font-size:11px;color:var(--gray-400);margin-bottom:20px;padding:0 20px}
+.domain-links a{color:var(--green);text-decoration:underline;margin:0 4px;font-weight:500}
 
-/* ==================== FOOTER ==================== */
-.footer{padding:60px 0 32px;background:var(--dark);color:var(--gray-400)}
-.footer-top{display:flex;justify-content:space-between;gap:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
-.footer-brand .nav-logo{margin-bottom:12px}
-.footer-brand .nav-logo .medi{color:var(--white)}
-.footer-brand p{font-size:13px;max-width:280px;line-height:1.6}
-.footer-col h5{font-family:var(--heading);font-size:13px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
-.footer-col a{display:block;font-size:13px;color:var(--gray-400);margin-bottom:10px;transition:color .2s}
-.footer-col a:hover{color:var(--green)}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;font-size:12px;flex-wrap:wrap;gap:12px}
+/* ── TRUST BADGES ── */
+.trust{max-width:520px;margin:0 auto 28px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;padding:0 20px}
+.trust-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--gray-400);font-weight:500}
+.trust-item svg{width:14px;height:14px;opacity:.6}
 
-/* ==================== ANIMATIONS ==================== */
-.fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-.fade-up.in-view{opacity:1;transform:translateY(0)}
-.fade-up-delay-1{transition-delay:.1s}
-.fade-up-delay-2{transition-delay:.2s}
-.fade-up-delay-3{transition-delay:.3s}
+/* ── HOW IT WORKS ── */
+.how{max-width:580px;margin:0 auto 32px;padding:0 20px;text-align:center}
+.how h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.how .how-sub{font-size:13px;color:var(--gray-500);margin-bottom:20px}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center}
+.how-step .hs-num{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--heading);font-size:13px;font-weight:700;margin-bottom:8px}
+.how-step .hs-title{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.how-step .hs-desc{font-size:10px;color:var(--gray-500);line-height:1.4}
 
-/* ==================== RESPONSIVE ==================== */
-@media(max-width:1024px){
-  .usp-grid{grid-template-columns:repeat(2,1fr)}
-  .dash-metrics{grid-template-columns:repeat(2,1fr)}
-  .dash-body{grid-template-columns:1fr}
-}
+/* ── WEBSITE PREVIEW ── */
+.webprev{max-width:520px;margin:0 auto 32px;padding:0 20px;text-align:center}
+.webprev h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.webprev .wp-sub{font-size:13px;color:var(--gray-500);margin-bottom:16px}
+.browser{border:.5px solid var(--gray-200);border-radius:var(--r2);overflow:hidden}
+.browser-chrome{background:#F1EFE8;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.browser-dots{display:flex;gap:4px}
+.browser-dots span{width:8px;height:8px;border-radius:50%}
+.browser-dots .d1{background:#FF5F57}.browser-dots .d2{background:#FFBD2E}.browser-dots .d3{background:#28CA41}
+.browser-url{flex:1;background:var(--white);border-radius:4px;padding:3px 8px;font-family:'Courier New',monospace;font-size:10px;color:var(--gray-600);text-align:center}
+.browser-body{padding:20px;text-align:center}
+.browser-body .bb-name{font-family:var(--heading);font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.browser-body .bb-nav{font-size:11px;color:var(--gray-400);margin-bottom:12px}
+.browser-body .bb-hero{height:120px;background:var(--gray-100);border-radius:var(--r);margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gray-400)}
+.browser-body .bb-text{font-size:11px;color:var(--gray-500);line-height:1.5}
+.wp-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.wp-pill{display:inline-flex;align-items:center;gap:4px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--r);padding:5px 10px;font-size:10px;color:var(--gray-600)}
+.wp-pill svg{width:12px;height:12px;opacity:.6}
+.wp-pill b{font-weight:600;color:var(--dark)}
+
+/* ── COMPARISON ── */
+.compare{max-width:580px;margin:0 auto 32px;padding:0 20px;text-align:center}
+.compare h2{font-size:18px;font-weight:700;margin-bottom:16px}
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.compare-col{border:.5px solid var(--gray-200);border-radius:var(--r2);padding:12px 10px}
+.compare-col.featured{border:2px solid var(--green);position:relative}
+.compare-col .cc-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--green-light);color:var(--green-text);font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap;font-family:var(--heading)}
+.compare-col .cc-hdr{font-size:11px;font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:.5px solid var(--gray-200)}
+.compare-col.featured .cc-hdr{color:var(--green-text);border-bottom-color:var(--green-sub)}
+.compare-col .cc-hdr.tertiary{color:var(--gray-400)}
+.compare-list{list-style:none;text-align:left;padding:0}
+.compare-list li{font-size:11px;line-height:2;color:var(--dark)}
+.compare-list li.no{color:var(--gray-400);text-decoration:line-through}
+.compare-list li.yes-green{color:var(--green-text)}
+
+/* ── CTA ── */
+.cta{max-width:580px;margin:0 auto 16px;padding:0 20px}
+.cta-card{background:var(--green);border-radius:var(--r2);padding:24px;text-align:center}
+.cta-card h2{font-size:18px;font-weight:700;color:var(--white);margin-bottom:6px}
+.cta-card p{font-size:13px;color:var(--green-sub);margin-bottom:16px}
+.cta-btn{display:inline-block;background:var(--white);color:var(--green);font-family:var(--heading);font-size:14px;font-weight:700;padding:10px 28px;border-radius:var(--r);transition:opacity .2s}
+.cta-btn:hover{opacity:.9}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:12px 20px 24px;font-size:9px;color:var(--gray-400);line-height:1.6}
+
+/* ── MOBILE ── */
 @media(max-width:768px){
-  .container{padding:0 20px}
-  .nav-links,.nav-cta .btn-ghost,.nav-cta .btn-green{display:none}
-  .hamburger{display:flex}
-  .nav-cta{gap:8px}
-  .hero{padding:120px 0 60px}
-  .hero h1{font-size:36px;letter-spacing:-1px}
-  .hero .subtitle{font-size:16px}
-  .hero-buttons{flex-direction:column;gap:12px}
-  .hero-buttons .btn{width:100%;justify-content:center}
-  .trust-badges{gap:12px 20px}
-  .browser-frame{margin:0 -8px;border-radius:var(--radius-lg);transform:none}
-  .dash-metrics{grid-template-columns:repeat(2,1fr);gap:10px}
-  .dash-table-header,.dash-table-row{grid-template-columns:2fr 1fr 1fr}
-  .dash-table-header >:last-child,.dash-table-row >:last-child{display:none}
-  .usp-grid{grid-template-columns:1fr;gap:12px}
-  .usp-card{padding:20px}
-  .steps-grid{grid-template-columns:1fr;gap:40px}
-  .steps-grid::before{display:none}
-  .compare-wrap{margin:0 -20px;padding:0 20px}
-  .section-title{font-size:28px}
-  .usp-section,.steps-section{padding:72px 0}
-  .compare-section{padding:72px 0}
-  .footer-top{flex-direction:column;gap:32px}
+  .nav-links .nav-link{display:none}
+  .announce-inner{gap:8px;font-size:10px}
+  .announce-div{display:none}
+  .hero h1{font-size:22px}
+  .hero-sub{font-size:13px}
+  .hf-row{flex-direction:column}
+  .hf-select{min-width:100%}
+  .preview-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .how-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .compare-grid{grid-template-columns:1fr}
+  .compare-col{max-width:280px;margin:0 auto}
+  .trust{gap:10px}
+  .wp-pills{gap:6px}
 }
 @media(max-width:480px){
-  .dash-card .value{font-size:20px}
-  .trust-badges{flex-direction:column;gap:8px}
-}
-
-/* ==================== PRICING ==================== */
-.pricing-section{padding:100px 0;background:var(--white)}
-.billing-toggle{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:48px}
-.billing-toggle span{font-size:14px;font-weight:600;color:var(--gray-400);transition:color .2s;cursor:pointer}
-.billing-toggle span.active{color:var(--dark)}
-.toggle-track{width:48px;height:26px;background:var(--gray-200);border-radius:99px;position:relative;cursor:pointer;transition:background .3s}
-.toggle-track.yearly{background:var(--green)}
-.toggle-thumb{width:20px;height:20px;background:var(--white);border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .3s;box-shadow:var(--shadow-sm)}
-.toggle-track.yearly .toggle-thumb{transform:translateX(22px)}
-.save-badge{font-size:11px;font-weight:700;color:var(--green);background:var(--green-light);padding:2px 8px;border-radius:99px}
-.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
-.plan-card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius-xl);padding:32px 24px;position:relative;transition:all .3s ease}
-.plan-card:hover{box-shadow:var(--shadow-lg)}
-.plan-card.popular{border-color:var(--green);border-width:2px;transform:scale(1.03);box-shadow:var(--shadow-lg);z-index:1}
-.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--white);font-size:12px;font-weight:700;padding:4px 16px;border-radius:99px;font-family:var(--heading);white-space:nowrap}
-.plan-name{font-family:var(--heading);font-size:20px;font-weight:700;color:var(--dark);margin-bottom:4px}
-.plan-tagline{font-size:13px;color:var(--gray-500);margin-bottom:20px}
-.plan-price{margin-bottom:20px}
-.plan-price .amount{font-family:var(--heading);font-size:40px;font-weight:800;color:var(--dark);letter-spacing:-1px}
-.plan-price .currency{font-size:18px;font-weight:600;color:var(--gray-500);vertical-align:super}
-.plan-price .period{font-size:14px;color:var(--gray-400);font-weight:500}
-.plan-price .yearly-note{font-size:12px;color:var(--green);font-weight:600;margin-top:2px}
-.plan-features{list-style:none;margin-bottom:24px;padding:0}
-.plan-features li{font-size:13px;padding:6px 0;display:flex;align-items:flex-start;gap:8px;color:var(--gray-600);line-height:1.4}
-.plan-features li i{margin-top:3px;font-size:12px;flex-shrink:0}
-.plan-features li i.fa-check{color:var(--green)}
-.plan-features li i.fa-lock{color:var(--gray-300)}
-.plan-features li.disabled{color:var(--gray-400)}
-.plan-cta{width:100%}
-.plan-cta .btn{width:100%;justify-content:center}
-.pricing-note{text-align:center;margin-top:32px;font-size:14px;color:var(--gray-500)}
-.pricing-note i{color:var(--green);margin-right:4px}
-
-/* Offer banner */
-.offer-banner{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:1px solid #F59E0B;border-radius:var(--radius-lg);padding:16px 24px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.offer-banner-text{font-size:14px;font-weight:600;color:#92400E}
-.offer-banner-text i{margin-right:6px}
-.offer-banner-code{font-family:var(--heading);font-size:14px;font-weight:800;background:var(--white);color:#D97706;padding:4px 12px;border-radius:6px;letter-spacing:1px}
-.offer-timer{font-family:var(--heading);font-size:13px;font-weight:700;color:#B45309}
-
-/* ==================== TRIGGER POPUPS ==================== */
-.trigger-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9998;opacity:0;transition:opacity .3s}
-.trigger-overlay.show{display:flex;align-items:center;justify-content:center;opacity:1}
-.trigger-popup{background:var(--white);border-radius:var(--radius-xl);padding:40px 32px;max-width:440px;width:90%;text-align:center;position:relative;box-shadow:var(--shadow-xl);transform:scale(.9);transition:transform .3s}
-.trigger-overlay.show .trigger-popup{transform:scale(1)}
-.trigger-popup-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;color:var(--gray-400);cursor:pointer;padding:4px;line-height:1}
-.trigger-popup-close:hover{color:var(--dark)}
-.trigger-popup-icon{width:56px;height:56px;border-radius:50%;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 16px}
-.trigger-popup h3{font-family:var(--heading);font-size:22px;font-weight:700;color:var(--dark);margin-bottom:10px}
-.trigger-popup p{font-size:14px;color:var(--gray-500);line-height:1.7;margin-bottom:20px}
-.trigger-popup .popup-code{display:inline-block;font-family:var(--heading);font-size:18px;font-weight:800;background:var(--green-light);color:var(--green);padding:8px 20px;border-radius:var(--radius);letter-spacing:1.5px;margin-bottom:16px}
-.trigger-popup .popup-timer{font-size:13px;color:var(--gray-400);margin-bottom:16px}
-.trigger-popup .popup-timer span{font-weight:700;color:var(--dark)}
-
-/* Sticky bar trigger */
-.trigger-sticky{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,var(--green-dark),var(--green));color:var(--white);padding:12px 24px;z-index:9997;box-shadow:0 -4px 20px rgba(0,0,0,.15);transform:translateY(100%);transition:transform .4s ease}
-.trigger-sticky.show{display:flex;transform:translateY(0)}
-.trigger-sticky-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;flex-wrap:wrap}
-.trigger-sticky-text{font-size:14px;font-weight:500}
-.trigger-sticky-text strong{font-weight:700}
-.trigger-sticky .btn{background:var(--white);color:var(--green);font-size:13px;padding:8px 20px}
-.trigger-sticky .btn:hover{background:var(--green-light)}
-.trigger-sticky-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;padding:4px}
-.trigger-sticky-close:hover{color:var(--white)}
-
-@media(max-width:1024px){
-  .pricing-grid{grid-template-columns:repeat(2,1fr)}
-  .plan-card.popular{transform:scale(1.02)}
-}
-@media(max-width:768px){
-  .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
-  .plan-card.popular{transform:none}
-  .offer-banner{flex-direction:column;text-align:center}
-  .pricing-section{padding:72px 0}
-  .trigger-sticky-inner{flex-direction:column;text-align:center;gap:10px}
+  .hero h1{font-size:20px}
+  .preview-grid{grid-template-columns:repeat(3,1fr);gap:4px}
+  .ptile{padding:8px 4px}
+  .ptile svg{width:18px;height:18px}
+  .ptile-title{font-size:10px}
+  .ptile-sub{font-size:8px}
 }
 </style>
 </head>
 <body>
 
-<!-- ==================== NAV ==================== -->
-<nav class="nav" id="nav">
-  <div class="container nav-inner">
-    <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
-      <span class="medi">Medi</span><span class="host">Host</span><span class="tm">&trade;</span>
-    </a>
+<!-- S1: NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="m">Medi</span><span class="h">Host</span><span class="tm">&trade;</span></div>
     <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#compare">Compare</a>
-      <a href="#steps">Get Started</a>
-    </div>
-    <div class="nav-cta">
-      <a href="/login.html" class="btn btn-ghost btn-sm">Login</a>
-      <a href="/signup.html" class="btn btn-green btn-sm">Get started free</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="#howSection" class="nav-link">How it works</a>
+      <a href="#compareSection" class="nav-link">Pricing</a>
+      <a href="#heroForm" class="nav-btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search domain</a>
+      <a href="/signup.html" class="nav-btn-solid">Start free</a>
     </div>
   </div>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#features" onclick="closeMobile()">Features</a>
-  <a href="#pricing" onclick="closeMobile()">Pricing</a>
-  <a href="#compare" onclick="closeMobile()">Compare</a>
-  <a href="#steps" onclick="closeMobile()">Get Started</a>
-  <a href="/login.html" onclick="closeMobile()">Login</a>
-  <a href="/signup.html" class="btn btn-green btn-md" onclick="closeMobile()">Get started free</a>
-</div>
 
-<!-- ==================== HERO ==================== -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <h1 class="fade-up">
-        Your <span class="green rotating-word" id="rotatingWord">clinic</span>, live in 10 minutes.<br>
-        <span class="green">No developer needed.</span>
-      </h1>
-      <p class="subtitle fade-up fade-up-delay-1">
-        Set up your own hospital management system &mdash; patient registration, billing, reports, website &mdash; all by yourself. Like setting up a WhatsApp Business profile.
-      </p>
-      <div class="hero-buttons fade-up fade-up-delay-2">
-        <a href="/signup.html" class="btn btn-green btn-lg">
-          Start free &mdash; no card needed <i class="fas fa-arrow-right" style="font-size:14px"></i>
-        </a>
-        <a href="#preview" class="btn btn-outline btn-lg">
-          <i class="fas fa-play" style="font-size:12px"></i> See live demo
-        </a>
-      </div>
-      <div class="trust-badges fade-up fade-up-delay-3">
-        <span class="trust-badge"><i class="fas fa-check"></i> UHID compliant</span>
-        <span class="trust-badge"><i class="fas fa-check"></i> ABHA ready</span>
-        <span class="trust-badge"><i class="fas fa-check"></i> GST invoicing</span>
-        <span class="trust-badge"><i class="fas fa-check"></i> NABH guidelines</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== DASHBOARD PREVIEW ==================== -->
-<section class="preview-section" id="preview">
-  <div class="container">
-    <div class="browser-frame fade-up">
-      <div class="browser-bar">
-        <div class="browser-dots">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="browser-url"><i class="fas fa-lock" style="margin-right:6px;font-size:10px;color:var(--green)"></i> <span>app.medihost.in</span>/dashboard</div>
-      </div>
-      <div class="dashboard">
-        <div class="dash-header">
-          <h3>Dashboard</h3>
-          <span class="dash-date"><i class="far fa-calendar" style="margin-right:4px"></i> Today, 2 Apr 2026</span>
-        </div>
-        <div class="dash-metrics">
-          <div class="dash-card">
-            <div class="label">Today's Patients</div>
-            <div class="value">24</div>
-            <div class="change"><i class="fas fa-arrow-up" style="font-size:10px"></i> 12% vs yesterday</div>
-          </div>
-          <div class="dash-card">
-            <div class="label">Revenue</div>
-            <div class="value">₹18,400</div>
-            <div class="change"><i class="fas fa-arrow-up" style="font-size:10px"></i> 8% vs yesterday</div>
-          </div>
-          <div class="dash-card">
-            <div class="label">Pending Bills</div>
-            <div class="value">3</div>
-            <div class="change red"><i class="fas fa-arrow-down" style="font-size:10px"></i> 2 overdue</div>
-          </div>
-          <div class="dash-card">
-            <div class="label">Appointments</div>
-            <div class="value">18</div>
-            <div class="change"><i class="fas fa-check" style="font-size:10px"></i> 6 completed</div>
-          </div>
-        </div>
-        <div class="dash-body">
-          <div class="dash-table">
-            <div class="dash-table-header">
-              <span>Patient</span><span>Token</span><span>Status</span><span>Doctor</span>
-            </div>
-            <div class="dash-table-row">
-              <span class="name">Priya Sharma</span><span>T-001</span><span><span class="dash-status status-done">Completed</span></span><span>Dr. Mehta</span>
-            </div>
-            <div class="dash-table-row">
-              <span class="name">Rajesh Kumar</span><span>T-002</span><span><span class="dash-status status-consult">Consulting</span></span><span>Dr. Anil</span>
-            </div>
-            <div class="dash-table-row">
-              <span class="name">Anita Desai</span><span>T-003</span><span><span class="dash-status status-wait">Waiting</span></span><span>Dr. Mehta</span>
-            </div>
-            <div class="dash-table-row">
-              <span class="name">Mohammed Ali</span><span>T-004</span><span><span class="dash-status status-wait">Waiting</span></span><span>Dr. Anil</span>
-            </div>
-            <div class="dash-table-row">
-              <span class="name">Kavita Nair</span><span>T-005</span><span><span class="dash-status status-done">Completed</span></span><span>Dr. Mehta</span>
-            </div>
-          </div>
-          <div class="dash-chart">
-            <div class="chart-title">Weekly Patient Flow</div>
-            <div class="chart-bars">
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:55%;background:var(--green-light)"></div><span class="chart-bar-label">Mon</span></div>
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:72%;background:var(--green-light)"></div><span class="chart-bar-label">Tue</span></div>
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:45%;background:var(--green-light)"></div><span class="chart-bar-label">Wed</span></div>
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:88%;background:var(--green)"></div><span class="chart-bar-label">Thu</span></div>
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:65%;background:var(--green-light)"></div><span class="chart-bar-label">Fri</span></div>
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:38%;background:var(--green-light)"></div><span class="chart-bar-label">Sat</span></div>
-              <div class="chart-bar-wrap"><div class="chart-bar" style="height:20%;background:var(--gray-200)"></div><span class="chart-bar-label">Sun</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== USP SECTION ==================== -->
-<section class="usp-section" id="features">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag"><i class="fas fa-star" style="font-size:11px"></i> Why MediHost</div>
-      <h2 class="section-title">Why 500+ healthcare businesses choose MediHost&trade;</h2>
-      <p class="section-sub">Everything a modern Indian healthcare practice needs &mdash; in one platform, at a price that makes sense.</p>
-    </div>
-    <div class="usp-grid">
-      <div class="usp-card fade-up">
-        <div class="usp-icon icon-setup"><i class="fas fa-bolt"></i></div>
-        <h4>Self-service setup</h4>
-        <p>Your clinic, live in 10 minutes. No IT team needed. No demo calls to book.</p>
-      </div>
-      <div class="usp-card fade-up fade-up-delay-1">
-        <div class="usp-icon icon-brand"><i class="fas fa-palette"></i></div>
-        <h4>Your brand, not ours</h4>
-        <p>Your logo on receipts. Your colors on screens. Your website. Patients see your brand.</p>
-      </div>
-      <div class="usp-card fade-up fade-up-delay-2">
-        <div class="usp-icon icon-roles"><i class="fas fa-user-shield"></i></div>
-        <h4>Roles &amp; permissions</h4>
-        <p>Receptionist sees billing. Doctor sees EMR. Owner sees everything. Full control.</p>
-      </div>
-      <div class="usp-card fade-up fade-up-delay-3">
-        <div class="usp-icon icon-all"><i class="fas fa-layer-group"></i></div>
-        <h4>All-in-one system</h4>
-        <p>Replace Kiwi + Vyapar + Excel with one connected platform. One login, everything.</p>
-      </div>
-      <div class="usp-card fade-up">
-        <div class="usp-icon icon-branch"><i class="fas fa-code-branch"></i></div>
-        <h4>Multi-branch ready</h4>
-        <p>One login, all your clinics. Switch branches from the top bar. Unified reports.</p>
-      </div>
-      <div class="usp-card fade-up fade-up-delay-1">
-        <div class="usp-icon icon-website"><i class="fas fa-globe"></i></div>
-        <h4>Free website included</h4>
-        <p>Your clinic&rsquo;s online presence &mdash; SEO-ready, shareable, Google-indexed. Free.</p>
-      </div>
-      <div class="usp-card fade-up fade-up-delay-2">
-        <div class="usp-icon icon-india"><i class="fas fa-shield-halved"></i></div>
-        <h4>Indian healthcare compliant</h4>
-        <p>UHID, ABHA, GST invoicing, thermal receipt printing. Built for Indian clinics.</p>
-      </div>
-      <div class="usp-card fade-up fade-up-delay-3">
-        <div class="usp-icon icon-trial"><i class="fas fa-gift"></i></div>
-        <h4>14-day free trial</h4>
-        <p>Every paid feature unlocked. No credit card. No commitment. Cancel anytime.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== COMPARISON TABLE ==================== -->
-<section class="compare-section" id="compare">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag"><i class="fas fa-chart-bar" style="font-size:11px"></i> Comparison</div>
-      <h2 class="section-title">See how we compare</h2>
-      <p class="section-sub">The features that matter, side by side. No marketing fluff.</p>
-    </div>
-    <div class="compare-wrap fade-up">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th class="col-mh highlight">MediHost&trade;</th>
-            <th>Practo</th>
-            <th>MocDoc</th>
-            <th>Vyapar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Self-signup</td>
-            <td class="col-mh"><span class="check"><i class="fas fa-check-circle"></i></span></td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-            <td><span class="check"><i class="fas fa-check-circle"></i></span></td>
-          </tr>
-          <tr>
-            <td>Free tier</td>
-            <td class="col-mh"><span class="text-green">Forever free</span></td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-            <td>Limited</td>
-          </tr>
-          <tr>
-            <td>Free trial</td>
-            <td class="col-mh"><span class="text-green">14 days</span></td>
-            <td>Demo only</td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-            <td><span class="check"><i class="fas fa-check-circle"></i></span></td>
-          </tr>
-          <tr>
-            <td>HMS + LIS</td>
-            <td class="col-mh"><span class="check"><i class="fas fa-check-circle"></i></span> Included</td>
-            <td><span class="check"><i class="fas fa-check-circle"></i></span></td>
-            <td><span class="check"><i class="fas fa-check-circle"></i></span></td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-          </tr>
-          <tr>
-            <td>Your branding</td>
-            <td class="col-mh"><span class="text-green">Full custom</span></td>
-            <td>Practo brand</td>
-            <td>Partial</td>
-            <td>Vyapar brand</td>
-          </tr>
-          <tr>
-            <td>Website builder</td>
-            <td class="col-mh"><span class="text-green">Free included</span></td>
-            <td>On Practo.com</td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-            <td><span class="cross"><i class="fas fa-times-circle"></i></span></td>
-          </tr>
-          <tr>
-            <td>Starting price</td>
-            <td class="col-mh"><span class="text-green" style="font-size:16px;font-family:var(--heading)">FREE</span></td>
-            <td>₹5,000+/mo</td>
-            <td>₹20,000+</td>
-            <td>₹999/mo</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="compare-note fade-up">Data based on publicly available information as of April 2026.</p>
-  </div>
-</section>
-
-<!-- ==================== STEPS ==================== -->
-<section class="steps-section" id="steps">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag"><i class="fas fa-rocket" style="font-size:11px"></i> Getting Started</div>
-      <h2 class="section-title">Go live in 3 simple steps</h2>
-      <p class="section-sub">No meetings. No installation. No paperwork. Just you and your clinic.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card fade-up">
-        <div class="step-num">1</div>
-        <h4>Sign up</h4>
-        <p>Email, Google, or phone. Takes 30 seconds. No credit card required.</p>
-      </div>
-      <div class="step-card fade-up fade-up-delay-1">
-        <div class="step-num">2</div>
-        <h4>Configure</h4>
-        <p>Clinic name, logo, modules you need. Our wizard guides you. Takes 5 minutes.</p>
-      </div>
-      <div class="step-card fade-up fade-up-delay-2">
-        <div class="step-num">3</div>
-        <h4>Go live</h4>
-        <p>Start billing patients immediately. Your website is already online.</p>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:48px" class="fade-up">
-      <a href="/signup.html" class="btn btn-green btn-lg">
-        Start free &mdash; no card needed <i class="fas fa-arrow-right" style="font-size:14px"></i>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== PRICING ==================== -->
-<section class="pricing-section" id="pricing">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag"><i class="fas fa-tag" style="font-size:11px"></i> Pricing</div>
-      <h2 class="section-title">Simple, transparent pricing</h2>
-      <p class="section-sub">Start free. Upgrade when you need more. No hidden fees, ever.</p>
-    </div>
-    <div id="offerBanner" class="offer-banner fade-up" style="display:none"></div>
-    <div class="billing-toggle fade-up">
-      <span id="toggleMonthly" class="active" onclick="setBilling('monthly')">Monthly</span>
-      <div class="toggle-track" id="billingToggle" onclick="toggleBilling()">
-        <div class="toggle-thumb"></div>
-      </div>
-      <span id="toggleYearly" onclick="setBilling('yearly')">Yearly</span>
-      <span class="save-badge">Save 17%</span>
-    </div>
-    <div class="pricing-grid fade-up" id="pricingGrid">
-      <!-- Plans rendered by JS -->
-    </div>
-    <p class="pricing-note fade-up"><i class="fas fa-shield-halved"></i> All paid plans include a 14-day free trial. No credit card required.</p>
-  </div>
-</section>
-
-<!-- ==================== TRIGGER POPUPS ==================== -->
-<div class="trigger-overlay" id="triggerOverlay">
-  <div class="trigger-popup">
-    <button class="trigger-popup-close" onclick="closeTriggerPopup()">&times;</button>
-    <div class="trigger-popup-icon"><i class="fas fa-gift"></i></div>
-    <h3 id="triggerTitle"></h3>
-    <p id="triggerMessage"></p>
-    <div class="popup-code" id="triggerCode" style="display:none"></div>
-    <div class="popup-timer" id="triggerTimer" style="display:none">Offer expires in <span id="triggerCountdown"></span></div>
-    <a href="#" class="btn btn-green btn-md" id="triggerCta"></a>
-  </div>
-</div>
-<div class="trigger-sticky" id="triggerSticky">
-  <div class="trigger-sticky-inner">
-    <span class="trigger-sticky-text" id="triggerStickyText"></span>
-    <a href="#" class="btn btn-sm" id="triggerStickyCta"></a>
-    <button class="trigger-sticky-close" onclick="closeStickyTrigger()">&times;</button>
+<!-- S2: ANNOUNCEMENT BAR -->
+<div class="announce">
+  <div class="announce-inner">
+    <span class="announce-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <b>AI-powered domain search</b></span>
+    <span class="announce-div"></span>
+    <span class="announce-item">Get a free domain for your practice — <b>absolutely free*</b></span>
+    <span class="announce-div"></span>
+    <button class="announce-btn" onclick="document.getElementById('heroForm').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search now</button>
   </div>
 </div>
 
-<!-- ==================== FOOTER ==================== -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="nav-logo">
-          <span class="medi">Medi</span><span class="host">Host</span><span class="tm">&trade;</span>
-        </div>
-        <p>India&rsquo;s self-service healthcare platform. Set up your clinic management system without a developer.</p>
-      </div>
-      <div class="footer-col">
-        <h5>Product</h5>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#compare">Compare</a>
-        <a href="#steps">Get Started</a>
-        <a href="/login.html">Login</a>
-      </div>
-      <div class="footer-col">
-        <h5>Modules</h5>
-        <a href="#">Patient Registration</a>
-        <a href="#">Billing &amp; Invoicing</a>
-        <a href="#">EMR &amp; Prescriptions</a>
-        <a href="#">Lab (LIS)</a>
-      </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <a href="mailto:sai@smartgumastha.com">Contact</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-      </div>
+<!-- S3: HERO -->
+<div class="hero">
+  <div class="hero-badge"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg> Trusted by 500+ healthcare businesses across India</div>
+  <h1>Patients are searching for<br><span class="rolling" id="rollingText">your clinic</span><br>online. Let them find you.</h1>
+  <p class="hero-sub">Your own domain. Professional website. Google listing. AI-powered social posts. Online appointment booking. Full practice management. Live in 15 minutes.</p>
+</div>
+
+<!-- S4: HERO FORM -->
+<div class="hero-form" id="heroForm">
+  <label>Tell us about your practice</label>
+  <div class="hf-row">
+    <input type="text" class="hf-input" id="hfName" placeholder="Your practice name">
+    <select class="hf-select" id="hfType">
+      <option value="dental">Dental</option>
+      <option value="clinic" selected>Clinic / Hospital</option>
+      <option value="diagnostic">Diagnostic lab</option>
+      <option value="physio">Physiotherapy</option>
+      <option value="pharmacy">Pharmacy</option>
+      <option value="multispecialty">Multi-specialty</option>
+      <option value="ayurveda">Ayurveda</option>
+      <option value="homeopathy">Homeopathy</option>
+    </select>
+  </div>
+  <div class="hf-row">
+    <input type="text" class="hf-input" id="hfCity" placeholder="City">
+  </div>
+  <button class="hf-btn" onclick="goSignup()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Show me what MediHost AI builds for my practice</button>
+  <div class="hf-note"><span class="dot"></span> <b>MediHost AI</b>&nbsp;finds your domain, designs your site, writes your posts</div>
+</div>
+
+<!-- S5: PREVIEW CARD -->
+<div class="preview">
+  <div class="preview-hdr">
+    <div class="preview-hdr-left">
+      <div class="ph-title">Here's what we'll create for you</div>
+      <div class="ph-sub">Rajitha Dental Clinic, Hyderabad</div>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 MediHost&trade; by SmartGumastha. All rights reserved.</span>
-      <span>Made with <i class="fas fa-heart" style="color:var(--red);font-size:10px"></i> in India</span>
+    <span class="preview-badge">15 min setup</span>
+  </div>
+  <div class="preview-grid">
+    <div class="ptile" style="background:var(--green-light);color:var(--green-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="ptile-title">rajithadental.in</span><span class="ptile-sub">Your own domain</span></div>
+    <div class="ptile" style="background:var(--purple-light);color:var(--purple-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span class="ptile-title">Professional site</span><span class="ptile-sub">AI-designed</span></div>
+    <div class="ptile" style="background:var(--blue-light);color:var(--blue-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="ptile-title">Google listing</span><span class="ptile-sub">Auto-synced</span></div>
+    <div class="ptile" style="background:var(--orange-light);color:var(--orange-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span class="ptile-title">10 social posts</span><span class="ptile-sub">AI-written</span></div>
+    <div class="ptile" style="background:var(--olive-light);color:var(--olive-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="ptile-title">Online booking</span><span class="ptile-sub">Patients book 24/7</span></div>
+    <div class="ptile" style="background:var(--gold-light);color:var(--gold-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span class="ptile-title">Billing + GST</span><span class="ptile-sub">Invoices ready</span></div>
+    <div class="ptile" style="background:var(--rose-light);color:var(--rose-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="ptile-title">Full HMS</span><span class="ptile-sub">Manage everything</span></div>
+    <div class="ptile" style="background:var(--blue-light);color:var(--blue-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="ptile-title">Patient portal</span><span class="ptile-sub">On your website</span></div>
+    <div class="ptile" style="background:var(--purple-light);color:var(--purple-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L9 9l-7 1 5 5-1 7 6-3 6 3-1-7 5-5-7-1z"/></svg><span class="ptile-title">AI marketing</span><span class="ptile-sub">MediHost AI</span></div>
+  </div>
+</div>
+
+<!-- S6: DOMAIN LINKS -->
+<div class="domain-links">Or search a domain directly: <a href="/signup.html?domain=rajithaclinic.com">rajithaclinic.com</a> | <a href="/signup.html?domain=rajithadental.in">rajithadental.in</a> | <a href="/signup.html?domain=drrajitha.com">drrajitha.com</a></div>
+
+<!-- S7: TRUST BADGES -->
+<div class="trust">
+  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> NABL compliant</span>
+  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg> ABDM / ABHA ready</span>
+  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> GST compliant</span>
+  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> ISO ready</span>
+</div>
+
+<!-- S8: HOW IT WORKS -->
+<div class="how" id="howSection">
+  <h2>How it works</h2>
+  <p class="how-sub">Zero to fully online in 4 steps</p>
+  <div class="how-grid">
+    <div class="how-step"><div class="hs-num" style="background:var(--green-light);color:var(--green-text)">1</div><div class="hs-title">Enter your name</div><div class="hs-desc">Name, type, city. MediHost AI handles everything else.</div></div>
+    <div class="how-step"><div class="hs-num" style="background:var(--purple-light);color:var(--purple-text)">2</div><div class="hs-title">Review AI design</div><div class="hs-desc">Preview your website. Change colors, photos, text.</div></div>
+    <div class="how-step"><div class="hs-num" style="background:var(--blue-light);color:var(--blue-text)">3</div><div class="hs-title">Go live everywhere</div><div class="hs-desc">Publish site. Connect Google + socials. Patients book online.</div></div>
+    <div class="how-step"><div class="hs-num" style="background:var(--gold-light);color:var(--gold-text)">4</div><div class="hs-title">Run your practice</div><div class="hs-desc">Patients, billing, appointments — full HMS built in.</div></div>
+  </div>
+</div>
+
+<!-- S9: WEBSITE PREVIEW -->
+<div class="webprev">
+  <h2>Your clinic website — powered by you</h2>
+  <p class="wp-sub">Patients visit your domain. Everything looks like YOUR practice.</p>
+  <div class="browser">
+    <div class="browser-chrome">
+      <div class="browser-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="browser-url">rajithadental.in</div>
+    </div>
+    <div class="browser-body">
+      <div class="bb-name">Rajitha Dental Clinic</div>
+      <div class="bb-nav">Home&ensp;|&ensp;Services&ensp;|&ensp;Doctors&ensp;|&ensp;Book appointment&ensp;|&ensp;Contact</div>
+      <div class="bb-hero">Hero image area</div>
+      <div class="bb-text">Welcome to Rajitha Dental Clinic. Providing quality dental care in Hyderabad since 2015.</div>
     </div>
   </div>
-</footer>
+  <div class="wp-pills">
+    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <b>Book appointment</b>&nbsp;Patients book from your site</span>
+    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <b>Patient portal</b>&nbsp;Patients view reports</span>
+    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <b>Staff login</b>&nbsp;Your team manages the clinic</span>
+    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22C17.5228 22 22 17.5228 22 12H2C2 17.5228 6.47715 22 12 22Z"/></svg> <b>Your branding</b>&nbsp;Your logo, colors, name</span>
+  </div>
+</div>
+
+<!-- S10: COMPARISON -->
+<div class="compare" id="compareSection">
+  <h2>Why healthcare businesses choose MediHost</h2>
+  <div class="compare-grid">
+    <div class="compare-col">
+      <div class="cc-hdr tertiary">GoDaddy / Hostinger</div>
+      <ul class="compare-list">
+        <li>Domain + hosting</li>
+        <li>Generic templates</li>
+        <li class="no">Healthcare focus</li>
+        <li class="no">AI marketing</li>
+        <li class="no">Online booking</li>
+        <li class="no">Patient billing</li>
+        <li class="no">Practice management</li>
+        <li class="no">NABL / ISO compliance</li>
+        <li class="no">ABHA / ABDM ready</li>
+      </ul>
+    </div>
+    <div class="compare-col featured">
+      <span class="cc-badge">All-in-one platform</span>
+      <div class="cc-hdr" style="margin-top:2px">MediHost</div>
+      <ul class="compare-list">
+        <li class="yes-green">AI domain + website</li>
+        <li class="yes-green">Healthcare templates</li>
+        <li class="yes-green">MediHost AI marketing</li>
+        <li class="yes-green">Google Business sync</li>
+        <li class="yes-green">Online appointment booking</li>
+        <li class="yes-green">Billing + GST + EMR</li>
+        <li class="yes-green">Full HMS dashboard</li>
+        <li class="yes-green">NABL / ISO compliant LIS</li>
+        <li class="yes-green">ABHA / ABDM ready</li>
+      </ul>
+    </div>
+    <div class="compare-col">
+      <div class="cc-hdr tertiary">Practo / MocDoc</div>
+      <ul class="compare-list">
+        <li class="no">Your own domain</li>
+        <li class="no">Your own website</li>
+        <li class="no">AI marketing</li>
+        <li class="no">Google Business</li>
+        <li>Online booking</li>
+        <li>Billing</li>
+        <li>HMS software</li>
+        <li>NABL / ISO</li>
+        <li>ABHA / ABDM</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- S11: CTA -->
+<div class="cta">
+  <div class="cta-card">
+    <h2>Start free today</h2>
+    <p>Free subdomain + website + online booking + patient registration. No credit card. Upgrade anytime.</p>
+    <a href="/signup.html" class="cta-btn">Get your practice online</a>
+  </div>
+</div>
+
+<!-- S12: FOOTER -->
+<div class="footer">
+  *Free domain included with Professional, Business, and Enterprise plans (annual billing). Standard domain pricing applies for Starter plan.<br>
+  MediHost&trade; by SmartGumastha Technologies, Hyderabad | Registered trademark, Class 42
+</div>
 
 <script src="shared.js"></script>
 <script>
-// ==================== NAV SCROLL ====================
-var nav = document.getElementById('nav');
-var lastScroll = 0;
-window.addEventListener('scroll', function() {
-  if (window.scrollY > 10) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
-}, { passive: true });
+// Rolling text animation
+var rollingWords = ['your clinic', 'your dental practice', 'your diagnostic lab', 'your pharmacy', 'your physio center', 'your hospital', 'your ayurveda center', 'your homeopathy center'];
+var rollingIndex = 0;
+var rollingEl = document.getElementById('rollingText');
 
-// ==================== MOBILE MENU ====================
-var hamburger = document.getElementById('hamburger');
-var mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', function() {
-  mobileMenu.classList.toggle('open');
-  var spans = hamburger.querySelectorAll('span');
-  if (mobileMenu.classList.contains('open')) {
-    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-    spans[1].style.opacity = '0';
-    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-  } else {
-    spans[0].style.transform = '';
-    spans[1].style.opacity = '';
-    spans[2].style.transform = '';
-  }
-});
-function closeMobile() {
-  mobileMenu.classList.remove('open');
-  var spans = hamburger.querySelectorAll('span');
-  spans[0].style.transform = '';
-  spans[1].style.opacity = '';
-  spans[2].style.transform = '';
+function cycleRolling() {
+  rollingEl.classList.remove('fade-in');
+  rollingEl.classList.add('fade-out');
+  setTimeout(function() {
+    rollingIndex = (rollingIndex + 1) % rollingWords.length;
+    rollingEl.textContent = rollingWords[rollingIndex];
+    rollingEl.classList.remove('fade-out');
+    rollingEl.classList.add('fade-in');
+  }, 400);
+}
+setInterval(cycleRolling, 2500);
+
+// Hero form redirect
+function goSignup() {
+  var name = (document.getElementById('hfName').value || '').trim();
+  var type = document.getElementById('hfType').value;
+  var city = (document.getElementById('hfCity').value || '').trim();
+  var params = [];
+  if (name) params.push('name=' + encodeURIComponent(name));
+  if (type) params.push('type=' + encodeURIComponent(type));
+  if (city) params.push('city=' + encodeURIComponent(city));
+  window.location.href = '/signup.html' + (params.length ? '?' + params.join('&') : '');
 }
 
-// ==================== INTERSECTION OBSERVER ====================
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in-view');
-    }
-  });
-}, {
-  threshold: 0.1,
-  rootMargin: '0px 0px -40px 0px'
-});
-
-document.querySelectorAll('.fade-up, .browser-frame').forEach(function(el) {
-  observer.observe(el);
-});
-
-// ==================== SMOOTH SCROLL FOR ANCHOR LINKS ====================
-document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-  a.addEventListener('click', function(e) {
-    var target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      var offset = 80;
-      var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top: top, behavior: 'smooth' });
-    }
-  });
-});
-
-// ==================== ROTATING HERO WORD ====================
-(function() {
-  var words = ['clinic', 'diagnostic lab', 'pharmacy', 'physio centre', 'dental practice'];
-  var idx = 0;
-  var el = document.getElementById('rotatingWord');
-  if (!el) return;
-  setInterval(function() {
-    el.classList.add('fade-out');
-    el.classList.remove('fade-in');
-    setTimeout(function() {
-      idx = (idx + 1) % words.length;
-      el.textContent = words[idx];
-      el.classList.remove('fade-out');
-      el.classList.add('fade-in');
-    }, 400);
-  }, 3000);
-})();
-
-// ==================== PRICING ====================
-var SIGNUP_URL = '/signup.html';
-var API_URL = MEDIHOST.API_BASE + '/api/presence/pricing';
-var billingMode = 'monthly';
-var pricingPlans = [];
-var pricingOffers = [];
-var pricingTriggers = [];
-
-// Fallback data if API unreachable
-var FALLBACK_PLANS = [
-  {plan_tier:'starter',plan_name:'Starter',monthly_price:0,yearly_price:0,trial_days:0,tagline:'Perfect for getting started',cta_text:'Get started free',is_popular:false,features:[{name:'Clinic website builder',included:true},{name:'Public profile page',included:true},{name:'Basic patient registration',included:true},{name:'Up to 50 patients',included:true},{name:'Billing & invoicing',included:false},{name:'OPD management',included:false},{name:'EMR/EHR',included:false},{name:'Lab management (LIS)',included:false},{name:'Pharmacy module',included:false},{name:'Collection reports',included:false},{name:'Custom roles (RBAC)',included:false},{name:'Multi-branch',included:false}]},
-  {plan_tier:'professional',plan_name:'Professional',monthly_price:1499,yearly_price:14990,trial_days:14,tagline:'For growing clinics',cta_text:'Start 14-day trial',is_popular:false,features:[{name:'Everything in Starter',included:true},{name:'Unlimited patients',included:true},{name:'Billing & GST invoicing',included:true},{name:'Appointment scheduling',included:true},{name:'Basic EMR',included:true},{name:'Daily collection reports',included:true},{name:'2 staff accounts',included:true},{name:'Lab management (LIS)',included:false},{name:'Pharmacy module',included:false},{name:'Custom roles (RBAC)',included:false},{name:'Multi-branch',included:false}]},
-  {plan_tier:'business',plan_name:'Business',monthly_price:2999,yearly_price:29990,trial_days:14,tagline:'Most popular for clinics',cta_text:'Start 14-day trial',is_popular:true,features:[{name:'Everything in Professional',included:true},{name:'Full EMR with specialty templates',included:true},{name:'Lab management (LIS)',included:true},{name:'Pharmacy module',included:true},{name:'OPD queue management',included:true},{name:'Custom roles & permissions',included:true},{name:'10 staff accounts',included:true},{name:'Thermal/A5 receipt printing',included:true},{name:'Multi-branch',included:false},{name:'WhatsApp AI (coming soon)',included:false}]},
-  {plan_tier:'enterprise',plan_name:'Enterprise',monthly_price:4999,yearly_price:49990,trial_days:14,tagline:'For chain clinics & hospitals',cta_text:'Start 14-day trial',is_popular:false,features:[{name:'Everything in Business',included:true},{name:'Multi-branch management',included:true},{name:'Unlimited staff accounts',included:true},{name:'Branch-wise reports',included:true},{name:'WhatsApp AI (coming soon)',included:true},{name:'Priority support',included:true},{name:'Custom integrations',included:true},{name:'Dedicated account manager',included:true}]}
-];
-
-function formatPrice(p) {
-  if (p === 0) return 'FREE';
-  return p.toLocaleString('en-IN');
-}
-
-function renderPlans() {
-  var grid = document.getElementById('pricingGrid');
-  var html = '';
-  for (var i = 0; i < pricingPlans.length; i++) {
-    var plan = pricingPlans[i];
-    var price = billingMode === 'yearly' ? plan.yearly_price : plan.monthly_price;
-    var isFree = plan.monthly_price === 0;
-    var isPopular = plan.is_popular;
-    var features = plan.features || [];
-    if (typeof features === 'string') { try { features = JSON.parse(features); } catch(e) { features = []; } }
-
-    html += '<div class="plan-card' + (isPopular ? ' popular' : '') + '">';
-    if (isPopular) html += '<div class="popular-badge">Most popular</div>';
-    html += '<div class="plan-name">' + plan.plan_name + '</div>';
-    html += '<div class="plan-tagline">' + (plan.tagline || '') + '</div>';
-    html += '<div class="plan-price">';
-    if (isFree) {
-      html += '<span class="amount">FREE</span>';
-      html += '<div class="yearly-note" style="color:var(--gray-400)">Forever free</div>';
-    } else {
-      html += '<span class="currency">\u20B9</span>';
-      html += '<span class="amount">' + formatPrice(price) + '</span>';
-      if (billingMode === 'yearly') {
-        html += '<span class="period"> /year</span>';
-        html += '<div class="yearly-note">\u20B9' + formatPrice(Math.round(price / 12)) + '/mo &middot; save 17%</div>';
-      } else {
-        html += '<span class="period"> /month</span>';
-      }
-    }
-    html += '</div>';
-    html += '<ul class="plan-features">';
-    for (var j = 0; j < features.length; j++) {
-      var f = features[j];
-      if (f.included) {
-        html += '<li><i class="fas fa-check"></i> ' + f.name + '</li>';
-      } else {
-        html += '<li class="disabled"><i class="fas fa-lock"></i> ' + f.name + '</li>';
-      }
-    }
-    html += '</ul>';
-    html += '<div class="plan-cta">';
-    html += '<a href="' + SIGNUP_URL + '?plan=' + plan.plan_tier + '" class="btn ' + (isPopular ? 'btn-green' : isFree ? 'btn-green' : 'btn-outline') + ' btn-md">' + (plan.cta_text || 'Start free trial') + '</a>';
-    html += '</div></div>';
-  }
-  grid.innerHTML = html;
-}
-
-function toggleBilling() {
-  if (billingMode === 'monthly') {
-    setBilling('yearly');
-  } else {
-    setBilling('monthly');
-  }
-}
-
-function setBilling(mode) {
-  billingMode = mode;
-  var track = document.getElementById('billingToggle');
-  var mLabel = document.getElementById('toggleMonthly');
-  var yLabel = document.getElementById('toggleYearly');
-  if (mode === 'yearly') {
-    track.classList.add('yearly');
-    mLabel.classList.remove('active');
-    yLabel.classList.add('active');
-  } else {
-    track.classList.remove('yearly');
-    mLabel.classList.add('active');
-    yLabel.classList.remove('active');
-  }
-  renderPlans();
-}
-
-function renderOfferBanner() {
-  if (!pricingOffers || pricingOffers.length === 0) return;
-  var offer = pricingOffers[0]; // show first active offer
-  var banner = document.getElementById('offerBanner');
-  var html = '<span class="offer-banner-text"><i class="fas fa-fire"></i> ' + (offer.banner_text || offer.name) + '</span>';
-  if (offer.code) {
-    html += '<span class="offer-banner-code">' + offer.code + '</span>';
-  }
-  if (offer.valid_until) {
-    html += '<span class="offer-timer" id="offerCountdown"></span>';
-  }
-  banner.innerHTML = html;
-  banner.style.display = 'flex';
-  if (offer.valid_until) startOfferCountdown(offer.valid_until);
-}
-
-function startOfferCountdown(endsAt) {
-  var el = document.getElementById('offerCountdown');
-  if (!el) return;
-  function tick() {
-    var diff = endsAt - Date.now();
-    if (diff <= 0) { el.textContent = 'Expired'; return; }
-    var d = Math.floor(diff / 86400000);
-    var h = Math.floor((diff % 86400000) / 3600000);
-    var m = Math.floor((diff % 3600000) / 60000);
-    var parts = [];
-    if (d > 0) parts.push(d + 'd');
-    parts.push(h + 'h');
-    parts.push(m + 'm');
-    el.textContent = 'Ends in ' + parts.join(' ');
-  }
-  tick();
-  setInterval(tick, 60000);
-}
-
-// Fetch pricing data
-(function loadPricing() {
-  fetch(API_URL, { mode: 'cors' })
-    .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function(data) {
-      if (data.plans && data.plans.length > 0) {
-        pricingPlans = data.plans;
-      } else {
-        pricingPlans = FALLBACK_PLANS;
-      }
-      pricingOffers = data.offers || [];
-      pricingTriggers = data.triggers || [];
-      renderPlans();
-      renderOfferBanner();
-      initTriggers();
-    })
-    .catch(function(err) {
-      console.warn('Pricing API unreachable, using fallback:', err);
-      pricingPlans = FALLBACK_PLANS;
-      pricingOffers = [];
-      pricingTriggers = [];
-      renderPlans();
-    });
-})();
-
-// ==================== TRIGGER POPUPS ====================
-var triggerCooldowns = {};
-var triggerPopupOpen = false;
-
-function getTrigger(type) {
-  for (var i = 0; i < pricingTriggers.length; i++) {
-    if (pricingTriggers[i].trigger_type === type) return pricingTriggers[i];
-  }
-  return null;
-}
-
-function canShowTrigger(type) {
-  if (triggerPopupOpen) return false;
-  var key = 'mh_trig_' + type;
-  var last = localStorage.getItem(key);
-  if (!last) return true;
-  var trigger = getTrigger(type);
-  var cooldown = (trigger && trigger.cooldown_hours) ? trigger.cooldown_hours * 3600000 : 86400000;
-  return (Date.now() - parseInt(last, 10)) > cooldown;
-}
-
-function markTriggerShown(type) {
-  localStorage.setItem('mh_trig_' + type, String(Date.now()));
-}
-
-function trackTrigger(type, action) {
-  try {
-    fetch(API_URL.replace(/\/pricing$/, '/pricing/track-trigger'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ trigger_type: type, action: action })
-    }).catch(function() {});
-  } catch(e) {}
-}
-
-function showTriggerPopup(trigger) {
-  if (triggerPopupOpen) return;
-  triggerPopupOpen = true;
-  var overlay = document.getElementById('triggerOverlay');
-  document.getElementById('triggerTitle').textContent = trigger.popup_title || '';
-  document.getElementById('triggerMessage').textContent = trigger.popup_message || '';
-  var codeEl = document.getElementById('triggerCode');
-  if (trigger.coupon_code) {
-    codeEl.textContent = trigger.coupon_code;
-    codeEl.style.display = 'inline-block';
-  } else {
-    codeEl.style.display = 'none';
-  }
-  var timerEl = document.getElementById('triggerTimer');
-  if (trigger.timer_seconds) {
-    timerEl.style.display = 'block';
-    startPopupTimer(trigger.timer_seconds);
-  } else {
-    timerEl.style.display = 'none';
-  }
-  var ctaEl = document.getElementById('triggerCta');
-  ctaEl.textContent = trigger.popup_cta_text || 'Get started';
-  ctaEl.href = SIGNUP_URL + (trigger.coupon_code ? '?coupon=' + trigger.coupon_code : '');
-  ctaEl.onclick = function() {
-    trackTrigger(trigger.trigger_type, 'clicked');
-  };
-  overlay.classList.add('show');
-  trackTrigger(trigger.trigger_type, 'shown');
-  markTriggerShown(trigger.trigger_type);
-}
-
-var popupTimerInterval = null;
-function startPopupTimer(seconds) {
-  if (popupTimerInterval) clearInterval(popupTimerInterval);
-  var remaining = seconds;
-  var el = document.getElementById('triggerCountdown');
-  function tick() {
-    if (remaining <= 0) {
-      el.textContent = '0:00';
-      clearInterval(popupTimerInterval);
-      return;
-    }
-    var m = Math.floor(remaining / 60);
-    var s = remaining % 60;
-    el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-    remaining--;
-  }
-  tick();
-  popupTimerInterval = setInterval(tick, 1000);
-}
-
-function closeTriggerPopup() {
-  document.getElementById('triggerOverlay').classList.remove('show');
-  triggerPopupOpen = false;
-  if (popupTimerInterval) clearInterval(popupTimerInterval);
-}
-
-function showStickyTrigger(trigger) {
-  var bar = document.getElementById('triggerSticky');
-  document.getElementById('triggerStickyText').innerHTML = '<strong>' + (trigger.popup_title || '') + '</strong> ' + (trigger.popup_message || '');
-  var ctaEl = document.getElementById('triggerStickyCta');
-  ctaEl.textContent = trigger.popup_cta_text || 'Get started';
-  ctaEl.href = SIGNUP_URL + (trigger.coupon_code ? '?coupon=' + trigger.coupon_code : '');
-  ctaEl.onclick = function() { trackTrigger(trigger.trigger_type, 'clicked'); };
-  bar.classList.add('show');
-  trackTrigger(trigger.trigger_type, 'shown');
-  markTriggerShown(trigger.trigger_type);
-}
-
-function closeStickyTrigger() {
-  document.getElementById('triggerSticky').classList.remove('show');
-}
-
-function initTriggers() {
-  // A) EXIT INTENT
-  var exitTrigger = getTrigger('exit_intent');
-  if (exitTrigger && canShowTrigger('exit_intent')) {
-    document.addEventListener('mouseleave', function onExit(e) {
-      if (e.clientY < 5 && canShowTrigger('exit_intent')) {
-        showTriggerPopup(exitTrigger);
-        document.removeEventListener('mouseleave', onExit);
-      }
-    });
-  }
-
-  // B) PRICING HESITATION (delay on pricing section)
-  var hesitationTrigger = getTrigger('pricing_hesitation');
-  if (hesitationTrigger && canShowTrigger('pricing_hesitation')) {
-    var cfg = hesitationTrigger.config || {};
-    var delay = (cfg.delay_seconds || 15) * 1000;
-    var hesitationTimer = null;
-    var pricingEl = document.getElementById('pricing');
-    if (pricingEl) {
-      var hesitationObs = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting) {
-          hesitationTimer = setTimeout(function() {
-            if (canShowTrigger('pricing_hesitation')) {
-              showStickyTrigger(hesitationTrigger);
-            }
-          }, delay);
-        } else {
-          if (hesitationTimer) clearTimeout(hesitationTimer);
-        }
-      }, { threshold: 0.3 });
-      hesitationObs.observe(pricingEl);
-    }
-  }
-
-  // C) RETURN VISITOR
-  var returnTrigger = getTrigger('return_visitor');
-  if (returnTrigger && canShowTrigger('return_visitor')) {
-    var cfg2 = returnTrigger.config || {};
-    var cookieDays = cfg2.cookie_days || 7;
-    var visitKey = 'mh_visited';
-    var lastVisit = localStorage.getItem(visitKey);
-    if (lastVisit) {
-      // Returning visitor — show after 3 seconds
-      setTimeout(function() {
-        if (canShowTrigger('return_visitor')) {
-          showTriggerPopup(returnTrigger);
-        }
-      }, 3000);
-    }
-    localStorage.setItem(visitKey, String(Date.now()));
-  }
-
-  // D) INCOMPLETE SIGNUP (idle timer on page)
-  var incompleteTrigger = getTrigger('incomplete_signup');
-  if (incompleteTrigger && canShowTrigger('incomplete_signup')) {
-    var cfg3 = incompleteTrigger.config || {};
-    var idleMs = (cfg3.idle_seconds || 90) * 1000;
-    var idleTimer = null;
-    function resetIdle() {
-      if (idleTimer) clearTimeout(idleTimer);
-      idleTimer = setTimeout(function() {
-        if (canShowTrigger('incomplete_signup')) {
-          if (cfg3.style === 'bottom_banner') {
-            showStickyTrigger(incompleteTrigger);
-          } else {
-            showTriggerPopup(incompleteTrigger);
-          }
-        }
-      }, idleMs);
-    }
-    document.addEventListener('mousemove', resetIdle, { passive: true });
-    document.addEventListener('keydown', resetIdle, { passive: true });
-    document.addEventListener('scroll', resetIdle, { passive: true });
-    resetIdle();
-  }
-}
-
-// Close popup on overlay click
-document.getElementById('triggerOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeTriggerPopup();
-});
-
-// Close popup on Escape
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeTriggerPopup();
-    closeStickyTrigger();
-  }
-});
+// Enter key on city input
+document.getElementById('hfCity').addEventListener('keydown', function(e) { if (e.key === 'Enter') goSignup(); });
 </script>
-
 </body>
 </html>
