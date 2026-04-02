@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Choose Your Plan — MediHost™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#0F6E56;--green-dark:#0A5744;--green-light:#E1F5EE;--green-sub:#9FE1CB;--green-text:#085041;--dark:#111827;--gray-700:#374151;--gray-600:#4B5563;--gray-500:#6B7280;--gray-400:#9CA3AF;--gray-300:#D1D5DB;--gray-200:#E5E7EB;--gray-100:#F3F4F6;--gray-50:#F9FAFB;--white:#FFF;--amber:#FAEEDA;--amber-text:#633806;--heading:'Plus Jakarta Sans',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--r:8px;--r2:12px}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--gray-700);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--heading);color:var(--dark);line-height:1.3}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:.5px solid var(--gray-200)}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-logo{font-family:var(--heading);font-size:19px;font-weight:800;letter-spacing:-.5px}
+.nav-logo .m{color:var(--dark)}.nav-logo .h{color:var(--green)}.nav-logo .tm{font-size:8px;color:var(--green);vertical-align:super}
+.nav-right{display:flex;align-items:center;gap:8px;font-size:12px}
+.nav-right a{color:var(--gray-500);font-weight:500;padding:6px 10px;border-radius:6px}
+.nav-right a:hover{background:var(--gray-100)}
+
+.wrap{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+
+/* Domain banner */
+.domain-banner{background:var(--green-light);border-radius:var(--r2);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.db-left{}.db-label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--green);letter-spacing:.5px;margin-bottom:2px}
+.db-domain{font-family:var(--heading);font-size:20px;font-weight:800;color:var(--green-text)}
+.db-right{text-align:right}.db-price{font-family:var(--heading);font-size:20px;font-weight:800;color:var(--green-text)}
+.db-period{font-size:11px;color:var(--green)}
+
+/* Free box */
+.free-box{border:2px solid var(--green);border-radius:var(--r2);padding:20px;margin-bottom:20px;position:relative}
+.free-box .fb-badge{display:inline-block;font-family:var(--heading);font-size:13px;font-weight:700;color:var(--green-text);margin-bottom:14px}
+.fb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fb-item{display:flex;align-items:flex-start;gap:8px}
+.fb-item svg{width:18px;height:18px;flex-shrink:0;margin-top:1px}
+.fb-item .fb-title{font-size:13px;font-weight:600;color:var(--dark)}
+.fb-item .fb-sub{font-size:11px;color:var(--gray-500)}
+.compare-bar{margin-top:16px;background:var(--amber);border-radius:var(--r);padding:12px 14px}
+.compare-bar .cb-title{font-size:12px;font-weight:600;color:var(--amber-text);margin-bottom:4px}
+.compare-bar .cb-detail{font-size:11px;color:var(--amber-text);opacity:.8}
+.compare-bar .cb-you{font-size:13px;font-weight:700;color:var(--green-text);margin-top:4px}
+
+/* Section heading */
+.section-head{text-align:center;margin:28px 0 16px}
+.section-head h2{font-size:20px;font-weight:700}
+.section-head p{font-size:13px;color:var(--gray-500);margin-top:4px}
+
+/* Plan cards */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.plan-card{border:1.5px solid var(--gray-200);border-radius:var(--r2);padding:16px 14px;cursor:pointer;transition:border-color .2s,box-shadow .2s;position:relative;text-align:center}
+.plan-card:hover{border-color:var(--gray-300)}
+.plan-card.selected{border-color:var(--green);box-shadow:0 0 0 2px rgba(15,110,86,.15)}
+.plan-card.featured{border-width:2px;border-color:var(--green)}
+.plan-card .pc-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap;font-family:var(--heading)}
+.plan-card .pc-name{font-family:var(--heading);font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.plan-card .pc-price{font-family:var(--heading);font-size:24px;font-weight:800;color:var(--dark)}
+.plan-card .pc-period{font-size:11px;color:var(--gray-500);margin-bottom:8px}
+.plan-card .pc-domain-free{display:inline-block;background:var(--green-light);color:var(--green-text);font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;margin-bottom:8px}
+.plan-card ul{list-style:none;text-align:left;padding:0;margin-bottom:12px}
+.plan-card li{font-size:11px;color:var(--green-text);line-height:1.8;padding-left:16px;position:relative}
+.plan-card li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--green-light);border:1.5px solid var(--green)}
+.pc-btn{width:100%;padding:10px;font-family:var(--heading);font-size:13px;font-weight:600;border-radius:var(--r);border:none;cursor:pointer;transition:opacity .2s}
+.pc-btn-solid{background:var(--green);color:#fff}
+.pc-btn-outline{background:var(--white);color:var(--green);border:1.5px solid var(--green)}
+.pc-btn:hover{opacity:.9}
+
+/* Order summary */
+.order-summary{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--r2);padding:20px;margin-bottom:20px}
+.os-title{font-family:var(--heading);font-size:15px;font-weight:700;color:var(--dark);margin-bottom:12px}
+.os-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px}
+.os-row .os-label{color:var(--gray-600)}.os-row .os-value{font-weight:600;color:var(--dark)}
+.os-row .os-free{color:var(--green);font-weight:600}
+.os-divider{height:1px;background:var(--gray-200);margin:10px 0}
+.os-total{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:16px}
+.os-total .os-label{font-family:var(--heading);font-weight:700;color:var(--dark)}
+.os-total .os-value{font-family:var(--heading);font-weight:800;color:var(--green-text);font-size:18px}
+.os-note{font-size:11px;color:var(--gray-500);margin-top:10px;line-height:1.5}
+
+/* Signup form */
+.signup-form{margin-bottom:16px}
+.sf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sf-input{width:100%;padding:12px 14px;font-family:var(--body);font-size:14px;color:var(--dark);border:1px solid var(--gray-200);border-radius:var(--r);outline:none;transition:border-color .2s}
+.sf-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(15,110,86,.08)}
+.sf-submit{width:100%;padding:14px;font-family:var(--heading);font-size:15px;font-weight:700;color:#fff;background:var(--green);border:none;border-radius:var(--r);cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.sf-submit:hover{opacity:.9}
+.sf-submit:disabled{background:var(--gray-300);cursor:not-allowed}
+.sf-error{font-size:12px;color:#EF4444;text-align:center;margin-bottom:8px;display:none}
+.sf-error.show{display:block}
+.spinner-sm{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Trust */
+.trust-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:16px 0 8px;font-size:11px;color:var(--gray-400)}
+.trust-row span{display:flex;align-items:center;gap:4px}
+.trust-row svg{width:13px;height:13px;opacity:.5}
+.powered{text-align:center;font-size:10px;color:var(--gray-400);margin-bottom:20px}
+
+/* Free plan link */
+.free-link{text-align:center;padding:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-200);margin-top:8px}
+.free-link a{color:var(--green);text-decoration:underline;font-weight:500}
+
+/* No domain */
+.no-domain{text-align:center;padding:60px 20px}
+.no-domain h2{font-size:20px;margin-bottom:8px}
+.no-domain p{font-size:14px;color:var(--gray-500);margin-bottom:16px}
+.no-domain a{display:inline-block;padding:10px 24px;background:var(--green);color:#fff;border-radius:var(--r);font-family:var(--heading);font-weight:600;font-size:14px}
+
+@media(max-width:640px){
+  .fb-grid{grid-template-columns:1fr}
+  .plan-grid{grid-template-columns:1fr}
+  .plan-card{max-width:320px;margin:0 auto}
+  .sf-grid{grid-template-columns:1fr}
+  .domain-banner{flex-direction:column;text-align:center}
+  .db-right{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- S1: NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="m">Medi</span><span class="h">Host</span><span class="tm">&trade;</span></a>
+    <div class="nav-right">
+      <a href="/">Search domains</a>
+      <a href="/login.html">Login</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap" id="mainContent" style="display:none">
+
+<!-- S2: DOMAIN BANNER -->
+<div class="domain-banner">
+  <div class="db-left">
+    <div class="db-label">Your domain</div>
+    <div class="db-domain" id="domainName">—</div>
+  </div>
+  <div class="db-right">
+    <div class="db-price" id="domainPriceDisplay">—</div>
+    <div class="db-period">one-time / year</div>
+  </div>
+</div>
+
+<!-- S3: FREE BOX -->
+<div class="free-box">
+  <div class="fb-badge"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M8 1l2.1 4.3 4.7.7-3.4 3.3.8 4.7L8 11.8 3.8 14l.8-4.7L1.2 6l4.7-.7L8 1z" fill="#0F6E56"/></svg>What you get FREE with your domain</div>
+  <div class="fb-grid">
+    <div class="fb-item"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><div class="fb-title">Professional website</div><div class="fb-sub">AI-designed, mobile-ready</div></div></div>
+    <div class="fb-item"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><div class="fb-title">Free hosting forever</div><div class="fb-sub">No renewal fees ever</div></div></div>
+    <div class="fb-item"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><div class="fb-title">SSL certificate</div><div class="fb-sub">Secure https://</div></div></div>
+    <div class="fb-item"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><div class="fb-title">Online booking page</div><div class="fb-sub">Patients book 24/7</div></div></div>
+    <div class="fb-item"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><div class="fb-title">50 patient records</div><div class="fb-sub">Basic registration</div></div></div>
+    <div class="fb-item"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><div class="fb-title">Google Business ready</div><div class="fb-sub">Sync your listing</div></div></div>
+  </div>
+  <div class="compare-bar">
+    <div class="cb-title">Compare: Hostinger charges ₹10,000+/yr for this</div>
+    <div class="cb-detail">Domain ₹899 + hosting ₹3,588 + website builder ₹5,988 = ₹10,475/yr</div>
+    <div class="cb-you">You pay: <span id="comparePrice">—</span></div>
+  </div>
+</div>
+
+<!-- S4: SECTION HEADING -->
+<div class="section-head">
+  <h2>Want more? Try our full platform free for 14 days</h2>
+  <p>Cancel anytime. Keep your domain no matter what.</p>
+</div>
+
+<!-- S5: PLAN CARDS -->
+<div class="plan-grid">
+  <div class="plan-card" id="planProfessional" onclick="selectPlan('professional')">
+    <div class="pc-name">Professional</div>
+    <div class="pc-price">₹1,499</div>
+    <div class="pc-period">/month after trial</div>
+    <div class="pc-domain-free">Domain FREE</div>
+    <ul>
+      <li>Unlimited patients</li>
+      <li>Billing + GST invoicing</li>
+      <li>Appointment scheduling</li>
+      <li>Basic EMR</li>
+      <li>2 staff accounts</li>
+      <li>Collection reports</li>
+    </ul>
+    <button class="pc-btn pc-btn-outline" onclick="selectPlan('professional')">Try 14 days free</button>
+  </div>
+
+  <div class="plan-card featured selected" id="planBusiness" onclick="selectPlan('business')">
+    <span class="pc-badge">Best value</span>
+    <div class="pc-name">Business</div>
+    <div class="pc-price">₹2,999</div>
+    <div class="pc-period">/month after trial</div>
+    <div class="pc-domain-free">Domain FREE</div>
+    <ul>
+      <li>Everything in Professional</li>
+      <li>Full EMR + templates</li>
+      <li>Lab management (LIS)</li>
+      <li>Pharmacy module</li>
+      <li>OPD queue management</li>
+      <li>10 staff accounts</li>
+      <li>Custom roles (RBAC)</li>
+    </ul>
+    <button class="pc-btn pc-btn-solid" onclick="selectPlan('business')">Try 14 days free</button>
+  </div>
+
+  <div class="plan-card" id="planEnterprise" onclick="selectPlan('enterprise')">
+    <div class="pc-name">Enterprise</div>
+    <div class="pc-price">₹4,999</div>
+    <div class="pc-period">/month after trial</div>
+    <div class="pc-domain-free">Domain FREE</div>
+    <ul>
+      <li>Everything in Business</li>
+      <li>Multi-branch management</li>
+      <li>Unlimited staff</li>
+      <li>WhatsApp AI (coming soon)</li>
+      <li>Priority support</li>
+      <li>Custom integrations</li>
+    </ul>
+    <button class="pc-btn pc-btn-outline" onclick="selectPlan('enterprise')">Try 14 days free</button>
+  </div>
+</div>
+
+<!-- S6: ORDER SUMMARY -->
+<div class="order-summary" id="orderSummary">
+  <div class="os-title">Order summary</div>
+  <div class="os-row"><span class="os-label" id="osDomainLabel">Domain (1 year)</span><span class="os-value" id="osDomainPrice">—</span></div>
+  <div class="os-row"><span class="os-label">Professional website + hosting</span><span class="os-free">FREE forever</span></div>
+  <div class="os-row"><span class="os-label">SSL certificate</span><span class="os-free">FREE</span></div>
+  <div class="os-row"><span class="os-label" id="osPlanLabel">Business (14-day free trial)</span><span class="os-free">₹0 today</span></div>
+  <div class="os-divider"></div>
+  <div class="os-total"><span class="os-label">Pay now</span><span class="os-value" id="osTotalPrice">—</span></div>
+  <div class="os-note" id="osNote">After 14-day trial: ₹2,999/month auto-debit via UPI. Cancel anytime before trial ends — keep your domain, pay nothing more.</div>
+</div>
+
+<!-- S7: SIGNUP FORM -->
+<div class="signup-form">
+  <div class="sf-error" id="sfError"></div>
+  <div class="sf-grid">
+    <input type="text" class="sf-input" id="sfName" placeholder="Full name" required>
+    <input type="email" class="sf-input" id="sfEmail" placeholder="Email address" required>
+    <input type="tel" class="sf-input" id="sfPhone" placeholder="Phone number" required>
+    <input type="password" class="sf-input" id="sfPassword" placeholder="Create password (6+ chars)" required>
+  </div>
+
+  <!-- S8: SUBMIT -->
+  <button class="sf-submit" id="sfSubmit" onclick="submitOrder()">
+    <span id="sfSubmitText">Pay <span id="sfBtnPrice">—</span> and start free trial</span>
+  </button>
+</div>
+
+<!-- S9: TRUST -->
+<div class="trust-row">
+  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Cancel anytime</span>
+  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12"/></svg> Keep domain even if you cancel</span>
+  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> UPI autopay</span>
+</div>
+<div class="powered">Powered by Razorpay</div>
+
+<!-- S10: FREE PLAN LINK -->
+<div class="free-link">
+  Don't need billing or HMS? <a href="#" onclick="selectPlan('starter');document.getElementById('orderSummary').scrollIntoView({behavior:'smooth'});return false">Start with the free plan</a> — just pay for your domain.
+</div>
+
+</div><!-- /wrap -->
+
+<!-- NO DOMAIN STATE -->
+<div class="no-domain" id="noDomainState">
+  <h2>No domain selected</h2>
+  <p>Search for a domain first, then come back to choose your plan.</p>
+  <a href="/">Search domains</a>
+</div>
+
+<script src="shared.js"></script>
+<script>
+var params = new URLSearchParams(window.location.search);
+var selectedDomain = params.get('domain') || '';
+var practiceName = params.get('name') || '';
+var selectedPlan = 'business';
+
+var PLAN_PRICES = { starter: 0, professional: 1499, business: 2999, enterprise: 4999 };
+var PLAN_NAMES = { starter: 'Starter (free)', professional: 'Professional', business: 'Business', enterprise: 'Enterprise' };
+var TLD_PRICES = {};
+
+function getDomainPrice(domain) {
+  if (!domain) return 799;
+  var d = domain.toLowerCase();
+  if (d.endsWith('.co.in')) return 199;
+  if (d.endsWith('.in')) return 299;
+  if (d.endsWith('.org')) return 899;
+  return 799;
+}
+
+var domainPrice = getDomainPrice(selectedDomain);
+
+if (selectedDomain) {
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('noDomainState').style.display = 'none';
+  document.getElementById('domainName').textContent = selectedDomain;
+  document.getElementById('domainPriceDisplay').textContent = '\u20B9' + domainPrice;
+  document.getElementById('comparePrice').textContent = '\u20B9' + domainPrice;
+  if (practiceName) document.getElementById('sfName').value = practiceName;
+  updateSummary();
+} else {
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('noDomainState').style.display = 'block';
+}
+
+function selectPlan(plan) {
+  selectedPlan = plan;
+  var cards = document.querySelectorAll('.plan-card');
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
+  var el = document.getElementById('plan' + plan.charAt(0).toUpperCase() + plan.slice(1));
+  if (el) el.classList.add('selected');
+  updateSummary();
+}
+
+function updateSummary() {
+  var planName = PLAN_NAMES[selectedPlan] || 'Business';
+  var planPrice = PLAN_PRICES[selectedPlan] || 0;
+
+  document.getElementById('osDomainLabel').textContent = selectedDomain + ' (1 year)';
+  document.getElementById('osDomainPrice').textContent = '\u20B9' + domainPrice;
+  document.getElementById('osTotalPrice').textContent = '\u20B9' + domainPrice;
+  document.getElementById('sfBtnPrice').textContent = '\u20B9' + domainPrice;
+
+  if (selectedPlan === 'starter') {
+    document.getElementById('osPlanLabel').textContent = 'Starter plan (free forever)';
+    document.getElementById('osNote').textContent = 'Starter plan is free forever. You only pay for your domain. Upgrade to Professional, Business, or Enterprise anytime.';
+  } else {
+    document.getElementById('osPlanLabel').textContent = planName + ' (14-day free trial)';
+    document.getElementById('osNote').textContent = 'After 14-day trial: \u20B9' + planPrice.toLocaleString('en-IN') + '/month auto-debit via UPI. Cancel anytime before trial ends \u2014 keep your domain, pay nothing more.';
+  }
+}
+
+function submitOrder() {
+  var name = document.getElementById('sfName').value.trim();
+  var email = document.getElementById('sfEmail').value.trim();
+  var phone = document.getElementById('sfPhone').value.trim();
+  var password = document.getElementById('sfPassword').value;
+  var errEl = document.getElementById('sfError');
+  var btn = document.getElementById('sfSubmit');
+  var btnText = document.getElementById('sfSubmitText');
+
+  errEl.classList.remove('show');
+
+  if (!name) { showErr('Please enter your name'); return; }
+  if (!email || email.indexOf('@') === -1) { showErr('Please enter a valid email'); return; }
+  if (!phone || phone.length < 10) { showErr('Please enter a valid phone number'); return; }
+  if (!password || password.length < 6) { showErr('Password must be at least 6 characters'); return; }
+
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner-sm"></span> Creating your account...';
+
+  MEDIHOST.apiPost('/api/presence/partner-auth/signup', {
+    owner_name: name,
+    email: email,
+    phone: phone,
+    password: password,
+    business_name: practiceName || name,
+    plan_tier: selectedPlan === 'starter' ? 'starter' : selectedPlan,
+    signup_source: 'plans_page',
+    domain: selectedDomain
+  }).then(function(data) {
+    btn.disabled = false;
+    btnText.innerHTML = 'Pay <span id="sfBtnPrice">\u20B9' + domainPrice + '</span> and start free trial';
+    if (data.success) {
+      if (data.token) MEDIHOST.saveAuth(data.token, data.partner);
+      window.location.href = '/verify.html?from=plans&domain=' + encodeURIComponent(selectedDomain);
+    } else {
+      showErr(data.error || 'Signup failed. Please try again.');
+    }
+  }).catch(function() {
+    btn.disabled = false;
+    btnText.innerHTML = 'Pay <span id="sfBtnPrice">\u20B9' + domainPrice + '</span> and start free trial';
+    showErr('Network error. Please try again.');
+  });
+}
+
+function showErr(msg) {
+  var el = document.getElementById('sfError');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+</script>
+</body>
+</html>
