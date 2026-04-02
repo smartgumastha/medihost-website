@@ -455,27 +455,25 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
           if (redirectUrl) {
             window.location.href = redirectUrl;
           } else if (data.partner && data.partner.hospital_id) {
-            // Partner has HMS hospital — fetch HMS token, store it, then redirect
+            // Partner has HMS hospital — fetch HMS token, pass via URL params (cross-domain)
             MEDIHOST.apiPost('/api/presence/partner-auth/hms-token', {}).then(function(hmsData) {
+              var dest = product.redirectUrl || MEDIHOST.APP_URL;
               if (hmsData.success && hmsData.hms_token) {
-                try {
-                  localStorage.setItem('mw_token', hmsData.hms_token);
-                  localStorage.setItem('mw_hospital_id', String(hmsData.hospital_id));
-                  localStorage.setItem('mw_login_data', JSON.stringify({
-                    token: hmsData.hms_token,
-                    hospitalId: String(hmsData.hospital_id),
-                    userid: String(hmsData.user_id),
-                    first_name: hmsData.first_name || '',
-                    last_name: hmsData.last_name || '',
-                    email: data.partner.email,
-                    role: 'HOSPITAL_ADMIN',
-                    role_id: 2
-                  }));
-                } catch(e) { console.error('HMS token save error:', e); }
+                var loginData = encodeURIComponent(JSON.stringify({
+                  token: hmsData.hms_token,
+                  hospitalId: String(hmsData.hospital_id),
+                  userid: String(hmsData.user_id),
+                  first_name: hmsData.first_name || '',
+                  last_name: hmsData.last_name || '',
+                  email: data.partner.email,
+                  role: 'HOSPITAL_ADMIN',
+                  role_id: 2
+                }));
+                window.location.href = dest + '?mw_token=' + encodeURIComponent(hmsData.hms_token) + '&mw_hospital_id=' + encodeURIComponent(hmsData.hospital_id) + '&mw_login_data=' + loginData;
+              } else {
+                window.location.href = dest;
               }
-              window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
             }).catch(function() {
-              // HMS token fetch failed — redirect anyway, user will need to log in again on HMS
               window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
             });
           } else {

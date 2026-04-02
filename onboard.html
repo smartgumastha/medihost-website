@@ -822,25 +822,20 @@ function completeSetup() {
     MEDIHOST.apiPost('/api/presence/onboard/complete', onboardBody).then(function(onboardData) {
       btn.disabled = false;
       if (onboardData.success) {
-        // Store HMS auth tokens so app.hemato.in recognizes the session
-        if (onboardData.hms_token) {
-          try {
-            localStorage.setItem('mw_token', onboardData.hms_token);
-            localStorage.setItem('mw_hospital_id', String(onboardData.hospital_id));
-            if (onboardData.user_id) {
-              localStorage.setItem('mw_login_data', JSON.stringify({
-                token: onboardData.hms_token,
-                hospitalId: String(onboardData.hospital_id),
-                userid: String(onboardData.user_id),
-                name: onboardData.partner_name || '',
-                role: 'HOSPITAL_ADMIN'
-              }));
-            }
-          } catch(e) { console.error('HMS token save error:', e); }
-        }
         MEDIHOST.toast('Clinic setup complete! Redirecting...');
         setTimeout(function() {
-          window.location.href = MEDIHOST.APP_URL;
+          if (onboardData.hms_token) {
+            var loginData = encodeURIComponent(JSON.stringify({
+              token: onboardData.hms_token,
+              hospitalId: String(onboardData.hospital_id),
+              userid: String(onboardData.user_id || ''),
+              name: onboardData.partner_name || '',
+              role: 'HOSPITAL_ADMIN'
+            }));
+            window.location.href = MEDIHOST.APP_URL + '?mw_token=' + encodeURIComponent(onboardData.hms_token) + '&mw_hospital_id=' + encodeURIComponent(onboardData.hospital_id) + '&mw_login_data=' + loginData;
+          } else {
+            window.location.href = MEDIHOST.APP_URL;
+          }
         }, 1500);
       } else if (onboardData.error && onboardData.error.indexOf('already provisioned') !== -1) {
         // Already onboarded — just redirect
