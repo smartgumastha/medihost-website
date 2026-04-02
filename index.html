@@ -198,7 +198,7 @@ img{max-width:100%}
       <a href="#howSection" class="nav-link">How it works</a>
       <a href="#compareSection" class="nav-link">Pricing</a>
       <a href="#heroForm" class="nav-btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search domain</a>
-      <a href="/signup.html" class="nav-btn-solid">Start free</a>
+      <a href="/plans.html" class="nav-btn-solid">Start free</a>
     </div>
   </div>
 </nav>
@@ -210,7 +210,7 @@ img{max-width:100%}
     <span class="announce-div"></span>
     <span class="announce-item">Get a free domain for your practice — <b>absolutely free*</b></span>
     <span class="announce-div"></span>
-    <button class="announce-btn" onclick="document.getElementById('heroForm').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search now</button>
+    <button class="announce-btn" onclick="document.getElementById('hfName').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){document.getElementById('hfName').focus()},400)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search now</button>
   </div>
 </div>
 
@@ -259,7 +259,7 @@ img{max-width:100%}
 </div>
 
 <!-- S6: DOMAIN LINKS -->
-<div class="domain-links">Or search a domain directly: <a href="/signup.html?domain=rajithaclinic.com">rajithaclinic.com</a> | <a href="/signup.html?domain=rajithadental.in">rajithadental.in</a> | <a href="/signup.html?domain=drrajitha.com">drrajitha.com</a></div>
+<div class="domain-links">Or search a domain directly: <a href="/plans.html?domain=rajithaclinic.com">rajithaclinic.com</a> | <a href="/plans.html?domain=rajithadental.in">rajithadental.in</a> | <a href="/plans.html?domain=drrajitha.com">drrajitha.com</a></div>
 
 <!-- S7: TRUST BADGES -->
 <div class="trust">
@@ -360,7 +360,7 @@ img{max-width:100%}
   <div class="cta-card">
     <h2>Start free today</h2>
     <p>Free subdomain + website + online booking + patient registration. No credit card. Upgrade anytime.</p>
-    <a href="/signup.html" class="cta-btn">Get your practice online</a>
+    <a href="/plans.html" class="cta-btn">Get your practice online</a>
   </div>
 </div>
 
@@ -430,7 +430,7 @@ function searchDomains() {
         html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0">';
         html += '<span style="font-size:14px;font-weight:500;color:#085041">' + s.domain + '</span>';
         html += '<span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">\u20B9' + s.price + '/yr</span>';
-        html += '<a href="/signup.html?domain=' + encodeURIComponent(s.domain) + enc + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Get it</a></span>';
+        html += '<a href="/plans.html?domain=' + encodeURIComponent(s.domain) + '&name=' + encodeURIComponent(name) + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Get it</a></span>';
         html += '</div>';
       } else if (s.available === false) {
         html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#F1EFE8;border-radius:8px;margin:4px 0">';
@@ -440,7 +440,7 @@ function searchDomains() {
         html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0">';
         html += '<span style="font-size:14px;font-weight:500;color:#085041">' + s.domain + '</span>';
         html += '<span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + (s.price || 299) + '/yr</span>';
-        html += '<a href="/signup.html?domain=' + encodeURIComponent(s.domain) + enc + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
+        html += '<a href="/plans.html?domain=' + encodeURIComponent(s.domain) + '&name=' + encodeURIComponent(name) + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
         html += '</div>';
       }
     });
@@ -454,7 +454,7 @@ function searchDomains() {
 
     var enc2 = 'name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
     html += '<div style="text-align:center;margin-top:14px;font-size:12px;color:#666;display:flex;justify-content:center;gap:16px">';
-    html += '<a href="/signup.html?has_domain=true&' + enc2 + '" style="color:#0F6E56;text-decoration:underline">Already have a domain?</a>';
+    html += '<a href="/plans.html?has_domain=true&' + enc2 + '" style="color:#0F6E56;text-decoration:underline">Already have a domain?</a>';
     html += '<span style="color:#ccc">|</span>';
     html += '<a href="/signup.html?hms_only=true&' + enc2 + '" style="color:#0F6E56;text-decoration:underline">Just need clinic software?</a>';
     html += '</div>';
@@ -494,7 +494,7 @@ function checkManualDomain() {
 
   var row = document.createElement('div');
   row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0';
-  row.innerHTML = '<span style="font-size:14px;font-weight:500;color:#085041">' + fullDomain + '</span><span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + price + '/yr</span><a href="/signup.html?domain=' + encodeURIComponent(fullDomain) + enc + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
+  row.innerHTML = '<span style="font-size:14px;font-weight:500;color:#085041">' + fullDomain + '</span><span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + price + '/yr</span><a href="/plans.html?domain=' + encodeURIComponent(fullDomain) + '&name=' + encodeURIComponent(name) + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
 
   var resultsDiv = document.getElementById('domainResults');
   var manualSection = resultsDiv.querySelector('div[style*="border-top"]');

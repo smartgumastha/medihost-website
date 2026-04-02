@@ -294,19 +294,43 @@ function getDomainPrice(domain) {
   return 799;
 }
 
-var domainPrice = getDomainPrice(selectedDomain);
+var hasDomain = params.get('has_domain') === 'true';
+var domainPrice = hasDomain ? 0 : getDomainPrice(selectedDomain);
 
-if (selectedDomain) {
+if (selectedDomain || hasDomain) {
   document.getElementById('mainContent').style.display = 'block';
   document.getElementById('noDomainState').style.display = 'none';
-  document.getElementById('domainName').textContent = selectedDomain;
-  document.getElementById('domainPriceDisplay').textContent = '\u20B9' + domainPrice;
-  document.getElementById('comparePrice').textContent = '\u20B9' + domainPrice;
+
+  if (hasDomain) {
+    // "Already have a domain" flow
+    selectedDomain = '';
+    domainPrice = 0;
+    document.getElementById('domainName').innerHTML = '<input type="text" id="existingDomain" placeholder="Enter your domain (e.g. rajithaclinic.com)" style="font-size:16px;font-weight:700;color:#085041;border:none;background:transparent;outline:none;width:100%;font-family:var(--heading)">';
+    document.getElementById('domainPriceDisplay').textContent = '\u20B90';
+    document.getElementById('db-label-el') && (document.getElementById('db-label-el').textContent = 'YOUR EXISTING DOMAIN');
+    document.querySelector('.db-label').textContent = 'YOUR EXISTING DOMAIN';
+    document.querySelector('.db-period').textContent = 'you already own it';
+    document.getElementById('comparePrice').textContent = '\u20B90';
+  } else {
+    document.getElementById('domainName').textContent = selectedDomain;
+    document.getElementById('domainPriceDisplay').textContent = '\u20B9' + domainPrice;
+    document.getElementById('comparePrice').textContent = '\u20B9' + domainPrice;
+  }
+
   if (practiceName) document.getElementById('sfName').value = practiceName;
   updateSummary();
 } else {
-  document.getElementById('mainContent').style.display = 'none';
-  document.getElementById('noDomainState').style.display = 'block';
+  // No domain param — show plans with free subdomain option
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('noDomainState').style.display = 'none';
+  domainPrice = 0;
+  selectedDomain = '';
+  document.getElementById('domainName').innerHTML = '<span style="font-size:16px;font-weight:600;color:#085041">Free subdomain: </span><input type="text" id="subdomainInput" placeholder="yourname" style="font-size:16px;font-weight:700;color:#085041;border:none;background:transparent;outline:none;width:120px;font-family:var(--heading)"><span style="font-size:16px;font-weight:600;color:#0F6E56">.medihost.in</span>';
+  document.getElementById('domainPriceDisplay').textContent = 'FREE';
+  document.querySelector('.db-period').textContent = 'included with every plan';
+  document.getElementById('comparePrice').textContent = '\u20B90';
+  if (practiceName) document.getElementById('sfName').value = practiceName;
+  updateSummary();
 }
 
 function selectPlan(plan) {
@@ -322,14 +346,22 @@ function updateSummary() {
   var planName = PLAN_NAMES[selectedPlan] || 'Business';
   var planPrice = PLAN_PRICES[selectedPlan] || 0;
 
-  document.getElementById('osDomainLabel').textContent = selectedDomain + ' (1 year)';
-  document.getElementById('osDomainPrice').textContent = '\u20B9' + domainPrice;
-  document.getElementById('osTotalPrice').textContent = '\u20B9' + domainPrice;
-  document.getElementById('sfBtnPrice').textContent = '\u20B9' + domainPrice;
+  var domainLabel = selectedDomain ? selectedDomain + ' (1 year)' : hasDomain ? 'Your existing domain' : 'Free subdomain (.medihost.in)';
+  document.getElementById('osDomainLabel').textContent = domainLabel;
+  document.getElementById('osDomainPrice').textContent = domainPrice > 0 ? '\u20B9' + domainPrice : 'FREE';
+  document.getElementById('osTotalPrice').textContent = domainPrice > 0 ? '\u20B9' + domainPrice : '\u20B90';
+  document.getElementById('sfBtnPrice').textContent = domainPrice > 0 ? '\u20B9' + domainPrice : '\u20B90';
+
+  // Update submit button text
+  if (domainPrice === 0 && selectedPlan === 'starter') {
+    document.getElementById('sfSubmitText').innerHTML = 'Create free account';
+  } else if (domainPrice === 0) {
+    document.getElementById('sfSubmitText').innerHTML = 'Start free trial';
+  }
 
   if (selectedPlan === 'starter') {
     document.getElementById('osPlanLabel').textContent = 'Starter plan (free forever)';
-    document.getElementById('osNote').textContent = 'Starter plan is free forever. You only pay for your domain. Upgrade to Professional, Business, or Enterprise anytime.';
+    document.getElementById('osNote').textContent = domainPrice > 0 ? 'Starter plan is free forever. You only pay for your domain. Upgrade anytime.' : 'Completely free. No payment needed. Upgrade anytime.';
   } else {
     document.getElementById('osPlanLabel').textContent = planName + ' (14-day free trial)';
     document.getElementById('osNote').textContent = 'After 14-day trial: \u20B9' + planPrice.toLocaleString('en-IN') + '/month auto-debit via UPI. Cancel anytime before trial ends \u2014 keep your domain, pay nothing more.';
@@ -352,6 +384,17 @@ function submitOrder() {
   if (!phone || phone.length < 10) { showErr('Please enter a valid phone number'); return; }
   if (!password || password.length < 6) { showErr('Password must be at least 6 characters'); return; }
 
+  // Resolve domain from various input states
+  var finalDomain = selectedDomain;
+  if (!finalDomain && hasDomain) {
+    var edEl = document.getElementById('existingDomain');
+    finalDomain = edEl ? edEl.value.trim() : '';
+  }
+  if (!finalDomain) {
+    var sdEl = document.getElementById('subdomainInput');
+    finalDomain = sdEl && sdEl.value.trim() ? sdEl.value.trim() + '.medihost.in' : '';
+  }
+
   btn.disabled = true;
   btnText.innerHTML = '<span class="spinner-sm"></span> Creating your account...';
 
@@ -363,7 +406,7 @@ function submitOrder() {
     business_name: practiceName || name,
     plan_tier: selectedPlan === 'starter' ? 'starter' : selectedPlan,
     signup_source: 'plans_page',
-    domain: selectedDomain
+    domain: finalDomain
   }).then(function(data) {
     btn.disabled = false;
     btnText.innerHTML = 'Pay <span id="sfBtnPrice">\u20B9' + domainPrice + '</span> and start free trial';
