@@ -697,7 +697,8 @@ function changePlan(id) {
 function sendInvite(id) {
   api('POST', '/api/presence/admin/partners/' + id + '/invite').then(function(data) {
     if (data.success) {
-      openModal('Invite Link', '<p style="font-size:13px;color:var(--gray-600);margin-bottom:12px">Share this link with the partner:</p><div class="copy-box"><input type="text" value="' + data.invite_link + '" id="inviteLinkInput" readonly><button class="btn btn-sm btn-green" onclick="copyInvite()"><i class="fas fa-copy"></i> Copy</button></div>', '<button class="btn btn-outline" onclick="closeModal()">Close</button>');
+      showToast('Invite email sent!');
+      openModal('Invite Sent', '<p style="font-size:13px;color:var(--green);margin-bottom:12px"><i class="fas fa-check-circle"></i> Invite email sent via Resend.</p><p style="font-size:13px;color:var(--gray-600);margin-bottom:12px">You can also share this link directly (e.g. via WhatsApp):</p><div class="copy-box"><input type="text" value="' + data.invite_link + '" id="inviteLinkInput" readonly><button class="btn btn-sm btn-green" onclick="copyInvite()"><i class="fas fa-copy"></i> Copy</button></div>', '<button class="btn btn-outline" onclick="closeModal()">Close</button>');
     } else showToast('Error: ' + (data.error || 'Failed'));
   });
 }
