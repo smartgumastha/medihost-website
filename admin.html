@@ -478,7 +478,7 @@ function loadDashboard() {
     document.getElementById('dashMetrics').innerHTML =
       mc('Total partners', d.total_partners, '<span class="green">+' + d.signups_today + '</span> today') +
       mc('Active trials', trialCount, expiringText) +
-      mc('Revenue', '\\u20B9' + (d.payments.total_revenue_paise / 100).toLocaleString('en-IN'), d.payments.total_transactions + ' transactions') +
+      mc('Revenue', '₹' + (d.payments.total_revenue_paise / 100).toLocaleString('en-IN'), d.payments.total_transactions + ' transactions') +
       mc('Today\'s signups', d.signups_today, d.never_logged_in + ' never logged in');
 
     renderPlanChart(d.by_plan || []);
@@ -630,7 +630,7 @@ function renderPayments(payments) {
   if (!payments.length) return '<div style="color:var(--gray-400);padding:20px;text-align:center">No payments yet</div>';
   return '<table class="data-table"><thead><tr><th>ID</th><th>Amount</th><th>Status</th><th>Plan</th><th>Date</th></tr></thead><tbody>' +
     payments.map(function(t) {
-      return '<tr><td class="sub-text">' + esc(t.id) + '</td><td>\\u20B9' + ((t.amount || 0) / 100) + '</td><td>' + esc(t.status) + '</td><td>' + esc(t.plan_tier || '-') + '</td><td>' + relTime(t.created_at) + '</td></tr>';
+      return '<tr><td class="sub-text">' + esc(t.id) + '</td><td>₹' + ((t.amount || 0) / 100) + '</td><td>' + esc(t.status) + '</td><td>' + esc(t.plan_tier || '-') + '</td><td>' + relTime(t.created_at) + '</td></tr>';
     }).join('') + '</tbody></table>';
 }
 
@@ -734,7 +734,7 @@ function loadPricing() {
       if (typeof features === 'string') try { features = JSON.parse(features); } catch(e) { features = []; }
       return '<div class="plan-edit-card' + (plan.is_popular ? ' popular' : '') + '" data-tier="' + plan.plan_tier + '">' +
         '<h4>' + esc(plan.plan_name) + ' ' + planBadge(plan.plan_tier) + '</h4>' +
-        '<div class="plan-edit-row"><div class="form-group"><label class="form-label">Monthly (\\u20B9)</label><input class="form-input" data-f="monthly_price" value="' + plan.monthly_price + '"></div><div class="form-group"><label class="form-label">Yearly (\\u20B9)</label><input class="form-input" data-f="yearly_price" value="' + plan.yearly_price + '"></div></div>' +
+        '<div class="plan-edit-row"><div class="form-group"><label class="form-label">Monthly (₹)</label><input class="form-input" data-f="monthly_price" value="' + plan.monthly_price + '"></div><div class="form-group"><label class="form-label">Yearly (₹)</label><input class="form-input" data-f="yearly_price" value="' + plan.yearly_price + '"></div></div>' +
         '<div class="plan-edit-row"><div class="form-group"><label class="form-label">Trial days</label><input class="form-input" data-f="trial_days" value="' + plan.trial_days + '"></div><div class="form-group"><label class="form-label">CTA text</label><input class="form-input" data-f="cta_text" value="' + esc(plan.cta_text || '') + '"></div></div>' +
         '<div class="form-group"><label class="form-label">Tagline</label><input class="form-input" data-f="tagline" value="' + esc(plan.tagline || '') + '"></div>' +
         '<div class="toggle-row"><label class="toggle-label"><input type="checkbox" data-f="is_popular"' + (plan.is_popular ? ' checked' : '') + '> Popular</label><label class="toggle-label"><input type="checkbox" data-f="is_active"' + (plan.is_active ? ' checked' : '') + '> Active</label></div>' +
@@ -777,7 +777,7 @@ function loadOffers() {
       return;
     }
     tbody.innerHTML = data.offers.map(function(o) {
-      var disc = o.discount_type === 'percent' ? o.discount_value + '%' : o.discount_type === 'flat' ? '\\u20B9' + o.discount_value : o.discount_value + ' days';
+      var disc = o.discount_type === 'percent' ? o.discount_value + '%' : o.discount_type === 'flat' ? '₹' + o.discount_value : o.discount_value + ' days';
       var plans = (o.applicable_plans || []).join(', ') || 'All';
       var usage = (o.times_used || 0) + (o.max_uses ? '/' + o.max_uses : '');
       var statusCls = o.is_active ? 'offer-active' : 'offer-inactive';
@@ -789,7 +789,7 @@ function loadOffers() {
 function openCreateOfferModal() {
   openModal('Create offer',
     '<div class="form-row"><div class="form-group"><label class="form-label">Code (leave empty to auto-generate)</label><input class="form-input" id="ofCode" placeholder="WELCOME20"></div><div class="form-group"><label class="form-label">Name</label><input class="form-input" id="ofName" placeholder="Welcome discount"></div></div>' +
-    '<div class="form-row"><div class="form-group"><label class="form-label">Discount type</label><select class="form-input" id="ofType"><option value="percent">Percent (%)</option><option value="flat">Flat (\\u20B9)</option><option value="trial_days">Trial days</option></select></div><div class="form-group"><label class="form-label">Value</label><input class="form-input" id="ofValue" type="number" placeholder="20"></div></div>' +
+    '<div class="form-row"><div class="form-group"><label class="form-label">Discount type</label><select class="form-input" id="ofType"><option value="percent">Percent (%)</option><option value="flat">Flat (₹)</option><option value="trial_days">Trial days</option></select></div><div class="form-group"><label class="form-label">Value</label><input class="form-input" id="ofValue" type="number" placeholder="20"></div></div>' +
     '<div class="form-group"><label class="form-label">Applicable plans</label><div style="display:flex;gap:12px;flex-wrap:wrap">' +
       '<label class="form-check"><input type="checkbox" value="professional" class="of-plan"> Professional</label>' +
       '<label class="form-check"><input type="checkbox" value="business" class="of-plan"> Business</label>' +
