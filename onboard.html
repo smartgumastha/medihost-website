@@ -83,7 +83,12 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
 .module-card{border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative}
 .module-card:hover{border-color:var(--gray-300)}
 .module-card.active{border-color:var(--green);background:var(--green-subtle)}
-.module-card.locked{opacity:.5;cursor:not-allowed}
+.module-card.locked{opacity:.55;cursor:default;background:var(--gray-50)}
+.module-card.locked .mc-toggle{display:none}
+.module-card.locked .mc-lock{position:absolute;top:14px;right:14px;color:var(--gray-400);font-size:14px}
+.module-card.included{border-left:3px solid var(--green)}
+.module-card.included.active{border-left:3px solid var(--green)}
+.module-card.included:not(.active){border-left:3px solid var(--gray-300)}
 .module-card .mc-icon{width:36px;height:36px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
 .module-card .mc-name{font-family:var(--heading);font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px}
 .module-card .mc-desc{font-size:11px;color:var(--gray-500);line-height:1.4}
@@ -405,27 +410,62 @@ document.querySelectorAll('.day-check').forEach(function(label) {
 });
 
 // ==================== MODULES ====================
+var PLAN_MODULES = {
+  starter: ['website', 'profile', 'basic_patient_reg'],
+  professional: ['website', 'profile', 'basic_patient_reg', 'patient_reg', 'billing', 'appointments', 'basic_emr', 'reports'],
+  business: ['website', 'profile', 'basic_patient_reg', 'patient_reg', 'billing', 'appointments', 'basic_emr', 'emr', 'lis', 'pharmacy', 'reports', 'rbac', 'opd_queue'],
+  enterprise: ['website', 'profile', 'basic_patient_reg', 'patient_reg', 'billing', 'appointments', 'basic_emr', 'emr', 'lis', 'pharmacy', 'reports', 'rbac', 'opd_queue', 'multi_branch', 'whatsapp_ai', 'priority_support']
+};
+
+// Which plan is needed to unlock a module
+var MODULE_REQUIRED_PLAN = {};
+(function buildRequiredPlan() {
+  var tiers = ['starter', 'professional', 'business', 'enterprise'];
+  for (var t = 0; t < tiers.length; t++) {
+    var mods = PLAN_MODULES[tiers[t]];
+    for (var m = 0; m < mods.length; m++) {
+      if (!MODULE_REQUIRED_PLAN[mods[m]]) MODULE_REQUIRED_PLAN[mods[m]] = tiers[t];
+    }
+  }
+})();
+
 function renderModules() {
   var grid = document.getElementById('moduleGrid');
-  var included = (partner && partner.modules_enabled) || [];
+  var tier = (partner && partner.plan_tier) || 'starter';
+  var included = PLAN_MODULES[tier] || PLAN_MODULES.starter;
   var html = '';
   for (var i = 0; i < ALL_MODULES.length; i++) {
     var m = ALL_MODULES[i];
     var isIncluded = included.indexOf(m.key) !== -1;
-    var isActive = isIncluded;
-    html += '<div class="module-card' + (isActive ? ' active' : '') + '" data-key="' + m.key + '" onclick="toggleModule(this)">' +
-      '<div class="mc-icon" style="background:' + m.bg + ';color:' + m.color + '"><i class="' + m.icon + '"></i></div>' +
-      '<div class="mc-name">' + m.name + '</div>' +
-      '<div class="mc-desc">' + m.desc + '</div>' +
-      (isIncluded ? '<span class="mc-badge mc-badge-included">In your plan</span>' : '<span class="mc-badge mc-badge-upgrade">Upgrade</span>') +
-      '<div class="mc-toggle"></div>' +
-    '</div>';
+    var isLocked = !isIncluded;
+    var requiredPlan = MODULE_REQUIRED_PLAN[m.key] || 'enterprise';
+    var classes = 'module-card';
+    if (isIncluded) classes += ' included active';
+    if (isLocked) classes += ' locked';
+
+    html += '<div class="' + classes + '" data-key="' + m.key + '" data-included="' + isIncluded + '" onclick="toggleModule(this,\'' + requiredPlan + '\')">';
+    html += '<div class="mc-icon" style="background:' + m.bg + ';color:' + m.color + '"><i class="' + m.icon + '"></i></div>';
+    html += '<div class="mc-name">' + m.name + '</div>';
+    html += '<div class="mc-desc">' + m.desc + '</div>';
+    if (isIncluded) {
+      html += '<span class="mc-badge mc-badge-included">In your plan</span>';
+      html += '<div class="mc-toggle"></div>';
+    } else {
+      html += '<span class="mc-badge mc-badge-upgrade">Upgrade to ' + requiredPlan.charAt(0).toUpperCase() + requiredPlan.slice(1) + '</span>';
+      html += '<div class="mc-lock"><i class="fas fa-lock"></i></div>';
+    }
+    html += '</div>';
   }
   grid.innerHTML = html;
 }
 
-function toggleModule(card) {
-  if (card.classList.contains('locked')) return;
+function toggleModule(card, requiredPlan) {
+  if (card.classList.contains('locked')) {
+    var modName = card.querySelector('.mc-name').textContent;
+    var planLabel = requiredPlan.charAt(0).toUpperCase() + requiredPlan.slice(1);
+    MEDIHOST.toast('Upgrade to ' + planLabel + ' to access ' + modName, 'warning');
+    return;
+  }
   card.classList.toggle('active');
 }
 
@@ -594,7 +634,9 @@ function saveProgress() {
   var statusMap = { 1: 'wizard_step1', 2: 'wizard_step2', 3: 'wizard_step3' };
   var status = statusMap[currentStep - 1];
   if (!status) return;
-  MEDIHOST.apiPut('/api/presence/partner-auth/me', { onboarding_status: status }).catch(function() {});
+  MEDIHOST.apiPut('/api/presence/partner-auth/me', { onboarding_status: status }).catch(function(err) {
+    console.error('[Onboard] Save progress error:', err);
+  });
 }
 
 // ==================== COMPLETE SETUP ====================
@@ -603,12 +645,13 @@ function completeSetup() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Setting up...';
 
-  var timings = {};
-  if (wizardData.clinic.opening_time || wizardData.clinic.closing_time) {
-    timings = { open: wizardData.clinic.opening_time, close: wizardData.clinic.closing_time, days: wizardData.clinic.working_days };
+  function resetBtn() {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-rocket" style="font-size:13px"></i> Complete setup';
   }
 
-  var body = {
+  // Step A: Update partner profile first
+  var profileBody = {
     business_name: wizardData.clinic.business_name,
     partner_type: wizardData.clinic.partner_type,
     phone: wizardData.clinic.phone,
@@ -616,27 +659,90 @@ function completeSetup() {
     city: wizardData.clinic.city,
     state: wizardData.clinic.state,
     pincode: wizardData.clinic.pincode,
-    timings: timings,
+    description: wizardData.branding.tagline || '',
     modules_enabled: wizardData.modules,
-    onboarding_status: 'wizard_complete',
-    primary_color: wizardData.branding.primary_color,
-    description: wizardData.branding.tagline
+    onboarding_status: 'wizard_step4'
   };
 
-  MEDIHOST.apiPut('/api/presence/partner-auth/me', body).then(function(data) {
-    btn.disabled = false;
-    if (data.success) {
-      MEDIHOST.toast('Clinic setup complete!');
-      setTimeout(function() {
-        window.location.href = MEDIHOST.APP_URL;
-      }, 1500);
-    } else {
-      btn.innerHTML = '<i class="fas fa-rocket" style="font-size:13px"></i> Complete setup';
-      MEDIHOST.toast(data.error || 'Failed to save. Please try again.', 'error');
+  // Store timings as JSON
+  if (wizardData.clinic.opening_time || wizardData.clinic.closing_time) {
+    profileBody.timings = { open: wizardData.clinic.opening_time, close: wizardData.clinic.closing_time, days: wizardData.clinic.working_days };
+  }
+
+  // Store branding in services JSON
+  profileBody.services = {
+    primary_color: wizardData.branding.primary_color || '#1D9E75',
+    secondary_color: wizardData.branding.secondary_color || '#111827',
+    tagline: wizardData.branding.tagline || '',
+    whatsapp: wizardData.branding.whatsapp || ''
+  };
+
+  MEDIHOST.apiPut('/api/presence/partner-auth/me', profileBody).then(function(profileData) {
+    if (!profileData.success) {
+      resetBtn();
+      console.error('[Onboard] Profile update failed:', profileData);
+      MEDIHOST.toast(profileData.error || 'Failed to save profile', 'error');
+      return;
     }
-  }).catch(function() {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-rocket" style="font-size:13px"></i> Complete setup';
+
+    // Step B: Call onboard/complete to create hospital + user + modules
+    var onboardBody = {
+      clinic_info: {
+        name: wizardData.clinic.business_name,
+        type: wizardData.clinic.partner_type,
+        address: wizardData.clinic.address_line1,
+        city: wizardData.clinic.city,
+        state: wizardData.clinic.state,
+        pincode: wizardData.clinic.pincode,
+        phone: wizardData.clinic.phone,
+        opening_time: wizardData.clinic.opening_time,
+        closing_time: wizardData.clinic.closing_time,
+        working_days: wizardData.clinic.working_days
+      },
+      modules: wizardData.modules,
+      branding: {
+        brand_color: wizardData.branding.primary_color,
+        secondary_color: wizardData.branding.secondary_color,
+        tagline: wizardData.branding.tagline,
+        whatsapp: wizardData.branding.whatsapp,
+        logo_base64: wizardData.branding.logo_data || null,
+        receipt_header: wizardData.clinic.business_name,
+        receipt_footer: 'Thank you for visiting ' + wizardData.clinic.business_name
+      },
+      partner_id: partner.id
+    };
+
+    MEDIHOST.apiPost('/api/presence/onboard/complete', onboardBody).then(function(onboardData) {
+      btn.disabled = false;
+      if (onboardData.success) {
+        // Store HMS token if returned
+        if (onboardData.hms_token) {
+          try { localStorage.setItem('token', onboardData.hms_token); } catch(e) {}
+        }
+        MEDIHOST.toast('Clinic setup complete! Redirecting...');
+        setTimeout(function() {
+          window.location.href = MEDIHOST.APP_URL;
+        }, 1500);
+      } else if (onboardData.error && onboardData.error.indexOf('already provisioned') !== -1) {
+        // Already onboarded — just redirect
+        MEDIHOST.toast('Clinic already set up! Redirecting...');
+        setTimeout(function() {
+          window.location.href = MEDIHOST.APP_URL;
+        }, 1000);
+      } else {
+        resetBtn();
+        console.error('[Onboard] Complete failed:', onboardData);
+        MEDIHOST.toast(onboardData.error || 'Setup failed. Please try again.', 'error');
+      }
+    }).catch(function(err) {
+      resetBtn();
+      console.error('[Onboard] Network error:', err);
+      MEDIHOST.toast('Network error. Please try again.', 'error');
+    });
+
+  }).catch(function(err) {
+    resetBtn();
+    console.error('[Onboard] Profile network error:', err);
     MEDIHOST.toast('Network error. Please try again.', 'error');
   });
 }
