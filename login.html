@@ -454,7 +454,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         setTimeout(function() {
           if (redirectUrl) {
             window.location.href = redirectUrl;
-          } else if (data.partner && (data.partner.funnel_stage === 'active' || data.partner.funnel_stage === 'wizard_complete') && data.partner.hospital_id) {
+          } else if (data.partner && data.partner.hospital_id) {
             // Partner has HMS hospital — fetch HMS token, store it, then redirect
             MEDIHOST.apiPost('/api/presence/partner-auth/hms-token', {}).then(function(hmsData) {
               if (hmsData.success && hmsData.hms_token) {
@@ -478,8 +478,6 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
               // HMS token fetch failed — redirect anyway, user will need to log in again on HMS
               window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
             });
-          } else if (data.partner && (data.partner.funnel_stage === 'password_set' || data.partner.funnel_stage === 'email_verified')) {
-            window.location.href = '/onboard.html';
           } else {
             window.location.href = '/onboard.html';
           }

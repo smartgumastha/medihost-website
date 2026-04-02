@@ -398,8 +398,8 @@ var ALL_MODULES = [
     partner = data.partner;
     document.getElementById('partnerName').textContent = partner.owner_name || partner.email || '';
 
-    // If already onboarded, redirect
-    if (partner.onboarding_status === 'wizard_complete' || partner.onboarding_status === 'active') {
+    // If already onboarded (has hospital), redirect to HMS
+    if (partner.hospital_id) {
       window.location.href = MEDIHOST.APP_URL;
       return;
     }
