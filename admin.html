@@ -192,6 +192,16 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
 .offer-inactive{color:var(--gray-400)}
 
 /* TRIGGERS */
+/* FUNNEL */
+.funnel-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px}
+.funnel-card h4{font-size:14px;font-weight:700;margin-bottom:16px}
+.funnel-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.funnel-label{width:140px;font-size:12px;font-weight:600;color:var(--gray-600);flex-shrink:0;text-align:right}
+.funnel-bar-wrap{flex:1;height:28px;background:var(--gray-100);border-radius:6px;overflow:hidden;position:relative}
+.funnel-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:var(--white);min-width:32px;transition:width .5s ease}
+.funnel-count{width:60px;font-size:12px;font-weight:600;color:var(--dark);text-align:right;flex-shrink:0}
+.funnel-pct{width:40px;font-size:11px;color:var(--gray-400);flex-shrink:0}
+
 .trigger-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px;margin-bottom:12px}
 .trigger-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .trigger-card-header h4{font-size:14px;font-weight:700}
@@ -285,6 +295,10 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
         <div class="charts-row">
           <div class="chart-card"><h4>Partners by plan</h4><div class="chart-wrap"><canvas id="chartPlan"></canvas></div></div>
           <div class="chart-card"><h4>Signups by source</h4><div class="chart-wrap"><canvas id="chartSource"></canvas></div></div>
+        </div>
+        <div class="funnel-card" id="funnelCard" style="display:none">
+          <h4><i class="fas fa-filter" style="color:var(--green);margin-right:6px"></i> Signup Funnel</h4>
+          <div id="funnelBars"></div>
         </div>
         <div class="data-card">
           <div class="data-card-header"><h4><i class="fas fa-exclamation-triangle" style="color:var(--amber);margin-right:6px"></i>Needs attention</h4></div>
@@ -483,8 +497,30 @@ function loadDashboard() {
 
     renderPlanChart(d.by_plan || []);
     renderSourceChart(d.by_source || []);
+    renderFunnel(d.funnel_stats || []);
     loadAttentionTable();
   }).catch(function(e) { console.error('Dashboard error:', e); });
+}
+
+function renderFunnel(stats) {
+  if (!stats || stats.length === 0) return;
+  document.getElementById('funnelCard').style.display = 'block';
+  var order = ['pending_verification','email_verified','password_set','payment_complete','onboarding_started','wizard_complete','active','abandoned'];
+  var labels = { pending_verification:'Pending verification', email_verified:'Email verified', password_set:'Password set', payment_complete:'Payment done', onboarding_started:'Onboarding started', wizard_complete:'Wizard complete', active:'Active', abandoned:'Abandoned' };
+  var colors = ['#9CA3AF','#60A5FA','#34D399','#22C55E','#16A34A','#15803D','#166534','#EF4444'];
+  var map = {};
+  var total = 0;
+  for (var i = 0; i < stats.length; i++) { map[stats[i].funnel_stage] = stats[i].count; total += stats[i].count; }
+  if (total === 0) return;
+  var html = '';
+  for (var j = 0; j < order.length; j++) {
+    var count = map[order[j]] || 0;
+    if (count === 0 && order[j] !== 'active') continue;
+    var pct = Math.round((count / total) * 100);
+    var barW = Math.max(pct, 5);
+    html += '<div class="funnel-row"><div class="funnel-label">' + (labels[order[j]] || order[j]) + '</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:' + barW + '%;background:' + colors[j] + '">' + count + '</div></div><div class="funnel-pct">' + pct + '%</div></div>';
+  }
+  document.getElementById('funnelBars').innerHTML = html;
 }
 
 function mc(label, value, sub) {

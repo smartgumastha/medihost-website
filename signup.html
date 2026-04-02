@@ -138,6 +138,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
 /* Spinner */
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:var(--white);border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 
 /* Divider */
 .form-divider{display:flex;align-items:center;gap:12px;margin:20px 0}
@@ -290,40 +291,16 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
           </div>
         </div>
 
-        <!-- PLAN SELECTOR -->
-        <div class="plan-selector" id="planSelector">
-          <div class="plan-selector-label">Select your plan</div>
-          <div class="plan-cards">
-            <div class="plan-card" data-plan="starter" onclick="selectPlan('starter')">
-              <div class="plan-card-name">Starter</div>
-              <div class="plan-card-price">Free forever</div>
-            </div>
-            <div class="plan-card" data-plan="professional" onclick="selectPlan('professional')">
-              <div class="plan-card-name">Professional</div>
-              <div class="plan-card-price"><strong>₹1,499</strong>/mo</div>
-            </div>
-            <div class="plan-card" data-plan="business" onclick="selectPlan('business')">
-              <div class="plan-card-badge">Popular</div>
-              <div class="plan-card-name">Business</div>
-              <div class="plan-card-price"><strong>₹2,999</strong>/mo</div>
-            </div>
-            <div class="plan-card" data-plan="enterprise" onclick="selectPlan('enterprise')">
-              <div class="plan-card-name">Enterprise</div>
-              <div class="plan-card-price"><strong>₹4,999</strong>/mo</div>
-            </div>
-          </div>
+        <!-- NAME -->
+        <div class="form-group">
+          <label class="form-label" for="ownerName">Your name</label>
+          <input class="form-input" type="text" id="ownerName" name="owner_name" placeholder="Dr. Priya Sharma" autocomplete="name" required>
         </div>
 
-        <!-- NAME + CLINIC -->
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="ownerName">Your name</label>
-            <input class="form-input" type="text" id="ownerName" name="owner_name" placeholder="Dr. Priya Sharma" autocomplete="name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="businessName">Clinic name</label>
-            <input class="form-input" type="text" id="businessName" name="business_name" placeholder="Sharma Clinic" autocomplete="organization" required>
-          </div>
+        <!-- BUSINESS NAME -->
+        <div class="form-group">
+          <label class="form-label" for="businessName">Clinic name<span class="req">*</span></label>
+          <input class="form-input" type="text" id="businessName" name="business_name" placeholder="Sharma Clinic" autocomplete="organization" required>
         </div>
 
         <!-- EMAIL -->
@@ -345,24 +322,12 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
           </div>
         </div>
 
-        <!-- PASSWORD -->
-        <div class="form-group">
-          <label class="form-label" for="password">Password</label>
-          <div class="password-wrap">
-            <input class="form-input" type="password" id="password" name="password" placeholder="Min 6 characters" autocomplete="new-password" required>
-            <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Toggle password visibility">
-              <i class="fas fa-eye" id="passwordIcon"></i>
-            </button>
-          </div>
-          <div class="password-strength"><div class="password-strength-bar" id="passwordBar"></div></div>
-          <div class="form-error" id="passwordError"></div>
-        </div>
-
         <!-- SUBMIT -->
         <div class="form-submit">
           <button type="submit" class="btn btn-green btn-full" id="submitBtn">
-            <span id="submitText">Create account</span>
+            <span id="submitText">Continue &mdash; we'll send a verification link</span>
           </button>
+          <p style="font-size:12px;color:var(--gray-400);text-align:center;margin-top:8px"><i class="fas fa-envelope" style="margin-right:4px"></i> We'll send a verification link to your email</p>
         </div>
 
         <!-- TERMS -->
@@ -373,20 +338,19 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
 
       </form>
 
-      <!-- SUCCESS STATE (replaces form) -->
-      <div class="success-state" id="successState">
-        <div class="success-icon"><i class="fas fa-check"></i></div>
-        <h2>Welcome to MediHost!</h2>
-        <div class="success-plan-badge" id="successPlanBadge"><i class="fas fa-star"></i> <span id="successPlanName">Starter Plan</span></div>
-        <p>Your account has been created. Let's set up your clinic.</p>
-        <ul class="success-checklist">
-          <li><i class="fas fa-check-circle"></i> Account created</li>
-          <li><i class="fas fa-check-circle"></i> <span id="successTrialText">Starter plan activated</span></li>
-          <li><i class="fas fa-circle" style="color:var(--gray-300)"></i> Complete clinic setup (next)</li>
-        </ul>
-        <a href="/onboard.html" class="btn btn-green btn-full" id="successCta">
-          Set up your clinic <i class="fas fa-arrow-right" style="font-size:13px"></i>
-        </a>
+      <!-- CHECK EMAIL STATE (replaces form) -->
+      <div class="success-state" id="checkEmailState">
+        <div class="success-icon" style="animation:pulse 2s ease-in-out infinite"><i class="fas fa-envelope"></i></div>
+        <h2>Check your email!</h2>
+        <p>We've sent a verification link to<br><strong id="maskedEmail"></strong></p>
+        <p style="font-size:13px;color:var(--gray-500)">Click the link in the email to continue setting up your account.</p>
+        <div style="background:var(--gray-50);border-radius:var(--radius-lg);padding:16px;margin:20px 0;text-align:left">
+          <p style="font-size:13px;color:var(--gray-600);margin-bottom:8px"><strong>Didn't receive it?</strong></p>
+          <p style="font-size:12px;color:var(--gray-500);margin-bottom:10px"><i class="fas fa-folder" style="margin-right:4px"></i> Check your spam/promotions folder</p>
+          <button class="btn btn-outline" style="width:100%;padding:10px;font-size:13px" id="resendBtn" onclick="resendVerification()"><i class="fas fa-redo" style="font-size:11px"></i> Resend verification link</button>
+          <p id="resendMsg" style="font-size:12px;color:var(--green);margin-top:6px;display:none;text-align:center"></p>
+        </div>
+        <p style="font-size:12px;color:var(--gray-400)">Wrong email? <a href="#" onclick="resetForm();return false" style="color:var(--green);font-weight:600">Start over</a></p>
       </div>
 
     </div>
@@ -398,45 +362,24 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
       <h2 id="benefitsTitle">Your clinic, live in 10 minutes</h2>
       <p class="benefits-sub" id="benefitsSub">Everything you need to run a modern clinic.</p>
 
-      <div class="benefit-item">
-        <div class="benefit-icon green"><i class="fas fa-bolt"></i></div>
-        <div class="benefit-text">
-          <h4>Self-service setup</h4>
-          <p>No IT team, no demo calls. You set it up yourself.</p>
+      <div style="margin:28px 0">
+        <h4 style="font-family:var(--heading);font-size:14px;font-weight:700;color:var(--dark);margin-bottom:16px">What happens next</h4>
+        <div class="benefit-item">
+          <div class="benefit-icon green"><i class="fas fa-envelope"></i></div>
+          <div class="benefit-text"><h4>1. Verify your email</h4><p>Click the link we send you</p></div>
         </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon blue"><i class="fas fa-file-invoice"></i></div>
-        <div class="benefit-text">
-          <h4>GST billing from day 1</h4>
-          <p>Professional invoices, thermal receipts, collection reports.</p>
+        <div class="benefit-item">
+          <div class="benefit-icon blue"><i class="fas fa-tag"></i></div>
+          <div class="benefit-text"><h4>2. Choose your plan</h4><p>Free starter or 14-day trial of paid plans</p></div>
         </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon purple"><i class="fas fa-laptop-medical"></i></div>
-        <div class="benefit-text">
-          <h4>EMR + Prescriptions</h4>
-          <p>Digital records, specialty templates, auto-formatted Rx.</p>
+        <div class="benefit-item">
+          <div class="benefit-icon purple"><i class="fas fa-key"></i></div>
+          <div class="benefit-text"><h4>3. Set your password</h4><p>Create a secure password for your account</p></div>
         </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon amber"><i class="fas fa-globe"></i></div>
-        <div class="benefit-text">
-          <h4>Free clinic website</h4>
-          <p>SEO-ready, Google-indexed, shareable link.</p>
+        <div class="benefit-item">
+          <div class="benefit-icon amber"><i class="fas fa-rocket"></i></div>
+          <div class="benefit-text"><h4>4. Set up your clinic</h4><p>Add details, modules, branding &mdash; go live!</p></div>
         </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon indigo"><i class="fas fa-shield-halved"></i></div>
-        <div class="benefit-text">
-          <h4>UHID + ABHA compliant</h4>
-          <p>Built for Indian healthcare regulations.</p>
-        </div>
-      </div>
-
-      <div class="selected-plan-detail" id="selectedPlanDetail">
-        <h3>What's included in <span id="selectedPlanTitle">Starter</span></h3>
-        <ul class="selected-plan-features" id="selectedPlanFeatures"></ul>
       </div>
 
       <div class="social-proof">
@@ -481,22 +424,19 @@ var PLAN_DATA = {
 
 // ==================== INIT ====================
 function init() {
-  selectPlan(selectedPlan);
-
   // Invite flow
   if (inviteToken) {
     document.getElementById('inviteBanner').style.display = 'flex';
     document.getElementById('formTitle').textContent = 'Complete your account';
-    document.getElementById('planSelector').style.display = 'none';
-    validateInviteToken(inviteToken);
   }
 
   // Coupon
   if (couponCode) {
     showCouponBanner(couponCode);
-    validateCoupon(couponCode);
   }
 }
+
+var signupEmail = ''; // stored for resend
 
 // ==================== BUSINESS TYPE SELECTION ====================
 var selectedBtype = 'clinic';
@@ -528,104 +468,10 @@ function selectBtype(type) {
   if (subEl) subEl.textContent = cfg.sub;
 }
 
-// ==================== PLAN SELECTION ====================
-function selectPlan(tier) {
-  if (!PLAN_DATA[tier]) tier = 'starter';
-  selectedPlan = tier;
-  var cards = document.querySelectorAll('.plan-card');
-  for (var i = 0; i < cards.length; i++) {
-    if (cards[i].getAttribute('data-plan') === tier) {
-      cards[i].classList.add('selected');
-    } else {
-      cards[i].classList.remove('selected');
-    }
-  }
-  updatePlanDetail(tier);
-  updateSubmitButton(tier);
-}
-
-function updatePlanDetail(tier) {
-  var plan = PLAN_DATA[tier];
-  if (!plan) return;
-  document.getElementById('selectedPlanTitle').textContent = plan.name;
-  var list = document.getElementById('selectedPlanFeatures');
-  var html = '';
-  for (var i = 0; i < plan.features.length; i++) {
-    html += '<li><i class="fas fa-check"></i> ' + plan.features[i] + '</li>';
-  }
-  list.innerHTML = html;
-}
-
-function updateSubmitButton(tier) {
-  var btn = document.getElementById('submitText');
-  if (tier === 'starter') {
-    btn.textContent = 'Create free account';
-  } else {
-    btn.textContent = 'Start 14-day free trial';
-  }
-}
-
-// ==================== PASSWORD ====================
-function togglePassword() {
-  var input = document.getElementById('password');
-  var icon = document.getElementById('passwordIcon');
-  if (input.type === 'password') {
-    input.type = 'text';
-    icon.classList.remove('fa-eye');
-    icon.classList.add('fa-eye-slash');
-  } else {
-    input.type = 'password';
-    icon.classList.remove('fa-eye-slash');
-    icon.classList.add('fa-eye');
-  }
-}
-
-document.getElementById('password').addEventListener('input', function() {
-  var val = this.value;
-  var bar = document.getElementById('passwordBar');
-  var strength = 0;
-  if (val.length >= 6) strength++;
-  if (val.length >= 8) strength++;
-  if (/[A-Z]/.test(val) && /[0-9]/.test(val)) strength++;
-  if (/[^A-Za-z0-9]/.test(val)) strength++;
-  var widths = ['0%', '25%', '50%', '75%', '100%'];
-  var colors = ['var(--gray-200)', 'var(--red)', 'var(--amber)', '#22C55E', 'var(--green)'];
-  bar.style.width = widths[strength];
-  bar.style.background = colors[strength];
-});
-
-// ==================== INVITE VALIDATION ====================
-function validateInviteToken(token) {
-  // We just show the invite banner; actual validation happens on backend at signup
-  // The token gets sent with the signup request
-}
-
 // ==================== COUPON ====================
-var validatedCoupon = null;
-
 function showCouponBanner(code) {
   document.getElementById('couponCodeDisplay').textContent = code.toUpperCase();
   document.getElementById('couponBanner').style.display = 'flex';
-}
-
-function validateCoupon(code) {
-  fetch(API_BASE + '/api/presence/pricing/validate-coupon', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code: code, plan_tier: selectedPlan })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (data.valid) {
-      validatedCoupon = data;
-    } else {
-      document.getElementById('couponBanner').style.display = 'none';
-      showAlert('Coupon code "' + code + '" is not valid: ' + (data.message || 'Invalid'), 'error');
-    }
-  })
-  .catch(function() {
-    // Coupon validation failed silently — will try again at signup
-  });
 }
 
 // ==================== FORM ALERT ====================
@@ -661,18 +507,6 @@ function validateForm() {
     emailError.classList.remove('show');
   }
 
-  var password = document.getElementById('password');
-  var passwordError = document.getElementById('passwordError');
-  if (password.value.length < 6) {
-    password.classList.add('error');
-    passwordError.textContent = 'Password must be at least 6 characters';
-    passwordError.classList.add('show');
-    valid = false;
-  } else {
-    password.classList.remove('error');
-    passwordError.classList.remove('show');
-  }
-
   var businessName = document.getElementById('businessName');
   if (!businessName.value.trim()) {
     businessName.classList.add('error');
@@ -693,24 +527,20 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
   var btnText = document.getElementById('submitText');
   btn.disabled = true;
   var originalText = btnText.textContent;
-  btnText.innerHTML = '<span class="spinner"></span> Creating account...';
+  btnText.innerHTML = '<span class="spinner"></span> Sending verification...';
+
+  signupEmail = document.getElementById('email').value.trim();
 
   var body = {
-    email: document.getElementById('email').value.trim(),
-    password: document.getElementById('password').value,
+    email: signupEmail,
     owner_name: document.getElementById('ownerName').value.trim(),
     business_name: document.getElementById('businessName').value.trim(),
     phone: document.getElementById('phone').value.trim() || undefined,
-    city: document.getElementById('city').value.trim() || undefined,
-    plan_tier: selectedPlan,
     signup_source: signupSource,
     partner_type: selectedBtype
   };
 
-  // Add invite token if present
-  if (inviteToken) {
-    body.invite_token = inviteToken;
-  }
+  if (inviteToken) body.invite_token = inviteToken;
 
   fetch(API_BASE + '/api/presence/partner-auth/signup', {
     method: 'POST',
@@ -722,44 +552,80 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     btn.disabled = false;
     btnText.textContent = originalText;
 
-    if (result.data.success) {
-      // Store token
-      try {
-        MEDIHOST.saveAuth(result.data.token, result.data.partner);
-      } catch(e) {}
-
-      // Show success
-      showSuccess(result.data.partner);
+    if (result.data.success && result.data.requires_verification) {
+      showCheckEmail(result.data.email || signupEmail);
+    } else if (result.data.success) {
+      // Fallback: direct success (e.g., invite flow)
+      showCheckEmail(result.data.email || signupEmail);
     } else {
       showAlert(result.data.error || 'Signup failed. Please try again.', 'error');
     }
   })
-  .catch(function(err) {
+  .catch(function() {
     btn.disabled = false;
     btnText.textContent = originalText;
     showAlert('Network error. Please check your connection and try again.', 'error');
   });
 });
 
-// ==================== SUCCESS STATE ====================
-function showSuccess(partner) {
+// ==================== CHECK EMAIL STATE ====================
+function showCheckEmail(email) {
   document.getElementById('signupForm').style.display = 'none';
   document.getElementById('inviteBanner').style.display = 'none';
   document.getElementById('couponBanner').style.display = 'none';
   document.getElementById('formAlert').style.display = 'none';
 
-  var planName = (PLAN_DATA[partner.plan_tier] || PLAN_DATA.starter).name;
-  document.getElementById('successPlanName').textContent = planName + ' Plan';
-
-  if (partner.plan_tier === 'starter') {
-    document.getElementById('successTrialText').textContent = 'Starter plan activated — free forever';
-  } else {
-    document.getElementById('successTrialText').textContent = '14-day ' + planName + ' trial started';
-  }
+  // Mask email: p***a@clinic.com
+  var parts = email.split('@');
+  var local = parts[0];
+  var masked = local.charAt(0) + '***' + (local.length > 1 ? local.charAt(local.length - 1) : '') + '@' + parts[1];
+  document.getElementById('maskedEmail').textContent = masked;
 
   document.getElementById('formTitle').textContent = '';
-  document.querySelector('.form-header p').textContent = '';
-  document.getElementById('successState').classList.add('show');
+  document.querySelector('.form-header p').style.display = 'none';
+  document.getElementById('checkEmailState').classList.add('show');
+}
+
+function resetForm() {
+  document.getElementById('checkEmailState').classList.remove('show');
+  document.getElementById('signupForm').style.display = '';
+  document.querySelector('.form-header p').style.display = '';
+  document.getElementById('formTitle').textContent = 'Create your account';
+  document.getElementById('email').value = '';
+  document.getElementById('email').focus();
+}
+
+var resendCooldown = false;
+function resendVerification() {
+  if (resendCooldown || !signupEmail) return;
+  resendCooldown = true;
+  var btn = document.getElementById('resendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  fetch(API_BASE + '/api/presence/partner-auth/resend-verification', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: signupEmail })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var msg = document.getElementById('resendMsg');
+    msg.textContent = data.message || 'Verification link resent!';
+    msg.style.display = 'block';
+    btn.textContent = 'Sent!';
+    // 30s cooldown
+    setTimeout(function() {
+      resendCooldown = false;
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-redo" style="font-size:11px"></i> Resend verification link';
+    }, 30000);
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-redo" style="font-size:11px"></i> Resend verification link';
+    resendCooldown = false;
+  });
 }
 
 // ==================== CLEAR ERRORS ON INPUT ====================
