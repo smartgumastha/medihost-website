@@ -452,8 +452,15 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         document.getElementById('successCheck').classList.add('show');
 
         setTimeout(function() {
-          var dest = redirectUrl || product.redirectUrl || MEDIHOST.APP_URL;
-          window.location.href = dest;
+          if (redirectUrl) {
+            window.location.href = redirectUrl;
+          } else if (data.partner && (data.partner.funnel_stage === 'active' || data.partner.funnel_stage === 'wizard_complete')) {
+            window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
+          } else if (data.partner && (data.partner.funnel_stage === 'password_set' || data.partner.funnel_stage === 'email_verified')) {
+            window.location.href = '/onboard.html';
+          } else {
+            window.location.href = '/onboard.html';
+          }
         }, 1200);
       } else {
         showAlert(data.error || 'Invalid email or password', 'error');

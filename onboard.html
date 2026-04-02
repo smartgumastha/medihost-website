@@ -822,9 +822,21 @@ function completeSetup() {
     MEDIHOST.apiPost('/api/presence/onboard/complete', onboardBody).then(function(onboardData) {
       btn.disabled = false;
       if (onboardData.success) {
-        // Store HMS token if returned
+        // Store HMS auth tokens so app.hemato.in recognizes the session
         if (onboardData.hms_token) {
-          try { localStorage.setItem('token', onboardData.hms_token); } catch(e) {}
+          try {
+            localStorage.setItem('mw_token', onboardData.hms_token);
+            localStorage.setItem('mw_hospital_id', String(onboardData.hospital_id));
+            if (onboardData.user_id) {
+              localStorage.setItem('mw_login_data', JSON.stringify({
+                token: onboardData.hms_token,
+                hospitalId: String(onboardData.hospital_id),
+                userid: String(onboardData.user_id),
+                name: onboardData.partner_name || '',
+                role: 'HOSPITAL_ADMIN'
+              }));
+            }
+          } catch(e) { console.error('HMS token save error:', e); }
         }
         MEDIHOST.toast('Clinic setup complete! Redirecting...');
         setTimeout(function() {
