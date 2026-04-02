@@ -448,9 +448,11 @@ function searchDomains() {
         html += '<span style="font-size:13px;color:#888;text-decoration:line-through">' + s.domain + '</span>';
         html += '<span style="font-size:11px;color:#888">taken</span></div>';
       } else {
-        html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#FAEEDA;border-radius:8px;margin:4px 0">';
-        html += '<span style="font-size:13px;color:#633806">' + s.domain + '</span>';
-        html += '<span style="font-size:11px;color:#854F0B">checking...</span></div>';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0">';
+        html += '<span style="font-size:14px;font-weight:500;color:#085041">' + s.domain + '</span>';
+        html += '<span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + (s.price || 299) + '/yr</span>';
+        html += '<a href="/signup.html?domain=' + encodeURIComponent(s.domain) + enc + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
+        html += '</div>';
       }
     });
 
