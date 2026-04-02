@@ -80,15 +80,31 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
 
 /* MODULE CARDS */
 .module-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.module-section-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.7px;margin:20px 0 8px;padding-left:2px;grid-column:1/-1}
+.module-section-label:first-child{margin-top:0}
 .module-card{border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative}
 .module-card:hover{border-color:var(--gray-300)}
 .module-card.active{border-color:var(--green);background:var(--green-subtle)}
-.module-card.locked{opacity:.55;cursor:default;background:var(--gray-50)}
+/* Included */
+.module-card.included{border-left:3px solid var(--green)}
+.module-card.included:not(.active){border-left:3px solid var(--gray-300)}
+/* Locked (upgrade needed) */
+.module-card.locked{opacity:.65;cursor:default;background:var(--gray-50)}
 .module-card.locked .mc-toggle{display:none}
 .module-card.locked .mc-lock{position:absolute;top:14px;right:14px;color:var(--gray-400);font-size:14px}
-.module-card.included{border-left:3px solid var(--green)}
-.module-card.included.active{border-left:3px solid var(--green)}
-.module-card.included:not(.active){border-left:3px solid var(--gray-300)}
+/* Coming soon */
+.module-card.coming-soon{border-left:3px solid var(--purple);cursor:default}
+.module-card.coming-soon .mc-toggle{display:none}
+.mc-badge-coming{background:#F5F3FF;color:var(--purple)}
+.mc-waitlist-btn{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:5px 12px;font-size:11px;font-weight:700;font-family:var(--heading);border-radius:99px;border:1.5px solid var(--purple);color:var(--purple);background:none;cursor:pointer;transition:all .15s}
+.mc-waitlist-btn:hover{background:#F5F3FF}
+.mc-waitlist-btn.joined{border-color:var(--green);color:var(--green);cursor:default;background:var(--green-light)}
+.mc-waitlist-count{font-size:10px;color:var(--gray-400);margin-top:4px}
+/* Planned */
+.module-card.planned{opacity:.45;cursor:default;border-left:3px solid var(--gray-300)}
+.module-card.planned .mc-toggle{display:none}
+.mc-badge-planned{background:var(--gray-100);color:var(--gray-500)}
+/* Shared */
 .module-card .mc-icon{width:36px;height:36px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
 .module-card .mc-name{font-family:var(--heading);font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px}
 .module-card .mc-desc{font-size:11px;color:var(--gray-500);line-height:1.4}
@@ -417,56 +433,147 @@ var PLAN_MODULES = {
   enterprise: ['website', 'profile', 'basic_patient_reg', 'patient_reg', 'billing', 'appointments', 'basic_emr', 'emr', 'lis', 'pharmacy', 'reports', 'rbac', 'opd_queue', 'multi_branch', 'whatsapp_ai', 'priority_support']
 };
 
-// Which plan is needed to unlock a module
-var MODULE_REQUIRED_PLAN = {};
-(function buildRequiredPlan() {
-  var tiers = ['starter', 'professional', 'business', 'enterprise'];
-  for (var t = 0; t < tiers.length; t++) {
-    var mods = PLAN_MODULES[tiers[t]];
-    for (var m = 0; m < mods.length; m++) {
-      if (!MODULE_REQUIRED_PLAN[mods[m]]) MODULE_REQUIRED_PLAN[mods[m]] = tiers[t];
-    }
-  }
-})();
+var moduleCatalog = [];
+var joinedWaitlist = {};
+
+// Icon color map (fallback if API module doesn't have color info)
+var ICON_COLORS = {
+  'fa-globe':'#14B8A6','fa-id-card':'#3B82F6','fa-user-plus':'#8B5CF6','fa-users':'#8B5CF6',
+  'fa-file-invoice-dollar':'#1D9E75','fa-calendar-check':'#F59E0B','fa-file-medical':'#EF4444',
+  'fa-chart-bar':'#0EA5E9','fa-hospital-user':'#EF4444','fa-microscope':'#6366F1','fa-pills':'#EC4899',
+  'fa-list-ol':'#14B8A6','fa-user-shield':'#F97316','fa-sitemap':'#6366F1','fa-headset':'#F59E0B',
+  'fa-link':'#3B82F6','fa-robot':'#8B5CF6','fa-magic':'#EC4899','fa-laptop-medical':'#0EA5E9',
+  'fa-video':'#EF4444','fa-shield-alt':'#F59E0B','fa-mobile-alt':'#1D9E75','fa-cube':'#9CA3AF'
+};
 
 function renderModules() {
   var grid = document.getElementById('moduleGrid');
   var tier = (partner && partner.plan_tier) || 'starter';
   var included = PLAN_MODULES[tier] || PLAN_MODULES.starter;
-  var html = '';
-  for (var i = 0; i < ALL_MODULES.length; i++) {
-    var m = ALL_MODULES[i];
-    var isIncluded = included.indexOf(m.key) !== -1;
-    var isLocked = !isIncluded;
-    var requiredPlan = MODULE_REQUIRED_PLAN[m.key] || 'enterprise';
-    var classes = 'module-card';
-    if (isIncluded) classes += ' included active';
-    if (isLocked) classes += ' locked';
 
-    html += '<div class="' + classes + '" data-key="' + m.key + '" data-included="' + isIncluded + '" onclick="toggleModule(this,\'' + requiredPlan + '\')">';
-    html += '<div class="mc-icon" style="background:' + m.bg + ';color:' + m.color + '"><i class="' + m.icon + '"></i></div>';
-    html += '<div class="mc-name">' + m.name + '</div>';
-    html += '<div class="mc-desc">' + m.desc + '</div>';
-    if (isIncluded) {
-      html += '<span class="mc-badge mc-badge-included">In your plan</span>';
-      html += '<div class="mc-toggle"></div>';
+  // Fetch from API, fall back to ALL_MODULES
+  MEDIHOST.apiGet('/api/presence/pricing/modules').then(function(data) {
+    if (data.success && data.modules && data.modules.length > 0) {
+      moduleCatalog = data.modules;
     } else {
-      html += '<span class="mc-badge mc-badge-upgrade">Upgrade to ' + requiredPlan.charAt(0).toUpperCase() + requiredPlan.slice(1) + '</span>';
-      html += '<div class="mc-lock"><i class="fas fa-lock"></i></div>';
+      moduleCatalog = ALL_MODULES.map(function(m) { return { module_key: m.key, name: m.name, description: m.desc, icon: m.icon, status: 'ready', min_plan: 'starter', waitlist_count: 0, coming_soon_text: null }; });
     }
-    html += '</div>';
+    renderModuleCards(grid, included, tier);
+  }).catch(function() {
+    moduleCatalog = ALL_MODULES.map(function(m) { return { module_key: m.key, name: m.name, description: m.desc, icon: m.icon, status: 'ready', min_plan: 'starter', waitlist_count: 0, coming_soon_text: null }; });
+    renderModuleCards(grid, included, tier);
+  });
+}
+
+function renderModuleCards(grid, included, tier) {
+  // Sort into 4 groups
+  var groups = { included: [], locked: [], coming_soon: [], planned: [] };
+
+  for (var i = 0; i < moduleCatalog.length; i++) {
+    var m = moduleCatalog[i];
+    if (m.status === 'planned') groups.planned.push(m);
+    else if (m.status === 'coming_soon') groups.coming_soon.push(m);
+    else if (included.indexOf(m.module_key) !== -1) groups.included.push(m);
+    else groups.locked.push(m);
   }
+
+  var html = '';
+
+  // Group 1: Included
+  if (groups.included.length > 0) {
+    html += '<div class="module-section-label"><i class="fas fa-check-circle" style="color:var(--green);margin-right:4px"></i> Included in your plan</div>';
+    for (var a = 0; a < groups.included.length; a++) html += buildModuleCard(groups.included[a], 'included');
+  }
+
+  // Group 2: Locked (upgrade)
+  if (groups.locked.length > 0) {
+    html += '<div class="module-section-label"><i class="fas fa-lock" style="color:var(--amber);margin-right:4px"></i> Available with upgrade</div>';
+    for (var b = 0; b < groups.locked.length; b++) html += buildModuleCard(groups.locked[b], 'locked');
+  }
+
+  // Group 3: Coming soon
+  if (groups.coming_soon.length > 0) {
+    html += '<div class="module-section-label"><i class="fas fa-flask" style="color:var(--purple);margin-right:4px"></i> Coming soon</div>';
+    for (var c = 0; c < groups.coming_soon.length; c++) html += buildModuleCard(groups.coming_soon[c], 'coming_soon');
+  }
+
+  // Group 4: Planned
+  if (groups.planned.length > 0) {
+    html += '<div class="module-section-label"><i class="fas fa-road" style="color:var(--gray-400);margin-right:4px"></i> On our roadmap</div>';
+    for (var d = 0; d < groups.planned.length; d++) html += buildModuleCard(groups.planned[d], 'planned');
+  }
+
   grid.innerHTML = html;
 }
 
-function toggleModule(card, requiredPlan) {
-  if (card.classList.contains('locked')) {
-    var modName = card.querySelector('.mc-name').textContent;
-    var planLabel = requiredPlan.charAt(0).toUpperCase() + requiredPlan.slice(1);
-    MEDIHOST.toast('Upgrade to ' + planLabel + ' to access ' + modName, 'warning');
-    return;
+function buildModuleCard(m, state) {
+  var icon = m.icon || 'fa-cube';
+  var color = ICON_COLORS[icon] || '#9CA3AF';
+  var bgColor = color + '18'; // ~10% opacity hex
+  var minPlanLabel = (m.min_plan || 'business').charAt(0).toUpperCase() + (m.min_plan || 'business').slice(1);
+  var desc = m.description || '';
+  var key = m.module_key;
+
+  var classes = 'module-card ' + state;
+  if (state === 'included') classes += ' active';
+
+  var html = '<div class="' + classes + '" data-key="' + key + '" data-state="' + state + '" onclick="handleModuleClick(this,\'' + state + '\',\'' + (m.min_plan || '') + '\')">';
+  html += '<div class="mc-icon" style="background:' + bgColor + ';color:' + color + '"><i class="fas ' + icon + '"></i></div>';
+  html += '<div class="mc-name">' + esc(m.name) + '</div>';
+  html += '<div class="mc-desc">' + esc(state === 'coming_soon' && m.coming_soon_text ? m.coming_soon_text : desc) + '</div>';
+
+  if (state === 'included') {
+    html += '<span class="mc-badge mc-badge-included">In your plan</span>';
+    html += '<div class="mc-toggle"></div>';
+  } else if (state === 'locked') {
+    html += '<span class="mc-badge mc-badge-upgrade">Upgrade to ' + minPlanLabel + '</span>';
+    html += '<div class="mc-lock"><i class="fas fa-lock"></i></div>';
+  } else if (state === 'coming_soon') {
+    html += '<span class="mc-badge mc-badge-coming">Coming soon</span>';
+    html += '<button class="mc-waitlist-btn' + (joinedWaitlist[key] ? ' joined' : '') + '" onclick="event.stopPropagation();joinWaitlist(\'' + key + '\',this)">' +
+      (joinedWaitlist[key] ? '<i class="fas fa-check"></i> On the list!' : '<i class="fas fa-bell"></i> Notify me') + '</button>';
+    if (m.waitlist_count > 0) html += '<div class="mc-waitlist-count">' + m.waitlist_count + ' others waiting</div>';
+  } else if (state === 'planned') {
+    html += '<span class="mc-badge mc-badge-planned">Planned</span>';
   }
-  card.classList.toggle('active');
+
+  html += '</div>';
+  return html;
+}
+
+function esc(s) { return (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function handleModuleClick(card, state, minPlan) {
+  if (state === 'included') {
+    card.classList.toggle('active');
+  } else if (state === 'locked') {
+    var modName = card.querySelector('.mc-name').textContent;
+    var planLabel = minPlan.charAt(0).toUpperCase() + minPlan.slice(1);
+    MEDIHOST.toast('Upgrade to ' + planLabel + ' to access ' + modName, 'warning');
+  }
+  // coming_soon and planned: no toggle action
+}
+
+function joinWaitlist(moduleKey, btnEl) {
+  if (joinedWaitlist[moduleKey]) return;
+  var email = (partner && partner.email) || null;
+  var pid = (partner && partner.id) || null;
+
+  MEDIHOST.apiPost('/api/presence/pricing/modules/waitlist', { module_key: moduleKey, email: email, partner_id: pid }).then(function(data) {
+    if (data.success) {
+      joinedWaitlist[moduleKey] = true;
+      btnEl.classList.add('joined');
+      btnEl.innerHTML = '<i class="fas fa-check"></i> On the list!';
+      MEDIHOST.toast(data.message);
+    }
+  }).catch(function() {
+    MEDIHOST.toast('Failed to join waitlist', 'error');
+  });
+}
+
+// Legacy toggle (unused but keep for safety)
+function toggleModule(card, requiredPlan) {
+  handleModuleClick(card, card.getAttribute('data-state') || 'included', requiredPlan);
 }
 
 function getSelectedModules() {
