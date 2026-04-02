@@ -82,6 +82,18 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
 .coupon-banner i{font-size:16px}
 .coupon-banner .coupon-code{font-family:var(--heading);font-weight:800;background:var(--white);padding:2px 8px;border-radius:4px;letter-spacing:1px;margin-left:4px}
 
+/* ==================== BUSINESS TYPE ==================== */
+.btype-selector{margin-bottom:24px}
+.btype-selector-label{font-size:12px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.btype-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.btype-card{border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:12px 10px;cursor:pointer;transition:all .2s;text-align:center}
+.btype-card:hover{border-color:var(--gray-300)}
+.btype-card.selected{border-color:var(--green);background:var(--green-subtle)}
+.btype-card .bt-icon{width:32px;height:32px;border-radius:var(--radius);display:inline-flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:6px}
+.btype-card .bt-name{font-family:var(--heading);font-size:12px;font-weight:700;color:var(--dark)}
+.btype-card .bt-desc{font-size:10px;color:var(--gray-400);margin-top:2px;line-height:1.3}
+@media(max-width:480px){.btype-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* ==================== PLAN SELECTOR ==================== */
 .plan-selector{margin-bottom:24px}
 .plan-selector-label{font-size:12px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
@@ -241,6 +253,43 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
       <!-- SIGNUP FORM -->
       <form id="signupForm" autocomplete="on" novalidate>
 
+        <!-- BUSINESS TYPE -->
+        <div class="btype-selector" id="btypeSelector">
+          <div class="btype-selector-label">What describes you best?</div>
+          <div class="btype-grid">
+            <div class="btype-card selected" data-btype="clinic" onclick="selectBtype('clinic')">
+              <div class="bt-icon" style="background:#E6F1FB;color:#378ADD"><i class="fas fa-hospital"></i></div>
+              <div class="bt-name">Clinic / Hospital</div>
+              <div class="bt-desc">OPD, IPD, multi-specialty</div>
+            </div>
+            <div class="btype-card" data-btype="diagnostic_lab" onclick="selectBtype('diagnostic_lab')">
+              <div class="bt-icon" style="background:#EEEDFE;color:#7F77DD"><i class="fas fa-microscope"></i></div>
+              <div class="bt-name">Diagnostic Lab</div>
+              <div class="bt-desc">Pathology, radiology</div>
+            </div>
+            <div class="btype-card" data-btype="physiotherapy" onclick="selectBtype('physiotherapy')">
+              <div class="bt-icon" style="background:#E1F5EE;color:#1D9E75"><i class="fas fa-walking"></i></div>
+              <div class="bt-name">Physiotherapy</div>
+              <div class="bt-desc">Sessions, exercise plans</div>
+            </div>
+            <div class="btype-card" data-btype="pharmacy" onclick="selectBtype('pharmacy')">
+              <div class="bt-icon" style="background:#FDEEE8;color:#D85A30"><i class="fas fa-pills"></i></div>
+              <div class="bt-name">Pharmacy</div>
+              <div class="bt-desc">Inventory, POS, GST</div>
+            </div>
+            <div class="btype-card" data-btype="dental" onclick="selectBtype('dental')">
+              <div class="bt-icon" style="background:#FCE8EE;color:#D4537E"><i class="fas fa-tooth"></i></div>
+              <div class="bt-name">Dental Practice</div>
+              <div class="bt-desc">Dental charting, treatment</div>
+            </div>
+            <div class="btype-card" data-btype="other" onclick="selectBtype('other')">
+              <div class="bt-icon" style="background:#FFF3E0;color:#BA7517"><i class="fas fa-heartbeat"></i></div>
+              <div class="bt-name">Other Healthcare</div>
+              <div class="bt-desc">Ayurveda, homeopathy, etc.</div>
+            </div>
+          </div>
+        </div>
+
         <!-- PLAN SELECTOR -->
         <div class="plan-selector" id="planSelector">
           <div class="plan-selector-label">Select your plan</div>
@@ -251,16 +300,16 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
             </div>
             <div class="plan-card" data-plan="professional" onclick="selectPlan('professional')">
               <div class="plan-card-name">Professional</div>
-              <div class="plan-card-price"><strong>&rupee;1,499</strong>/mo</div>
+              <div class="plan-card-price"><strong>₹1,499</strong>/mo</div>
             </div>
             <div class="plan-card" data-plan="business" onclick="selectPlan('business')">
               <div class="plan-card-badge">Popular</div>
               <div class="plan-card-name">Business</div>
-              <div class="plan-card-price"><strong>&rupee;2,999</strong>/mo</div>
+              <div class="plan-card-price"><strong>₹2,999</strong>/mo</div>
             </div>
             <div class="plan-card" data-plan="enterprise" onclick="selectPlan('enterprise')">
               <div class="plan-card-name">Enterprise</div>
-              <div class="plan-card-price"><strong>&rupee;4,999</strong>/mo</div>
+              <div class="plan-card-price"><strong>₹4,999</strong>/mo</div>
             </div>
           </div>
         </div>
@@ -346,8 +395,8 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
   <!-- RIGHT: BENEFITS PANEL -->
   <div class="signup-right">
     <div class="benefits-panel">
-      <h2>Your clinic, live in 10 minutes</h2>
-      <p class="benefits-sub">Everything you need to run a modern clinic.</p>
+      <h2 id="benefitsTitle">Your clinic, live in 10 minutes</h2>
+      <p class="benefits-sub" id="benefitsSub">Everything you need to run a modern clinic.</p>
 
       <div class="benefit-item">
         <div class="benefit-icon green"><i class="fas fa-bolt"></i></div>
@@ -392,7 +441,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--heading);color:var(--dark);line-height:1.2}
 
       <div class="social-proof">
         <div class="sp-stat">500+</div>
-        <div class="sp-text">clinics trust MediHost across India</div>
+        <div class="sp-text">healthcare businesses trust MediHost across India</div>
       </div>
     </div>
   </div>
@@ -447,6 +496,36 @@ function init() {
     showCouponBanner(couponCode);
     validateCoupon(couponCode);
   }
+}
+
+// ==================== BUSINESS TYPE SELECTION ====================
+var selectedBtype = 'clinic';
+
+var BTYPE_CONFIG = {
+  clinic:         { label: 'Clinic / Hospital name', placeholder: 'City Care Clinic',        title: 'Your clinic, live in 10 minutes',       sub: 'Everything you need to run a modern clinic.' },
+  diagnostic_lab: { label: 'Laboratory name',        placeholder: 'PathCare Diagnostics',    title: 'Your lab, live in 10 minutes',           sub: 'LIS, test management, NABL-ready reports.' },
+  physiotherapy:  { label: 'Centre name',            placeholder: 'PhysioFirst Centre',      title: 'Your physio centre, live in 10 minutes', sub: 'Session tracking, exercise plans, billing.' },
+  pharmacy:       { label: 'Pharmacy name',          placeholder: 'MedPlus Pharmacy',        title: 'Your pharmacy, live in 10 minutes',      sub: 'Inventory, POS, GST billing, expiry alerts.' },
+  dental:         { label: 'Practice name',          placeholder: 'SmileCare Dental',        title: 'Your practice, live in 10 minutes',      sub: 'Dental charting, treatment plans, billing.' },
+  other:          { label: 'Business name',          placeholder: 'Your Healthcare Business', title: 'Your practice, live in 10 minutes',     sub: 'Everything you need to run a modern practice.' }
+};
+
+function selectBtype(type) {
+  selectedBtype = type;
+  var cards = document.querySelectorAll('.btype-card');
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].getAttribute('data-btype') === type) cards[i].classList.add('selected');
+    else cards[i].classList.remove('selected');
+  }
+  var cfg = BTYPE_CONFIG[type] || BTYPE_CONFIG.clinic;
+  var nameLabel = document.querySelector('label[for="businessName"]');
+  var nameInput = document.getElementById('businessName');
+  if (nameLabel) nameLabel.innerHTML = cfg.label + '<span class="req">*</span>' ;
+  if (nameInput) nameInput.placeholder = cfg.placeholder;
+  var titleEl = document.getElementById('benefitsTitle');
+  var subEl = document.getElementById('benefitsSub');
+  if (titleEl) titleEl.textContent = cfg.title;
+  if (subEl) subEl.textContent = cfg.sub;
 }
 
 // ==================== PLAN SELECTION ====================
@@ -624,7 +703,8 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     phone: document.getElementById('phone').value.trim() || undefined,
     city: document.getElementById('city').value.trim() || undefined,
     plan_tier: selectedPlan,
-    signup_source: signupSource
+    signup_source: signupSource,
+    partner_type: selectedBtype
   };
 
   // Add invite token if present
