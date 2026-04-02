@@ -222,26 +222,15 @@ img{max-width:100%}
 </div>
 
 <!-- S4: HERO FORM -->
-<div class="hero-form" id="heroForm">
-  <label>Tell us about your practice</label>
-  <div class="hf-row">
-    <input type="text" class="hf-input" id="hfName" placeholder="Your practice name">
-    <select class="hf-select" id="hfType">
-      <option value="dental">Dental</option>
-      <option value="clinic" selected>Clinic / Hospital</option>
-      <option value="diagnostic">Diagnostic lab</option>
-      <option value="physio">Physiotherapy</option>
-      <option value="pharmacy">Pharmacy</option>
-      <option value="multispecialty">Multi-specialty</option>
-      <option value="ayurveda">Ayurveda</option>
-      <option value="homeopathy">Homeopathy</option>
-    </select>
+<div id="heroForm" style="max-width:560px;margin:0 auto 14px;padding:0 20px">
+  <div style="display:flex;border:2px solid #0F6E56;border-radius:10px;overflow:hidden">
+    <input type="text" id="hfName" placeholder="Try: Rajitha Dental Clinic Hyderabad" style="flex:1;padding:14px 18px;border:none;font-size:15px;outline:none;background:transparent;color:var(--dark)" />
+    <button id="heroBtn" onclick="searchDomains()" style="padding:14px 28px;background:#0F6E56;color:#fff;border:none;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.3"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Search
+    </button>
   </div>
-  <div class="hf-row">
-    <input type="text" class="hf-input" id="hfCity" placeholder="City">
-  </div>
-  <button class="hf-btn" id="heroBtn" onclick="searchDomains()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Show me what MediHost AI builds for my practice</button>
-  <div class="hf-note"><span class="dot"></span> <b>MediHost AI</b>&nbsp;finds your domain, designs your site, writes your posts</div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--gray-400);display:flex;align-items:center;justify-content:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span> <b style="color:var(--green-text);font-weight:600">MediHost AI</b>&nbsp;finds your domain, designs your site, writes your posts</div>
 </div>
 
 <!-- DOMAIN RESULTS (populated by JS) -->
@@ -405,8 +394,8 @@ var heroSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 
 function searchDomains() {
   var name = document.getElementById('hfName').value.trim();
-  var type = document.getElementById('hfType').value;
-  var city = document.getElementById('hfCity').value.trim();
+  var type = '';
+  var city = '';
   if (!name) { document.getElementById('hfName').focus(); return; }
 
   var btn = document.getElementById('heroBtn');
@@ -499,8 +488,8 @@ function checkManualDomain() {
   var PRICES = { 'com': 799, 'in': 299, 'co.in': 199, 'org': 899 };
   var price = PRICES[tld] || 799;
   var name = document.getElementById('hfName').value || '';
-  var type = document.getElementById('hfType').value || '';
-  var city = document.getElementById('hfCity').value || '';
+  var type = '';
+  var city = '';
   var enc = '&name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
 
   var row = document.createElement('div');
@@ -516,7 +505,23 @@ function checkManualDomain() {
 }
 
 // Enter key on city input
-document.getElementById('hfCity').addEventListener('keydown', function(e) { if (e.key === 'Enter') searchDomains(); });
+document.getElementById('hfName').addEventListener('keydown', function(e) { if (e.key === 'Enter') searchDomains(); });
+
+// Rotating placeholder examples
+var placeholders = [
+  'Try: Rajitha Dental Clinic Hyderabad',
+  'Try: Dr Sharma Physiotherapy Mumbai',
+  'Try: City Diagnostic Lab Bangalore',
+  'Try: Green Pharmacy Chennai',
+  'Try: Sunrise Hospital Delhi',
+  'Try: Smile Dental Care Pune'
+];
+var phIdx = 0;
+setInterval(function() {
+  phIdx = (phIdx + 1) % placeholders.length;
+  var el = document.getElementById('hfName');
+  if (el && !el.value) el.placeholder = placeholders[phIdx];
+}, 3000);
 </script>
 </body>
 </html>
