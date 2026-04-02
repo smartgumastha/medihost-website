@@ -494,29 +494,25 @@ function checkManualDomain() {
   var domain = (document.getElementById('manualDomain').value || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
   var tld = (document.getElementById('manualTld').value || '.com').replace('.', '');
   if (!domain) return;
-  var btn = event.target; btn.textContent = '...';
-  fetch(MEDIHOST.API_BASE + '/api/presence/domains/check?domain=' + encodeURIComponent(domain) + '&tld=' + encodeURIComponent(tld))
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      btn.textContent = 'Check';
-      var name = document.getElementById('hfName').value.trim();
-      var type = document.getElementById('hfType').value;
-      var city = document.getElementById('hfCity').value.trim();
-      var enc = '&name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
-      var row = document.createElement('div');
-      if (data.success && data.available) {
-        row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0';
-        row.innerHTML = '<span style="font-size:14px;font-weight:500;color:#085041">' + data.domain + '</span><a href="/signup.html?domain=' + encodeURIComponent(data.domain) + enc + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Get it</a>';
-      } else {
-        row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#FBEAF0;border-radius:8px;margin:4px 0';
-        row.innerHTML = '<span style="font-size:13px;color:#72243E">' + domain + '.' + tld + '</span><span style="font-size:11px;color:#72243E">not available</span>';
-      }
-      var resultsDiv = document.getElementById('domainResults');
-      var manualSection = resultsDiv.querySelector('[style*="border-top"]');
-      if (manualSection) resultsDiv.insertBefore(row, manualSection);
-      else resultsDiv.appendChild(row);
-    })
-    .catch(function() { btn.textContent = 'Check'; });
+
+  var fullDomain = domain + '.' + tld;
+  var PRICES = { 'com': 799, 'in': 299, 'co.in': 199, 'org': 899 };
+  var price = PRICES[tld] || 799;
+  var name = document.getElementById('hfName').value || '';
+  var type = document.getElementById('hfType').value || '';
+  var city = document.getElementById('hfCity').value || '';
+  var enc = '&name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
+
+  var row = document.createElement('div');
+  row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0';
+  row.innerHTML = '<span style="font-size:14px;font-weight:500;color:#085041">' + fullDomain + '</span><span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + price + '/yr</span><a href="/signup.html?domain=' + encodeURIComponent(fullDomain) + enc + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
+
+  var resultsDiv = document.getElementById('domainResults');
+  var manualSection = resultsDiv.querySelector('div[style*="border-top"]');
+  if (manualSection) resultsDiv.insertBefore(row, manualSection);
+  else resultsDiv.appendChild(row);
+
+  document.getElementById('manualDomain').value = '';
 }
 
 // Enter key on city input
