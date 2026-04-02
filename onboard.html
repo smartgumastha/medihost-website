@@ -3,862 +3,643 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MediHost — Get Your Clinic Online</title>
-<meta name="description" content="Join 500+ healthcare providers on MediHost. Free website, hosting, HMS, LIS. Get started in 5 minutes.">
+<title>Set Up Your Clinic — MediHost™</title>
+<meta name="description" content="Complete your MediHost clinic setup in 4 easy steps.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#fff;--bg2:#f7f9f8;--bg3:#eef2f0;--dark:#0f1b15;--mint:#0FA67A;--mint2:#0B8C66;--mint-l:#e6f7f0;--purple:#6C5CE7;--purple-l:#f0eeff;--text:#1a2e22;--text2:#4a6355;--text3:#7a9489;--red:#e74c3c;--border:#e5ebe8;--border2:#d0dbd5;--r:12px;--r2:16px;--f:'Plus Jakarta Sans',system-ui,sans-serif;--shadow:0 2px 12px rgba(15,27,21,.06);--shadow2:0 8px 30px rgba(15,27,21,.1)}
-html{scroll-behavior:smooth}
-body{font-family:var(--f);background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+:root{
+  --green:#1D9E75;--green-dark:#178A65;--green-light:#E8F7F1;--green-subtle:#F4FBF8;
+  --dark:#111827;--gray-700:#374151;--gray-600:#4B5563;--gray-500:#6B7280;--gray-400:#9CA3AF;
+  --gray-300:#D1D5DB;--gray-200:#E5E7EB;--gray-100:#F3F4F6;--gray-50:#F9FAFB;--white:#FFFFFF;
+  --red:#EF4444;--amber:#F59E0B;--blue:#3B82F6;--purple:#8B5CF6;
+  --heading:'Plus Jakarta Sans',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 1px 3px rgba(0,0,0,.1);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1);
+  --radius:8px;--radius-lg:12px;--radius-xl:16px;
+}
+html{height:100%}
+body{font-family:var(--body);color:var(--gray-700);background:var(--gray-50);min-height:100%;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
 
-/* NAV — exact copy from index.html */
-nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.c{max-width:1200px;margin:0 auto;padding:0 32px}
-.nav-brand{display:flex;align-items:center;gap:10px}
-.nav-icon{width:36px;height:36px;background:var(--mint);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff}
-.nav-word{font-size:22px;font-weight:800;color:var(--dark);letter-spacing:-.5px}
-.nav-word em{font-style:normal;color:var(--mint)}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:14px;font-weight:500;color:var(--text2);transition:color .2s}
-.nav-links a:hover{color:var(--mint)}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-weight:700;border:none;cursor:pointer;transition:all .25s;border-radius:10px}
-.btn-sm{padding:10px 22px;font-size:14px}
-.btn-mint{background:var(--mint);color:#fff}
-.btn-mint:hover{background:var(--mint2);transform:translateY(-1px);box-shadow:var(--shadow2)}
+/* TOP BAR */
+.top-bar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar-left{display:flex;align-items:center;gap:16px}
+.top-bar-logo{font-family:var(--heading);font-size:20px;font-weight:800;letter-spacing:-.5px}
+.top-bar-logo .medi{color:var(--dark)}.top-bar-logo .host{color:var(--green)}
+.top-bar-logo .tm{font-size:9px;color:var(--gray-400);vertical-align:super;margin-left:1px}
+.top-bar-step{font-size:13px;font-weight:600;color:var(--gray-500)}
+.top-bar-step span{color:var(--green)}
+.top-bar-right{font-size:13px;color:var(--gray-500);display:flex;align-items:center;gap:8px}
+.top-bar-right i{color:var(--green)}
 
-/* PROGRESS BAR */
-.progress-bar{position:fixed;top:68px;left:0;right:0;z-index:998;background:#fff;border-bottom:1px solid var(--border);padding:16px 0;display:none}
-.progress-bar.visible{display:block}
-.progress-inner{display:flex;align-items:center;justify-content:center;gap:0;max-width:320px;margin:0 auto}
-.prog-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--text3);background:#fff;position:relative;z-index:2;transition:all .3s}
-.prog-dot.active{border-color:var(--mint);background:var(--mint);color:#fff}
-.prog-dot.done{border-color:var(--mint);background:var(--mint-l);color:var(--mint)}
-.prog-line{width:48px;height:2.5px;background:var(--border2);transition:background .3s}
-.prog-line.active{background:var(--mint)}
+/* PROGRESS */
+.progress-section{background:var(--white);border-bottom:1px solid var(--gray-200);padding:16px 24px}
+.progress-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:0}
+.prog-step{display:flex;align-items:center;gap:0;flex:1}
+.prog-step:last-child{flex:0}
+.prog-dot{width:36px;height:36px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;font-family:var(--heading);font-size:13px;font-weight:700;color:var(--gray-400);background:var(--white);cursor:pointer;transition:all .2s;flex-shrink:0;position:relative}
+.prog-dot.done{border-color:var(--green);background:var(--green);color:var(--white)}
+.prog-dot.active{border-color:var(--green);color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,.15)}
+.prog-dot.future{cursor:default}
+.prog-label{position:absolute;top:42px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;color:var(--gray-400);white-space:nowrap}
+.prog-dot.done .prog-label,.prog-dot.active .prog-label{color:var(--green)}
+.prog-line{flex:1;height:2px;background:var(--gray-200);margin:0 4px;transition:background .3s}
+.prog-line.done{background:var(--green)}
 
-/* MAIN CONTAINER */
-.onboard-wrap{min-height:100vh;padding-top:68px;display:flex;align-items:center;justify-content:center}
-.onboard-wrap.has-progress{padding-top:132px}
-.step{display:none;width:100%;max-width:480px;margin:0 auto;padding:40px 24px 60px;animation:fadeIn .4s ease}
-.step.wide{max-width:800px}
-.step.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+/* CONTENT */
+.wizard-body{padding:40px 24px 100px;min-height:calc(100vh - 56px - 80px)}
+.wizard-card{max-width:640px;margin:0 auto;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow)}
+.wizard-card h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+.wizard-card .step-sub{font-size:14px;color:var(--gray-500);margin-bottom:28px}
 
-/* CARD */
-.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:36px 32px;box-shadow:var(--shadow)}
-.card-logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
-.card h2{font-size:26px;font-weight:800;color:var(--dark);text-align:center;letter-spacing:-.5px;margin-bottom:6px;line-height:1.2}
-.card .sub{font-size:14px;color:var(--text3);text-align:center;margin-bottom:28px}
-
-/* FORM ELEMENTS */
-.form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
-.form-group input,.form-group select{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:var(--f);outline:none;color:var(--text);background:#fff;transition:border-color .2s}
-.form-group input:focus,.form-group select:focus{border-color:var(--mint)}
-.form-group input::placeholder{color:var(--text3)}
-.form-group select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a9489' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
-.phone-row{display:flex;gap:8px;align-items:stretch}
-.phone-prefix{padding:13px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:600;color:var(--text2);background:var(--bg2);white-space:nowrap;display:flex;align-items:center}
-.phone-row input{flex:1}
-.form-error{font-size:12px;color:var(--red);margin-top:6px;display:none}
+/* FORM */
+.form-group{margin-bottom:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:5px}
+.form-label .req{color:var(--red);margin-left:2px}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;font-family:var(--body);font-size:14px;color:var(--dark);background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);outline:none;transition:border-color .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--green)}
+.form-textarea{resize:vertical;min-height:60px}
+.form-select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%239CA3AF'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.form-error{font-size:12px;color:var(--red);margin-top:4px;display:none}
 .form-error.show{display:block}
 
-/* OTP BOXES */
-.otp-wrap{display:flex;gap:10px;justify-content:center;margin:24px 0}
-.otp-box{width:48px;height:56px;border:1.5px solid var(--border);border-radius:10px;text-align:center;font-size:22px;font-weight:700;font-family:var(--f);color:var(--dark);outline:none;transition:border-color .2s}
-.otp-box:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(15,166,122,.1)}
-.otp-timer{font-size:13px;color:var(--text3);text-align:center;margin-top:12px}
-.otp-timer a{color:var(--mint);font-weight:600;cursor:pointer}
+/* CHECKBOX GROUP */
+.checkbox-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.day-check{display:flex;align-items:center;gap:4px;padding:6px 12px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:12px;font-weight:600;color:var(--gray-600);cursor:pointer;transition:all .15s;user-select:none}
+.day-check:hover{border-color:var(--gray-300)}
+.day-check.checked{border-color:var(--green);background:var(--green-light);color:var(--green)}
+.day-check input{display:none}
 
-/* BUTTONS */
-.btn-full{width:100%;padding:15px 24px;font-size:16px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:var(--f);transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary{background:var(--mint);color:#fff}
-.btn-primary:hover{background:var(--mint2);transform:translateY(-1px);box-shadow:var(--shadow2)}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-outline-full{background:#fff;color:var(--dark);border:1.5px solid var(--border2)}
-.btn-outline-full:hover{border-color:var(--mint);color:var(--mint)}
-.btn-google{border-color:#4285f4;color:#4285f4}
-.btn-google:hover{background:#f0f4ff;border-color:#4285f4;color:#4285f4}
-.btn-fb{border-color:#1877f2;color:#1877f2}
-.btn-fb:hover{background:#f0f4ff;border-color:#1877f2;color:#1877f2}
-.skip-link{display:block;text-align:center;margin-top:18px;font-size:14px;color:var(--text3);font-weight:600;cursor:pointer;transition:color .2s}
-.skip-link:hover{color:var(--mint)}
+/* MODULE CARDS */
+.module-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.module-card{border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative}
+.module-card:hover{border-color:var(--gray-300)}
+.module-card.active{border-color:var(--green);background:var(--green-subtle)}
+.module-card.locked{opacity:.5;cursor:not-allowed}
+.module-card .mc-icon{width:36px;height:36px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
+.module-card .mc-name{font-family:var(--heading);font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px}
+.module-card .mc-desc{font-size:11px;color:var(--gray-500);line-height:1.4}
+.module-card .mc-badge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px}
+.mc-badge-included{background:var(--green-light);color:var(--green)}
+.mc-badge-upgrade{background:#FEF3C7;color:#D97706}
+.mc-toggle{position:absolute;top:14px;right:14px;width:36px;height:20px;border-radius:99px;background:var(--gray-200);transition:background .2s;cursor:pointer}
+.mc-toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--white);transition:transform .2s;box-shadow:var(--shadow-sm)}
+.module-card.active .mc-toggle{background:var(--green)}
+.module-card.active .mc-toggle::after{transform:translateX(16px)}
 
-/* SPINNER */
-.spinner{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
-.spinner.dark{border-color:rgba(0,0,0,.1);border-top-color:var(--mint)}
+/* BRANDING */
+.upload-zone{border:2px dashed var(--gray-200);border-radius:var(--radius-lg);padding:32px;text-align:center;cursor:pointer;transition:all .2s}
+.upload-zone:hover{border-color:var(--green);background:var(--green-subtle)}
+.upload-zone i{font-size:28px;color:var(--gray-400);margin-bottom:8px}
+.upload-zone p{font-size:13px;color:var(--gray-500)}
+.upload-zone .small{font-size:11px;color:var(--gray-400);margin-top:4px}
+.upload-preview{width:80px;height:80px;border-radius:var(--radius-lg);border:1px solid var(--gray-200);object-fit:contain;display:none;margin:0 auto 12px}
+.color-row{display:flex;gap:12px;align-items:center;margin-top:8px}
+.color-pick{width:40px;height:40px;border-radius:var(--radius);border:2px solid var(--gray-200);cursor:pointer;padding:0;overflow:hidden}
+.color-pick input{width:100%;height:100%;border:none;cursor:pointer;padding:0}
+.color-label{font-size:12px;color:var(--gray-500)}
+.color-hex{font-family:monospace;font-size:12px;color:var(--dark);font-weight:600}
+
+/* SUMMARY */
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.summary-card{background:var(--gray-50);border-radius:var(--radius);padding:16px}
+.summary-card h4{font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.summary-item{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.summary-item .si-label{color:var(--gray-500)}
+.summary-item .si-value{font-weight:600;color:var(--dark)}
+.summary-modules{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.summary-modules span{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--green-light);color:var(--green);font-weight:600}
+.summary-plan{padding:16px;border-radius:var(--radius-lg);border:1.5px solid var(--green);background:var(--green-subtle);text-align:center;margin-bottom:20px}
+.summary-plan .sp-name{font-family:var(--heading);font-size:18px;font-weight:700;color:var(--green)}
+.summary-plan .sp-sub{font-size:12px;color:var(--gray-500);margin-top:4px}
+
+/* FOOTER BUTTONS */
+.wizard-footer{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--gray-200);padding:16px 24px;z-index:99}
+.wizard-footer-inner{max-width:640px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--heading);font-weight:600;border:none;cursor:pointer;transition:all .2s;font-size:14px;border-radius:var(--radius-lg);padding:12px 28px}
+.btn-green{background:var(--green);color:var(--white)}
+.btn-green:hover{background:var(--green-dark)}
+.btn-green:disabled{background:var(--gray-300);cursor:not-allowed}
+.btn-outline{background:transparent;color:var(--gray-600);border:1.5px solid var(--gray-200)}
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
+.btn-ghost{background:none;border:none;color:var(--gray-500);padding:12px 16px}
+.btn-ghost:hover{color:var(--green)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* CONNECT CARDS */
-.connect-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-.connect-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:24px 20px;text-align:center;transition:all .3s}
-.connect-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
-.connect-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;margin:0 auto 12px}
-.connect-icon.g{background:#e8f0fe;color:#4285f4}
-.connect-icon.fb{background:#e7f0fd;color:#1877f2}
-.connect-card h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
-.connect-card p{font-size:11px;color:var(--text3);line-height:1.4;margin-bottom:14px;min-height:32px}
-
-/* PLAN CARDS (compact) */
-.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
-.plan-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:20px 16px;cursor:pointer;transition:all .3s;position:relative}
-.plan-card:hover{border-color:var(--mint);box-shadow:var(--shadow)}
-.plan-card.selected{border-color:var(--mint);background:var(--mint-l)}
-.plan-card.pop{border-color:var(--purple)}
-.plan-card .pop-badge{position:absolute;top:-10px;right:12px;background:var(--purple);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.04em}
-.plan-card h4{font-size:16px;font-weight:800;color:var(--dark);margin-bottom:2px}
-.plan-card .price{font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px}
-.plan-card .price span{font-size:13px;font-weight:400;color:var(--text3)}
-.plan-card .price.free{color:var(--mint)}
-.plan-card .desc{font-size:11px;color:var(--text3);line-height:1.4}
-
-/* STEP 4 — WELCOME */
-.welcome-check{font-size:64px;text-align:center;margin-bottom:16px}
-.checklist{list-style:none;margin:24px 0}
-.checklist li{padding:10px 0;font-size:14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
-.checklist li:last-child{border-bottom:none}
-.check-done{color:var(--mint);font-weight:700;font-size:16px}
-.check-pending{color:var(--border2);font-size:16px}
-.checklist .action{margin-left:auto;font-size:12px;color:var(--mint);font-weight:600;cursor:pointer}
-
-/* SECTION HEADING inside steps */
-.step-heading{font-size:22px;font-weight:800;color:var(--dark);margin-bottom:6px;letter-spacing:-.3px}
-.step-sub{font-size:14px;color:var(--text3);margin-bottom:24px}
-.section-label-sm{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--mint);font-weight:700;margin-bottom:8px}
-.trial-note{font-size:12px;color:var(--text3);text-align:center;margin-top:12px;font-style:italic}
-
-/* GLOBAL ERROR / TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;z-index:9999;display:none;box-shadow:var(--shadow2)}
-.toast.error{background:var(--red)}
-.toast.show{display:block;animation:fadeIn .3s ease}
+/* STEP VISIBILITY */
+.step{display:none}
+.step.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  .nav-links{display:none}
-  .connect-grid{grid-template-columns:1fr}
-  .plan-grid{grid-template-columns:1fr}
-  .step{padding:24px 16px 48px}
-  .card{padding:28px 20px}
-  .otp-box{width:42px;height:50px;font-size:20px}
+  .wizard-card{padding:24px 20px}
+  .form-row,.form-row-3{grid-template-columns:1fr}
+  .module-grid{grid-template-columns:1fr}
+  .summary-grid{grid-template-columns:1fr}
+  .wizard-body{padding:24px 16px 100px}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV — exact copy from index.html -->
-<nav><div class="c" style="display:flex;align-items:center;justify-content:space-between;height:68px">
-<a href="/" class="nav-brand"><div class="nav-icon">M</div><div class="nav-word">Medi<em>Host</em></div></a>
-<div class="nav-links"><a href="/#pricing">Pricing</a><a href="/#features">Features</a><a href="/#types">Who it's for</a><a href="/#how">How it works</a><a href="/onboard.html" class="btn btn-sm btn-mint">Get Started Free</a></div>
-</div></nav>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="top-bar-logo"><span class="medi">Medi</span><span class="host">Host</span><span class="tm">&trade;</span></div>
+    <div class="top-bar-step">Step <span id="stepNum">1</span> of 4</div>
+  </div>
+  <div class="top-bar-right"><i class="fas fa-user-circle"></i> <span id="partnerName">...</span></div>
+</div>
 
 <!-- PROGRESS BAR -->
-<div class="progress-bar" id="progress-bar">
-<div class="progress-inner">
-<div class="prog-dot active" data-step="1">1</div>
-<div class="prog-line" data-after="1"></div>
-<div class="prog-dot" data-step="2">2</div>
-<div class="prog-line" data-after="2"></div>
-<div class="prog-dot" data-step="3">3</div>
-<div class="prog-line" data-after="3"></div>
-<div class="prog-dot" data-step="4">4</div>
-</div>
+<div class="progress-section">
+  <div class="progress-inner">
+    <div class="prog-step"><div class="prog-dot active" data-step="1" onclick="goToStep(1)">1<span class="prog-label">Clinic</span></div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot future" data-step="2" onclick="goToStep(2)">2<span class="prog-label">Modules</span></div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot future" data-step="3" onclick="goToStep(3)">3<span class="prog-label">Branding</span></div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot future" data-step="4" onclick="goToStep(4)">4<span class="prog-label">Review</span></div></div>
+  </div>
 </div>
 
-<div class="onboard-wrap" id="onboard-wrap">
+<!-- WIZARD CONTENT -->
+<div class="wizard-body">
 
-<!-- ======================== STEP 1: PHONE OTP ======================== -->
-<div class="step active" id="step-1">
-<div class="card">
-<div class="card-logo">
-<div class="nav-icon">M</div>
-<div class="nav-word">Medi<em>Host</em></div>
-</div>
-<h2>Get your clinic online in 5 minutes</h2>
-<p class="sub">Join 500+ healthcare providers on MediHost</p>
+  <!-- STEP 1: CLINIC INFO -->
+  <div class="step active" id="step-1">
+    <div class="wizard-card">
+      <h2>Tell us about your clinic</h2>
+      <p class="step-sub">This information appears on your receipts, website, and profile.</p>
+      <div class="form-group">
+        <label class="form-label">Clinic / Hospital name<span class="req">*</span></label>
+        <input class="form-input" id="s1_name" placeholder="Sharma Clinic & Diagnostics">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Clinic type<span class="req">*</span></label>
+          <select class="form-select" id="s1_type">
+            <option value="">Select type</option>
+            <option value="general_practice">General Practice</option>
+            <option value="multi_specialty">Multi-Specialty</option>
+            <option value="single_specialty">Single Specialty</option>
+            <option value="dental">Dental Clinic</option>
+            <option value="eye">Eye Clinic</option>
+            <option value="diagnostic_lab">Diagnostic Lab</option>
+            <option value="pharmacy">Pharmacy</option>
+            <option value="physiotherapy">Physiotherapy Centre</option>
+            <option value="ayurveda_homeopathy">Ayurveda / Homeopathy</option>
+            <option value="veterinary">Veterinary</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone<span class="req">*</span></label>
+          <input class="form-input" id="s1_phone" placeholder="9876543210" type="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <textarea class="form-textarea" id="s1_address" rows="2" placeholder="123 Main Road, Near City Hospital"></textarea>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">City<span class="req">*</span></label>
+          <input class="form-input" id="s1_city" placeholder="Mumbai">
+        </div>
+        <div class="form-group">
+          <label class="form-label">State<span class="req">*</span></label>
+          <select class="form-select" id="s1_state">
+            <option value="">Select</option>
+            <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">PIN code<span class="req">*</span></label>
+          <input class="form-input" id="s1_pincode" placeholder="400001" maxlength="6" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Opening time</label>
+          <select class="form-select" id="s1_open"><option value="08:00">8:00 AM</option><option value="08:30">8:30 AM</option><option value="09:00" selected>9:00 AM</option><option value="09:30">9:30 AM</option><option value="10:00">10:00 AM</option><option value="10:30">10:30 AM</option><option value="11:00">11:00 AM</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Closing time</label>
+          <select class="form-select" id="s1_close"><option value="17:00">5:00 PM</option><option value="17:30">5:30 PM</option><option value="18:00">6:00 PM</option><option value="18:30">6:30 PM</option><option value="19:00">7:00 PM</option><option value="19:30">7:30 PM</option><option value="20:00" selected>8:00 PM</option><option value="20:30">8:30 PM</option><option value="21:00">9:00 PM</option><option value="21:30">9:30 PM</option><option value="22:00">10:00 PM</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Working days</label>
+        <div class="checkbox-row" id="s1_days">
+          <label class="day-check checked"><input type="checkbox" value="Mon" checked> Mon</label>
+          <label class="day-check checked"><input type="checkbox" value="Tue" checked> Tue</label>
+          <label class="day-check checked"><input type="checkbox" value="Wed" checked> Wed</label>
+          <label class="day-check checked"><input type="checkbox" value="Thu" checked> Thu</label>
+          <label class="day-check checked"><input type="checkbox" value="Fri" checked> Fri</label>
+          <label class="day-check checked"><input type="checkbox" value="Sat" checked> Sat</label>
+          <label class="day-check"><input type="checkbox" value="Sun"> Sun</label>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- Phone input -->
-<div id="phone-section">
-<div class="form-group">
-<label>Mobile Number</label>
-<div class="phone-row">
-<div class="phone-prefix">+91</div>
-<input type="tel" id="phone-input" maxlength="10" placeholder="Enter mobile number" inputmode="numeric" pattern="[0-9]*">
-</div>
-<div class="form-error" id="phone-error"></div>
-</div>
-<button class="btn-full btn-primary" id="btn-send-otp" onclick="sendOtp()">Send OTP</button>
+  <!-- STEP 2: MODULES -->
+  <div class="step" id="step-2">
+    <div class="wizard-card">
+      <h2>Choose your modules</h2>
+      <p class="step-sub">Select what you need. You can change these anytime from settings.</p>
+      <div class="module-grid" id="moduleGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP 3: BRANDING -->
+  <div class="step" id="step-3">
+    <div class="wizard-card">
+      <h2>Brand your clinic</h2>
+      <p class="step-sub">Upload your logo and pick your brand colors. This shows on your website, dashboard, and receipts.</p>
+      <div class="form-group">
+        <label class="form-label">Clinic logo</label>
+        <img class="upload-preview" id="logoPreview">
+        <div class="upload-zone" id="logoZone" onclick="document.getElementById('logoInput').click()">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>Click to upload your logo</p>
+          <p class="small">PNG, JPG, SVG &middot; Max 2 MB &middot; Square recommended</p>
+        </div>
+        <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="previewLogo(this)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Brand colors</label>
+        <div class="color-row">
+          <div class="color-pick"><input type="color" id="s3_primary" value="#1D9E75" onchange="updateColorHex(this,'primaryHex')"></div>
+          <div><div class="color-label">Primary color</div><div class="color-hex" id="primaryHex">#1D9E75</div></div>
+        </div>
+        <div class="color-row" style="margin-top:12px">
+          <div class="color-pick"><input type="color" id="s3_secondary" value="#111827" onchange="updateColorHex(this,'secondaryHex')"></div>
+          <div><div class="color-label">Text / dark color</div><div class="color-hex" id="secondaryHex">#111827</div></div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Website tagline</label>
+          <input class="form-input" id="s3_tagline" placeholder="Your health, our priority">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp number (for website)</label>
+          <input class="form-input" id="s3_whatsapp" placeholder="919876543210">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: REVIEW -->
+  <div class="step" id="step-4">
+    <div class="wizard-card">
+      <h2>Review &amp; launch</h2>
+      <p class="step-sub">Everything looks good? Hit "Complete setup" and you're live!</p>
+      <div class="summary-plan">
+        <div class="sp-name" id="summaryPlan">Starter Plan</div>
+        <div class="sp-sub" id="summaryPlanSub">Free forever</div>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h4>Clinic Details</h4>
+          <div id="summaryClinic"></div>
+        </div>
+        <div class="summary-card">
+          <h4>Schedule</h4>
+          <div id="summarySchedule"></div>
+        </div>
+      </div>
+      <div class="summary-card" style="margin-top:16px">
+        <h4>Active Modules</h4>
+        <div class="summary-modules" id="summaryModules"></div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- OTP input (hidden initially) -->
-<div id="otp-section" style="display:none">
-<p style="font-size:14px;color:var(--text2);text-align:center;margin-bottom:4px">Enter the 6-digit code sent to</p>
-<p style="font-size:16px;font-weight:700;color:var(--dark);text-align:center;margin-bottom:8px" id="otp-phone-display"></p>
-<div class="otp-wrap" id="otp-boxes"></div>
-<div class="form-error" id="otp-error" style="text-align:center"></div>
-<button class="btn-full btn-primary" id="btn-verify-otp" onclick="verifyOtp()">Verify OTP</button>
-<div class="otp-timer" id="otp-timer"></div>
-<p style="text-align:center;margin-top:14px"><a style="font-size:13px;color:var(--text3);cursor:pointer" onclick="changePhone()">Change phone number</a></p>
+<!-- FOOTER BUTTONS -->
+<div class="wizard-footer">
+  <div class="wizard-footer-inner">
+    <button class="btn btn-ghost" id="btnBack" onclick="prevStep()" style="visibility:hidden"><i class="fas fa-arrow-left"></i> Back</button>
+    <button class="btn btn-green" id="btnNext" onclick="nextStep()">Continue <i class="fas fa-arrow-right" style="font-size:12px"></i></button>
+  </div>
 </div>
 
-<p style="font-size:11px;color:var(--text3);text-align:center;margin-top:20px">By continuing, you agree to our Terms of Service and Privacy Policy</p>
-</div>
-</div>
-
-<!-- ======================== STEP 2: BUSINESS DETAILS ======================== -->
-<div class="step" id="step-2">
-<div class="step-heading">Tell us about your practice</div>
-<div class="step-sub">This helps us set up your website and profile</div>
-
-<div class="card">
-<div class="form-group">
-<label>Business / Clinic Name *</label>
-<input type="text" id="f-business" placeholder="Dr. Sharma's Clinic" required>
-</div>
-<div class="form-group">
-<label>Type of Practice *</label>
-<select id="f-type">
-<option value="">Select Type</option>
-<option value="clinic">Clinic</option>
-<option value="hospital">Hospital</option>
-<option value="diagnostic_lab">Diagnostic Lab</option>
-<option value="pharmacy">Pharmacy</option>
-<option value="physiotherapy">Physiotherapy Center</option>
-<option value="nursing_home">Nursing Home</option>
-</select>
-</div>
-<div class="form-group">
-<label>Owner / Doctor Name *</label>
-<input type="text" id="f-owner" placeholder="Dr. Full Name">
-</div>
-<div class="form-group">
-<label>City *</label>
-<input type="text" id="f-city" placeholder="Hyderabad">
-</div>
-<div class="form-group">
-<label>Pincode *</label>
-<input type="tel" id="f-pincode" maxlength="6" placeholder="500001" inputmode="numeric" pattern="[0-9]*">
-</div>
-<div class="form-group">
-<label>Email (optional)</label>
-<input type="email" id="f-email" placeholder="clinic@email.com">
-</div>
-<div class="form-error" id="step2-error" style="text-align:center"></div>
-<button class="btn-full btn-primary" id="btn-step2" onclick="submitProfile()">Continue</button>
-</div>
-</div>
-
-<!-- ======================== STEP 3: CONNECT + PLAN ======================== -->
-<div class="step wide" id="step-3">
-
-<!-- Section A: Connect Accounts -->
-<div class="section-label-sm">Optional</div>
-<div class="step-heading">Supercharge your online presence</div>
-<div class="step-sub">Connect your accounts to auto-create business profiles and AI-powered marketing</div>
-
-<div class="connect-grid">
-<div class="connect-card">
-<div class="connect-icon g">G</div>
-<h4>Connect Google Account</h4>
-<p>Auto-create Google Business Profile, manage reviews, show on Google Maps</p>
-<button class="btn-full btn-outline-full btn-google" onclick="connectGoogle()">Connect Google</button>
-</div>
-<div class="connect-card">
-<div class="connect-icon fb">f</div>
-<h4>Connect Facebook &amp; Instagram</h4>
-<p>Auto-create clinic page, AI posts 3x/week, patient engagement</p>
-<button class="btn-full btn-outline-full btn-fb" onclick="connectFacebook()">Connect Facebook</button>
-</div>
-</div>
-<div class="skip-link" onclick="skipConnect()">Skip for now</div>
-
-<!-- Section B: Choose Plan -->
-<div style="margin-top:40px">
-<div class="section-label-sm">Choose Your Plan</div>
-<div class="step-heading">Pick the right plan</div>
-<div class="step-sub">All plans include free website + hosting. Upgrade or downgrade anytime.</div>
-
-<div class="plan-grid" id="plan-grid"></div>
-<div class="trial-note" id="trial-note" style="display:none">Starting with 30-day free trial. Payment setup coming soon.</div>
-<div class="form-error" id="step3-error" style="text-align:center"></div>
-<button class="btn-full btn-primary" id="btn-select-plan" onclick="submitPlan()" disabled>Select Plan &amp; Continue</button>
-</div>
-</div>
-
-<!-- ======================== STEP 4: WELCOME DASHBOARD ======================== -->
-<div class="step" id="step-4">
-<div class="card" style="text-align:center">
-<div class="welcome-check" id="welcome-icon">&#10003;</div>
-<h2 id="welcome-title">Welcome to MediHost!</h2>
-<p class="sub" id="welcome-sub">Your clinic is being set up</p>
-
-<ul class="checklist" id="welcome-checklist"></ul>
-
-<button class="btn-full btn-primary" onclick="window.location.href='dashboard.html'" style="margin-top:8px">Go to Dashboard</button>
-<p style="font-size:13px;color:var(--text3);text-align:center;margin-top:16px">Need help? <a href="https://wa.me/917993135689?text=Hi%20MediHost!%20I%20just%20signed%20up%20and%20need%20help." style="color:var(--mint);font-weight:600">WhatsApp us at +91 7993 135 689</a></p>
-</div>
-</div>
-
-</div><!-- /onboard-wrap -->
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
+<script src="shared.js"></script>
 <script>
-// ============================================================
-// CONFIG
-// ============================================================
-var API = 'https://app.hemato.in/backend/api';
-var userPhone = '';
-var partnerId = '';
-var partnerData = null;
-var selectedPlan = '';
-var resendTimer = null;
+var currentStep = 1;
+var totalSteps = 4;
+var partner = null;
+var wizardData = { clinic: {}, modules: [], branding: {} };
 
-// ============================================================
-// HELPERS
-// ============================================================
-function showStep(num) {
-    var steps = document.querySelectorAll('.step');
-    steps.forEach(function(s){ s.classList.remove('active'); });
-    var target = document.getElementById('step-' + num);
-    if (target) target.classList.add('active');
-
-    // Progress bar: visible on steps 2-4
-    var bar = document.getElementById('progress-bar');
-    var wrap = document.getElementById('onboard-wrap');
-    if (num >= 2) {
-        bar.classList.add('visible');
-        wrap.classList.add('has-progress');
-    } else {
-        bar.classList.remove('visible');
-        wrap.classList.remove('has-progress');
-    }
-
-    // Update dots
-    document.querySelectorAll('.prog-dot').forEach(function(d){
-        var s = parseInt(d.getAttribute('data-step'));
-        d.classList.remove('active','done');
-        if (s === num) d.classList.add('active');
-        else if (s < num) d.classList.add('done');
-    });
-    document.querySelectorAll('.prog-line').forEach(function(l){
-        var a = parseInt(l.getAttribute('data-after'));
-        l.classList.toggle('active', a < num);
-    });
-}
-
-function showToast(msg, isError) {
-    var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast show' + (isError ? ' error' : '');
-    setTimeout(function(){ t.classList.remove('show'); }, 3500);
-}
-
-function showError(id, msg) {
-    var el = document.getElementById(id);
-    el.textContent = msg;
-    el.classList.add('show');
-}
-
-function clearError(id) {
-    var el = document.getElementById(id);
-    el.textContent = '';
-    el.classList.remove('show');
-}
-
-function setLoading(btnId, loading) {
-    var btn = document.getElementById(btnId);
-    if (loading) {
-        btn.disabled = true;
-        btn.setAttribute('data-text', btn.innerHTML);
-        btn.innerHTML = '<span class="spinner"></span>';
-    } else {
-        btn.disabled = false;
-        btn.innerHTML = btn.getAttribute('data-text') || btn.innerHTML;
-    }
-}
-
-function authHeaders() {
-    return {
-        'Authorization': 'Bearer ' + localStorage.getItem('medihost_token'),
-        'Content-Type': 'application/json'
-    };
-}
-
-function handleApiError(res) {
-    if (res.status === 401) {
-        localStorage.removeItem('medihost_token');
-        localStorage.removeItem('medihost_partner_id');
-        showToast('Session expired. Please log in again.', true);
-        showStep(1);
-        return true;
-    }
-    return false;
-}
-
-// ============================================================
-// STEP 1: SEND OTP
-// ============================================================
-function sendOtp() {
-    clearError('phone-error');
-    var phone = document.getElementById('phone-input').value.replace(/\D/g, '');
-    if (phone.length !== 10) {
-        showError('phone-error', 'Enter a valid 10-digit mobile number');
-        return;
-    }
-    userPhone = phone;
-    setLoading('btn-send-otp', true);
-
-    fetch(API + '/presence/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: phone })
-    })
-    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); })
-    .then(function(res){
-        setLoading('btn-send-otp', false);
-        if (!res.ok) {
-            showError('phone-error', res.data.message || 'Failed to send OTP');
-            return;
-        }
-        // Show OTP input
-        document.getElementById('phone-section').style.display = 'none';
-        document.getElementById('otp-section').style.display = 'block';
-        document.getElementById('otp-phone-display').textContent = '+91 ' + phone;
-        buildOtpBoxes();
-        startResendTimer();
-    })
-    .catch(function(){
-        setLoading('btn-send-otp', false);
-        showError('phone-error', 'Connection error, please try again');
-    });
-}
-
-// ============================================================
-// OTP BOXES
-// ============================================================
-function buildOtpBoxes() {
-    var wrap = document.getElementById('otp-boxes');
-    wrap.innerHTML = '';
-    for (var i = 0; i < 6; i++) {
-        var box = document.createElement('input');
-        box.type = 'tel';
-        box.className = 'otp-box';
-        box.maxLength = 1;
-        box.inputMode = 'numeric';
-        box.setAttribute('data-idx', i);
-        box.addEventListener('input', otpInput);
-        box.addEventListener('keydown', otpKeydown);
-        box.addEventListener('paste', otpPaste);
-        wrap.appendChild(box);
-    }
-    wrap.children[0].focus();
-}
-
-function otpInput(e) {
-    var val = e.target.value.replace(/\D/g, '');
-    e.target.value = val;
-    if (val && e.target.nextElementSibling) {
-        e.target.nextElementSibling.focus();
-    }
-}
-
-function otpKeydown(e) {
-    if (e.key === 'Backspace' && !e.target.value && e.target.previousElementSibling) {
-        e.target.previousElementSibling.focus();
-    }
-}
-
-function otpPaste(e) {
-    e.preventDefault();
-    var paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
-    var boxes = document.querySelectorAll('.otp-box');
-    for (var i = 0; i < paste.length && i < boxes.length; i++) {
-        boxes[i].value = paste[i];
-    }
-    if (paste.length > 0) {
-        var focusIdx = Math.min(paste.length, 5);
-        boxes[focusIdx].focus();
-    }
-}
-
-function getOtpValue() {
-    var otp = '';
-    document.querySelectorAll('.otp-box').forEach(function(b){ otp += b.value; });
-    return otp;
-}
-
-// ============================================================
-// RESEND TIMER
-// ============================================================
-function startResendTimer() {
-    var seconds = 30;
-    var timerEl = document.getElementById('otp-timer');
-    if (resendTimer) clearInterval(resendTimer);
-    timerEl.innerHTML = 'Resend OTP in <strong>' + seconds + 's</strong>';
-    resendTimer = setInterval(function(){
-        seconds--;
-        if (seconds <= 0) {
-            clearInterval(resendTimer);
-            timerEl.innerHTML = '<a onclick="resendOtp()">Resend OTP</a>';
-        } else {
-            timerEl.innerHTML = 'Resend OTP in <strong>' + seconds + 's</strong>';
-        }
-    }, 1000);
-}
-
-function resendOtp() {
-    clearError('otp-error');
-    var timerEl = document.getElementById('otp-timer');
-    timerEl.innerHTML = '<span class="spinner dark"></span>';
-
-    fetch(API + '/presence/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: userPhone })
-    })
-    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); })
-    .then(function(res){
-        if (!res.ok) {
-            showToast(res.data.message || 'Failed to resend', true);
-            timerEl.innerHTML = '<a onclick="resendOtp()">Resend OTP</a>';
-            return;
-        }
-        showToast('OTP resent successfully', false);
-        // Clear boxes
-        document.querySelectorAll('.otp-box').forEach(function(b){ b.value = ''; });
-        document.querySelectorAll('.otp-box')[0].focus();
-        startResendTimer();
-    })
-    .catch(function(){
-        showToast('Connection error', true);
-        timerEl.innerHTML = '<a onclick="resendOtp()">Resend OTP</a>';
-    });
-}
-
-function changePhone() {
-    document.getElementById('phone-section').style.display = 'block';
-    document.getElementById('otp-section').style.display = 'none';
-    if (resendTimer) clearInterval(resendTimer);
-    clearError('otp-error');
-}
-
-// ============================================================
-// STEP 1: VERIFY OTP
-// ============================================================
-function verifyOtp() {
-    clearError('otp-error');
-    var otp = getOtpValue();
-    if (otp.length !== 6) {
-        showError('otp-error', 'Enter the complete 6-digit OTP');
-        return;
-    }
-    setLoading('btn-verify-otp', true);
-
-    fetch(API + '/presence/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: userPhone, otp: otp })
-    })
-    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); })
-    .then(function(res){
-        setLoading('btn-verify-otp', false);
-        if (!res.ok) {
-            showError('otp-error', res.data.message || 'Invalid OTP');
-            return;
-        }
-        // Store credentials
-        localStorage.setItem('medihost_token', res.data.token);
-        localStorage.setItem('medihost_partner_id', String(res.data.partnerId));
-        partnerId = String(res.data.partnerId);
-        partnerData = res.data.partner;
-
-        if (res.data.isNewUser) {
-            showStep(2);
-        } else {
-            // Returning user — resume based on status
-            resumeFromStatus(partnerData ? partnerData.onboarding_status : 'phone_verified');
-        }
-    })
-    .catch(function(){
-        setLoading('btn-verify-otp', false);
-        showError('otp-error', 'Connection error, please try again');
-    });
-}
-
-// ============================================================
-// STEP 2: SUBMIT PROFILE
-// ============================================================
-function submitProfile() {
-    clearError('step2-error');
-    var business = document.getElementById('f-business').value.trim();
-    var type = document.getElementById('f-type').value;
-    var owner = document.getElementById('f-owner').value.trim();
-    var city = document.getElementById('f-city').value.trim();
-    var pincode = document.getElementById('f-pincode').value.replace(/\D/g, '');
-    var email = document.getElementById('f-email').value.trim();
-
-    if (!business) { showError('step2-error', 'Business name is required'); return; }
-    if (!type) { showError('step2-error', 'Select a practice type'); return; }
-    if (!owner) { showError('step2-error', 'Owner / Doctor name is required'); return; }
-    if (!city) { showError('step2-error', 'City is required'); return; }
-    if (!pincode || pincode.length !== 6) { showError('step2-error', 'Enter a valid 6-digit pincode'); return; }
-
-    setLoading('btn-step2', true);
-
-    var body = {
-        business_name: business,
-        partner_type: type,
-        owner_name: owner,
-        city: city,
-        pincode: pincode,
-        onboarding_status: 'profile_created'
-    };
-    if (email) body.email = email;
-
-    fetch(API + '/presence/partners/' + partnerId, {
-        method: 'PUT',
-        headers: authHeaders(),
-        body: JSON.stringify(body)
-    })
-    .then(function(r){
-        if (handleApiError(r)) { setLoading('btn-step2', false); return null; }
-        return r.json().then(function(d){ return { ok: r.ok, data: d }; });
-    })
-    .then(function(res){
-        if (!res) return;
-        setLoading('btn-step2', false);
-        if (!res.ok) {
-            showError('step2-error', res.data.message || 'Failed to save profile');
-            return;
-        }
-        partnerData = res.data.partner || partnerData;
-        if (!partnerData) partnerData = {};
-        partnerData.business_name = business;
-        partnerData.partner_type = type;
-        partnerData.owner_name = owner;
-        partnerData.subscription_plan = partnerData.subscription_plan || null;
-        loadPlans();
-        showStep(3);
-    })
-    .catch(function(){
-        setLoading('btn-step2', false);
-        showError('step2-error', 'Connection error, please try again');
-    });
-}
-
-// ============================================================
-// STEP 3: CONNECT (placeholder)
-// ============================================================
-function connectGoogle() {
-    showToast('Google Business API approval pending. We\'ll notify you when ready!', false);
-}
-
-function connectFacebook() {
-    showToast('Facebook Pages API under review. We\'ll notify you when ready!', false);
-}
-
-function skipConnect() {
-    // Scroll down to plan section
-    document.getElementById('plan-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-// ============================================================
-// STEP 3: PLAN SELECTION
-// ============================================================
-var planData = [
-    { id: 'starter', name: 'Starter', price: 'Free', priceNum: 0, desc: 'Profile + Website + Hosting', popular: false },
-    { id: 'growth', name: 'Growth', price: '999', priceNum: 999, desc: 'Domain + Google + Social + HMS Lite', popular: true },
-    { id: 'professional', name: 'Professional', price: '2,499', priceNum: 2499, desc: 'Full HMS + LIS + AI Marketing', popular: false },
-    { id: 'enterprise', name: 'Enterprise', price: '4,999', priceNum: 4999, desc: 'Pharmacy + Marketplace + TeleDoc', popular: false }
+// ==================== ALL MODULES ====================
+var ALL_MODULES = [
+  { key: 'website', icon: 'fas fa-globe', color: '#14B8A6', bg: '#F0FDFA', name: 'Clinic Website', desc: 'SEO-ready public website with booking' },
+  { key: 'profile', icon: 'fas fa-id-card', color: '#3B82F6', bg: '#EFF6FF', name: 'Public Profile', desc: 'Shareable clinic profile page' },
+  { key: 'patient_reg', icon: 'fas fa-users', color: '#8B5CF6', bg: '#F5F3FF', name: 'Patient Registration', desc: 'UHID, search, history, demographics' },
+  { key: 'basic_patient_reg', icon: 'fas fa-user-plus', color: '#8B5CF6', bg: '#F5F3FF', name: 'Basic Registration', desc: 'Simple patient registration (up to 50)' },
+  { key: 'billing', icon: 'fas fa-file-invoice', color: '#1D9E75', bg: '#E8F7F1', name: 'Billing & Invoicing', desc: 'GST invoices, receipts, collection reports' },
+  { key: 'appointments', icon: 'fas fa-calendar-check', color: '#F59E0B', bg: '#FEF3C7', name: 'Appointments', desc: 'Scheduling, queue management, tokens' },
+  { key: 'basic_emr', icon: 'fas fa-notes-medical', color: '#EF4444', bg: '#FEE2E2', name: 'Basic EMR', desc: 'Digital prescriptions and visit notes' },
+  { key: 'emr', icon: 'fas fa-laptop-medical', color: '#EF4444', bg: '#FEE2E2', name: 'Full EMR', desc: 'Specialty templates, auto Rx, full records' },
+  { key: 'lis', icon: 'fas fa-flask', color: '#6366F1', bg: '#EEF2FF', name: 'Lab (LIS)', desc: 'Test orders, results, NABL workflow' },
+  { key: 'pharmacy', icon: 'fas fa-pills', color: '#EC4899', bg: '#FDF2F8', name: 'Pharmacy', desc: 'Inventory, dispensing, GST billing' },
+  { key: 'reports', icon: 'fas fa-chart-bar', color: '#0EA5E9', bg: '#F0F9FF', name: 'Reports', desc: 'Daily collection, revenue, patient analytics' },
+  { key: 'rbac', icon: 'fas fa-user-shield', color: '#F97316', bg: '#FFF7ED', name: 'Roles & Permissions', desc: 'Staff access control, audit trail' },
+  { key: 'opd_queue', icon: 'fas fa-list-ol', color: '#14B8A6', bg: '#F0FDFA', name: 'OPD Queue', desc: 'Token system, wait times, display' },
+  { key: 'multi_branch', icon: 'fas fa-code-branch', color: '#6366F1', bg: '#EEF2FF', name: 'Multi-Branch', desc: 'Manage multiple clinics from one login' },
+  { key: 'whatsapp_ai', icon: 'fab fa-whatsapp', color: '#22C55E', bg: '#F0FDF4', name: 'WhatsApp AI', desc: 'Automated appointment reminders' },
+  { key: 'priority_support', icon: 'fas fa-headset', color: '#F59E0B', bg: '#FEF3C7', name: 'Priority Support', desc: 'Dedicated account manager, fast response' }
 ];
 
-function loadPlans() {
-    fetch('pricing.json')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-        if (data && data.plans) {
-            planData = data.plans.map(function(p){
-                return {
-                    id: p.id,
-                    name: p.name,
-                    price: p.prices.monthly === 0 ? 'Free' : p.prices.monthly.toLocaleString('en-IN'),
-                    priceNum: p.prices.monthly,
-                    desc: p.tagline,
-                    popular: p.popular
-                };
-            });
-        }
-        renderPlans();
-    })
-    .catch(function(){
-        renderPlans();
-    });
-}
-
-function renderPlans() {
-    var grid = document.getElementById('plan-grid');
-    var html = '';
-    planData.forEach(function(p){
-        html += '<div class="plan-card' + (p.popular ? ' pop' : '') + '" data-plan="' + p.id + '" onclick="selectPlan(\'' + p.id + '\')">';
-        if (p.popular) html += '<div class="pop-badge">MOST POPULAR</div>';
-        html += '<h4>' + p.name + '</h4>';
-        if (p.priceNum === 0) {
-            html += '<div class="price free">Free</div>';
-        } else {
-            html += '<div class="price">\u20B9' + p.price + '<span>/mo</span></div>';
-        }
-        html += '<div class="desc">' + p.desc + '</div>';
-        html += '</div>';
-    });
-    grid.innerHTML = html;
-}
-
-function selectPlan(planId) {
-    selectedPlan = planId;
-    document.querySelectorAll('.plan-card').forEach(function(c){
-        c.classList.toggle('selected', c.getAttribute('data-plan') === planId);
-    });
-    var btn = document.getElementById('btn-select-plan');
-    btn.disabled = false;
-    // Show trial note for paid plans
-    var plan = planData.find(function(p){ return p.id === planId; });
-    var note = document.getElementById('trial-note');
-    note.style.display = (plan && plan.priceNum > 0) ? 'block' : 'none';
-}
-
-function submitPlan() {
-    if (!selectedPlan) return;
-    clearError('step3-error');
-    setLoading('btn-select-plan', true);
-
-    fetch(API + '/presence/partners/' + partnerId, {
-        method: 'PUT',
-        headers: authHeaders(),
-        body: JSON.stringify({ subscription_plan: selectedPlan, onboarding_status: 'plan_selected' })
-    })
-    .then(function(r){
-        if (handleApiError(r)) { setLoading('btn-select-plan', false); return null; }
-        return r.json().then(function(d){ return { ok: r.ok, data: d }; });
-    })
-    .then(function(res){
-        if (!res) return;
-        setLoading('btn-select-plan', false);
-        if (!res.ok) {
-            showError('step3-error', res.data.message || 'Failed to select plan');
-            return;
-        }
-        if (partnerData) partnerData.subscription_plan = selectedPlan;
-        showWelcome();
-    })
-    .catch(function(){
-        setLoading('btn-select-plan', false);
-        showError('step3-error', 'Connection error, please try again');
-    });
-}
-
-// ============================================================
-// STEP 4: WELCOME
-// ============================================================
-function showWelcome() {
-    showStep(4);
-    var name = (partnerData && partnerData.business_name) ? partnerData.business_name : 'Your clinic';
-    var plan = selectedPlan || (partnerData && partnerData.subscription_plan) || 'starter';
-    var planLabel = plan.charAt(0).toUpperCase() + plan.slice(1);
-
-    document.getElementById('welcome-sub').textContent = name + ' is being set up';
-
-    var items = [
-        { done: true, text: 'Phone verified' },
-        { done: true, text: 'Profile created' },
-        { done: true, text: 'Plan selected: ' + planLabel },
-        { done: false, text: 'Google Business connected', action: 'connectGoogle()' },
-        { done: false, text: 'Facebook page connected', action: 'connectFacebook()' },
-        { done: false, text: 'Website auto-generated (coming soon)', action: '' },
-        { done: false, text: 'Custom domain (coming soon)', action: '' },
-        { done: false, text: 'Go live!', action: '' }
-    ];
-
-    var html = '';
-    items.forEach(function(item){
-        html += '<li>';
-        html += item.done ? '<span class="check-done">&#10003;</span>' : '<span class="check-pending">&#9675;</span>';
-        html += '<span>' + item.text + '</span>';
-        if (!item.done && item.action) {
-            html += '<span class="action" onclick="' + item.action + '">Connect</span>';
-        }
-        html += '</li>';
-    });
-    document.getElementById('welcome-checklist').innerHTML = html;
-}
-
-// ============================================================
-// RESUME SESSION ON PAGE LOAD
-// ============================================================
-function resumeFromStatus(status) {
-    if (status === 'phone_verified') {
-        showStep(2);
-    } else if (status === 'profile_created') {
-        loadPlans();
-        showStep(3);
-    } else if (status === 'plan_selected' || status === 'active') {
-        showWelcome();
-    } else {
-        showStep(2);
+// ==================== INIT ====================
+(function init() {
+  if (!MEDIHOST.isLoggedIn()) {
+    window.location.href = 'signup.html';
+    return;
+  }
+  MEDIHOST.apiGet('/api/presence/partner-auth/me').then(function(data) {
+    if (!data.success || !data.partner) {
+      MEDIHOST.logout();
+      return;
     }
-}
+    partner = data.partner;
+    document.getElementById('partnerName').textContent = partner.owner_name || partner.email || '';
 
-function checkSession() {
-    var token = localStorage.getItem('medihost_token');
-    var storedId = localStorage.getItem('medihost_partner_id');
-    if (!token || !storedId) {
-        showStep(1);
-        return;
+    // If already onboarded, redirect
+    if (partner.onboarding_status === 'wizard_complete' || partner.onboarding_status === 'active') {
+      window.location.href = MEDIHOST.APP_URL;
+      return;
     }
 
-    partnerId = storedId;
+    // Pre-fill step 1
+    if (partner.business_name) document.getElementById('s1_name').value = partner.business_name;
+    if (partner.phone) document.getElementById('s1_phone').value = partner.phone;
+    if (partner.city) document.getElementById('s1_city').value = partner.city;
 
-    fetch(API + '/presence/auth/me', {
-        method: 'GET',
-        headers: authHeaders()
-    })
-    .then(function(r){
-        if (r.status === 401) {
-            localStorage.removeItem('medihost_token');
-            localStorage.removeItem('medihost_partner_id');
-            showStep(1);
-            return null;
-        }
-        return r.json();
-    })
-    .then(function(data){
-        if (!data) return;
-        if (data.success && data.partner) {
-            partnerData = data.partner;
-            partnerId = String(data.partner.id);
-            selectedPlan = data.partner.subscription_plan || '';
-            resumeFromStatus(data.partner.onboarding_status || 'phone_verified');
-        } else {
-            localStorage.removeItem('medihost_token');
-            localStorage.removeItem('medihost_partner_id');
-            showStep(1);
-        }
-    })
-    .catch(function(){
-        showStep(1);
-    });
-}
+    renderModules();
+  }).catch(function() {
+    MEDIHOST.logout();
+  });
+})();
 
-// Enter key support on phone input
-document.getElementById('phone-input').addEventListener('keydown', function(e){
-    if (e.key === 'Enter') sendOtp();
+// ==================== DAY CHECKBOXES ====================
+document.querySelectorAll('.day-check').forEach(function(label) {
+  label.addEventListener('click', function(e) {
+    e.preventDefault();
+    var cb = this.querySelector('input');
+    cb.checked = !cb.checked;
+    this.classList.toggle('checked', cb.checked);
+  });
 });
 
-// Init
-checkSession();
+// ==================== MODULES ====================
+function renderModules() {
+  var grid = document.getElementById('moduleGrid');
+  var included = (partner && partner.modules_enabled) || [];
+  var html = '';
+  for (var i = 0; i < ALL_MODULES.length; i++) {
+    var m = ALL_MODULES[i];
+    var isIncluded = included.indexOf(m.key) !== -1;
+    var isActive = isIncluded;
+    html += '<div class="module-card' + (isActive ? ' active' : '') + '" data-key="' + m.key + '" onclick="toggleModule(this)">' +
+      '<div class="mc-icon" style="background:' + m.bg + ';color:' + m.color + '"><i class="' + m.icon + '"></i></div>' +
+      '<div class="mc-name">' + m.name + '</div>' +
+      '<div class="mc-desc">' + m.desc + '</div>' +
+      (isIncluded ? '<span class="mc-badge mc-badge-included">In your plan</span>' : '<span class="mc-badge mc-badge-upgrade">Upgrade</span>') +
+      '<div class="mc-toggle"></div>' +
+    '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+function toggleModule(card) {
+  if (card.classList.contains('locked')) return;
+  card.classList.toggle('active');
+}
+
+function getSelectedModules() {
+  var modules = [];
+  document.querySelectorAll('.module-card.active').forEach(function(card) {
+    modules.push(card.getAttribute('data-key'));
+  });
+  return modules;
+}
+
+// ==================== BRANDING ====================
+function previewLogo(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var preview = document.getElementById('logoPreview');
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      wizardData.branding.logo_data = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function updateColorHex(input, hexId) {
+  document.getElementById(hexId).textContent = input.value.toUpperCase();
+}
+
+// ==================== STEP NAVIGATION ====================
+function showStep(n) {
+  currentStep = n;
+  document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('step-' + n).classList.add('active');
+  document.getElementById('stepNum').textContent = n;
+
+  // Update progress dots
+  document.querySelectorAll('.prog-dot').forEach(function(dot) {
+    var s = parseInt(dot.getAttribute('data-step'));
+    dot.classList.remove('done', 'active', 'future');
+    if (s < n) dot.classList.add('done');
+    else if (s === n) dot.classList.add('active');
+    else dot.classList.add('future');
+  });
+  document.querySelectorAll('.prog-line').forEach(function(line, i) {
+    line.classList.toggle('done', i < n - 1);
+  });
+
+  // Footer buttons
+  document.getElementById('btnBack').style.visibility = n === 1 ? 'hidden' : 'visible';
+  var nextBtn = document.getElementById('btnNext');
+  if (n === totalSteps) {
+    nextBtn.innerHTML = '<i class="fas fa-rocket" style="font-size:13px"></i> Complete setup';
+  } else {
+    nextBtn.innerHTML = 'Continue <i class="fas fa-arrow-right" style="font-size:12px"></i>';
+  }
+
+  if (n === 4) buildSummary();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToStep(n) {
+  // Only allow going back, not forward
+  if (n < currentStep) showStep(n);
+}
+
+function nextStep() {
+  if (currentStep === 1 && !validateStep1()) return;
+  if (currentStep === 1) collectStep1();
+  if (currentStep === 2) collectStep2();
+  if (currentStep === 3) collectStep3();
+
+  if (currentStep < totalSteps) {
+    showStep(currentStep + 1);
+    saveProgress();
+  } else {
+    completeSetup();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) showStep(currentStep - 1);
+}
+
+// ==================== VALIDATION ====================
+function validateStep1() {
+  var name = document.getElementById('s1_name').value.trim();
+  var type = document.getElementById('s1_type').value;
+  var city = document.getElementById('s1_city').value.trim();
+  var state = document.getElementById('s1_state').value;
+  var pin = document.getElementById('s1_pincode').value.trim();
+  var phone = document.getElementById('s1_phone').value.trim();
+  if (!name) { MEDIHOST.toast('Clinic name is required', 'error'); return false; }
+  if (!type) { MEDIHOST.toast('Please select a clinic type', 'error'); return false; }
+  if (!city) { MEDIHOST.toast('City is required', 'error'); return false; }
+  if (!state) { MEDIHOST.toast('State is required', 'error'); return false; }
+  if (pin && !/^\d{6}$/.test(pin)) { MEDIHOST.toast('PIN code must be 6 digits', 'error'); return false; }
+  if (!phone || phone.length < 10) { MEDIHOST.toast('Valid phone number required', 'error'); return false; }
+  return true;
+}
+
+// ==================== COLLECT DATA ====================
+function collectStep1() {
+  var days = [];
+  document.querySelectorAll('#s1_days input:checked').forEach(function(cb) { days.push(cb.value); });
+  wizardData.clinic = {
+    business_name: document.getElementById('s1_name').value.trim(),
+    partner_type: document.getElementById('s1_type').value,
+    phone: document.getElementById('s1_phone').value.trim(),
+    address_line1: document.getElementById('s1_address').value.trim(),
+    city: document.getElementById('s1_city').value.trim(),
+    state: document.getElementById('s1_state').value,
+    pincode: document.getElementById('s1_pincode').value.trim(),
+    opening_time: document.getElementById('s1_open').value,
+    closing_time: document.getElementById('s1_close').value,
+    working_days: days
+  };
+}
+
+function collectStep2() {
+  wizardData.modules = getSelectedModules();
+}
+
+function collectStep3() {
+  wizardData.branding = {
+    primary_color: document.getElementById('s3_primary').value,
+    secondary_color: document.getElementById('s3_secondary').value,
+    tagline: document.getElementById('s3_tagline').value.trim(),
+    whatsapp: document.getElementById('s3_whatsapp').value.trim(),
+    logo_data: wizardData.branding.logo_data || null
+  };
+}
+
+// ==================== SUMMARY ====================
+function buildSummary() {
+  var c = wizardData.clinic;
+  var planName = (partner && partner.plan_tier) ? partner.plan_tier.charAt(0).toUpperCase() + partner.plan_tier.slice(1) : 'Starter';
+  var isPaid = partner && partner.plan_tier && partner.plan_tier !== 'starter';
+  document.getElementById('summaryPlan').textContent = planName + ' Plan';
+  document.getElementById('summaryPlanSub').textContent = isPaid ? '14-day free trial active' : 'Free forever';
+
+  document.getElementById('summaryClinic').innerHTML =
+    si('Clinic', c.business_name || '-') + si('Type', c.partner_type || '-') +
+    si('City', c.city || '-') + si('State', c.state || '-') +
+    si('PIN', c.pincode || '-') + si('Phone', c.phone || '-');
+
+  document.getElementById('summarySchedule').innerHTML =
+    si('Opens', c.opening_time || '9:00') + si('Closes', c.closing_time || '20:00') +
+    si('Days', (c.working_days || []).join(', '));
+
+  var modsHtml = '';
+  var mods = wizardData.modules || [];
+  for (var i = 0; i < mods.length; i++) {
+    var mod = ALL_MODULES.find(function(m) { return m.key === mods[i]; });
+    modsHtml += '<span>' + (mod ? mod.name : mods[i]) + '</span>';
+  }
+  document.getElementById('summaryModules').innerHTML = modsHtml || '<span style="background:#f3f4f6;color:#9ca3af">None selected</span>';
+}
+
+function si(label, val) {
+  return '<div class="summary-item"><span class="si-label">' + label + '</span><span class="si-value">' + (val || '-') + '</span></div>';
+}
+
+// ==================== SAVE PROGRESS ====================
+function saveProgress() {
+  var statusMap = { 1: 'wizard_step1', 2: 'wizard_step2', 3: 'wizard_step3' };
+  var status = statusMap[currentStep - 1];
+  if (!status) return;
+  MEDIHOST.apiPut('/api/presence/partner-auth/me', { onboarding_status: status }).catch(function() {});
+}
+
+// ==================== COMPLETE SETUP ====================
+function completeSetup() {
+  var btn = document.getElementById('btnNext');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Setting up...';
+
+  var timings = {};
+  if (wizardData.clinic.opening_time || wizardData.clinic.closing_time) {
+    timings = { open: wizardData.clinic.opening_time, close: wizardData.clinic.closing_time, days: wizardData.clinic.working_days };
+  }
+
+  var body = {
+    business_name: wizardData.clinic.business_name,
+    partner_type: wizardData.clinic.partner_type,
+    phone: wizardData.clinic.phone,
+    address_line1: wizardData.clinic.address_line1,
+    city: wizardData.clinic.city,
+    state: wizardData.clinic.state,
+    pincode: wizardData.clinic.pincode,
+    timings: timings,
+    modules_enabled: wizardData.modules,
+    onboarding_status: 'wizard_complete',
+    primary_color: wizardData.branding.primary_color,
+    description: wizardData.branding.tagline
+  };
+
+  MEDIHOST.apiPut('/api/presence/partner-auth/me', body).then(function(data) {
+    btn.disabled = false;
+    if (data.success) {
+      MEDIHOST.toast('Clinic setup complete!');
+      setTimeout(function() {
+        window.location.href = MEDIHOST.APP_URL;
+      }, 1500);
+    } else {
+      btn.innerHTML = '<i class="fas fa-rocket" style="font-size:13px"></i> Complete setup';
+      MEDIHOST.toast(data.error || 'Failed to save. Please try again.', 'error');
+    }
+  }).catch(function() {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-rocket" style="font-size:13px"></i> Complete setup';
+    MEDIHOST.toast('Network error. Please try again.', 'error');
+  });
+}
 </script>
 </body>
 </html>
