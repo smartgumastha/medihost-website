@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MediHost Admin — Curate Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#16a34a;--green-dark:#15803d;--green-light:#ecfdf5;--green-50:#f0fdf4;
+  --dark:#0f172a;--slate-900:#0f172a;--slate-800:#1e293b;--slate-700:#334155;--slate-600:#475569;
+  --slate-500:#64748b;--slate-400:#94a3b8;--slate-300:#cbd5e1;--slate-200:#e2e8f0;--slate-100:#f1f5f9;--slate-50:#f8fafc;
+  --white:#fff;--red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;
+  --shadow:0 1px 3px rgba(0,0,0,.1);--shadow-md:0 4px 6px -1px rgba(0,0,0,.1);
+  --radius:10px;--radius-lg:14px;
+}
+html{height:100%}
+body{font-family:var(--font);color:var(--slate-700);background:var(--slate-50);min-height:100%;-webkit-font-smoothing:antialiased;font-size:14px}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{color:var(--dark);line-height:1.2}
+button{font-family:var(--font);cursor:pointer;border:none;outline:none}
+input,select{font-family:var(--font);outline:none}
+
+/* NAV */
+.topnav{background:var(--dark);color:var(--white);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav-brand{font-size:18px;font-weight:800;display:flex;align-items:center;gap:10px}
+.topnav-brand .medi{color:#e2e8f0}.topnav-brand .host{color:#4ade80}
+.topnav-brand .tm{font-size:8px;color:var(--slate-400);vertical-align:super}
+.admin-badge{background:rgba(74,222,128,.15);color:#4ade80;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
+.topnav-right{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--slate-400)}
+.topnav-right a{color:var(--slate-400);transition:color .2s}.topnav-right a:hover{color:#fff}
+
+/* TABS */
+.tabs{background:var(--white);border-bottom:1px solid var(--slate-200);padding:0 24px;display:flex;gap:0}
+.tab-btn{padding:14px 20px;font-size:13px;font-weight:600;color:var(--slate-500);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s}
+.tab-btn:hover{color:var(--slate-700)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* LAYOUT */
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:10px 12px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--slate-500);border-bottom:2px solid var(--slate-200);background:var(--slate-50)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--slate-100);vertical-align:middle}
+.tbl tr:hover{background:var(--slate-50)}
+
+/* INPUTS */
+.input{width:100%;padding:8px 12px;border:1.5px solid var(--slate-200);border-radius:8px;font-size:13px;transition:border-color .2s}
+.input:focus{border-color:var(--green)}
+.input-sm{padding:6px 10px;font-size:12px}
+select.input{cursor:pointer}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:all .15s}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-dark)}
+.btn-outline{background:var(--white);color:var(--slate-600);border:1.5px solid var(--slate-200)}.btn-outline:hover{border-color:var(--slate-300);background:var(--slate-50)}
+.btn-red{background:var(--red);color:#fff;font-size:12px;padding:5px 10px}.btn-red:hover{opacity:.9}
+.btn-sm{padding:5px 12px;font-size:12px}
+
+/* TOGGLE */
+.toggle{position:relative;width:40px;height:22px;cursor:pointer;display:inline-block}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;inset:0;background:var(--slate-300);border-radius:22px;transition:.2s}
+.toggle .slider:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+.toggle input:checked+.slider{background:var(--green)}
+.toggle input:checked+.slider:before{transform:translateX(18px)}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;border:1.5px solid var(--slate-200);color:var(--slate-600);cursor:pointer;transition:all .15s;background:var(--white)}
+.chip:hover{border-color:var(--slate-300)}
+.chip.active{background:var(--green-light);border-color:var(--green);color:var(--green-dark)}
+
+/* PLAN CARDS */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.plan-card{border:1.5px solid var(--slate-200);border-radius:var(--radius-lg);padding:20px;position:relative}
+.plan-card.popular{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.popular-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+.plan-name{font-size:18px;font-weight:800;margin-bottom:4px}
+.plan-field{margin-bottom:10px}
+.plan-field label{display:block;font-size:11px;font-weight:600;color:var(--slate-500);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
+
+/* PREVIEW TABLE */
+.preview-table{width:100%;border-collapse:collapse;font-size:13px}
+.preview-table th{padding:12px;text-align:center;font-weight:700;border-bottom:2px solid var(--slate-200);background:var(--slate-50)}
+.preview-table th:first-child{text-align:left}
+.preview-table th.mh{background:var(--green-light);color:var(--green-dark)}
+.preview-table td{padding:10px 12px;border-bottom:1px solid var(--slate-100);text-align:center}
+.preview-table td:first-child{text-align:left;font-weight:600;color:var(--slate-800)}
+.preview-table .check{color:var(--green);font-weight:700}.preview-table .dash{color:var(--slate-300)}
+.preview-table .hl td:first-child{position:relative;padding-left:20px}
+.preview-table .hl td:first-child::before{content:'';position:absolute;left:6px;top:50%;transform:translateY(-50%);width:6px;height:6px;background:var(--green);border-radius:50%}
+
+/* TOAST */
+.toast{position:fixed;top:70px;right:24px;background:var(--green);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:var(--shadow-md);transform:translateX(120%);transition:transform .3s;z-index:200}
+.toast.show{transform:translateX(0)}
+
+/* INLINE FORM */
+.inline-form{background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--radius);padding:16px;margin-top:12px;display:none}
+.inline-form.show{display:block}
+.form-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.form-row .fg{flex:1;min-width:140px}
+.form-row .fg label{display:block;font-size:11px;font-weight:600;color:var(--slate-500);margin-bottom:3px}
+
+/* MODULE TABLE DROPDOWNS */
+.dd-default{background:#dcfce7;color:#166534;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;border:none;cursor:pointer}
+.dd-optional{background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;border:none;cursor:pointer}
+.dd-na{background:var(--slate-100);color:var(--slate-400);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;border:none;cursor:pointer}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .plan-grid{grid-template-columns:1fr}
+  .tabs{overflow-x:auto}
+  .form-row{flex-direction:column}
+  .container{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="topnav-brand">
+    <span><span class="medi">Medi</span><span class="host">Host</span><span class="tm">&trade;</span></span>
+    <span class="admin-badge">Admin Curate</span>
+  </div>
+  <div class="topnav-right">
+    <a href="admin.html">Partner Admin</a>
+    <a href="index.html">Site</a>
+  </div>
+</nav>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" data-tab="types">Practice types</button>
+  <button class="tab-btn" data-tab="pricing">Plan pricing</button>
+  <button class="tab-btn" data-tab="modules">Module mapping</button>
+  <button class="tab-btn" data-tab="preview">Customer preview</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<div class="container">
+
+  <!-- TAB 1: PRACTICE TYPES -->
+  <div class="tab-panel active" id="panel-types">
+    <div class="card">
+      <div class="card-title">
+        <span>Practice Types</span>
+        <button class="btn btn-green btn-sm" id="addTypeBtn">+ Add type</button>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Icon</th><th>Name</th><th>Description</th><th>Active</th><th>Actions</th></tr></thead>
+        <tbody id="typesBody"></tbody>
+      </table>
+      <div class="inline-form" id="addTypeForm">
+        <div class="form-row">
+          <div class="fg"><label>Name (slug)</label><input class="input input-sm" id="newTypeName" placeholder="e.g. dental"></div>
+          <div class="fg"><label>Display name</label><input class="input input-sm" id="newTypeDisplay" placeholder="e.g. Dental Clinic"></div>
+          <div class="fg"><label>Icon</label><input class="input input-sm" id="newTypeIcon" placeholder="e.g. tooth" value="clinic"></div>
+          <div class="fg"><label>Order</label><input class="input input-sm" id="newTypeOrder" type="number" value="0"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Description</label><input class="input input-sm" id="newTypeDesc" placeholder="Short description"></div>
+        </div>
+        <button class="btn btn-green btn-sm" id="saveNewType">Save</button>
+        <button class="btn btn-outline btn-sm" id="cancelNewType">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: PLAN PRICING -->
+  <div class="tab-panel" id="panel-pricing">
+    <div class="card">
+      <div class="card-title"><span>Plan Tiers</span></div>
+      <div class="plan-grid" id="planGrid"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: MODULE MAPPING -->
+  <div class="tab-panel" id="panel-modules">
+    <div class="card">
+      <div class="card-title"><span>Module Mapping</span><button class="btn btn-green btn-sm" id="saveAllModules" style="display:none">Save all mappings</button></div>
+      <div class="chips" id="moduleChips"></div>
+      <div id="moduleTableWrap" style="display:none">
+        <table class="tbl">
+          <thead><tr><th>Module</th><th>Category</th><th>Professional</th><th>Business</th><th>Enterprise</th><th>Highlighted</th><th></th></tr></thead>
+          <tbody id="moduleBody"></tbody>
+        </table>
+        <div class="inline-form show" style="margin-top:12px">
+          <div class="form-row">
+            <div class="fg"><label>Module name</label><input class="input input-sm" id="newModName" placeholder="e.g. Teleconsultation"></div>
+            <div class="fg"><label>Category</label><input class="input input-sm" id="newModCat" placeholder="e.g. Advanced"></div>
+            <div class="fg"><label>Min plan</label>
+              <select class="input input-sm" id="newModPlan">
+                <option value="1">Professional</option>
+                <option value="2">Business</option>
+                <option value="3">Enterprise</option>
+              </select>
+            </div>
+            <div class="fg" style="flex:0;min-width:auto;align-self:flex-end">
+              <button class="btn btn-green btn-sm" id="addModuleRow">+ Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="moduleEmpty" style="color:var(--slate-400);text-align:center;padding:40px 0">Select a practice type above to manage its modules</div>
+    </div>
+  </div>
+
+  <!-- TAB 4: CUSTOMER PREVIEW -->
+  <div class="tab-panel" id="panel-preview">
+    <div class="card">
+      <div class="card-title"><span>Customer Preview</span><span id="combinedBadge" style="display:none;background:#dbeafe;color:#1d4ed8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px">Combined plan</span></div>
+      <p style="font-size:13px;color:var(--slate-500);margin-bottom:12px">Select one or more practice types to see what the customer will see on plans.html</p>
+      <div class="chips" id="previewChips"></div>
+      <div id="previewTableWrap"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  var ADMIN_KEY = 'MediHost@2026';
+  var allTypes = [];
+  var allTiers = [];
+  var selectedModuleTypeId = null;
+  var selectedPreviewIds = [];
+  var currentModules = [];
+
+  // ===== HELPERS =====
+  function adminHeaders() {
+    return { 'Content-Type': 'application/json', 'x-admin-key': ADMIN_KEY };
+  }
+
+  function publicHeaders() {
+    return { 'Content-Type': 'application/json' };
+  }
+
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2200);
+  }
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s || '';
+    return d.innerHTML;
+  }
+
+  // ===== TABS =====
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < tabBtns.length; i++) {
+    tabBtns[i].addEventListener('click', function() {
+      for (var j = 0; j < tabBtns.length; j++) { tabBtns[j].classList.remove('active'); }
+      this.classList.add('active');
+      var panels = document.querySelectorAll('.tab-panel');
+      for (var k = 0; k < panels.length; k++) { panels[k].classList.remove('active'); }
+      document.getElementById('panel-' + this.getAttribute('data-tab')).classList.add('active');
+
+      var tab = this.getAttribute('data-tab');
+      if (tab === 'types') loadTypes();
+      if (tab === 'pricing') loadPricing();
+      if (tab === 'modules') loadModuleChips();
+      if (tab === 'preview') loadPreviewChips();
+    });
+  }
+
+  // ===== TAB 1: PRACTICE TYPES =====
+  function loadTypes() {
+    fetch('/api/presence/admin/practice-types', { headers: adminHeaders() })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        allTypes = data.types || [];
+        renderTypes();
+      })
+      .catch(function(e) { console.error('loadTypes:', e); });
+  }
+
+  function renderTypes() {
+    var tbody = document.getElementById('typesBody');
+    var html = '';
+    for (var i = 0; i < allTypes.length; i++) {
+      var t = allTypes[i];
+      html += '<tr data-id="' + t.id + '">';
+      html += '<td>' + escHtml(String(t.display_order)) + '</td>';
+      html += '<td style="font-size:18px">' + getIcon(t.icon) + '</td>';
+      html += '<td><strong>' + escHtml(t.display_name) + '</strong><br><span style="font-size:11px;color:var(--slate-400)">' + escHtml(t.name) + '</span></td>';
+      html += '<td style="font-size:12px;color:var(--slate-500);max-width:200px">' + escHtml(t.description || '') + '</td>';
+      html += '<td><label class="toggle"><input type="checkbox" ' + (t.is_active ? 'checked' : '') + ' onchange="toggleType(' + t.id + ', this.checked)"><span class="slider"></span></label></td>';
+      html += '<td><button class="btn btn-outline btn-sm" onclick="editType(' + t.id + ')">Edit</button></td>';
+      html += '</tr>';
+      html += '<tr id="edit-row-' + t.id + '" style="display:none"><td colspan="6"><div class="inline-form show" style="margin:0">';
+      html += '<div class="form-row">';
+      html += '<div class="fg"><label>Display name</label><input class="input input-sm" id="ed-dn-' + t.id + '" value="' + escHtml(t.display_name) + '"></div>';
+      html += '<div class="fg"><label>Description</label><input class="input input-sm" id="ed-desc-' + t.id + '" value="' + escHtml(t.description || '') + '"></div>';
+      html += '<div class="fg"><label>Icon</label><input class="input input-sm" id="ed-icon-' + t.id + '" value="' + escHtml(t.icon || 'clinic') + '"></div>';
+      html += '<div class="fg"><label>Order</label><input class="input input-sm" id="ed-ord-' + t.id + '" type="number" value="' + t.display_order + '"></div>';
+      html += '</div>';
+      html += '<button class="btn btn-green btn-sm" onclick="saveType(' + t.id + ')">Save</button> ';
+      html += '<button class="btn btn-outline btn-sm" onclick="cancelEdit(' + t.id + ')">Cancel</button>';
+      html += '</div></td></tr>';
+    }
+    tbody.innerHTML = html;
+  }
+
+  function getIcon(icon) {
+    var map = { stethoscope: '\uD83E\uDE7A', clinic: '\uD83C\uDFE5', microscope: '\uD83D\uDD2C', pill: '\uD83D\uDC8A', physio: '\uD83E\uDDBD', hospital: '\uD83C\uDFE8', chain: '\uD83D\uDD17', heart: '\u2764\uFE0F' };
+    return map[icon] || '\uD83C\uDFE5';
+  }
+
+  window.toggleType = function(id, active) {
+    var t = allTypes.find(function(x) { return x.id === id; });
+    if (!t) return;
+    fetch('/api/presence/admin/practice-types/' + id, {
+      method: 'PUT', headers: adminHeaders(),
+      body: JSON.stringify({ display_name: t.display_name, description: t.description, icon: t.icon, display_order: t.display_order, is_active: active })
+    }).then(function(r) { return r.json(); }).then(function() { toast(active ? 'Activated' : 'Deactivated'); loadTypes(); });
+  };
+
+  window.editType = function(id) {
+    var row = document.getElementById('edit-row-' + id);
+    if (row) row.style.display = '';
+  };
+
+  window.cancelEdit = function(id) {
+    var row = document.getElementById('edit-row-' + id);
+    if (row) row.style.display = 'none';
+  };
+
+  window.saveType = function(id) {
+    var body = {
+      display_name: document.getElementById('ed-dn-' + id).value,
+      description: document.getElementById('ed-desc-' + id).value,
+      icon: document.getElementById('ed-icon-' + id).value,
+      display_order: parseInt(document.getElementById('ed-ord-' + id).value) || 0,
+      is_active: true
+    };
+    fetch('/api/presence/admin/practice-types/' + id, {
+      method: 'PUT', headers: adminHeaders(), body: JSON.stringify(body)
+    }).then(function(r) { return r.json(); }).then(function() { toast('Saved!'); loadTypes(); });
+  };
+
+  // Add type
+  document.getElementById('addTypeBtn').addEventListener('click', function() {
+    document.getElementById('addTypeForm').classList.toggle('show');
+  });
+  document.getElementById('cancelNewType').addEventListener('click', function() {
+    document.getElementById('addTypeForm').classList.remove('show');
+  });
+  document.getElementById('saveNewType').addEventListener('click', function() {
+    var body = {
+      name: document.getElementById('newTypeName').value.trim(),
+      display_name: document.getElementById('newTypeDisplay').value.trim(),
+      description: document.getElementById('newTypeDesc').value.trim(),
+      icon: document.getElementById('newTypeIcon').value.trim() || 'clinic',
+      display_order: parseInt(document.getElementById('newTypeOrder').value) || 0
+    };
+    if (!body.name || !body.display_name) { alert('Name and display name required'); return; }
+    fetch('/api/presence/admin/practice-types', {
+      method: 'POST', headers: adminHeaders(), body: JSON.stringify(body)
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.success) { toast('Created!'); document.getElementById('addTypeForm').classList.remove('show'); loadTypes(); }
+      else { alert(data.error || 'Failed'); }
+    });
+  });
+
+  // ===== TAB 2: PLAN PRICING =====
+  function loadPricing() {
+    fetch('/api/presence/plan-tiers', { headers: publicHeaders() })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        allTiers = data.tiers || [];
+        renderPricing();
+      });
+  }
+
+  function renderPricing() {
+    var grid = document.getElementById('planGrid');
+    var html = '';
+    for (var i = 0; i < allTiers.length; i++) {
+      var t = allTiers[i];
+      var pop = t.is_popular ? ' popular' : '';
+      html += '<div class="plan-card' + pop + '" data-tier-id="' + t.id + '">';
+      if (t.is_popular) html += '<div class="popular-badge">Most popular</div>';
+      html += '<div class="plan-name">' + escHtml(t.display_name) + '</div>';
+      html += '<div style="font-size:11px;color:var(--slate-400);margin-bottom:14px">' + escHtml(t.name) + '</div>';
+      html += '<div class="plan-field"><label>Monthly price (₹)</label><input class="input input-sm" id="tp-mp-' + t.id + '" type="number" value="' + t.monthly_price + '"></div>';
+      html += '<div class="plan-field"><label>Yearly price (₹)</label><input class="input input-sm" id="tp-yp-' + t.id + '" type="number" value="' + t.yearly_price + '"></div>';
+      html += '<div class="plan-field"><label>Trial days</label><input class="input input-sm" id="tp-td-' + t.id + '" type="number" value="' + t.trial_days + '"></div>';
+      html += '<div class="plan-field"><label>Max staff</label><input class="input input-sm" id="tp-ms-' + t.id + '" value="' + escHtml(t.max_staff) + '"></div>';
+      html += '<div class="plan-field" style="display:flex;gap:16px">';
+      html += '<label style="display:flex;align-items:center;gap:6px;font-size:12px"><span>Domain free</span><label class="toggle"><input type="checkbox" id="tp-df-' + t.id + '" ' + (t.domain_free ? 'checked' : '') + '><span class="slider"></span></label></label>';
+      html += '<label style="display:flex;align-items:center;gap:6px;font-size:12px"><span>Popular</span><label class="toggle"><input type="checkbox" id="tp-pop-' + t.id + '" ' + (t.is_popular ? 'checked' : '') + '><span class="slider"></span></label></label>';
+      html += '</div>';
+      html += '<button class="btn btn-green" style="width:100%;justify-content:center;margin-top:8px" onclick="saveTier(' + t.id + ')">Save</button>';
+      html += '</div>';
+    }
+    grid.innerHTML = html;
+  }
+
+  window.saveTier = function(id) {
+    var body = {
+      monthly_price: parseInt(document.getElementById('tp-mp-' + id).value) || 0,
+      yearly_price: parseInt(document.getElementById('tp-yp-' + id).value) || 0,
+      trial_days: parseInt(document.getElementById('tp-td-' + id).value) || 14,
+      max_staff: document.getElementById('tp-ms-' + id).value || '2',
+      domain_free: document.getElementById('tp-df-' + id).checked,
+      is_popular: document.getElementById('tp-pop-' + id).checked
+    };
+    fetch('/api/presence/admin/plan-tiers/' + id, {
+      method: 'PUT', headers: adminHeaders(), body: JSON.stringify(body)
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.success) { toast('Saved!'); loadPricing(); }
+      else { alert(data.error || 'Failed'); }
+    });
+  };
+
+  // ===== TAB 3: MODULE MAPPING =====
+  function loadModuleChips() {
+    fetch('/api/presence/admin/practice-types', { headers: adminHeaders() })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        allTypes = data.types || [];
+        var wrap = document.getElementById('moduleChips');
+        var html = '';
+        for (var i = 0; i < allTypes.length; i++) {
+          var t = allTypes[i];
+          var cls = selectedModuleTypeId === t.id ? ' active' : '';
+          html += '<span class="chip' + cls + '" data-id="' + t.id + '">' + getIcon(t.icon) + ' ' + escHtml(t.display_name) + '</span>';
+        }
+        wrap.innerHTML = html;
+        var chips = wrap.querySelectorAll('.chip');
+        for (var j = 0; j < chips.length; j++) {
+          chips[j].addEventListener('click', function() {
+            selectedModuleTypeId = parseInt(this.getAttribute('data-id'));
+            loadModuleChips();
+            loadModules(selectedModuleTypeId);
+          });
+        }
+      });
+  }
+
+  function loadModules(typeId) {
+    document.getElementById('moduleTableWrap').style.display = '';
+    document.getElementById('moduleEmpty').style.display = 'none';
+    document.getElementById('saveAllModules').style.display = '';
+
+    fetch('/api/presence/admin/module-mapping/' + typeId, { headers: adminHeaders() })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        currentModules = data.modules || [];
+        renderModules();
+      });
+  }
+
+  function renderModules() {
+    var tbody = document.getElementById('moduleBody');
+    var html = '';
+    for (var i = 0; i < currentModules.length; i++) {
+      var m = currentModules[i];
+      var minTier = m.min_plan_tier_id || 1;
+
+      html += '<tr data-mod-id="' + m.id + '">';
+      html += '<td><input class="input input-sm mod-name" value="' + escHtml(m.module_name) + '" style="width:160px"></td>';
+      html += '<td><input class="input input-sm mod-cat" value="' + escHtml(m.category || '') + '" style="width:120px"></td>';
+
+      // Professional (tier 1)
+      html += '<td style="text-align:center">' + tierDropdown('mod-t1-' + i, minTier <= 1 ? m.availability : 'na') + '</td>';
+      // Business (tier 2)
+      html += '<td style="text-align:center">' + tierDropdown('mod-t2-' + i, minTier <= 2 ? m.availability : 'na') + '</td>';
+      // Enterprise (tier 3)
+      html += '<td style="text-align:center">' + tierDropdown('mod-t3-' + i, minTier <= 3 ? m.availability : 'na') + '</td>';
+
+      html += '<td style="text-align:center"><input type="checkbox" class="mod-hl" ' + (m.is_highlighted ? 'checked' : '') + '></td>';
+      html += '<td><button class="btn-red" onclick="deleteMod(' + m.id + ')">Del</button></td>';
+      html += '</tr>';
+    }
+    tbody.innerHTML = html;
+  }
+
+  function tierDropdown(id, val) {
+    var cls = val === 'default' ? 'dd-default' : val === 'optional' ? 'dd-optional' : 'dd-na';
+    return '<select id="' + id + '" class="' + cls + '" onchange="updateDdClass(this)">' +
+      '<option value="default"' + (val === 'default' ? ' selected' : '') + '>Default</option>' +
+      '<option value="optional"' + (val === 'optional' ? ' selected' : '') + '>Optional</option>' +
+      '<option value="na"' + (val === 'na' ? ' selected' : '') + '>N/A</option>' +
+      '</select>';
+  }
+
+  window.updateDdClass = function(sel) {
+    sel.className = sel.value === 'default' ? 'dd-default' : sel.value === 'optional' ? 'dd-optional' : 'dd-na';
+  };
+
+  window.deleteMod = function(id) {
+    if (!confirm('Delete this module mapping?')) return;
+    fetch('/api/presence/admin/module-mapping/' + id, {
+      method: 'DELETE', headers: adminHeaders()
+    }).then(function(r) { return r.json(); }).then(function() {
+      toast('Deleted');
+      loadModules(selectedModuleTypeId);
+    });
+  };
+
+  // Add module row
+  document.getElementById('addModuleRow').addEventListener('click', function() {
+    var name = document.getElementById('newModName').value.trim();
+    var cat = document.getElementById('newModCat').value.trim();
+    var plan = parseInt(document.getElementById('newModPlan').value);
+    if (!name) { alert('Module name required'); return; }
+
+    fetch('/api/presence/admin/module-mapping', {
+      method: 'POST', headers: adminHeaders(),
+      body: JSON.stringify({
+        practice_type_id: selectedModuleTypeId,
+        module_name: name, category: cat || 'general',
+        min_plan_tier_id: plan, availability: 'default',
+        is_highlighted: false, display_order: currentModules.length + 1
+      })
+    }).then(function(r) { return r.json(); }).then(function() {
+      toast('Added'); document.getElementById('newModName').value = '';
+      document.getElementById('newModCat').value = '';
+      loadModules(selectedModuleTypeId);
+    });
+  });
+
+  // Save all mappings
+  document.getElementById('saveAllModules').addEventListener('click', function() {
+    var rows = document.getElementById('moduleBody').querySelectorAll('tr');
+    var mappings = [];
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var modName = row.querySelector('.mod-name').value.trim();
+      var modCat = row.querySelector('.mod-cat').value.trim();
+      var hl = row.querySelector('.mod-hl').checked;
+
+      // Determine min_plan_tier_id from dropdowns
+      var t1 = document.getElementById('mod-t1-' + i);
+      var t2 = document.getElementById('mod-t2-' + i);
+      var t3 = document.getElementById('mod-t3-' + i);
+
+      var minTier = 3;
+      var avail = 'default';
+      if (t1 && t1.value !== 'na') { minTier = 1; avail = t1.value; }
+      else if (t2 && t2.value !== 'na') { minTier = 2; avail = t2.value; }
+      else if (t3 && t3.value !== 'na') { minTier = 3; avail = t3.value; }
+
+      if (modName) {
+        mappings.push({
+          module_name: modName, category: modCat || 'general',
+          min_plan_tier_id: minTier, availability: avail,
+          is_highlighted: hl, display_order: i + 1
+        });
+      }
+    }
+
+    fetch('/api/presence/admin/module-mapping/bulk', {
+      method: 'PUT', headers: adminHeaders(),
+      body: JSON.stringify({ practice_type_id: selectedModuleTypeId, mappings: mappings })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.success) { toast('Saved ' + data.count + ' modules!'); loadModules(selectedModuleTypeId); }
+      else { alert(data.error || 'Failed'); }
+    });
+  });
+
+  // ===== TAB 4: CUSTOMER PREVIEW =====
+  function loadPreviewChips() {
+    fetch('/api/presence/practice-types', { headers: publicHeaders() })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var types = data.types || [];
+        var wrap = document.getElementById('previewChips');
+        var html = '';
+        for (var i = 0; i < types.length; i++) {
+          var t = types[i];
+          var isActive = selectedPreviewIds.indexOf(t.id) !== -1;
+          html += '<span class="chip' + (isActive ? ' active' : '') + '" data-id="' + t.id + '">' + getIcon(t.icon) + ' ' + escHtml(t.display_name) + '</span>';
+        }
+        wrap.innerHTML = html;
+
+        var chips = wrap.querySelectorAll('.chip');
+        for (var j = 0; j < chips.length; j++) {
+          chips[j].addEventListener('click', function() {
+            var id = parseInt(this.getAttribute('data-id'));
+            var idx = selectedPreviewIds.indexOf(id);
+            if (idx !== -1) { selectedPreviewIds.splice(idx, 1); }
+            else { selectedPreviewIds.push(id); }
+            loadPreviewChips();
+            if (selectedPreviewIds.length > 0) loadPreview();
+            else { document.getElementById('previewTableWrap').innerHTML = ''; document.getElementById('combinedBadge').style.display = 'none'; }
+          });
+        }
+      });
+  }
+
+  function loadPreview() {
+    var badge = document.getElementById('combinedBadge');
+    badge.style.display = selectedPreviewIds.length > 1 ? '' : 'none';
+
+    fetch('/api/presence/curated-plan/' + selectedPreviewIds.join(','), { headers: publicHeaders() })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var modules = data.modules || [];
+        var tiers = data.tiers || [];
+        renderPreview(modules, tiers);
+      });
+  }
+
+  function renderPreview(modules, tiers) {
+    var wrap = document.getElementById('previewTableWrap');
+
+    var html = '<table class="preview-table">';
+    html += '<thead><tr><th style="width:40%">Feature</th>';
+    for (var t = 0; t < tiers.length; t++) {
+      html += '<th class="mh">' + escHtml(tiers[t].display_name) + '<br><span style="font-size:16px;font-weight:800">₹' + tiers[t].monthly_price + '</span><span style="font-size:11px;font-weight:400">/mo</span></th>';
+    }
+    html += '</tr></thead><tbody>';
+
+    // Group by category
+    var categories = [];
+    var catMap = {};
+    for (var i = 0; i < modules.length; i++) {
+      var m = modules[i];
+      var cat = m.category || 'General';
+      if (!catMap[cat]) { catMap[cat] = []; categories.push(cat); }
+      catMap[cat].push(m);
+    }
+
+    for (var c = 0; c < categories.length; c++) {
+      var catName = categories[c];
+      html += '<tr><td colspan="' + (tiers.length + 1) + '" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--slate-400);padding-top:16px;background:var(--slate-50)">' + escHtml(catName) + '</td></tr>';
+
+      var mods = catMap[catName];
+      for (var j = 0; j < mods.length; j++) {
+        var mod = mods[j];
+        var hlClass = mod.is_highlighted ? ' hl' : '';
+        html += '<tr class="' + hlClass + '">';
+        html += '<td>' + escHtml(mod.module_name) + '</td>';
+
+        var minTier = mod.min_plan_tier_id || 1;
+        for (var k = 0; k < tiers.length; k++) {
+          var tierId = tiers[k].id;
+          if (tierId >= minTier) {
+            if (mod.availability === 'optional') {
+              html += '<td style="color:var(--amber)">Add-on</td>';
+            } else {
+              html += '<td class="check">✓</td>';
+            }
+          } else {
+            html += '<td class="dash">—</td>';
+          }
+        }
+        html += '</tr>';
+      }
+    }
+
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+  }
+
+  // ===== INIT =====
+  loadTypes();
+
+});
+</script>
+</body>
+</html>
