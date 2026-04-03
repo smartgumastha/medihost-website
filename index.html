@@ -2,531 +2,1124 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MediHost™ — Your Clinic, Live in 15 Minutes | Domain, Website, HMS, Billing</title>
-<meta name="description" content="Your own domain. Professional website. Google listing. AI-powered social posts. Online booking. Full practice management. Live in 15 minutes.">
-<meta name="keywords" content="clinic website, hospital management system, doctor website, dental website, pharmacy website, diagnostic lab website, NABL, ABDM, ABHA, HMS India">
-<meta property="og:title" content="MediHost™ — Your Practice, Fully Online in 15 Minutes">
-<meta property="og:description" content="Domain + website + Google listing + AI marketing + HMS + billing. Built for Indian healthcare.">
-<meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediHost™ — Your Clinic's Digital Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --green:#0F6E56;--green-dark:#0A5744;--green-light:#E1F5EE;--green-sub:#9FE1CB;--green-text:#085041;
-  --dark:#111827;--gray-900:#1F2937;--gray-700:#374151;--gray-600:#4B5563;--gray-500:#6B7280;--gray-400:#9CA3AF;--gray-300:#D1D5DB;--gray-200:#E5E7EB;--gray-100:#F3F4F6;--gray-50:#F9FAFB;--white:#FFF;
-  --purple:#534AB7;--purple-light:#EEEDFE;--purple-text:#3C3489;
-  --blue:#185FA5;--blue-light:#E6F1FB;--blue-text:#0C447C;
-  --orange:#993C1D;--orange-light:#FAECE7;--orange-text:#712B13;
-  --olive:#3B6D11;--olive-light:#EAF3DE;--olive-text:#27500A;
-  --gold:#854F0B;--gold-light:#FAEEDA;--gold-text:#633806;
-  --rose:#993556;--rose-light:#FBEAF0;--rose-text:#72243E;
-  --heading:'Plus Jakarta Sans',system-ui,sans-serif;
-  --body:'Inter',system-ui,sans-serif;
-  --r:8px;--r2:12px;
+:root {
+  --green-50: #ECFDF5;
+  --green-100: #D1FAE5;
+  --green-200: #A7F3D0;
+  --green-400: #34D399;
+  --green-500: #10B981;
+  --green-600: #059669;
+  --green-700: #047857;
+  --green-800: #065F46;
+  --green-900: #064E3B;
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --amber-400: #FBBF24;
+  --amber-500: #F59E0B;
+  --coral-500: #EF6461;
+  --blue-500: #3B82F6;
+  --white: #FFFFFF;
+  --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'DM Serif Display', Georgia, serif;
 }
-html{scroll-behavior:smooth}
-body{font-family:var(--body);color:var(--gray-700);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.55}
-a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--heading);color:var(--dark);line-height:1.35}
-img{max-width:100%}
 
-/* ── NAV ── */
-.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:.5px solid var(--gray-200)}
-.nav-inner{max-width:1000px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
-.nav-logo{font-family:var(--heading);font-size:19px;font-weight:800;letter-spacing:-.5px;cursor:pointer}
-.nav-logo .m{color:var(--dark)}.nav-logo .h{color:var(--green)}.nav-logo .tm{font-size:8px;color:var(--green);vertical-align:super}
-.nav-links{display:flex;align-items:center;gap:6px}
-.nav-link{font-size:12px;font-weight:500;color:var(--gray-600);padding:6px 10px;border-radius:6px;transition:background .2s}
-.nav-link:hover{background:var(--gray-100)}
-.nav-btn-outline{font-size:12px;font-weight:600;color:var(--green);padding:6px 12px;border:1px solid var(--green);border-radius:6px;display:inline-flex;align-items:center;gap:5px;transition:background .2s}
-.nav-btn-outline:hover{background:var(--green-light)}
-.nav-btn-outline svg{width:13px;height:13px}
-.nav-btn-solid{font-size:12px;font-weight:600;color:var(--white);background:var(--green);padding:7px 14px;border-radius:6px;transition:opacity .2s}
-.nav-btn-solid:hover{opacity:.9}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ── ANNOUNCEMENT BAR ── */
-.announce{background:var(--green-light);padding:8px 20px;text-align:center}
-.announce-inner{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
-.announce-item{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--green-text)}
-.announce-item b{font-weight:700}
-.announce-item svg{width:14px;height:14px;flex-shrink:0}
-.announce-div{width:1px;height:16px;background:var(--green-sub)}
-.announce-btn{display:inline-flex;align-items:center;gap:4px;background:var(--green);color:var(--white);font-size:10px;font-weight:600;padding:4px 10px;border-radius:99px;border:none;cursor:pointer;transition:opacity .2s}
-.announce-btn:hover{opacity:.9}
-.announce-btn svg{width:11px;height:11px}
-
-/* ── HERO ── */
-.hero{max-width:700px;margin:0 auto;padding:36px 20px 0;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-text);font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:18px}
-.hero-badge svg{width:13px;height:13px}
-.hero h1{font-size:32px;font-weight:500;line-height:1.35;margin-bottom:14px}
-.hero h1 .rolling{color:var(--green);display:inline-block;min-width:180px;transition:opacity .4s,transform .4s}
-.hero h1 .rolling.fade-out{opacity:0;transform:translateY(6px)}
-.hero h1 .rolling.fade-in{opacity:1;transform:translateY(0)}
-.hero-sub{font-size:16px;color:var(--gray-500);max-width:560px;margin:0 auto 24px;line-height:1.6}
-
-/* ── HERO FORM ── */
-.hero-form{max-width:560px;margin:0 auto 14px;border:.5px solid var(--gray-200);border-radius:var(--r2);padding:20px 22px;background:var(--white);text-align:left}
-.hero-form label{display:block;font-size:14px;font-weight:600;color:var(--dark);margin-bottom:10px}
-.hf-row{display:flex;gap:8px;margin-bottom:8px}
-.hf-input{flex:1;padding:12px 16px;font-family:var(--body);font-size:15px;color:var(--dark);border:1px solid var(--gray-200);border-radius:var(--r);outline:none;transition:border-color .2s}
-.hf-input:focus{border-color:var(--green)}
-.hf-select{padding:12px 16px;font-family:var(--body);font-size:15px;color:var(--dark);border:1px solid var(--gray-200);border-radius:var(--r);outline:none;background:var(--white);min-width:140px}
-.hf-btn{width:100%;padding:14px;font-family:var(--heading);font-size:15px;font-weight:600;color:var(--white);background:var(--green);border:none;border-radius:var(--r);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s}
-.hf-btn:hover{opacity:.9}
-.hf-btn svg{width:15px;height:15px}
-.hf-note{text-align:center;margin-top:12px;font-size:11px;color:var(--gray-400);display:flex;align-items:center;justify-content:center;gap:5px}
-.hf-note .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
-.hf-note b{color:var(--green-text);font-weight:600}
-#domainResults{display:none;max-width:560px;margin:0 auto 14px;border:.5px solid var(--gray-200);border-radius:var(--r2);padding:16px 18px;background:var(--white)}
-.spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── PREVIEW CARD ── */
-.preview{max-width:600px;margin:0 auto 16px;border-radius:var(--r2);overflow:hidden;border:.5px solid var(--gray-200)}
-.preview-hdr{background:var(--green);padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
-.preview-hdr-left{color:var(--white)}
-.preview-hdr-left .ph-title{font-family:var(--heading);font-size:14px;font-weight:700}
-.preview-hdr-left .ph-sub{font-size:11px;color:var(--green-sub);margin-top:2px}
-.preview-badge{font-size:10px;font-weight:600;color:var(--white);background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px}
-.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px}
-.ptile{text-align:center;padding:10px 6px;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;gap:4px}
-.ptile svg{width:22px;height:22px}
-.ptile-title{font-size:12px;font-weight:700}
-.ptile-sub{font-size:10px;opacity:.75}
-
-/* ── DOMAIN LINKS ── */
-.domain-links{text-align:center;font-size:11px;color:var(--gray-400);margin-bottom:20px;padding:0 20px}
-.domain-links a{color:var(--green);text-decoration:underline;margin:0 4px;font-weight:500}
-
-/* ── TRUST BADGES ── */
-.trust{max-width:680px;margin:0 auto 28px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;padding:0 20px}
-.trust-item{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--gray-400);font-weight:500}
-.trust-item svg{width:14px;height:14px;opacity:.6}
-
-/* ── HOW IT WORKS ── */
-.how{max-width:680px;margin:0 auto 32px;padding:0 20px;text-align:center}
-.how h2{font-size:22px;font-weight:700;margin-bottom:4px}
-.how .how-sub{font-size:14px;color:var(--gray-500);margin-bottom:20px}
-.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center}
-.how-step .hs-num{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--heading);font-size:13px;font-weight:700;margin-bottom:8px}
-.how-step .hs-title{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px}
-.how-step .hs-desc{font-size:10px;color:var(--gray-500);line-height:1.4}
-
-/* ── WEBSITE PREVIEW ── */
-.webprev{max-width:680px;margin:0 auto 32px;padding:0 20px;text-align:center}
-.webprev h2{font-size:22px;font-weight:700;margin-bottom:4px}
-.webprev .wp-sub{font-size:14px;color:var(--gray-500);margin-bottom:16px}
-.browser{border:.5px solid var(--gray-200);border-radius:var(--r2);overflow:hidden}
-.browser-chrome{background:#F1EFE8;padding:8px 12px;display:flex;align-items:center;gap:8px}
-.browser-dots{display:flex;gap:4px}
-.browser-dots span{width:8px;height:8px;border-radius:50%}
-.browser-dots .d1{background:#FF5F57}.browser-dots .d2{background:#FFBD2E}.browser-dots .d3{background:#28CA41}
-.browser-url{flex:1;background:var(--white);border-radius:4px;padding:3px 8px;font-family:'Courier New',monospace;font-size:10px;color:var(--gray-600);text-align:center}
-.browser-body{padding:20px;text-align:center}
-.browser-body .bb-name{font-family:var(--heading);font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px}
-.browser-body .bb-nav{font-size:11px;color:var(--gray-400);margin-bottom:12px}
-.browser-body .bb-hero{height:120px;background:var(--gray-100);border-radius:var(--r);margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gray-400)}
-.browser-body .bb-text{font-size:11px;color:var(--gray-500);line-height:1.5}
-.wp-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
-.wp-pill{display:inline-flex;align-items:center;gap:4px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--r);padding:5px 10px;font-size:10px;color:var(--gray-600)}
-.wp-pill svg{width:12px;height:12px;opacity:.6}
-.wp-pill b{font-weight:600;color:var(--dark)}
-
-/* ── COMPARISON ── */
-.compare{max-width:680px;margin:0 auto 32px;padding:0 20px;text-align:center}
-.compare h2{font-size:22px;font-weight:700;margin-bottom:16px}
-.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
-.compare-col{border:.5px solid var(--gray-200);border-radius:var(--r2);padding:12px 10px}
-.compare-col.featured{border:2px solid var(--green);position:relative}
-.compare-col .cc-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--green-light);color:var(--green-text);font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap;font-family:var(--heading)}
-.compare-col .cc-hdr{font-size:11px;font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:.5px solid var(--gray-200)}
-.compare-col.featured .cc-hdr{color:var(--green-text);border-bottom-color:var(--green-sub)}
-.compare-col .cc-hdr.tertiary{color:var(--gray-400)}
-.compare-list{list-style:none;text-align:left;padding:0}
-.compare-list li{font-size:11px;line-height:2;color:var(--dark)}
-.compare-list li.no{color:var(--gray-400);text-decoration:line-through}
-.compare-list li.yes-green{color:var(--green-text)}
-
-/* ── CTA ── */
-.cta{max-width:680px;margin:0 auto 16px;padding:0 20px}
-.cta-card{background:var(--green);border-radius:var(--r2);padding:24px;text-align:center}
-.cta-card h2{font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px}
-.cta-card p{font-size:13px;color:var(--green-sub);margin-bottom:16px}
-.cta-btn{display:inline-block;background:var(--white);color:var(--green);font-family:var(--heading);font-size:14px;font-weight:700;padding:10px 28px;border-radius:var(--r);transition:opacity .2s}
-.cta-btn:hover{opacity:.9}
-
-/* ── FOOTER ── */
-.footer{text-align:center;padding:12px 20px 24px;font-size:9px;color:var(--gray-400);line-height:1.6}
-
-/* ── MOBILE ── */
-@media(max-width:768px){
-  .nav-links .nav-link{display:none}
-  .announce-inner{gap:8px;font-size:10px}
-  .announce-div{display:none}
-  .hero h1{font-size:22px}
-  .hero-sub{font-size:13px}
-  .hf-row{flex-direction:column}
-  .hf-select{min-width:100%}
-  .preview-grid{grid-template-columns:repeat(3,1fr);gap:6px}
-  .how-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .compare-grid{grid-template-columns:1fr}
-  .compare-col{max-width:280px;margin:0 auto}
-  .trust{gap:10px}
-  .wp-pills{gap:6px}
+body {
+  font-family: var(--font-main);
+  color: var(--slate-800);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
-@media(max-width:480px){
-  .hero h1{font-size:20px}
-  .preview-grid{grid-template-columns:repeat(3,1fr);gap:4px}
-  .ptile{padding:8px 4px}
-  .ptile svg{width:18px;height:18px}
-  .ptile-title{font-size:10px}
-  .ptile-sub{font-size:8px}
+
+/* ===== S1: STICKY NAV ===== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-weight: 800; font-size: 1.35rem; color: var(--green-700);
+  letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px;
+}
+.nav-logo span { color: var(--slate-800); }
+.nav-logo .tm { font-size: 0.6rem; vertical-align: super; color: var(--slate-400); }
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500; color: var(--slate-600);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--green-700); }
+.btn-nav {
+  background: var(--green-600); color: white; border: none; padding: 10px 22px;
+  border-radius: 10px; font-size: 0.875rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font-main); transition: all 0.2s;
+}
+.btn-nav:hover { background: var(--green-700); transform: translateY(-1px); }
+
+/* ===== S2: ANNOUNCEMENT BAR ===== */
+.announce-bar {
+  margin-top: 64px;
+  background: linear-gradient(135deg, var(--green-800) 0%, var(--green-700) 100%);
+  color: white; text-align: center; padding: 8px 1rem;
+  font-size: 0.78rem; font-weight: 500;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.announce-bar .spark { font-size: 0.7rem; opacity: 0.7; }
+.announce-bar a { color: var(--green-200); font-weight: 600; text-decoration: none; }
+
+/* ===== S3+S4: HERO ===== */
+.hero {
+  position: relative;
+  padding: 2rem 2rem 1rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--slate-50) 0%, var(--white) 60%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.trust-line {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-50); border: 1px solid var(--green-200);
+  border-radius: 100px; padding: 6px 18px 6px 12px;
+  font-size: 0.78rem; font-weight: 600; color: var(--green-700);
+  margin-bottom: 1rem;
+  animation: fadeInDown 0.6s ease;
+}
+.trust-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green-500);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.15;
+  color: var(--slate-900);
+  max-width: 740px; margin: 0 auto 0.25rem;
+  animation: fadeInDown 0.6s ease 0.1s both;
+}
+.hero h1 .accent { color: var(--green-600); }
+
+.hero-sub {
+  font-size: 1rem; color: var(--slate-500); max-width: 540px;
+  margin: 0 auto 1.5rem; line-height: 1.5; font-weight: 400;
+  animation: fadeInDown 0.6s ease 0.2s both;
+}
+.hero-sub strong { color: var(--slate-700); font-weight: 600; }
+
+/* Rolling text */
+.rolling-wrapper {
+  display: inline-block; height: 1.2em; overflow: hidden; vertical-align: bottom;
+  position: relative; width: 340px; text-align: left;
+}
+.rolling-text {
+  display: flex; flex-direction: column;
+  animation: roll 10s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+.rolling-text span {
+  height: 1.2em; display: flex; align-items: center;
+  color: var(--green-600); white-space: nowrap;
+}
+@keyframes roll {
+  0%, 18% { transform: translateY(0); }
+  25%, 43% { transform: translateY(-1.2em); }
+  50%, 68% { transform: translateY(-2.4em); }
+  75%, 93% { transform: translateY(-3.6em); }
+  100% { transform: translateY(-4.8em); }
+}
+
+/* ===== SEARCH BAR ===== */
+.search-wrapper {
+  max-width: 620px; margin: 0 auto 1rem;
+  animation: fadeInUp 0.7s ease 0.3s both;
+}
+.search-box {
+  display: flex; align-items: center;
+  background: var(--white);
+  border: 2px solid var(--slate-200);
+  border-radius: 16px;
+  padding: 6px 6px 6px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.search-box:focus-within {
+  border-color: var(--green-400);
+  box-shadow: 0 4px 24px rgba(16,185,129,0.12), 0 0 0 4px rgba(16,185,129,0.08);
+}
+.search-input {
+  flex: 1; border: none; outline: none; font-size: 1rem;
+  font-family: var(--font-main); color: var(--slate-800);
+  background: transparent; padding: 10px 0;
+}
+.search-input::placeholder { color: var(--slate-400); }
+.search-btn {
+  background: var(--green-600); color: white; border: none;
+  padding: 12px 24px; border-radius: 12px; font-size: 0.9rem;
+  font-weight: 700; cursor: pointer; font-family: var(--font-main);
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.25s; white-space: nowrap;
+}
+.search-btn:hover { background: var(--green-700); transform: scale(1.02); }
+.search-btn svg { width: 18px; height: 18px; }
+
+.ai-badge {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: 0.72rem; color: var(--slate-400); margin-top: 12px;
+  font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.ai-badge .ai-icon {
+  width: 14px; height: 14px; border-radius: 4px;
+  background: linear-gradient(135deg, var(--green-400), var(--green-600));
+  display: inline-flex; align-items: center; justify-content: center;
+  color: white; font-size: 7px; font-weight: 800;
+}
+
+/* ===== S5: AI DOMAIN RESULTS ===== */
+.results-section {
+  max-width: 620px; margin: 0 auto 2rem; padding: 0 2rem;
+  animation: fadeInUp 0.5s ease 0.5s both;
+}
+.results-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px; font-size: 0.82rem; color: var(--slate-500); font-weight: 500;
+}
+.results-header .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-500); }
+
+.domain-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 12px; margin-bottom: 8px;
+  transition: all 0.2s;
+}
+.domain-row:hover { border-color: var(--green-300); background: var(--green-50); }
+.domain-row.best {
+  border-color: var(--green-400);
+  background: linear-gradient(135deg, var(--green-50) 0%, rgba(16,185,129,0.04) 100%);
+  box-shadow: 0 2px 12px rgba(16,185,129,0.08);
+}
+.domain-name {
+  font-size: 0.95rem; font-weight: 600; color: var(--slate-800);
+  display: flex; align-items: center; gap: 8px;
+}
+.domain-name .ext { color: var(--green-600); }
+.best-tag {
+  font-size: 0.65rem; font-weight: 700; color: var(--green-700);
+  background: var(--green-100); padding: 2px 8px; border-radius: 100px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.domain-right { display: flex; align-items: center; gap: 12px; }
+.domain-price {
+  font-size: 0.85rem; color: var(--slate-500); font-weight: 500;
+}
+.btn-get {
+  background: var(--green-600); color: white; border: none;
+  padding: 8px 20px; border-radius: 8px; font-size: 0.82rem;
+  font-weight: 700; cursor: pointer; font-family: var(--font-main);
+  transition: all 0.2s;
+}
+.btn-get:hover { background: var(--green-700); }
+.domain-row.taken .domain-name { color: var(--slate-400); text-decoration: line-through; }
+.btn-taken {
+  background: var(--slate-100); color: var(--slate-400); border: none;
+  padding: 8px 16px; border-radius: 8px; font-size: 0.82rem;
+  font-weight: 600; cursor: default;
+}
+
+/* ===== S6: ALTERNATE PATHS ===== */
+.alt-paths {
+  display: flex; align-items: center; justify-content: center; gap: 2rem;
+  padding: 1rem 2rem 3rem; font-size: 0.875rem;
+}
+.alt-paths a {
+  color: var(--slate-500); text-decoration: none; font-weight: 500;
+  border-bottom: 1px dashed var(--slate-300); padding-bottom: 2px;
+  transition: all 0.2s;
+}
+.alt-paths a:hover { color: var(--green-600); border-color: var(--green-400); }
+.alt-paths .sep { color: var(--slate-300); }
+
+/* ===== S7: TRUST BADGES ===== */
+.trust-strip {
+  background: var(--slate-50);
+  border-top: 1px solid var(--slate-100);
+  border-bottom: 1px solid var(--slate-100);
+  padding: 2rem;
+  display: flex; align-items: center; justify-content: center; gap: 3rem;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 600; color: var(--slate-600);
+}
+.trust-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.58rem; font-weight: 800; color: white;
+}
+.ti-nabl { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+.ti-abdm { background: linear-gradient(135deg, #059669, #047857); }
+.ti-gst { background: linear-gradient(135deg, #D97706, #B45309); }
+.ti-iso { background: linear-gradient(135deg, #7C3AED, #6D28D9); }
+.ti-hipaa { background: linear-gradient(135deg, #DC2626, #B91C1C); }
+
+/* ===== S8: PREVIEW CARD (what you get) ===== */
+.features-section {
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.section-label {
+  font-size: 0.75rem; font-weight: 700; color: var(--green-600);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  color: var(--slate-900);
+  margin-bottom: 0.75rem;
+}
+.section-sub {
+  font-size: 1rem; color: var(--slate-500); max-width: 500px;
+  margin: 0 auto 3rem; line-height: 1.6;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 820px; margin: 0 auto;
+}
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem;
+  text-align: left;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.feature-card:hover {
+  border-color: var(--green-300);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+.feature-card .fc-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem; font-size: 1.2rem;
+}
+.fc-green { background: var(--green-50); color: var(--green-600); }
+.fc-blue { background: #EFF6FF; color: var(--blue-500); }
+.fc-amber { background: #FFFBEB; color: var(--amber-500); }
+.fc-coral { background: #FEF2F2; color: var(--coral-500); }
+
+.feature-card h3 {
+  font-size: 0.92rem; font-weight: 700; color: var(--slate-800);
+  margin-bottom: 6px;
+}
+.feature-card p {
+  font-size: 0.8rem; color: var(--slate-500); line-height: 1.5;
+}
+.feature-card .free-tag {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 0.6rem; font-weight: 800; color: var(--green-700);
+  background: var(--green-100); padding: 3px 8px; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* ===== S9: HOW IT WORKS ===== */
+.how-section {
+  padding: 5rem 2rem;
+  background: var(--slate-900);
+  color: white;
+  text-align: center;
+}
+.how-section .section-label { color: var(--green-400); }
+.how-section .section-title { color: white; }
+.how-section .section-sub { color: var(--slate-400); }
+
+.steps-row {
+  display: flex; justify-content: center; gap: 1.5rem;
+  max-width: 900px; margin: 0 auto; flex-wrap: wrap;
+}
+.step-card {
+  flex: 1; min-width: 180px; max-width: 200px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 2rem 1.25rem;
+  position: relative;
+  transition: all 0.3s;
+}
+.step-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--green-500);
+  transform: translateY(-4px);
+}
+.step-num {
+  font-size: 2.5rem; font-weight: 800; color: var(--green-500);
+  opacity: 0.3; line-height: 1; margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+.step-card h3 {
+  font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;
+}
+.step-card p {
+  font-size: 0.78rem; color: var(--slate-400); line-height: 1.5;
+}
+.step-arrow {
+  display: flex; align-items: center; color: var(--green-500); opacity: 0.3;
+  font-size: 1.5rem; align-self: center;
+}
+
+/* ===== S10: WEBSITE PREVIEW ===== */
+.preview-section {
+  padding: 5rem 2rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--white) 0%, var(--green-50) 100%);
+}
+.browser-frame {
+  max-width: 780px; margin: 0 auto;
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.browser-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 18px;
+  background: var(--slate-50);
+  border-bottom: 1px solid var(--slate-200);
+}
+.browser-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.bd-r { background: #EF4444; }
+.bd-y { background: #F59E0B; }
+.bd-g { background: #10B981; }
+.browser-url {
+  flex: 1; margin-left: 12px;
+  background: var(--white); border-radius: 6px; padding: 6px 14px;
+  font-size: 0.75rem; color: var(--slate-500);
+  border: 1px solid var(--slate-200);
+  display: flex; align-items: center; gap: 6px;
+}
+.browser-url .lock { color: var(--green-600); font-size: 0.65rem; }
+.browser-content {
+  padding: 2.5rem;
+  text-align: left;
+}
+.preview-clinic-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 2rem;
+}
+.preview-logo {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--green-500), var(--green-700));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.4rem; font-weight: 800;
+}
+.preview-clinic-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem; color: var(--slate-900);
+}
+.preview-clinic-tag {
+  font-size: 0.82rem; color: var(--slate-500);
+}
+.preview-hero-img {
+  width: 100%; height: 180px; border-radius: 12px;
+  background: linear-gradient(135deg, #e0f2fe 0%, #d1fae5 50%, #fef3c7 100%);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem; color: var(--slate-400); font-weight: 500;
+}
+.preview-features {
+  display: flex; gap: 12px; margin-bottom: 1.5rem;
+}
+.pf-item {
+  flex: 1; background: var(--slate-50); border-radius: 10px; padding: 14px;
+  text-align: center;
+}
+.pf-item .pf-icon { font-size: 1.2rem; margin-bottom: 6px; }
+.pf-item .pf-label { font-size: 0.72rem; font-weight: 600; color: var(--slate-600); }
+
+.preview-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-600); color: white; padding: 12px 28px;
+  border-radius: 10px; font-size: 0.9rem; font-weight: 700;
+  text-decoration: none;
+}
+
+/* ===== S11: COMPARISON TABLE ===== */
+.compare-section {
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.compare-table {
+  max-width: 820px; margin: 0 auto;
+  border-collapse: separate; border-spacing: 0;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--slate-200);
+  font-size: 0.85rem;
+}
+.compare-table thead th {
+  background: var(--slate-50); padding: 16px;
+  font-weight: 700; font-size: 0.82rem; color: var(--slate-600);
+  border-bottom: 1px solid var(--slate-200);
+}
+.compare-table thead th:nth-child(3) {
+  background: var(--green-50); color: var(--green-700);
+  position: relative;
+}
+.compare-table thead th .winner-badge {
+  display: block; font-size: 0.6rem; font-weight: 800;
+  color: var(--green-600); text-transform: uppercase; letter-spacing: 1px;
+}
+.compare-table td {
+  padding: 14px 16px; border-bottom: 1px solid var(--slate-100);
+  color: var(--slate-600);
+}
+.compare-table td:first-child {
+  font-weight: 600; color: var(--slate-700); text-align: left;
+}
+.compare-table td:nth-child(3) {
+  background: rgba(16,185,129,0.03);
+  color: var(--green-700); font-weight: 600;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.check { color: var(--green-500); font-weight: 700; }
+.cross { color: var(--slate-300); }
+.muted-price { font-size: 0.78rem; color: var(--slate-400); }
+
+/* ===== S12: CTA + FOOTER ===== */
+.cta-section {
+  padding: 5rem 2rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--green-50) 0%, var(--white) 100%);
+}
+.cta-section .section-title { margin-bottom: 1rem; }
+.cta-section .section-sub { margin-bottom: 2rem; }
+.cta-big-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--green-600); color: white; border: none;
+  padding: 18px 40px; border-radius: 14px; font-size: 1.1rem;
+  font-weight: 700; cursor: pointer; font-family: var(--font-main);
+  transition: all 0.3s; box-shadow: 0 8px 24px rgba(16,185,129,0.25);
+}
+.cta-big-btn:hover {
+  background: var(--green-700); transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(16,185,129,0.3);
+}
+.cta-fine {
+  margin-top: 1rem; font-size: 0.75rem; color: var(--slate-400);
+}
+
+.footer {
+  background: var(--slate-900);
+  color: var(--slate-400);
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+}
+.footer-brand {
+  font-weight: 800; font-size: 1.1rem; color: white;
+  margin-bottom: 0.5rem;
+}
+.footer-brand span { color: var(--green-400); }
+.footer-tagline {
+  font-size: 0.82rem; color: var(--slate-500); margin-bottom: 2rem;
+}
+.footer-links {
+  display: flex; justify-content: center; gap: 2rem;
+  margin-bottom: 2rem; flex-wrap: wrap;
+}
+.footer-links a {
+  font-size: 0.8rem; color: var(--slate-500); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--green-400); }
+.footer-copy {
+  font-size: 0.72rem; color: var(--slate-600);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links a:not(.btn-nav) { display: none; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .steps-row { flex-direction: column; align-items: center; }
+  .step-arrow { transform: rotate(90deg); }
+  .preview-features { flex-direction: column; }
+  .trust-strip { gap: 1.5rem; }
+  .compare-table { font-size: 0.75rem; }
+  .alt-paths { flex-direction: column; gap: 0.75rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- S1: NAV -->
+<!-- S1: STICKY NAV -->
 <nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="m">Medi</span><span class="h">Host</span><span class="tm">&trade;</span></div>
-    <div class="nav-links">
-      <a href="#howSection" class="nav-link">How it works</a>
-      <a href="#compareSection" class="nav-link">Pricing</a>
-      <a href="#heroForm" class="nav-btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search domain</a>
-      <a href="/plans.html" class="nav-btn-solid">Start free</a>
-    </div>
+  <div class="nav-logo">
+    <span>Medi</span>Host<span class="tm">™</span>
+  </div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#compare">Compare</a>
+    <button class="btn-nav">Start free</button>
   </div>
 </nav>
 
 <!-- S2: ANNOUNCEMENT BAR -->
-<div class="announce">
-  <div class="announce-inner">
-    <span class="announce-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <b>AI-powered domain search</b></span>
-    <span class="announce-div"></span>
-    <span class="announce-item">Get a free domain for your practice — <b>absolutely free*</b></span>
-    <span class="announce-div"></span>
-    <button class="announce-btn" onclick="document.getElementById('hfName').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){document.getElementById('hfName').focus()},400)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search now</button>
-  </div>
+<div class="announce-bar">
+  <span class="spark">&#10024;</span>
+  AI-powered domain search &nbsp;|&nbsp; Get your clinic's own .com — <strong>absolutely free*</strong> with any paid plan
+  <a href="#search">Search now &rarr;</a>
 </div>
 
-<!-- S3: HERO -->
-<div class="hero">
-  <div class="hero-badge"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg> Trusted by 500+ healthcare businesses across India</div>
-  <h1>Patients are searching for<br><span class="rolling" id="rollingText">your clinic</span><br>online. Let them find you.</h1>
-  <p class="hero-sub">Your own domain. Professional website. Google listing. AI-powered social posts. Online appointment booking. Full practice management. Live in 15 minutes.</p>
-</div>
-
-<!-- S4: HERO FORM -->
-<div id="heroForm" style="max-width:560px;margin:0 auto 14px;padding:0 20px">
-  <div style="display:flex;border:2px solid #0F6E56;border-radius:10px;overflow:hidden">
-    <input type="text" id="hfName" placeholder="Try: Rajitha Dental Clinic Hyderabad" style="flex:1;padding:14px 18px;border:none;font-size:15px;outline:none;background:transparent;color:var(--dark)" />
-    <button id="heroBtn" onclick="searchDomains()" style="padding:14px 28px;background:#0F6E56;color:#fff;border:none;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.3"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Search
-    </button>
+<!-- S3+S4: HERO -->
+<section class="hero" id="search">
+  <div class="trust-line">
+    <span class="trust-dot"></span>
+    Trusted by 50+ clinics across India
   </div>
-  <div style="text-align:center;margin-top:14px;display:flex;justify-content:center;gap:20px;font-size:13px">
-    <a href="/plans.html?has_domain=true" style="color:#0F6E56;text-decoration:underline;cursor:pointer">Already have a domain?</a>
-    <span style="color:#ccc">|</span>
-    <a href="/signup.html?hms_only=true" style="color:#0F6E56;text-decoration:underline;cursor:pointer">Just need HMS / LIS software?</a>
-  </div>
-  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--gray-400);display:flex;align-items:center;justify-content:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span> <b style="color:var(--green-text);font-weight:600">MediHost AI</b>&nbsp;finds your domain, designs your site, writes your posts</div>
-</div>
 
-<!-- DOMAIN RESULTS (populated by JS) -->
-<div id="domainResults"></div>
+  <h1>
+    Your patients are searching.<br>
+    Can they find your <br>
+    <span class="rolling-wrapper">
+      <span class="rolling-text">
+        <span class="accent">dental clinic?</span>
+        <span class="accent">diagnostics lab?</span>
+        <span class="accent">pharmacy?</span>
+        <span class="accent">physio centre?</span>
+        <span class="accent">dental clinic?</span>
+      </span>
+    </span>
+  </h1>
 
-<!-- S5: PREVIEW CARD -->
-<div class="preview">
-  <div class="preview-hdr">
-    <div class="preview-hdr-left">
-      <div class="ph-title">Here's what we'll create for you</div>
-      <div class="ph-sub">Rajitha Dental Clinic, Hyderabad</div>
+  <p class="hero-sub">
+    <strong>80% of patients Google before booking.</strong> Get your clinic a professional website, custom domain, and full practice management — all in one platform.
+  </p>
+
+  <!-- SINGLE SEARCH BAR -->
+  <div class="search-wrapper">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="Rajitha Dental Clinic Hyderabad">
+      <button class="search-btn" onclick="showResults()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Find my domain
+      </button>
     </div>
-    <span class="preview-badge">15 min setup</span>
-  </div>
-  <div class="preview-grid">
-    <div class="ptile" style="background:var(--green-light);color:var(--green-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="ptile-title">rajithadental.in</span><span class="ptile-sub">Your own domain</span></div>
-    <div class="ptile" style="background:var(--purple-light);color:var(--purple-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span class="ptile-title">Professional site</span><span class="ptile-sub">AI-designed</span></div>
-    <div class="ptile" style="background:var(--blue-light);color:var(--blue-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="ptile-title">Google listing</span><span class="ptile-sub">Auto-synced</span></div>
-    <div class="ptile" style="background:var(--orange-light);color:var(--orange-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span class="ptile-title">10 social posts</span><span class="ptile-sub">AI-written</span></div>
-    <div class="ptile" style="background:var(--olive-light);color:var(--olive-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="ptile-title">Online booking</span><span class="ptile-sub">Patients book 24/7</span></div>
-    <div class="ptile" style="background:var(--gold-light);color:var(--gold-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span class="ptile-title">Billing + GST</span><span class="ptile-sub">Invoices ready</span></div>
-    <div class="ptile" style="background:var(--rose-light);color:var(--rose-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="ptile-title">Full HMS</span><span class="ptile-sub">Manage everything</span></div>
-    <div class="ptile" style="background:var(--blue-light);color:var(--blue-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="ptile-title">Patient portal</span><span class="ptile-sub">On your website</span></div>
-    <div class="ptile" style="background:var(--purple-light);color:var(--purple-text)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L9 9l-7 1 5 5-1 7 6-3 6 3-1-7 5-5-7-1z"/></svg><span class="ptile-title">AI marketing</span><span class="ptile-sub">MediHost AI</span></div>
-  </div>
-</div>
-
-<!-- S6: DOMAIN LINKS -->
-<div class="domain-links">Or search a domain directly: <a href="/plans.html?domain=rajithaclinic.com">rajithaclinic.com</a> | <a href="/plans.html?domain=rajithadental.in">rajithadental.in</a> | <a href="/plans.html?domain=drrajitha.com">drrajitha.com</a></div>
-
-<!-- S7: TRUST BADGES -->
-<div class="trust">
-  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> NABL compliant</span>
-  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg> ABDM / ABHA ready</span>
-  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> GST compliant</span>
-  <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> ISO ready</span>
-</div>
-
-<!-- S8: HOW IT WORKS -->
-<div class="how" id="howSection">
-  <h2>How it works</h2>
-  <p class="how-sub">Zero to fully online in 4 steps</p>
-  <div class="how-grid">
-    <div class="how-step"><div class="hs-num" style="background:var(--green-light);color:var(--green-text)">1</div><div class="hs-title">Enter your name</div><div class="hs-desc">Name, type, city. MediHost AI handles everything else.</div></div>
-    <div class="how-step"><div class="hs-num" style="background:var(--purple-light);color:var(--purple-text)">2</div><div class="hs-title">Review AI design</div><div class="hs-desc">Preview your website. Change colors, photos, text.</div></div>
-    <div class="how-step"><div class="hs-num" style="background:var(--blue-light);color:var(--blue-text)">3</div><div class="hs-title">Go live everywhere</div><div class="hs-desc">Publish site. Connect Google + socials. Patients book online.</div></div>
-    <div class="how-step"><div class="hs-num" style="background:var(--gold-light);color:var(--gold-text)">4</div><div class="hs-title">Run your practice</div><div class="hs-desc">Patients, billing, appointments — full HMS built in.</div></div>
-  </div>
-</div>
-
-<!-- S9: WEBSITE PREVIEW -->
-<div class="webprev">
-  <h2>Your clinic website — powered by you</h2>
-  <p class="wp-sub">Patients visit your domain. Everything looks like YOUR practice.</p>
-  <div class="browser">
-    <div class="browser-chrome">
-      <div class="browser-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
-      <div class="browser-url">rajithadental.in</div>
-    </div>
-    <div class="browser-body">
-      <div class="bb-name">Rajitha Dental Clinic</div>
-      <div class="bb-nav">Home&ensp;|&ensp;Services&ensp;|&ensp;Doctors&ensp;|&ensp;Book appointment&ensp;|&ensp;Contact</div>
-      <div class="bb-hero">Hero image area</div>
-      <div class="bb-text">Welcome to Rajitha Dental Clinic. Providing quality dental care in Hyderabad since 2015.</div>
+    <div class="ai-badge">
+      <span class="ai-icon">AI</span>
+      Powered by MediHost AI — instant domain suggestions
     </div>
   </div>
-  <div class="wp-pills">
-    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <b>Book appointment</b>&nbsp;Patients book from your site</span>
-    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <b>Patient portal</b>&nbsp;Patients view reports</span>
-    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <b>Staff login</b>&nbsp;Your team manages the clinic</span>
-    <span class="wp-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22C17.5228 22 22 17.5228 22 12H2C2 17.5228 6.47715 22 12 22Z"/></svg> <b>Your branding</b>&nbsp;Your logo, colors, name</span>
-  </div>
-</div>
 
-<!-- S10: COMPARISON -->
-<div class="compare" id="compareSection">
-  <h2>Why healthcare businesses choose MediHost</h2>
-  <div class="compare-grid">
-    <div class="compare-col">
-      <div class="cc-hdr tertiary">GoDaddy / Hostinger</div>
-      <ul class="compare-list">
-        <li>Domain + hosting</li>
-        <li>Generic templates</li>
-        <li class="no">Healthcare focus</li>
-        <li class="no">AI marketing</li>
-        <li class="no">Online booking</li>
-        <li class="no">Patient billing</li>
-        <li class="no">Practice management</li>
-        <li class="no">NABL / ISO compliance</li>
-        <li class="no">ABHA / ABDM ready</li>
-      </ul>
+  <!-- TRUST BADGES (moved into hero for single-page impact) -->
+  <section class="trust-strip" style="margin-top: 1.2rem; border:none; background:transparent; padding: 0.8rem 0 0;">
+    <div class="trust-item">
+      <div class="trust-icon ti-hipaa">HIPAA</div>
+      HIPAA-Grade Security
     </div>
-    <div class="compare-col featured">
-      <span class="cc-badge">All-in-one platform</span>
-      <div class="cc-hdr" style="margin-top:2px">MediHost</div>
-      <ul class="compare-list">
-        <li class="yes-green">AI domain + website</li>
-        <li class="yes-green">Healthcare templates</li>
-        <li class="yes-green">MediHost AI marketing</li>
-        <li class="yes-green">Google Business sync</li>
-        <li class="yes-green">Online appointment booking</li>
-        <li class="yes-green">Billing + GST + EMR</li>
-        <li class="yes-green">Full HMS dashboard</li>
-        <li class="yes-green">NABL / ISO compliant LIS</li>
-        <li class="yes-green">ABHA / ABDM ready</li>
-      </ul>
+    <div class="trust-item">
+      <div class="trust-icon ti-nabl">NABL</div>
+      NABL Compliant
     </div>
-    <div class="compare-col">
-      <div class="cc-hdr tertiary">Practo / MocDoc</div>
-      <ul class="compare-list">
-        <li class="no">Your own domain</li>
-        <li class="no">Your own website</li>
-        <li class="no">AI marketing</li>
-        <li class="no">Google Business</li>
-        <li>Online booking</li>
-        <li>Billing</li>
-        <li>HMS software</li>
-        <li>NABL / ISO</li>
-        <li>ABHA / ABDM</li>
-      </ul>
+    <div class="trust-item">
+      <div class="trust-icon ti-abdm">ABDM</div>
+      ABHA / ABDM Ready
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon ti-gst">GST</div>
+      GST Compliant
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon ti-iso">ISO</div>
+      ISO Ready
+    </div>
+  </section>
+</section>
+
+<!-- S5: AI DOMAIN RESULTS (simulated) -->
+<section class="results-section" id="resultsArea" style="display:none;">
+  <div class="results-header">
+    <span class="dot"></span>
+    MediHost AI found 5 perfect domains for you
+  </div>
+
+  <div class="domain-row best">
+    <div class="domain-name">
+      rajithadental<span class="ext">.com</span>
+      <span class="best-tag">AI Pick</span>
+    </div>
+    <div class="domain-right">
+      <span class="domain-price">&#8377;699/yr</span>
+      <button class="btn-get">Get it &rarr;</button>
     </div>
   </div>
-</div>
 
-<!-- S11: CTA -->
-<div class="cta">
-  <div class="cta-card">
-    <h2>Start free today</h2>
-    <p>Free subdomain + website + online booking + patient registration. No credit card. Upgrade anytime.</p>
-    <a href="/plans.html" class="cta-btn">Get your practice online</a>
+  <div class="domain-row">
+    <div class="domain-name">rajithadentalclinic<span class="ext">.in</span></div>
+    <div class="domain-right">
+      <span class="domain-price">&#8377;399/yr</span>
+      <button class="btn-get">Get it &rarr;</button>
+    </div>
   </div>
+
+  <div class="domain-row">
+    <div class="domain-name">rajithadentalhyd<span class="ext">.com</span></div>
+    <div class="domain-right">
+      <span class="domain-price">&#8377;799/yr</span>
+      <button class="btn-get">Get it &rarr;</button>
+    </div>
+  </div>
+
+  <div class="domain-row">
+    <div class="domain-name">drrajithadental<span class="ext">.in</span></div>
+    <div class="domain-right">
+      <span class="domain-price">&#8377;299/yr</span>
+      <button class="btn-get">Get it &rarr;</button>
+    </div>
+  </div>
+
+  <div class="domain-row taken">
+    <div class="domain-name">rajithadental<span class="ext">.in</span></div>
+    <div class="domain-right">
+      <span class="domain-price" style="text-decoration:line-through;">Taken</span>
+      <button class="btn-taken">Unavailable</button>
+    </div>
+  </div>
+</section>
+
+<!-- S6: ALTERNATE PATHS -->
+<div class="alt-paths">
+  <a href="#">Already have a domain? Connect it free &rarr;</a>
+  <span class="sep">|</span>
+  <a href="#">Just need clinic software? Start free &rarr;</a>
 </div>
 
-<!-- S12: FOOTER -->
-<div class="footer">
-  *Free domain included with Professional, Business, and Enterprise plans (annual billing). Standard domain pricing applies for Starter plan.<br>
-  MediHost&trade; by SmartGumastha Technologies, Hyderabad | Registered trademark, Class 42
-</div>
+<!-- Trust badges now in hero section above -->
 
-<script src="shared.js"></script>
+<!-- S8: FEATURE GRID -->
+<section class="features-section" id="pricing">
+  <div class="section-label">Everything included</div>
+  <h2 class="section-title">One platform. Complete digital identity.</h2>
+  <p class="section-sub">No more juggling GoDaddy + Practo + spreadsheets. Everything your clinic needs, in one place.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="free-tag">Free</span>
+      <div class="fc-icon fc-green">&#127760;</div>
+      <h3>Custom domain</h3>
+      <p>Your own .com or .in — patients search your name, they find YOU</p>
+    </div>
+    <div class="feature-card">
+      <span class="free-tag">Free</span>
+      <div class="fc-icon fc-blue">&#128187;</div>
+      <h3>Clinic website</h3>
+      <p>AI-built professional site with services, timings, and online booking</p>
+    </div>
+    <div class="feature-card">
+      <span class="free-tag">Free</span>
+      <div class="fc-icon fc-green">&#128274;</div>
+      <h3>SSL + hosting forever</h3>
+      <p>Secure, fast, always online. No annual renewal headaches</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon fc-amber">&#128197;</div>
+      <h3>Appointments</h3>
+      <p>Online booking widget on your site. Zero missed calls</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon fc-blue">&#128203;</div>
+      <h3>Billing + GST</h3>
+      <p>Professional invoices, collection reports, GST-compliant billing</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon fc-coral">&#129658;</div>
+      <h3>Patient records</h3>
+      <p>EMR, prescriptions, visit history — complete patient folder</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon fc-green">&#128300;</div>
+      <h3>Lab (LIS)</h3>
+      <p>NABL-compliant reports, TAT tracking, auto-interpretations</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon fc-amber">&#128241;</div>
+      <h3>Google Business</h3>
+      <p>Auto-listed on Google Maps. Patients find directions instantly</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon fc-blue">&#129302;</div>
+      <h3>AI marketing</h3>
+      <p>Social posts, health tips, ad copy — generated by MediHost AI</p>
+    </div>
+  </div>
+</section>
+
+<!-- S9: HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-label">4 simple steps</div>
+  <h2 class="section-title">Live in 10 minutes, not 10 days</h2>
+  <p class="section-sub">No developer needed. No technical knowledge. Just your clinic name.</p>
+
+  <div class="steps-row">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Enter your clinic name</h3>
+      <p>Type your clinic name and city. MediHost AI suggests perfect domains instantly.</p>
+    </div>
+    <span class="step-arrow">&rarr;</span>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Pick your domain</h3>
+      <p>Choose your .com or .in. We register it in your name. You own it forever.</p>
+    </div>
+    <span class="step-arrow">&rarr;</span>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>AI builds your site</h3>
+      <p>MediHost AI creates a professional website from your clinic details. One click to go live.</p>
+    </div>
+    <span class="step-arrow">&rarr;</span>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <h3>Run your practice</h3>
+      <p>Appointments, billing, EMR, lab reports — all working from day one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S10: WEBSITE PREVIEW -->
+<section class="preview-section">
+  <div class="section-label">Your clinic, online</div>
+  <h2 class="section-title">This is how your patients will see you</h2>
+  <p class="section-sub">A professional website that builds trust before they even walk in.</p>
+
+  <div class="browser-frame">
+    <div class="browser-bar">
+      <span class="browser-dot bd-r"></span>
+      <span class="browser-dot bd-y"></span>
+      <span class="browser-dot bd-g"></span>
+      <div class="browser-url">
+        <span class="lock">&#128274;</span>
+        rajithadental.com
+      </div>
+    </div>
+    <div class="browser-content">
+      <div class="preview-clinic-header">
+        <div class="preview-logo">RD</div>
+        <div>
+          <div class="preview-clinic-name">Rajitha Dental Clinic</div>
+          <div class="preview-clinic-tag">Multi-Speciality Dental Care &bull; Hyderabad</div>
+        </div>
+      </div>
+      <div class="preview-hero-img">
+        AI-generated clinic hero image with services, team, and location
+      </div>
+      <div class="preview-features">
+        <div class="pf-item">
+          <div class="pf-icon">&#128197;</div>
+          <div class="pf-label">Book appointment</div>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon">&#128222;</div>
+          <div class="pf-label">Call clinic</div>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon">&#128205;</div>
+          <div class="pf-label">Get directions</div>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon">&#128172;</div>
+          <div class="pf-label">WhatsApp us</div>
+        </div>
+      </div>
+      <a href="#" class="preview-btn">Book your appointment &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- S11: COMPARISON TABLE -->
+<section class="compare-section" id="compare">
+  <div class="section-label">Why MediHost wins</div>
+  <h2 class="section-title">Practo rents you patients. We build you a brand.</h2>
+  <p class="section-sub">See how MediHost compares to the alternatives.</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="text-align:left;">Feature</th>
+        <th>GoDaddy /<br>Hostinger</th>
+        <th>
+          MediHost™
+          <span class="winner-badge">Best value</span>
+        </th>
+        <th>Practo /<br>MocDoc</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Custom domain (.com)</td>
+        <td><span class="check">&#10003;</span> <span class="muted-price">&#8377;800+/yr</span></td>
+        <td><span class="check">&#10003;</span> FREE*</td>
+        <td><span class="cross">&#10005;</span></td>
+      </tr>
+      <tr>
+        <td>Professional website</td>
+        <td><span class="check">&#10003;</span> <span class="muted-price">DIY builder</span></td>
+        <td><span class="check">&#10003;</span> AI-built</td>
+        <td><span class="cross">&#10005;</span></td>
+      </tr>
+      <tr>
+        <td>Free hosting + SSL</td>
+        <td><span class="muted-price">&#8377;10,000+/yr</span></td>
+        <td><span class="check">&#10003;</span> FREE forever</td>
+        <td><span class="cross">&#10005;</span></td>
+      </tr>
+      <tr>
+        <td>Patient appointments</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="check">&#10003;</span></td>
+      </tr>
+      <tr>
+        <td>Billing + GST invoices</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="check">&#10003;</span></td>
+      </tr>
+      <tr>
+        <td>EMR / patient records</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="check">&#10003;</span></td>
+      </tr>
+      <tr>
+        <td>NABL-compliant lab (LIS)</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="check">&#10003;</span> <span class="muted-price">extra</span></td>
+      </tr>
+      <tr>
+        <td>ABDM / ABHA integration</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="muted-price">partial</span></td>
+      </tr>
+      <tr>
+        <td>HIPAA-grade security</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span> RBAC + Encryption</td>
+        <td><span class="muted-price">varies</span></td>
+      </tr>
+      <tr>
+        <td>AI marketing assistant</td>
+        <td><span class="cross">&#10005;</span></td>
+        <td><span class="check">&#10003;</span> MediHost AI</td>
+        <td><span class="cross">&#10005;</span></td>
+      </tr>
+      <tr>
+        <td>You own your brand</td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="check">&#10003;</span></td>
+        <td><span class="cross">&#10005;</span> <span class="muted-price">their platform</span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Total cost / year</td>
+        <td style="font-weight:700;">&#8377;12,000+</td>
+        <td style="font-weight:700;color:var(--green-600);">&#8377;799 domain only</td>
+        <td style="font-weight:700;">&#8377;20,000+</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- S12: CTA + FOOTER -->
+<section class="cta-section">
+  <div class="section-label">Ready?</div>
+  <h2 class="section-title">Your clinic deserves to be found</h2>
+  <p class="section-sub">Join 50+ clinics already growing with MediHost. Start in 10 minutes.</p>
+  <button class="cta-big-btn" onclick="document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'});">
+    Search your clinic domain
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </button>
+  <p class="cta-fine">*Free domain included with Professional, Business, and Enterprise plans. 14-day free trial. Cancel anytime.</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand"><span>Medi</span>Host™</div>
+  <div class="footer-tagline">AI-powered digital growth platform for healthcare</div>
+  <div class="footer-links">
+    <a href="#">Privacy policy</a>
+    <a href="#">Terms of service</a>
+    <a href="#">Support</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">
+    &copy; 2026 SmartGumastha Technologies, Hyderabad. All rights reserved.<br>
+    MEDIHOST is a registered trademark (Class 42, Proprietor Code 7629536).
+  </div>
+</footer>
+
 <script>
-// Rolling text animation
-var rollingWords = ['your clinic', 'your dental practice', 'your diagnostic lab', 'your pharmacy', 'your physio center', 'your hospital', 'your ayurveda center', 'your homeopathy center'];
-var rollingIndex = 0;
-var rollingEl = document.getElementById('rollingText');
+// Rotating placeholder
+var placeholders = [
+  "Rajitha Dental Clinic Hyderabad",
+  "Dr Meera Women's Clinic Mumbai",
+  "City Diagnostics Lab Bangalore",
+  "Krishna Ortho & Physio Jaipur",
+  "Aarogya Pharmacy Pune",
+  "Dr Reddy's ENT Clinic Vizag",
+  "Sunrise Eye Care Chennai",
+  "Shanti Multi-Speciality Lucknow"
+];
+var phIdx = 0;
+var searchInput = document.getElementById('searchInput');
 
-function cycleRolling() {
-  rollingEl.classList.remove('fade-in');
-  rollingEl.classList.add('fade-out');
-  setTimeout(function() {
-    rollingIndex = (rollingIndex + 1) % rollingWords.length;
-    rollingEl.textContent = rollingWords[rollingIndex];
-    rollingEl.classList.remove('fade-out');
-    rollingEl.classList.add('fade-in');
-  }, 400);
-}
-setInterval(cycleRolling, 2500);
+setInterval(function() {
+  if (document.activeElement !== searchInput && searchInput.value === '') {
+    phIdx = (phIdx + 1) % placeholders.length;
+    searchInput.style.transition = 'opacity 0.3s';
+    searchInput.style.opacity = 0;
+    setTimeout(function() {
+      searchInput.placeholder = placeholders[phIdx];
+      searchInput.style.opacity = 1;
+    }, 300);
+  }
+}, 3000);
 
-// Hero form — AI domain search
-var heroSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+// Search domain - real API call
+function showResults() {
+  var input = document.getElementById('searchInput');
+  var val = input.value.trim();
+  if (!val) { val = input.placeholder; }
+  
+  var btn = document.querySelector('.search-btn');
+  var origText = btn.innerHTML;
+  btn.innerHTML = 'MediHost AI is thinking...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
 
-function searchDomains() {
-  var name = document.getElementById('hfName').value.trim();
-  var type = '';
-  var city = '';
-  if (!name) { document.getElementById('hfName').focus(); return; }
-
-  var btn = document.getElementById('heroBtn');
-  var resultsDiv = document.getElementById('domainResults');
-
-  btn.innerHTML = '<span class="spinner"></span> MediHost AI is thinking...';
-  btn.disabled = true; btn.style.opacity = '0.7';
-
-  fetch(MEDIHOST.API_BASE + '/api/presence/domains/ai-suggest', {
+  fetch('/api/presence/ai-suggest', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: name, type: type, city: city })
+    body: JSON.stringify({ clinicName: val })
   })
-  .then(function(r) { return r.json(); })
+  .then(function(res) { return res.json(); })
   .then(function(data) {
-    btn.innerHTML = heroSvg + ' Search again';
-    btn.disabled = false; btn.style.opacity = '1';
-
-    if (!data.success || !data.suggestions || data.suggestions.length === 0) {
-      resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#666">Could not generate suggestions. Please try again.</div>';
-      resultsDiv.style.display = 'block';
-      return;
+    var area = document.getElementById('resultsArea');
+    if (data.suggestions && data.suggestions.length > 0) {
+      var html = '<div class="results-header"><span class="dot"></span> MediHost AI found ' + data.suggestions.length + ' domains for you</div>';
+      data.suggestions.forEach(function(item, idx) {
+        var isAvailable = item.available !== false;
+        var isBest = idx === 0 && isAvailable;
+        var rowClass = 'domain-row' + (isBest ? ' best' : '') + (!isAvailable ? ' taken' : '');
+        var parts = item.domain.split('.');
+        var name = parts[0];
+        var ext = '.' + parts.slice(1).join('.');
+        html += '<div class="' + rowClass + '">';
+        html += '<div class="domain-name">' + name + '<span class="ext">' + ext + '</span>';
+        if (isBest) html += ' <span class="best-tag">AI Pick</span>';
+        html += '</div><div class="domain-right">';
+        if (isAvailable) {
+          var price = item.price || '699';
+          html += '<span class="domain-price">&#8377;' + price + '/yr</span>';
+          html += '<button class="btn-get" onclick="window.location.href=\'plans.html?domain=' + encodeURIComponent(item.domain) + '&name=' + encodeURIComponent(val) + '\'">Get it &rarr;</button>';
+        } else {
+          html += '<span class="domain-price" style="text-decoration:line-through">Taken</span>';
+          html += '<button class="btn-taken">Unavailable</button>';
+        }
+        html += '</div></div>';
+      });
+      area.innerHTML = html;
+    } else {
+      area.innerHTML = '<div class="results-header"><span class="dot"></span> Generating suggestions...</div><div class="domain-row"><div class="domain-name">Domain search is warming up. <button class="btn-get" onclick="showResults()">Try again</button></div></div>';
     }
-
-    var html = '<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l2.1 4.3 4.7.7-3.4 3.3.8 4.7L8 11.8 3.8 14l.8-4.7L1.2 6l4.7-.7L8 1z" fill="#534AB7"/></svg><span style="font-size:14px;font-weight:500;color:#3C3489">MediHost AI found these domains for you</span>';
-    if (data.ai_generated) html += '<span style="font-size:10px;padding:2px 8px;background:#EEEDFE;color:#534AB7;border-radius:10px;margin-left:6px">AI-powered</span>';
-    html += '</div>';
-
-    data.suggestions.forEach(function(s) {
-      var enc = '&name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
-      if (s.available === true) {
-        html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0">';
-        html += '<span style="font-size:14px;font-weight:500;color:#085041">' + s.domain + '</span>';
-        html += '<span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">\u20B9' + s.price + '/yr</span>';
-        html += '<a href="/plans.html?domain=' + encodeURIComponent(s.domain) + '&name=' + encodeURIComponent(name) + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Get it</a></span>';
-        html += '</div>';
-      } else if (s.available === false) {
-        html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#F1EFE8;border-radius:8px;margin:4px 0">';
-        html += '<span style="font-size:13px;color:#888;text-decoration:line-through">' + s.domain + '</span>';
-        html += '<span style="font-size:11px;color:#888">taken</span></div>';
-      } else {
-        html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0">';
-        html += '<span style="font-size:14px;font-weight:500;color:#085041">' + s.domain + '</span>';
-        html += '<span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + (s.price || 299) + '/yr</span>';
-        html += '<a href="/plans.html?domain=' + encodeURIComponent(s.domain) + '&name=' + encodeURIComponent(name) + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
-        html += '</div>';
-      }
-    });
-
-    html += '<div style="margin-top:14px;padding-top:14px;border-top:.5px solid #e5e7eb;display:flex;align-items:center;gap:8px">';
-    html += '<span style="font-size:12px;color:#666;white-space:nowrap">Search another:</span>';
-    html += '<input type="text" id="manualDomain" placeholder="yourdomain" style="flex:1;padding:8px 12px;border:.5px solid #ccc;border-radius:6px;font-size:13px;font-family:var(--body);outline:none">';
-    html += '<select id="manualTld" style="padding:8px;border:.5px solid #ccc;border-radius:6px;font-size:13px;font-family:var(--body)"><option>.com</option><option>.in</option><option>.co.in</option><option>.org</option></select>';
-    html += '<button onclick="checkManualDomain()" style="padding:8px 14px;background:#0F6E56;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer">Check</button>';
-    html += '</div>';
-
-    var enc2 = 'name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
-    html += '<div style="text-align:center;margin-top:14px;font-size:12px;color:#666;display:flex;justify-content:center;gap:16px">';
-    html += '<a href="/plans.html?has_domain=true&' + enc2 + '" style="color:#0F6E56;text-decoration:underline">Already have a domain?</a>';
-    html += '<span style="color:#ccc">|</span>';
-    html += '<a href="/signup.html?hms_only=true&' + enc2 + '" style="color:#0F6E56;text-decoration:underline">Just need clinic software?</a>';
-    html += '</div>';
-
-    resultsDiv.innerHTML = html;
-    resultsDiv.style.display = 'block';
-    resultsDiv.style.opacity = '0';
-    resultsDiv.style.transform = 'translateY(-10px)';
-    setTimeout(function() {
-      resultsDiv.style.transition = 'all 0.4s ease';
-      resultsDiv.style.opacity = '1';
-      resultsDiv.style.transform = 'translateY(0)';
-    }, 50);
-    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    area.style.display = 'block';
+    area.scrollIntoView({ behavior: 'smooth', block: 'center' });
   })
   .catch(function(err) {
-    console.error('Domain search error:', err);
-    btn.innerHTML = heroSvg + ' Show me what MediHost AI builds for my practice';
-    btn.disabled = false; btn.style.opacity = '1';
-    resultsDiv.innerHTML = '<div style="text-align:center;padding:16px;color:#E24B4A">Something went wrong. Please try again.</div>';
-    resultsDiv.style.display = 'block';
+    var area = document.getElementById('resultsArea');
+    area.innerHTML = '<div class="results-header"><span class="dot"></span> Domain search is warming up</div><div class="domain-row"><div class="domain-name" style="font-size:0.9rem;color:var(--slate-500)">Our AI is getting ready. Please try again in a moment.</div><div class="domain-right"><button class="btn-get" onclick="showResults()">Retry &rarr;</button></div></div>';
+    area.style.display = 'block';
+    area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  })
+  .finally(function() {
+    btn.innerHTML = origText;
+    btn.disabled = false;
+    btn.style.opacity = '1';
   });
 }
 
-function checkManualDomain() {
-  var domain = (document.getElementById('manualDomain').value || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
-  var tld = (document.getElementById('manualTld').value || '.com').replace('.', '');
-  if (!domain) return;
+// Enter key triggers search
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') showResults();
+});
 
-  var fullDomain = domain + '.' + tld;
-  var PRICES = { 'com': 799, 'in': 299, 'co.in': 199, 'org': 899 };
-  var price = PRICES[tld] || 799;
-  var name = document.getElementById('hfName').value || '';
-  var type = '';
-  var city = '';
-  var enc = '&name=' + encodeURIComponent(name) + '&type=' + encodeURIComponent(type) + '&city=' + encodeURIComponent(city);
+// Smooth scroll for nav
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
 
-  var row = document.createElement('div');
-  row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#E1F5EE;border-radius:8px;margin:4px 0';
-  row.innerHTML = '<span style="font-size:14px;font-weight:500;color:#085041">' + fullDomain + '</span><span style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#0F6E56;font-weight:500">from \u20B9' + price + '/yr</span><a href="/plans.html?domain=' + encodeURIComponent(fullDomain) + '&name=' + encodeURIComponent(name) + '" style="padding:6px 16px;background:#0F6E56;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Check &amp; get it</a></span>';
-
-  var resultsDiv = document.getElementById('domainResults');
-  var manualSection = resultsDiv.querySelector('div[style*="border-top"]');
-  if (manualSection) resultsDiv.insertBefore(row, manualSection);
-  else resultsDiv.appendChild(row);
-
-  document.getElementById('manualDomain').value = '';
-}
-
-// Enter key on city input
-document.getElementById('hfName').addEventListener('keydown', function(e) { if (e.key === 'Enter') searchDomains(); });
-
-// Rotating placeholder examples
-var placeholders = [
-  'Try: Rajitha Dental Clinic Hyderabad',
-  'Try: Dr Sharma Physiotherapy Mumbai',
-  'Try: City Diagnostic Lab Bangalore',
-  'Try: Green Pharmacy Chennai',
-  'Try: Sunrise Hospital Delhi',
-  'Try: Smile Dental Care Pune'
-];
-var phIdx = 0;
-setInterval(function() {
-  phIdx = (phIdx + 1) % placeholders.length;
-  var el = document.getElementById('hfName');
-  if (el && !el.value) el.placeholder = placeholders[phIdx];
-}, 3000);
+// Start free / CTA buttons scroll to search
+document.querySelector('.btn-nav').addEventListener('click', function() {
+  document.getElementById('searchInput').focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 </script>
+
 </body>
 </html>
