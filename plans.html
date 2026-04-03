@@ -6,6 +6,7 @@
 <title>MediHost™ — Choose Your Plan</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{--g50:#ECFDF5;--g100:#D1FAE5;--g200:#A7F3D0;--g400:#34D399;--g500:#10B981;--g600:#059669;--g700:#047857;--g800:#065F46;--g900:#064E3B;--s50:#F8FAFC;--s100:#F1F5F9;--s200:#E2E8F0;--s300:#CBD5E1;--s400:#94A3B8;--s500:#64748B;--s600:#475569;--s700:#334155;--s800:#1E293B;--s900:#0F172A;--w:#FFF;--a50:#FFFBEB;--a500:#F59E0B;--a700:#B45309;--fm:'Plus Jakarta Sans',system-ui,sans-serif;--fd:'DM Serif Display',Georgia,serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -141,7 +142,9 @@ body{font-family:var(--fm);color:var(--s800);background:var(--s50);-webkit-font-
   <div class="step-line" id="stepLine1"></div>
   <div class="step-item" id="step2"><span class="sn">2</span> Compare plans</div>
   <div class="step-line" id="stepLine2"></div>
-  <div class="step-item" id="step3"><span class="sn">3</span> Sign up & pay</div>
+  <div class="step-item" id="step3"><span class="sn">3</span> Create account</div>
+  <div class="step-line" id="stepLine3"></div>
+  <div class="step-item" id="step4"><span class="sn">4</span> Pay & go live</div>
 </div>
 
 <!-- STEP 1: CURATE -->
@@ -187,20 +190,57 @@ body{font-family:var(--fm);color:var(--s800);background:var(--s50);-webkit-font-
     <button class="cta-go" onclick="showSignup()">Continue &rarr;</button>
   </div>
 
-  <!-- STEP 3: SIGNUP FORM (hidden) -->
+  <!-- STEP 3: CREATE ACCOUNT (hidden) -->
   <div class="signup-box" id="signupBox">
-    <h2>Create your MediHost account</h2>
-    <p class="ss">You selected <strong id="sfPlan">Business</strong>. Pay <strong>&#8377;699</strong> for domain. 14-day free trial.</p>
-    <div class="sf-grid">
-      <div class="sf"><label>Full name</label><input type="text" id="fName" placeholder="Dr. Rajitha Sharma"></div>
-      <div class="sf"><label>Phone</label><input type="tel" id="fPhone" placeholder="+91 98765 43210"></div>
+    <h2>Create Your Account</h2>
+    <p class="ss">Your account is saved instantly — pay when you're ready</p>
+    <div id="signupMsg" style="display:none;text-align:center;padding:1rem;margin-bottom:1rem;border-radius:10px;font-size:.88rem;font-weight:600;"></div>
+
+    <!-- Google Sign-In -->
+    <div style="max-width:400px;margin:0 auto 1rem;text-align:center;">
+      <div id="google-signin-btn" style="display:flex;justify-content:center;"></div>
+    </div>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:12px;max-width:400px;margin:0 auto 1rem;">
+      <div style="flex:1;height:1px;background:var(--s200);"></div>
+      <span style="font-size:.72rem;font-weight:700;color:var(--s400);">or sign up with email</span>
+      <div style="flex:1;height:1px;background:var(--s200);"></div>
+    </div>
+
+    <!-- Email Form -->
+    <div class="sf-grid" id="emailSignupForm">
+      <div class="sf"><label>Hospital / Clinic Name</label><input type="text" id="fHospital" placeholder="Rajitha Dental Clinic"></div>
+      <div class="sf"><label>Your Name</label><input type="text" id="fName" placeholder="Dr. Rajitha Sharma"></div>
       <div class="sf"><label>Email</label><input type="email" id="fEmail" placeholder="doctor@example.com"></div>
-      <div class="sf"><label>Create password</label><input type="password" id="fPass" placeholder="Min 8 characters"></div>
+      <div class="sf"><label>Phone</label><input type="tel" id="fPhone" placeholder="98765 43210"></div>
+      <div class="sf"><label>Password</label><input type="password" id="fPass" placeholder="Min 8 characters"></div>
+      <div class="sf"><label>Confirm Password</label><input type="password" id="fPass2" placeholder="Repeat password"></div>
       <div class="sf-pay">
-        <button class="pay-btn" id="payBtn" onclick="doPayment()">Pay &#8377;699 and go live &rarr;</button>
-        <div class="pm-r"><span class="pmb">UPI</span><span class="pmb">GPay</span><span class="pmb">PhonePe</span><span class="pmb">Paytm</span><span class="pmb">Cards</span><span class="pmb">Net Banking</span><span class="pmb">Wallets</span><span class="pmb">EMI</span></div>
-        <p class="sf-fine">After trial: UPI AutoPay. Cancel anytime. <a href="#" onclick="selPlan('starter',0);return false;">Domain only &#8377;699 &rarr;</a></p>
+        <button class="pay-btn" id="createAccBtn" onclick="createEmailAccount()" style="background:var(--g600);">Create Account &rarr;</button>
       </div>
+    </div>
+    <p style="text-align:center;font-size:.65rem;color:var(--s400);margin-top:10px;"><i class="fas fa-lock" style="margin-right:4px;"></i>Your information is encrypted and secure. We'll never share your data.</p>
+  </div>
+
+  <!-- STEP 4: PAYMENT (hidden) -->
+  <div class="signup-box" id="paymentBox">
+    <h2>Complete Payment</h2>
+    <p class="ss">Activate your domain and start your free trial</p>
+    <div id="paymentMsg" style="display:none;text-align:center;padding:1rem;margin-bottom:1rem;border-radius:10px;font-size:.88rem;font-weight:600;"></div>
+
+    <!-- Order Summary -->
+    <div style="max-width:420px;margin:0 auto 1.25rem;background:var(--s50);border:1.5px solid var(--s200);border-radius:12px;padding:1.25rem;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:.88rem;"><span style="color:var(--s600);">Plan</span><strong id="payPlanName">Business — ₹2,999/month</strong></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:.88rem;"><span style="color:var(--s600);">Domain</span><strong id="payDomainName">yourname.in — ₹699/year</strong></div>
+      <div style="height:1px;background:var(--s200);margin:10px 0;"></div>
+      <div style="display:flex;justify-content:space-between;font-size:1rem;font-weight:800;"><span>Pay today</span><span id="payTotal" style="color:var(--g700);">₹699</span></div>
+      <div style="font-size:.7rem;color:var(--g600);margin-top:6px;"><i class="fas fa-gift" style="margin-right:4px;"></i>First month free — you'll be charged after trial ends</div>
+    </div>
+
+    <div style="max-width:420px;margin:0 auto;">
+      <button class="pay-btn" id="payBtn" onclick="startPayment()" style="background:var(--g600);">Pay &#8377;699 and go live &rarr;</button>
+      <div class="pm-r"><span class="pmb">UPI</span><span class="pmb">GPay</span><span class="pmb">PhonePe</span><span class="pmb">Paytm</span><span class="pmb">Cards</span><span class="pmb">Net Banking</span><span class="pmb">Wallets</span><span class="pmb">EMI</span></div>
     </div>
   </div>
 </div>
@@ -393,32 +433,162 @@ function goBackToCurate(){
   document.getElementById('curateBox').scrollIntoView({behavior:'smooth'});
 }
 
+// ===== STORED PARTNER DATA =====
+var storedPartnerId='';
+var storedName='';
+var storedEmail='';
+var storedPhone='';
+
 function showSignup(){
   document.getElementById('signupBox').classList.add('show');
   document.getElementById('step2').classList.remove('active');document.getElementById('step2').classList.add('done');
   document.getElementById('stepLine2').classList.add('done');
   document.getElementById('step3').classList.add('active');
   document.getElementById('signupBox').scrollIntoView({behavior:'smooth'});
-  document.getElementById('fName').focus();
+  // Init Google button
+  if(window.google&&google.accounts){
+    google.accounts.id.initialize({client_id:'645434958645-adj9plpl6m1blipo06fv17ioiqjjbftt.apps.googleusercontent.com',callback:handleGoogleResponse});
+    google.accounts.id.renderButton(document.getElementById('google-signin-btn'),{theme:'outline',size:'large',width:380,text:'signup_with',shape:'rectangular'});
+  }
 }
 
-function doPayment(){
+// ===== GOOGLE SIGN-UP =====
+function handleGoogleResponse(response){
+  var msg=document.getElementById('signupMsg');
+  msg.style.display='block';msg.style.background='var(--g50)';msg.style.color='var(--g700)';msg.textContent='Signing up with Google...';
+  fetch('/api/presence/register-google',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({google_token:response.credential,selected_domain:dom,plan_tier:sel,practice_types:selectedTypes.join(','),phone:null})})
+  .then(function(r){return r.json().then(function(d){return{status:r.status,data:d};});})
+  .then(function(res){
+    if(res.status===201){
+      storedPartnerId=res.data.partner_id;storedName=res.data.name||'';storedEmail=res.data.email||'';storedPhone='';
+      msg.style.background='var(--g50)';msg.style.color='var(--g700)';msg.innerHTML='<i class="fas fa-check-circle" style="margin-right:6px;"></i>Account created! Proceeding to payment...';
+      setTimeout(function(){advanceToPayment();},1000);
+    } else if(res.status===409){
+      msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.innerHTML=res.data.error+' <a href="login.html" style="color:#2563eb;text-decoration:underline;">Sign in here</a>';
+    } else {
+      msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent=res.data.error||'Something went wrong';
+    }
+  }).catch(function(e){msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Network error. Please try again.';});
+}
+
+// ===== EMAIL SIGN-UP =====
+function createEmailAccount(){
+  var hospital=document.getElementById('fHospital').value.trim();
   var name=document.getElementById('fName').value.trim();
-  var phone=document.getElementById('fPhone').value.trim();
   var email=document.getElementById('fEmail').value.trim();
+  var phone=document.getElementById('fPhone').value.trim().replace(/\s+/g,'');
   var pass=document.getElementById('fPass').value;
-  if(!name){alert('Please enter your full name');document.getElementById('fName').focus();return;}
-  if(!phone||phone.length<10){alert('Valid phone required');document.getElementById('fPhone').focus();return;}
-  if(!email||email.indexOf('@')===-1){alert('Valid email required');document.getElementById('fEmail').focus();return;}
-  if(!pass||pass.length<8){alert('Min 8 characters');document.getElementById('fPass').focus();return;}
-  var btn=document.getElementById('payBtn');btn.disabled=true;btn.textContent='Creating order...';
-  fetch('/api/presence/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:699,domain:dom,plan:sel,practiceTypes:selectedTypes.join(','),partnerName:name,partnerEmail:email,partnerPhone:phone})}).then(function(r){return r.json();}).then(function(d){
-    if(!d.orderId){alert('Could not create order');btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';return;}
-    var rzp=new Razorpay({key:d.key,amount:d.amount,currency:'INR',name:'MediHost',description:dom+' + '+sel,order_id:d.orderId,prefill:{name:name,email:email,contact:phone},theme:{color:'#059669'},method:{upi:true,card:true,netbanking:true,wallet:true,emi:true},
-      handler:function(r){btn.textContent='Verifying...';fetch('/api/presence/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({razorpay_order_id:r.razorpay_order_id,razorpay_payment_id:r.razorpay_payment_id,razorpay_signature:r.razorpay_signature,domain:dom,plan:sel,practiceTypes:selectedTypes.join(','),partnerName:name,partnerEmail:email,partnerPhone:phone,password:pass})}).then(function(r){return r.json();}).then(function(v){if(v.success){btn.textContent='\u2713 Success! Redirecting...';btn.style.background='#10B981';setTimeout(function(){window.location.href=v.redirectUrl||'verify.html?email='+encodeURIComponent(email);},1500);}else{alert('Verification failed');btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';}}).catch(function(){alert('Error. support@medihost.in');btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';});},
-      modal:{ondismiss:function(){btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';}}});
-    rzp.on('payment.failed',function(r){alert(r.error.description);btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';});rzp.open();
-  }).catch(function(){alert('Network error');btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';});
+  var pass2=document.getElementById('fPass2').value;
+  var msg=document.getElementById('signupMsg');
+
+  if(!hospital){msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Please enter your hospital/clinic name';document.getElementById('fHospital').focus();return;}
+  if(!name){msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Please enter your name';document.getElementById('fName').focus();return;}
+  if(!email||email.indexOf('@')===-1){msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Please enter a valid email';document.getElementById('fEmail').focus();return;}
+  if(!phone||phone.replace(/\D/g,'').length<10){msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Please enter a valid 10-digit phone number';document.getElementById('fPhone').focus();return;}
+  if(!pass||pass.length<8){msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Password must be at least 8 characters';document.getElementById('fPass').focus();return;}
+  if(pass!==pass2){msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Passwords do not match';document.getElementById('fPass2').focus();return;}
+
+  var btn=document.getElementById('createAccBtn');
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Creating account...';
+  msg.style.display='none';
+
+  fetch('/api/presence/register-account',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hospital_name:hospital,owner_name:name,email:email,phone:phone,password:pass,selected_domain:dom,plan_tier:sel,practice_types:selectedTypes.join(',')})})
+  .then(function(r){return r.json().then(function(d){return{status:r.status,data:d};});})
+  .then(function(res){
+    if(res.status===201){
+      storedPartnerId=res.data.partner_id;storedName=name;storedEmail=email;storedPhone=phone;
+      msg.style.display='block';msg.style.background='var(--g50)';msg.style.color='var(--g700)';msg.innerHTML='<i class="fas fa-check-circle" style="margin-right:6px;"></i>Account created!';
+      document.getElementById('emailSignupForm').style.display='none';
+      setTimeout(function(){advanceToPayment();},1000);
+    } else if(res.status===409){
+      msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.innerHTML=res.data.error+' <a href="login.html" style="color:#2563eb;text-decoration:underline;">Sign in here</a>';
+      btn.disabled=false;btn.textContent='Create Account \u2192';
+    } else {
+      msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent=res.data.error||'Something went wrong';
+      btn.disabled=false;btn.textContent='Create Account \u2192';
+    }
+  }).catch(function(e){
+    msg.style.display='block';msg.style.background='#fef2f2';msg.style.color='#dc2626';msg.textContent='Network error. Please try again.';
+    btn.disabled=false;btn.textContent='Create Account \u2192';
+  });
+}
+
+// ===== ADVANCE TO PAYMENT STEP =====
+function advanceToPayment(){
+  document.getElementById('signupBox').classList.remove('show');
+  document.getElementById('paymentBox').classList.add('show');
+  document.getElementById('step3').classList.remove('active');document.getElementById('step3').classList.add('done');
+  document.getElementById('stepLine3').classList.add('done');
+  document.getElementById('step4').classList.add('active');
+
+  // Update order summary
+  var planLabel=sel.charAt(0).toUpperCase()+sel.slice(1);
+  var tierPrice=selP||0;
+  document.getElementById('payPlanName').textContent=planLabel+' \u2014 \u20B9'+tierPrice.toLocaleString('en-IN')+'/month';
+  document.getElementById('payDomainName').textContent=dom+' \u2014 \u20B9699/year';
+  document.getElementById('payTotal').textContent='\u20B9699';
+  document.getElementById('paymentBox').scrollIntoView({behavior:'smooth'});
+}
+
+// ===== PAYMENT =====
+function startPayment(){
+  var btn=document.getElementById('payBtn');
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Creating order...';
+  var pmsg=document.getElementById('paymentMsg');pmsg.style.display='none';
+
+  fetch('/api/presence/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:699,domain:dom,plan:sel,partner_id:storedPartnerId,partnerName:storedName,partnerEmail:storedEmail,partnerPhone:storedPhone})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(!d.orderId){pmsg.style.display='block';pmsg.style.background='#fef2f2';pmsg.style.color='#dc2626';pmsg.textContent='Could not create order. Please try again.';btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';return;}
+    var rzp=new Razorpay({
+      key:'rzp_live_SYv4bpGGvljs1k',
+      amount:d.amount,currency:'INR',name:'MediHost',
+      description:dom+' + '+sel+' plan',
+      order_id:d.orderId,
+      prefill:{name:storedName,email:storedEmail,contact:storedPhone},
+      theme:{color:'#059669'},
+      method:{upi:true,card:true,netbanking:true,wallet:true,emi:true},
+      handler:function(r){verifyPayment(r);},
+      modal:{ondismiss:function(){btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';}}
+    });
+    rzp.on('payment.failed',function(r){
+      pmsg.style.display='block';pmsg.style.background='#fffbeb';pmsg.style.color='#92400e';
+      pmsg.innerHTML='<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>Payment could not be processed: '+(r.error.description||'Please try again')+'<br><span style="font-size:.78rem;color:var(--s500);">Your money is safe \u2014 if any amount was debited, it will be refunded within 5-7 business days.</span>';
+      btn.disabled=false;btn.textContent='Retry Payment \u2192';
+    });
+    rzp.open();
+    btn.textContent='Complete payment in Razorpay...';
+  }).catch(function(){
+    pmsg.style.display='block';pmsg.style.background='#fef2f2';pmsg.style.color='#dc2626';pmsg.textContent='Network error. Please try again.';
+    btn.disabled=false;btn.textContent='Pay \u20B9699 and go live \u2192';
+  });
+}
+
+function verifyPayment(rzpResponse){
+  var btn=document.getElementById('payBtn');
+  var pmsg=document.getElementById('paymentMsg');
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Verifying payment...';
+
+  fetch('/api/presence/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({razorpay_order_id:rzpResponse.razorpay_order_id,razorpay_payment_id:rzpResponse.razorpay_payment_id,razorpay_signature:rzpResponse.razorpay_signature,partner_id:storedPartnerId})})
+  .then(function(r){return r.json();})
+  .then(function(v){
+    if(v.success){
+      btn.innerHTML='<i class="fas fa-check-circle" style="margin-right:6px;"></i>Success! Redirecting...';
+      btn.style.background='#10B981';
+      pmsg.style.display='block';pmsg.style.background='var(--g50)';pmsg.style.color='var(--g700)';pmsg.innerHTML='<i class="fas fa-check-circle" style="margin-right:6px;"></i>Payment verified! Your account is active.';
+      setTimeout(function(){window.location.href='/welcome.html?email='+encodeURIComponent(storedEmail)+'&domain='+encodeURIComponent(dom)+'&plan='+encodeURIComponent(sel)+'&partner_id='+encodeURIComponent(storedPartnerId);},1500);
+    } else {
+      pmsg.style.display='block';pmsg.style.background='#fffbeb';pmsg.style.color='#92400e';
+      pmsg.innerHTML='<i class="fas fa-shield-alt" style="margin-right:6px;"></i>'+(v.error||'Verification issue')+'<br><br><span style="font-size:.78rem;color:var(--s500);">Our team has been notified and will reach out to you.</span><br><a href="https://wa.me/919999999999" target="_blank" style="color:#2563eb;font-size:.82rem;text-decoration:underline;">Contact support on WhatsApp</a>';
+      btn.disabled=false;btn.textContent='Retry Payment \u2192';
+      btn.onclick=function(){startPayment();};
+    }
+  }).catch(function(){
+    pmsg.style.display='block';pmsg.style.background='#fffbeb';pmsg.style.color='#92400e';
+    pmsg.innerHTML='<i class="fas fa-shield-alt" style="margin-right:6px;"></i>Could not verify payment. Your money is safe \u2014 if debited, it will be refunded within 5-7 business days.<br><br><span style="font-size:.78rem;color:var(--s500);">Our team has been notified.</span><br><a href="https://wa.me/919999999999" target="_blank" style="color:#2563eb;font-size:.82rem;text-decoration:underline;">Contact support on WhatsApp</a>';
+    btn.disabled=false;btn.textContent='Retry Payment \u2192';
+    btn.onclick=function(){startPayment();};
+  });
 }
 </script>
 </body></html>
