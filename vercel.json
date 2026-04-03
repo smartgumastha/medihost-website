@@ -5,6 +5,20 @@
     {
       "source": "/api/:path*",
       "destination": "https://smartgumastha-backend-production.up.railway.app/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "medihost.in" }],
+      "destination": "/$1"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.medihost.in" }],
+      "destination": "/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/site.html"
     }
   ],
   "headers": [

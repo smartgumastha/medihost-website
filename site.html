@@ -321,8 +321,12 @@ function setTheme(theme) {
 
 // Get domain from URL param or hostname
 var params = new URLSearchParams(window.location.search);
-var domain = params.get('domain') || window.location.hostname;
-if (domain === 'localhost' || domain === '127.0.0.1') domain = params.get('domain') || 'testclinicin.com';
+var hostname = window.location.hostname;
+var domain = params.get('domain') || '';
+if (!domain && hostname !== 'medihost.in' && hostname !== 'www.medihost.in' && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+  domain = hostname;
+}
+if (!domain) domain = params.get('domain') || 'testclinicin.com';
 
 // Load site
 fetch('/api/storefront/site?domain=' + encodeURIComponent(domain))
