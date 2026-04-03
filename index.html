@@ -145,7 +145,7 @@ body {
   animation: roll 10s cubic-bezier(0.4,0,0.2,1) infinite;
 }
 .rolling-text span {
-  height: 1.2em; display: flex; align-items: center;
+  height: 1.2em; line-height: 1.2em; display: block;
   color: var(--green-600); white-space: nowrap;
 }
 @keyframes roll {
@@ -629,8 +629,7 @@ body {
 
   <h1>
     Your patients are searching.<br>
-    Can they find your <br>
-    <span class="rolling-wrapper">
+    Can they find your <span class="rolling-wrapper">
       <span class="rolling-text">
         <span class="accent">dental clinic?</span>
         <span class="accent">diagnostics lab?</span>
