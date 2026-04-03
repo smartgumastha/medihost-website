@@ -1034,59 +1034,60 @@ setInterval(function() {
   }
 }, 3000);
 
-// Search domain - real API call
+// Search domain - ResellerClub availability check
 function showResults() {
   var input = document.getElementById('searchInput');
   var val = input.value.trim();
   if (!val) { val = input.placeholder; }
-  
+
+  // Clean: extract domain-like slug from clinic name
+  var slug = val.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '').replace(/^-+|-+$/g, '');
+  if (!slug || slug.length < 2) { alert('Please enter a valid clinic name'); return; }
+
   var btn = document.querySelector('.search-btn');
   var origText = btn.innerHTML;
-  btn.innerHTML = 'MediHost AI is thinking...';
+  btn.innerHTML = 'Checking availability...';
   btn.disabled = true;
   btn.style.opacity = '0.7';
 
-  fetch('/api/presence/ai-suggest', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ clinicName: val })
-  })
+  fetch('/api/presence/domains/check-multi?domain=' + encodeURIComponent(slug))
   .then(function(res) { return res.json(); })
   .then(function(data) {
     var area = document.getElementById('resultsArea');
-    if (data.suggestions && data.suggestions.length > 0) {
-      var html = '<div class="results-header"><span class="dot"></span> MediHost AI found ' + data.suggestions.length + ' domains for you</div>';
-      data.suggestions.forEach(function(item, idx) {
-        var isAvailable = item.available !== false;
-        var isBest = idx === 0 && isAvailable;
-        var rowClass = 'domain-row' + (isBest ? ' best' : '') + (!isAvailable ? ' taken' : '');
+    if (data.results && data.results.length > 0) {
+      var availCount = 0;
+      for (var c = 0; c < data.results.length; c++) { if (data.results[c].available) availCount++; }
+      var html = '<div class="results-header"><span class="dot"></span> Found ' + availCount + ' available domain' + (availCount !== 1 ? 's' : '') + ' for <strong>' + slug + '</strong></div>';
+      for (var i = 0; i < data.results.length; i++) {
+        var item = data.results[i];
+        var isBest = i === 0 && item.available;
         var parts = item.domain.split('.');
         var name = parts[0];
         var ext = '.' + parts.slice(1).join('.');
+        var rowClass = 'domain-row' + (isBest ? ' best' : '') + (!item.available ? ' taken' : '');
         html += '<div class="' + rowClass + '">';
         html += '<div class="domain-name">' + name + '<span class="ext">' + ext + '</span>';
-        if (isBest) html += ' <span class="best-tag">AI Pick</span>';
+        if (isBest) html += ' <span class="best-tag">Best Pick</span>';
         html += '</div><div class="domain-right">';
-        if (isAvailable) {
-          var price = item.price || '699';
-          html += '<span class="domain-price">&#8377;' + price + '/yr</span>';
-          html += '<button class="btn-get" onclick="window.location.href=\'plans.html?domain=' + encodeURIComponent(item.domain) + '&name=' + encodeURIComponent(val) + '\'">Get it &rarr;</button>';
+        if (item.available) {
+          html += '<span class="domain-price">&#8377;' + item.price + '/yr</span>';
+          html += '<button class="btn-get" onclick="window.location.href=\'plans.html?domain=' + encodeURIComponent(item.domain) + '&name=' + encodeURIComponent(val) + '\'">Get this domain &rarr;</button>';
         } else {
-          html += '<span class="domain-price" style="text-decoration:line-through">Taken</span>';
-          html += '<button class="btn-taken">Unavailable</button>';
+          html += '<span class="domain-price" style="text-decoration:line-through;color:var(--slate-400)">Taken</span>';
+          html += '<button class="btn-taken">Not available</button>';
         }
         html += '</div></div>';
-      });
+      }
       area.innerHTML = html;
     } else {
-      area.innerHTML = '<div class="results-header"><span class="dot"></span> Generating suggestions...</div><div class="domain-row"><div class="domain-name">Domain search is warming up. <button class="btn-get" onclick="showResults()">Try again</button></div></div>';
+      area.innerHTML = '<div class="results-header"><span class="dot"></span> Could not check availability right now</div><div class="domain-row"><div class="domain-name">Please try again in a moment.</div><div class="domain-right"><button class="btn-get" onclick="showResults()">Retry &rarr;</button></div></div>';
     }
     area.style.display = 'block';
     area.scrollIntoView({ behavior: 'smooth', block: 'center' });
   })
   .catch(function(err) {
     var area = document.getElementById('resultsArea');
-    area.innerHTML = '<div class="results-header"><span class="dot"></span> Domain search is warming up</div><div class="domain-row"><div class="domain-name" style="font-size:0.9rem;color:var(--slate-500)">Our AI is getting ready. Please try again in a moment.</div><div class="domain-right"><button class="btn-get" onclick="showResults()">Retry &rarr;</button></div></div>';
+    area.innerHTML = '<div class="results-header"><span class="dot"></span> Domain search is loading</div><div class="domain-row"><div class="domain-name" style="font-size:0.9rem;color:var(--slate-500)">Please try again in a moment.</div><div class="domain-right"><button class="btn-get" onclick="showResults()">Retry &rarr;</button></div></div>';
     area.style.display = 'block';
     area.scrollIntoView({ behavior: 'smooth', block: 'center' });
   })
