@@ -1040,9 +1040,22 @@ function showResults() {
   var val = input.value.trim();
   if (!val) { val = input.placeholder; }
 
-  // Clean: extract domain-like slug from clinic name
-  var slug = val.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '').replace(/^-+|-+$/g, '');
+  // Clean: extract domain-like slug from clinic name (preserve dots for domain input)
+  var slug = val.toLowerCase().replace(/[^a-z0-9.\s-]/g, '').replace(/\s+/g, '').replace(/^-+|-+$/g, '');
   if (!slug || slug.length < 2) { alert('Please enter a valid clinic name'); return; }
+
+  // Smart domain detection: if user typed "foodhost.in", extract "foodhost" as search term
+  var knownTlds = ['in', 'com', 'co.in', 'org', 'net'];
+  if (slug.indexOf('.') !== -1) {
+    for (var ti = 0; ti < knownTlds.length; ti++) {
+      if (slug.endsWith('.' + knownTlds[ti])) {
+        slug = slug.substring(0, slug.length - knownTlds[ti].length - 1);
+        break;
+      }
+    }
+    // Remove any remaining dots (e.g. "dr.sharma" → "drsharma")
+    slug = slug.replace(/\./g, '');
+  }
 
   var btn = document.querySelector('.search-btn');
   var origText = btn.innerHTML;
