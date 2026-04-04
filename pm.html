@@ -3,104 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MediHost — Command Center</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>MediHost Command Center v6</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#0a0a0b;color:#e4e4e7;min-height:100vh}
-.wrap{max-width:1200px;margin:0 auto;padding:16px}
-.hdr{display:flex;align-items:flex-end;justify-content:space-between;padding:12px 0 16px;border-bottom:2px solid #27272a;margin-bottom:16px;flex-wrap:wrap;gap:10px}
-.hdr h1{font-size:20px;font-weight:700;color:#fafafa;letter-spacing:-0.5px}
-.hdr .sub{font-size:11px;color:#52525b;margin-top:2px}
-.hdr .sub span{color:#a1a1aa}
-.brand{font-size:10px;font-weight:700;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase}
-.nav{display:flex;gap:4px;flex-wrap:wrap}
-.nav button{padding:5px 14px;border-radius:6px;border:1px solid #27272a;background:#18181b;color:#71717a;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s}
-.nav button.on{border-color:#fafafa;background:#fafafa;color:#09090b}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:16px}
-.stat{padding:12px 14px;border-radius:10px;background:#18181b;border:1px solid #27272a}
-.stat .n{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600}
-.stat .l{font-size:10px;color:#52525b;font-weight:600;margin-top:2px;letter-spacing:0.3px;text-transform:uppercase}
-.chart-row{display:grid;grid-template-columns:220px 1fr;gap:12px;margin-bottom:16px}
-@media(max-width:700px){.chart-row{grid-template-columns:1fr}}
-.card{background:#18181b;border:1px solid #27272a;border-radius:12px;padding:16px;overflow:hidden}
-.card h3{font-size:13px;font-weight:700;color:#a1a1aa;margin-bottom:12px;letter-spacing:0.3px}
-.ring-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-center{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;color:#fafafa}
-.ring-label{font-size:11px;color:#52525b;margin-top:2px}
-.branch-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.branch-bar .info{min-width:120px;display:flex;align-items:center;gap:6px}
-.branch-bar .icon{font-size:14px}
-.branch-bar .nm{font-size:11px;font-weight:600;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px}
-.branch-bar .track{flex:1;height:18px;background:#27272a;border-radius:4px;overflow:hidden;position:relative;min-width:60px}
-.branch-bar .fill{height:100%;border-radius:4px;transition:width 0.6s cubic-bezier(0.22,1,0.36,1)}
-.branch-bar .pct{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;min-width:36px;text-align:right}
-.branch-bar .cnt{font-size:10px;color:#52525b;min-width:30px;text-align:right}
-.streak-card{display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,#18181b 0%,#1c1917 100%);border:1px solid #292524;border-radius:12px;margin-bottom:16px}
-.streak-num{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:700;color:#f59e0b;line-height:1}
-.streak-info{flex:1}
-.streak-info .t{font-size:14px;font-weight:700;color:#fafafa}
-.streak-info .d{font-size:11px;color:#78716c;margin-top:2px}
-.milestone{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-.milestone .dot{width:10px;height:10px;border-radius:50%;border:2px solid #27272a}
-.milestone .dot.lit{border-color:#f59e0b;background:#f59e0b}
-.timeline-card{margin-bottom:16px}
-.day-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
-.day-row .day{font-family:'JetBrains Mono',monospace;font-size:10px;color:#52525b;min-width:50px}
-.day-row .bar-track{flex:1;height:14px;background:#27272a;border-radius:3px;overflow:hidden;position:relative}
-.day-row .bar-fill{height:100%;border-radius:3px}
-.day-row .count{font-family:'JetBrains Mono',monospace;font-size:10px;color:#71717a;min-width:20px;text-align:right}
-.branch-card{margin-bottom:10px;border:1px solid #27272a;border-radius:10px;overflow:hidden}
-.branch-head{padding:8px 12px;background:#18181b;border-bottom:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.branch-head .left{display:flex;align-items:center;gap:6px}
-.branch-head .nm{font-size:13px;font-weight:700;color:#e4e4e7}
-.branch-head .desc{font-size:10px;color:#52525b}
-.branch-body{padding:6px}
-.task{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;margin-bottom:3px;border-radius:6px;border:1px solid #1f1f23;transition:border-color 0.1s}
-.task:hover{border-color:#3f3f46}
-.task select{padding:3px 4px;border-radius:5px;border:1px solid #3f3f46;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;min-width:82px;background:#18181b;color:#a1a1aa}
-.task .info{flex:1;min-width:0}
-.task .name{font-size:12px;font-weight:600;color:#e4e4e7}
-.task .note{font-size:10px;color:#52525b;margin-top:1px}
-.task .where{font-size:10px;color:#78716c;margin-top:1px}
-.task .meta{display:flex;gap:6px;margin-top:2px;flex-wrap:wrap}
-.task .meta span{font-size:9px;color:#3f3f46}
-.task .blocked{color:#ef4444;font-weight:600}
-.task .deps-met{color:#22c55e}
-.task .tid{font-size:9px;color:#27272a}
-.badge{font-size:9px;padding:1px 6px;border-radius:4px;font-weight:600}
-.fix-badge{background:#052e16;color:#22c55e}
-.type-badge-code{background:#172554;color:#3b82f6}
-.type-badge-ops{background:#2e1065;color:#a855f7}
-.type-badge-vendor{background:#052e16;color:#22c55e}
-.type-badge-test{background:#431407;color:#f97316}
-.add-form{padding:14px;margin-bottom:14px;background:#18181b;border:1px solid #27272a;border-radius:10px}
-.add-form input,.add-form select{background:#09090b;border:1px solid #27272a;color:#e4e4e7;padding:6px 8px;border-radius:6px;font-size:12px;font-family:inherit;width:100%}
-.add-form label{font-size:10px;color:#52525b;display:block;margin-bottom:3px}
-.add-form .row{display:grid;gap:8px;margin-bottom:8px}
-.add-form .r2{grid-template-columns:1fr 1fr}
-.add-form .r4{grid-template-columns:1fr 1fr 1fr 1fr}
-.add-form button{padding:6px 16px;border-radius:6px;border:1px solid #27272a;background:#27272a;color:#fafafa;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-.add-form button:hover{background:#3f3f46}
-.log-entry{margin-bottom:12px}
-.log-head{font-size:12px;font-weight:700;color:#a1a1aa;padding:6px 10px;background:#18181b;border-radius:6px 6px 0 0;border:1px solid #27272a;border-bottom:2px solid #22c55e}
-.log-body{border:1px solid #27272a;border-top:none;border-radius:0 0 6px 6px;padding:6px}
-.log-item{display:flex;gap:8px;padding:5px 8px;margin-bottom:2px;border-radius:4px;background:#09090b}
-.log-tag{font-size:10px;padding:1px 7px;border-radius:4px;font-weight:600;min-width:60px;text-align:center}
-.footer{text-align:center;padding:20px 0;font-size:10px;color:#27272a}
-.quote{text-align:center;padding:10px;margin-bottom:16px;font-style:italic;color:#3f3f46;font-size:12px;border:1px solid #1f1f23;border-radius:8px;background:#18181b}
-.filter-row{display:flex;gap:3px;margin-bottom:12px;flex-wrap:wrap}
-.filter-row button{padding:3px 9px;border-radius:5px;border:1px solid #27272a;background:#18181b;color:#52525b;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit}
-.filter-row button.on{border-color:#fafafa;background:#fafafa;color:#09090b}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--card:#18181b;--border:#27272a;--text:#e4e4e7;--text2:#a1a1aa;--done:#22c55e;--in_progress:#f97316;--ready:#3b82f6;--todo:#71717a;--blocked:#ef4444;--partial:#a855f7;--wont_do:#525252;--critical:#ef4444;--high:#f97316;--medium:#eab308;--low:#3b82f6}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.mono{font-family:'JetBrains Mono',monospace}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);background:#111113}
+header h1{font-size:18px;font-weight:700;letter-spacing:-0.5px}
+header h1 span{color:var(--in_progress)}
+.nav-btns{display:flex;gap:6px}
+.nav-btn{padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text2);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;transition:all .15s}
+.nav-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.nav-btn:hover:not(.active){border-color:var(--text2)}
+#addBtn{padding:7px 14px;border:1px solid var(--done);border-radius:8px;background:transparent;color:var(--done);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif}
+#addBtn:hover{background:var(--done);color:#000}
+main{max-width:1200px;margin:0 auto;padding:24px}
+.view{display:none}.view.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.stat-card .num{font-size:28px;font-weight:700;line-height:1}
+.stat-card .lbl{font-size:11px;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.dash-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+.dash-card h3{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text2)}
+.streak-wrap{display:flex;align-items:center;gap:18px}
+.streak-num{font-size:52px;font-weight:700;line-height:1}
+.streak-dots{display:flex;gap:5px;margin-top:8px}
+.streak-dot{width:10px;height:10px;border-radius:50%;background:var(--border)}
+.streak-dot.lit{background:var(--in_progress)}
+.ring-wrap{display:flex;align-items:center;justify-content:center;position:relative}
+.ring-pct{position:absolute;font-size:28px;font-weight:700}
+.branch-bar{margin-bottom:8px}
+.branch-bar-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;font-size:12px}
+.branch-bar-track{height:10px;background:var(--border);border-radius:5px;overflow:hidden}
+.branch-bar-fill{height:100%;border-radius:5px;transition:width .4s}
+.burn-bar{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:11px}
+.burn-bar .burn-lbl{width:50px;text-align:right;color:var(--text2)}
+.burn-bar .burn-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;display:flex}
+.burn-bar .burn-done{height:100%;background:var(--done);border-radius:4px 0 0 4px}
+.burn-bar .burn-rem{height:100%;background:var(--border)}
+.burn-bar .burn-ct{width:40px;color:var(--text2)}
+.upnext-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:13px}
+.upnext-pri{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600;text-transform:uppercase}
+.quote-box{text-align:center;padding:16px;font-style:italic;color:var(--text2);font-size:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:20px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.fbtn{padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif}
+.fbtn.active{background:var(--text);color:var(--bg)}
+.branch-section{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.branch-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none}
+.branch-hdr:hover{background:#1f1f23}
+.branch-hdr-left{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.branch-hdr-bar{flex:1;max-width:200px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin:0 12px}
+.branch-hdr-fill{height:100%;border-radius:3px}
+.branch-hdr-count{font-size:12px;color:var(--text2)}
+.branch-hdr .chevron{transition:transform .2s;color:var(--text2)}
+.branch-hdr.open .chevron{transform:rotate(180deg)}
+.branch-body{display:none;padding:0 16px 14px}
+.branch-body.open{display:block}
+.task-row{display:grid;grid-template-columns:120px 1fr auto;gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.task-row:last-child{border-bottom:none}
+.task-status select{padding:4px 6px;border:1px solid var(--border);border-radius:5px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--text);outline:none}
+.task-name{font-weight:500}
+.badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;margin-left:4px}
+.badge-code{background:#1e3a5f;color:#60a5fa}.badge-ops{background:#3b2f1a;color:#f59e0b}.badge-vendor{background:#2d1f3d;color:#c084fc}.badge-test{background:#1a2f2f;color:#2dd4bf}
+.badge-critical{background:#3b1111;color:#f87171}.badge-high{background:#3b2811;color:#fb923c}.badge-medium{background:#3b3511;color:#facc15}.badge-low{background:#112840;color:#60a5fa}
+.fixed-badge{background:#052e16;color:#4ade80;padding:2px 7px;border-radius:4px;font-size:10px;margin-left:4px}
+.task-meta{font-size:11px;color:var(--text2);margin-top:2px}
+.task-blocked{color:var(--blocked);font-size:11px}
+.task-deps-met{color:var(--done);font-size:11px}
+.task-where{color:var(--in_progress);font-size:11px}
+.changelog-day{margin-bottom:18px}
+.changelog-day h3{font-size:14px;font-weight:600;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.cl-entry{padding:6px 0;font-size:13px;display:flex;align-items:center;gap:8px}
+.cl-tag{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
+.cl-tag-fixed{background:#052e16;color:#4ade80}.cl-tag-closed{background:#1e1b4b;color:#818cf8}.cl-tag-unblocked{background:#172554;color:#60a5fa}
+.add-form{display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px}
+.add-form.open{display:block}
+.add-form h3{margin-bottom:12px;font-size:15px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-grid label{font-size:12px;color:var(--text2);display:flex;flex-direction:column;gap:4px}
+.form-grid input,.form-grid select,.form-grid textarea{padding:7px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif}
+.form-grid textarea{grid-column:span 2;resize:vertical;height:60px}
+.form-actions{margin-top:12px;display:flex;gap:8px}
+.form-actions button{padding:8px 18px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif}
+.form-actions .save-btn{background:var(--done);color:#000;font-weight:600}
+.form-actions .cancel-btn{background:var(--border);color:var(--text)}
+@media(max-width:768px){.stats-grid{grid-template-columns:repeat(3,1fr)}.dash-grid{grid-template-columns:1fr}.task-row{grid-template-columns:100px 1fr}.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
+<header>
+  <h1>Medi<span>Host</span> Command Center <small style="font-weight:400;color:var(--text2);font-size:12px">v6</small></h1>
+  <div style="display:flex;gap:8px;align-items:center">
+    <div class="nav-btns">
+      <button class="nav-btn active" onclick="showView('dashboard')">Dashboard</button>
+      <button class="nav-btn" onclick="showView('tasks')">All Tasks</button>
+      <button class="nav-btn" onclick="showView('changelog')">Changelog</button>
+    </div>
+    <button id="addBtn" onclick="toggleAddForm()">+ Add Task</button>
+  </div>
+</header>
+<main>
+  <div class="add-form" id="addForm">
+    <h3>Add New Task</h3>
+    <div class="form-grid">
+      <label>Name<input id="af-name" placeholder="Task name"></label>
+      <label>Branch<select id="af-branch"></select></label>
+      <label>Priority<select id="af-pri"><option value="critical">Critical</option><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></label>
+      <label>Type<select id="af-type"><option value="code">CODE</option><option value="ops">OPS</option><option value="vendor">VENDOR</option><option value="test">TEST</option></select></label>
+      <label>Deadline<input id="af-dead" type="date"></label>
+      <label>Effort<input id="af-effort" placeholder="e.g. 2h, 1d"></label>
+      <label>Where<input id="af-where" placeholder="Location (ops tasks)"></label>
+      <label>Notes<input id="af-notes" placeholder="Notes"></label>
+    </div>
+    <div class="form-actions">
+      <button class="save-btn" onclick="addTask()">Add Task</button>
+      <button class="cancel-btn" onclick="toggleAddForm()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="view active" id="view-dashboard"></div>
+  <div class="view" id="view-tasks"></div>
+  <div class="view" id="view-changelog"></div>
+</main>
+
 <script>
-var SK = "medihost-cmd-v6";
-var ST = {done:{l:"Done",c:"#22c55e",bg:"#052e16"},in_progress:{l:"In Progress",c:"#f97316",bg:"#431407"},ready:{l:"Ready",c:"#3b82f6",bg:"#172554"},todo:{l:"To Do",c:"#71717a",bg:"#18181b"},blocked:{l:"Blocked",c:"#ef4444",bg:"#2a0a0a"},partial:{l:"Partial",c:"#a855f7",bg:"#2e1065"},wont_do:{l:"Won't Do",c:"#52525b",bg:"#18181b"}};
-var PR = {critical:{l:"Critical",c:"#ef4444"},high:{l:"High",c:"#f97316"},medium:{l:"Medium",c:"#3b82f6"},low:{l:"Low",c:"#71717a"}};
-var TC = {code:{l:"CODE",bg:"#172554",c:"#3b82f6"},ops:{l:"OPS",bg:"#2e1065",c:"#a855f7"},vendor:{l:"VENDOR",bg:"#052e16",c:"#22c55e"},test:{l:"TEST",bg:"#431407",c:"#f97316"}};
+var LS_KEY = "medihost-cmd-v6";
+
+var STATUS_COLORS = {done:"#22c55e",in_progress:"#f97316",ready:"#3b82f6",todo:"#71717a",blocked:"#ef4444",partial:"#a855f7",wont_do:"#525252"};
+var PRI_ORDER = {critical:0,high:1,medium:2,low:3};
 
 var QUOTES = [
   "Practo rents you patients. We build you a brand.",
@@ -108,405 +141,461 @@ var QUOTES = [
   "Multi-tenant. Multi-branch. One unstoppable founder.",
   "The moat is HMS order relay. Build the moat.",
   "13 years of healthcare domain knowledge, weaponized.",
-  "Shopify for Healthcare — and you're building it solo.",
-  "Tonight's fix unblocks tomorrow's feature.",
+  "Shopify for Healthcare \u2014 and you\u2019re building it solo.",
+  "Tonight\u2019s fix unblocks tomorrow\u2019s feature.",
   "Chain clinics need this. Your friend needs this. Ship it."
 ];
 
-var DEFAULT = {v:6,updated:Date.now(),streak:{count:1,lastDate:new Date().toISOString().split('T')[0]},history:[],log:[{d:"Apr 5 Night",items:[{t:"t1",a:"closed",n:"Already done in hemato-app — 115 api.get/api.post calls."},{t:"t9",a:"fixed",n:"subscription_plan → plan_tier. 7+5 lines."},{t:"t45",a:"fixed",n:"Shared modules.js + dedup 4 copies + API + gating."}]}],
-branches:[
-{id:"b1",name:"HMS Backbone",color:"#ef4444",icon:"\u{1F3E5}",desc:"Core HMS — patient, OPD, billing, LIS",tasks:[
-{id:"t1",name:"V44 apiRequest→api.get fix",s:"done",p:"critical",type:"code",dep:[],eff:"0",dl:"Apr 5",note:"Already done in hemato-app.",fix:"Apr 5",res:"Verified — never broken"},
-{id:"t2",name:"Test full OPD flow E2E",s:"ready",p:"critical",type:"test",dep:[],eff:"1 session",dl:"Apr 6",note:"All V44 screens verified. Manual test needed."},
-{id:"t3",name:"Collection reports",s:"todo",p:"high",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 9",note:"Client #1 ask. API + screen + print."},
-{id:"t4",name:"Prescription gen + print",s:"todo",p:"high",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 10",note:"Rx → print → pharmacy."},
-{id:"t5",name:"Multi-branch support",s:"todo",p:"high",type:"code",dep:["t2"],eff:"2 sessions",dl:"Apr 8",note:"KEY for chain clinics."},
-{id:"t6",name:"Pharmacy stock mgmt",s:"todo",p:"medium",type:"code",dep:["t4"],eff:"2 sessions",dl:"Apr 21",note:"Stock, expiry, purchase."},
-{id:"t7",name:"LIS → billing",s:"todo",p:"medium",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 21",note:"Test results → bills."},
-{id:"t8",name:"Appointment → queue",s:"todo",p:"medium",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 25",note:"Online booking → doctor queue."}
-]},
-{id:"b2",name:"MediHost Platform",color:"#3b82f6",icon:"\u{1F310}",desc:"Partner SaaS — signup, dashboard, admin",tasks:[
-{id:"t9",name:"Admin pricing save fix",s:"done",p:"critical",type:"code",dep:[],eff:"0.5 session",dl:"Apr 5",note:"subscription_plan → plan_tier.",fix:"Apr 5",res:"7 backend + 5 frontend lines"},
-{id:"t10",name:"Signup pipeline E2E",s:"partial",p:"critical",type:"code",dep:[],eff:"1 session",dl:"Apr 7",note:"Payment+domain OK. Auto-website pending."},
-{id:"t45",name:"Module gating fix",s:"done",p:"high",type:"code",dep:[],eff:"0.5 session",dl:"Apr 6",note:"Shared modules.js + API.",fix:"Apr 5",res:"helpers/modules.js + dedup"},
-{id:"t11",name:"Welcome page live link",s:"todo",p:"high",type:"code",dep:["t10"],eff:"0.5 session",dl:"Apr 7",note:"Your site is live at domain."},
-{id:"t12",name:"Partner dashboard — editor",s:"todo",p:"high",type:"code",dep:["t10"],eff:"2 sessions",dl:"Apr 14",note:"Edit tagline, about, services."},
-{id:"t13",name:"Partner dashboard — doctors",s:"todo",p:"high",type:"code",dep:["t12"],eff:"1 session",dl:"Apr 14",note:"Add/edit doctors, schedules."},
-{id:"t14",name:"Partner dashboard — orders",s:"todo",p:"high",type:"code",dep:["t12"],eff:"1 session",dl:"Apr 16",note:"View bookings, status."},
-{id:"t15",name:"Dashboard analytics",s:"todo",p:"medium",type:"code",dep:["t14"],eff:"1 session",dl:"Apr 18",note:"Visitors, revenue."},
-{id:"t16",name:"Onboarding wizard",s:"todo",p:"medium",type:"code",dep:["t12","t13"],eff:"2 sessions",dl:"Apr 21",note:"10 min target."},
-{id:"t17",name:"Admin partner mgmt",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"Apr 25",note:"View all partners."},
-{id:"t18",name:"Plan enforcement",s:"todo",p:"medium",type:"code",dep:["t16"],eff:"2 sessions",dl:"May 5",note:"Feature gating + billing."}
-]},
-{id:"b3",name:"Storefront + Websites",color:"#22c55e",icon:"\u{1F6D2}",desc:"Patient websites, booking, payments",tasks:[
-{id:"t19",name:"First client domain setup",s:"todo",p:"critical",type:"code",dep:[],eff:"1 session",dl:"Apr 10",note:"Register domain, seed data."},
-{id:"t46",name:"Booking: appt vs service fix",s:"todo",p:"high",type:"code",dep:[],eff:"0.5 session",dl:"Apr 7",note:"Free appt vs ₹500 bug."},
-{id:"t20",name:"Razorpay checkout",s:"todo",p:"high",type:"code",dep:[],eff:"1 session",dl:"Apr 10",note:"Checkout.js on site.html."},
-{id:"t21",name:"Mobile responsiveness",s:"todo",p:"high",type:"code",dep:[],eff:"1 session",dl:"Apr 10",note:"Test + fix on phone."},
-{id:"t22",name:"Doctor profile SEO pages",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"Apr 14",note:"Individual pages for Google."},
-{id:"t23",name:"Real-time slot availability",s:"todo",p:"medium",type:"code",dep:["t8"],eff:"1 session",dl:"Apr 14",note:"Block taken slots."},
-{id:"t24",name:"Template variants",s:"todo",p:"low",type:"code",dep:[],eff:"3 sessions",dl:"May 5",note:"5+ designs."}
-]},
-{id:"b4",name:"WhatsApp AI",color:"#16a34a",icon:"\u{1F4AC}",desc:"WA API, automation, chatbot",tasks:[
-{id:"t25",name:"WA DB tables",s:"todo",p:"high",type:"code",dep:[],eff:"0.5 session",dl:"Apr 14",note:"Config, templates, messages."},
-{id:"t26",name:"Meta Cloud API",s:"todo",p:"high",type:"code",dep:["t25"],eff:"1 session",dl:"Apr 16",note:"WA number + webhook."},
-{id:"t27",name:"6 message flows",s:"todo",p:"high",type:"code",dep:["t26"],eff:"2 sessions",dl:"Apr 21",note:"Confirm, remind, report, etc."},
-{id:"t28",name:"AI chatbot",s:"todo",p:"medium",type:"code",dep:["t27"],eff:"2 sessions",dl:"Apr 28",note:"Claude-powered WA bot."},
-{id:"t29",name:"Opt-in compliance",s:"todo",p:"medium",type:"code",dep:["t26"],eff:"0.5 session",dl:"Apr 28",note:"Opt-in/out handling."}
-]},
-{id:"b5",name:"Commerce + Logistics",color:"#f97316",icon:"\u{1F4E6}",desc:"Cart, checkout, delivery, HMS relay",tasks:[
-{id:"t30",name:"Cart + checkout",s:"todo",p:"high",type:"code",dep:["t20"],eff:"2 sessions",dl:"Apr 21",note:"Cart, coupon, pay."},
-{id:"t31",name:"Lab booking",s:"todo",p:"high",type:"code",dep:["t30"],eff:"1 session",dl:"Apr 25",note:"Slot, home/walk-in."},
-{id:"t32",name:"Pharmacy Rx upload",s:"todo",p:"high",type:"code",dep:["t30","t6"],eff:"2 sessions",dl:"Apr 28",note:"Upload → review → deliver."},
-{id:"t33",name:"HMS order relay (MOAT)",s:"todo",p:"critical",type:"code",dep:["t30","t2"],eff:"2 sessions",dl:"May 1",note:"Orders → HMS bills + LIS."},
-{id:"t34",name:"Field tracking",s:"todo",p:"medium",type:"code",dep:["t31"],eff:"3 sessions",dl:"May 15",note:"GPS, barcode, custody."}
-]},
-{id:"b6",name:"GBP + Marketing",color:"#a855f7",icon:"\u{1F4E3}",desc:"Google Business, AI content",tasks:[
-{id:"t35",name:"GBP OAuth",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"May 5",note:"Connect GBP."},
-{id:"t36",name:"Auto-sync GBP",s:"todo",p:"medium",type:"code",dep:["t35"],eff:"1 session",dl:"May 8",note:"Push hours/photos."},
-{id:"t37",name:"Review dashboard",s:"todo",p:"medium",type:"code",dep:["t35"],eff:"1 session",dl:"May 12",note:"Pull/reply reviews."},
-{id:"t38",name:"AI campaign engine",s:"todo",p:"medium",type:"code",dep:["t27"],eff:"2 sessions",dl:"May 19",note:"Multi-channel AI posts."},
-{id:"t39",name:"Content library",s:"todo",p:"low",type:"code",dep:["t38"],eff:"1 session",dl:"May 25",note:"Health day templates."}
-]},
-{id:"b7",name:"Hemato Marketplace",color:"#14b8a6",icon:"\u{1F3EA}",desc:"Search, compare, book across partners",tasks:[
-{id:"t40",name:"Marketplace DB",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"May 15",note:"8 tables."},
-{id:"t41",name:"Search + compare",s:"todo",p:"medium",type:"code",dep:["t40"],eff:"3 sessions",dl:"May 30",note:"CBC near me → labs."},
-{id:"t42",name:"Marketplace ordering",s:"todo",p:"medium",type:"code",dep:["t41","t30"],eff:"2 sessions",dl:"Jun 7",note:"Unified cart."},
-{id:"t43",name:"Commission system",s:"todo",p:"medium",type:"code",dep:["t42"],eff:"1 session",dl:"Jun 14",note:"Per-partner payout."},
-{id:"t44",name:"Wallet + referrals",s:"todo",p:"low",type:"code",dep:["t43"],eff:"2 sessions",dl:"Jun 25",note:"Cashback, subscriptions."}
-]},
-{id:"b8",name:"Ops & Vendors",color:"#71717a",icon:"\u{1F527}",desc:"DNS, Razorpay, RC, Meta, Google, Legal",tasks:[
-{id:"n01",name:"DMARC record medihost.in",s:"todo",p:"high",type:"ops",dep:[],eff:"2 min",dl:"Apr 5",note:"TXT: _dmarc",where:"DNS panel"},
-{id:"n02",name:"SPF record check",s:"todo",p:"high",type:"ops",dep:[],eff:"2 min",dl:"Apr 5",note:"v=spf1 include:...",where:"DNS panel"},
-{id:"n04",name:"Verify medihost.in Resend",s:"todo",p:"high",type:"ops",dep:[],eff:"5 min",dl:"Apr 5",note:"DKIM + domain verify",where:"Resend"},
-{id:"n07",name:"Add client domain Vercel",s:"todo",p:"high",type:"ops",dep:[],eff:"2 min",dl:"Apr 10",note:"medihost-website → Domains",where:"Vercel"},
-{id:"n11",name:"Razorpay KYC verify",s:"todo",p:"high",type:"vendor",dep:[],eff:"5 min",dl:"Apr 6",note:"Full activation status",where:"Razorpay"},
-{id:"n12",name:"Razorpay webhook setup",s:"todo",p:"high",type:"vendor",dep:[],eff:"5 min",dl:"Apr 6",note:"payment.captured event",where:"Razorpay"},
-{id:"n14",name:"Create subscription plans",s:"todo",p:"medium",type:"vendor",dep:[],eff:"10 min",dl:"Apr 10",note:"Growth/Pro/Enterprise",where:"Razorpay"},
-{id:"n16",name:"RC wallet balance check",s:"todo",p:"high",type:"vendor",dep:[],eff:"2 min",dl:"Apr 6",note:"Need ₹500+ per domain",where:"ResellerClub"},
-{id:"n20",name:"Call friend — clinic data",s:"todo",p:"critical",type:"ops",dep:[],eff:"15 min",dl:"Apr 6",note:"Doctors, services, prices, domain",where:"WhatsApp/call"},
-{id:"n23",name:"Agree plan tier + pricing",s:"todo",p:"high",type:"ops",dep:["n20"],eff:"5 min",dl:"Apr 7",note:"Enterprise ₹4,999/mo?",where:"Call"},
-{id:"n30",name:"Create Meta Business account",s:"todo",p:"high",type:"vendor",dep:[],eff:"10 min",dl:"Apr 7",note:"Required for WA API",where:"business.facebook.com"},
-{id:"n33",name:"Create Meta Developer App",s:"todo",p:"high",type:"vendor",dep:["n30"],eff:"10 min",dl:"Apr 8",note:"WA product + API token",where:"developers.facebook.com"},
-{id:"n35",name:"Submit WA message templates",s:"todo",p:"high",type:"vendor",dep:["n30"],eff:"20 min",dl:"Apr 8",note:"24-48hr approval! 6 templates.",where:"Meta Business Suite"},
-{id:"n25",name:"GCP project for GBP API",s:"todo",p:"medium",type:"vendor",dep:[],eff:"10 min",dl:"Apr 20",note:"Enable GBP APIs",where:"console.cloud.google.com"},
-{id:"n37",name:"MediHost Facebook Page",s:"todo",p:"medium",type:"ops",dep:[],eff:"10 min",dl:"Apr 10",note:"Logo + cover + about",where:"facebook.com"},
-{id:"n38",name:"MediHost Instagram",s:"todo",p:"medium",type:"ops",dep:["n37"],eff:"5 min",dl:"Apr 10",note:"Link to FB page",where:"Instagram"},
-{id:"n41",name:"SmartGumastha LinkedIn",s:"todo",p:"low",type:"ops",dep:[],eff:"10 min",dl:"Apr 15",note:"Company page",where:"linkedin.com"},
-{id:"n43",name:"GA4 for medihost.in",s:"todo",p:"high",type:"ops",dep:[],eff:"10 min",dl:"Apr 7",note:"Measurement ID → add to sites",where:"analytics.google.com"},
-{id:"n44",name:"Search Console medihost.in",s:"todo",p:"high",type:"ops",dep:[],eff:"5 min",dl:"Apr 7",note:"Verify + submit sitemap",where:"search.google.com"},
-{id:"n47",name:"Test pricing save (t9)",s:"todo",p:"high",type:"test",dep:[],eff:"3 min",dl:"Apr 5",note:"Admin → Plans → Save",where:"medihost.in"},
-{id:"n48",name:"Test module gating (t45)",s:"todo",p:"high",type:"test",dep:[],eff:"3 min",dl:"Apr 5",note:"Sidebar → tier check",where:"medihost.in"},
-{id:"n49",name:"Test OPD flow (t2)",s:"todo",p:"critical",type:"test",dep:[],eff:"15 min",dl:"Apr 6",note:"Register → bill full flow",where:"app.hemato.in"},
-{id:"n50",name:"Mobile test site.html",s:"todo",p:"high",type:"test",dep:[],eff:"5 min",dl:"Apr 6",note:"Check layout on phone",where:"Phone browser"},
-{id:"n53",name:"Draft Terms of Service",s:"todo",p:"high",type:"ops",dep:[],eff:"30 min",dl:"Apr 9",note:"ToS + Privacy + Refund",where:"Document"},
-{id:"n52",name:"Check trademark status",s:"todo",p:"medium",type:"ops",dep:[],eff:"5 min",dl:"Apr 10",note:"Ref 14007693",where:"ipindiaservices.gov.in"},
-{id:"n57",name:"Check PostgreSQL backups",s:"todo",p:"high",type:"ops",dep:[],eff:"3 min",dl:"Apr 6",note:"Daily backups enabled?",where:"Railway"},
-{id:"t48",name:"Seed-demo idempotent",s:"todo",p:"low",type:"code",dep:[],eff:"15 min",dl:"Apr 10",note:"Check-before-insert."},
-{id:"t49",name:"Doctor placeholder photos",s:"todo",p:"low",type:"code",dep:[],eff:"15 min",dl:"Apr 10",note:"Generic avatar or upload."}
-]}
-]};
+var DEFAULT_BRANCHES = [
+  {id:"b1",name:"HMS Backbone",color:"#ef4444",icon:"\ud83c\udfe5",tasks:[
+    {id:"t1",name:"V44 apiRequest\u2192api.get fix",status:"done",pri:"critical",type:"code",fix:"Apr 5",res:"Verified \u2014 never broken"},
+    {id:"t2",name:"Test full OPD flow E2E",status:"ready",pri:"critical",type:"code"},
+    {id:"t3",name:"Collection reports",status:"todo",pri:"high",type:"code",dep:["t2"]},
+    {id:"t4",name:"Prescription gen + print",status:"todo",pri:"high",type:"code",dep:["t2"]},
+    {id:"t5",name:"Multi-branch support",status:"todo",pri:"high",type:"code",dep:["t2"]},
+    {id:"t6",name:"Pharmacy stock mgmt",status:"todo",pri:"medium",type:"code",dep:["t4"]},
+    {id:"t7",name:"LIS \u2192 billing",status:"todo",pri:"medium",type:"code",dep:["t2"]},
+    {id:"t8",name:"Appointment \u2192 queue",status:"todo",pri:"medium",type:"code",dep:["t2"]}
+  ]},
+  {id:"b2",name:"MediHost Platform",color:"#3b82f6",icon:"\ud83c\udf10",tasks:[
+    {id:"t9",name:"Admin pricing save fix",status:"done",pri:"critical",type:"code",fix:"Apr 5",res:"subscription_plan \u2192 plan_tier"},
+    {id:"t10",name:"Signup pipeline E2E",status:"partial",pri:"critical",type:"code"},
+    {id:"t45",name:"Module gating fix",status:"done",pri:"high",type:"code",fix:"Apr 5",res:"shared modules.js + dedup"},
+    {id:"t11",name:"Welcome page live link",status:"todo",pri:"high",type:"code",dep:["t10"]},
+    {id:"t12",name:"Partner dashboard editor",status:"todo",pri:"high",type:"code",dep:["t10"]},
+    {id:"t13",name:"Partner dashboard doctors",status:"todo",pri:"high",type:"code",dep:["t12"]},
+    {id:"t14",name:"Partner dashboard orders",status:"todo",pri:"high",type:"code",dep:["t12"]},
+    {id:"t15",name:"Dashboard analytics",status:"todo",pri:"medium",type:"code",dep:["t14"]},
+    {id:"t16",name:"Onboarding wizard",status:"todo",pri:"medium",type:"code",dep:["t12","t13"]},
+    {id:"t17",name:"Admin partner mgmt",status:"todo",pri:"medium",type:"code"},
+    {id:"t18",name:"Plan enforcement",status:"todo",pri:"medium",type:"code",dep:["t16"]}
+  ]},
+  {id:"b3",name:"Storefront",color:"#22c55e",icon:"\ud83d\uded2",tasks:[
+    {id:"t19",name:"First client domain setup",status:"todo",pri:"critical",type:"code"},
+    {id:"t46",name:"Booking appt vs service fix",status:"todo",pri:"high",type:"code"},
+    {id:"t20",name:"Razorpay checkout",status:"todo",pri:"high",type:"code"},
+    {id:"t21",name:"Mobile responsiveness",status:"todo",pri:"high",type:"code"},
+    {id:"t22",name:"Doctor profile SEO",status:"todo",pri:"medium",type:"code"},
+    {id:"t23",name:"Real-time slots",status:"todo",pri:"medium",type:"code",dep:["t8"]},
+    {id:"t24",name:"Template variants",status:"todo",pri:"low",type:"code"}
+  ]},
+  {id:"b4",name:"WhatsApp AI",color:"#16a34a",icon:"\ud83d\udcac",tasks:[
+    {id:"t25",name:"WA DB tables",status:"todo",pri:"high",type:"code"},
+    {id:"t26",name:"Meta Cloud API",status:"todo",pri:"high",type:"code",dep:["t25"]},
+    {id:"t27",name:"6 message flows",status:"todo",pri:"high",type:"code",dep:["t26"]},
+    {id:"t28",name:"AI chatbot",status:"todo",pri:"medium",type:"code",dep:["t27"]},
+    {id:"t29",name:"Opt-in compliance",status:"todo",pri:"medium",type:"code",dep:["t26"]}
+  ]},
+  {id:"b5",name:"Commerce",color:"#f97316",icon:"\ud83d\udce6",tasks:[
+    {id:"t30",name:"Cart + checkout",status:"todo",pri:"high",type:"code",dep:["t20"]},
+    {id:"t31",name:"Lab booking",status:"todo",pri:"high",type:"code",dep:["t30"]},
+    {id:"t32",name:"Pharmacy Rx upload",status:"todo",pri:"high",type:"code",dep:["t30","t6"]},
+    {id:"t33",name:"HMS order relay (MOAT)",status:"todo",pri:"critical",type:"code",dep:["t30","t2"]},
+    {id:"t34",name:"Field tracking",status:"todo",pri:"medium",type:"code",dep:["t31"]}
+  ]},
+  {id:"b6",name:"GBP + Marketing",color:"#a855f7",icon:"\ud83d\udce3",tasks:[
+    {id:"t35",name:"GBP OAuth",status:"todo",pri:"medium",type:"code"},
+    {id:"t36",name:"Auto-sync GBP",status:"todo",pri:"medium",type:"code",dep:["t35"]},
+    {id:"t37",name:"Review dashboard",status:"todo",pri:"medium",type:"code",dep:["t35"]},
+    {id:"t38",name:"AI campaign engine",status:"todo",pri:"medium",type:"code",dep:["t27"]},
+    {id:"t39",name:"Content library",status:"todo",pri:"low",type:"code",dep:["t38"]}
+  ]},
+  {id:"b7",name:"Hemato Marketplace",color:"#14b8a6",icon:"\ud83c\udfea",tasks:[
+    {id:"t40",name:"Marketplace DB",status:"todo",pri:"medium",type:"code"},
+    {id:"t41",name:"Search + compare",status:"todo",pri:"medium",type:"code",dep:["t40"]},
+    {id:"t42",name:"Marketplace ordering",status:"todo",pri:"medium",type:"code",dep:["t41","t30"]},
+    {id:"t43",name:"Commission system",status:"todo",pri:"medium",type:"code",dep:["t42"]},
+    {id:"t44",name:"Wallet + referrals",status:"todo",pri:"low",type:"code",dep:["t43"]}
+  ]},
+  {id:"b8",name:"Ops & Vendors",color:"#71717a",icon:"\ud83d\udd27",tasks:[
+    {id:"n01",name:"DMARC record",status:"todo",pri:"high",type:"ops",where:"RC DNS panel"},
+    {id:"n04",name:"Verify Resend domain",status:"todo",pri:"high",type:"ops",where:"Resend dashboard"},
+    {id:"n11",name:"Razorpay KYC",status:"todo",pri:"high",type:"vendor",where:"Razorpay"},
+    {id:"n12",name:"Razorpay webhook",status:"todo",pri:"high",type:"vendor",where:"Razorpay"},
+    {id:"n16",name:"RC wallet check",status:"todo",pri:"high",type:"vendor",where:"ResellerClub"},
+    {id:"n20",name:"Call friend \u2014 clinic data",status:"todo",pri:"critical",type:"ops",where:"WhatsApp/call"},
+    {id:"n30",name:"Meta Business account",status:"todo",pri:"high",type:"vendor",where:"business.facebook.com"},
+    {id:"n35",name:"Submit WA templates (24-48hr!)",status:"todo",pri:"high",type:"vendor",where:"Meta Business Suite"},
+    {id:"n37",name:"MediHost Facebook Page",status:"todo",pri:"medium",type:"ops",where:"facebook.com"},
+    {id:"n43",name:"GA4 for medihost.in",status:"todo",pri:"high",type:"ops",where:"analytics.google.com"},
+    {id:"n44",name:"Search Console",status:"todo",pri:"high",type:"ops",where:"search.google.com"},
+    {id:"n47",name:"Test pricing save fix",status:"todo",pri:"high",type:"test",where:"medihost.in admin"},
+    {id:"n48",name:"Test module gating",status:"todo",pri:"high",type:"test",where:"medihost.in dashboard"},
+    {id:"n49",name:"Test OPD flow",status:"todo",pri:"critical",type:"test",where:"app.hemato.in"},
+    {id:"n53",name:"Draft Terms of Service",status:"todo",pri:"high",type:"ops",where:"Document"},
+    {id:"n57",name:"Check PostgreSQL backups",status:"todo",pri:"high",type:"ops",where:"Railway"}
+  ]}
+];
 
-var state = {data:null,view:"dashboard",filter:"all",typeFilter:"all",showAdd:false,collapsed:{}};
+var DEFAULT_CHANGELOG = [
+  {date:"Apr 5 Night",entries:[
+    {tag:"closed",text:"t1 \u2014 V44 apiRequest\u2192api.get fix verified, never broken"},
+    {tag:"fixed",text:"t9 \u2014 Admin pricing save fix (subscription_plan \u2192 plan_tier)"},
+    {tag:"fixed",text:"t45 \u2014 Module gating fix (shared modules.js + dedup)"}
+  ]}
+];
 
-function init(){
-  var saved = localStorage.getItem(SK);
-  if(saved){try{var d=JSON.parse(saved);if(d.v===6)state.data=d;else state.data=JSON.parse(JSON.stringify(DEFAULT))}catch(e){state.data=JSON.parse(JSON.stringify(DEFAULT))}}
-  else state.data=JSON.parse(JSON.stringify(DEFAULT));
-  updateStreak();
-  render();
+/* ---- STATE ---- */
+var state = loadState();
+
+function loadState() {
+  try {
+    var s = JSON.parse(localStorage.getItem(LS_KEY));
+    if (s && s.branches) return s;
+  } catch(e) {}
+  return {branches:JSON.parse(JSON.stringify(DEFAULT_BRANCHES)),changelog:JSON.parse(JSON.stringify(DEFAULT_CHANGELOG)),streak:{count:0,lastDate:null},burndown:[]};
 }
 
-function save(){state.data.updated=Date.now();localStorage.setItem(SK,JSON.stringify(state.data))}
-
-function updateStreak(){
-  var today=new Date().toISOString().split('T')[0];
-  var s=state.data.streak;
-  if(!s){state.data.streak={count:1,lastDate:today};return}
-  if(s.lastDate===today)return;
-  var yesterday=new Date(Date.now()-86400000).toISOString().split('T')[0];
-  if(s.lastDate===yesterday){s.count++;s.lastDate=today}
-  else{s.count=1;s.lastDate=today}
+function saveState() {
+  localStorage.setItem(LS_KEY, JSON.stringify(state));
 }
 
-function recordHistory(){
-  var today=new Date().toISOString().split('T')[0];
-  var all=getAllTasks();
-  var done=all.filter(function(t){return t.t.s==="done"}).length;
-  var hist=state.data.history||(state.data.history=[]);
-  var existing=hist.find(function(h){return h.date===today});
-  if(existing)existing.done=done;
-  else hist.push({date:today,done:done,total:all.length});
-  if(hist.length>30)hist.shift();
+/* ---- HELPERS ---- */
+function allTasks() {
+  var out = [];
+  state.branches.forEach(function(b) { b.tasks.forEach(function(t) { t._branch = b.id; out.push(t); }); });
+  return out;
 }
 
-function getAllTasks(){
-  var tasks=[];
-  state.data.branches.forEach(function(b){b.tasks.forEach(function(t){tasks.push({t:t,b:b})})});
-  return tasks;
+function findTask(id) {
+  var all = allTasks();
+  for (var i = 0; i < all.length; i++) { if (all[i].id === id) return all[i]; }
+  return null;
 }
 
-function getBlockedBy(task){
-  if(!task.dep||!task.dep.length)return[];
-  var all=getAllTasks();
-  return task.dep.map(function(did){var f=all.find(function(a){return a.t.id===did});return f?f.t:null}).filter(function(t){return t&&t.s!=="done"&&t.s!=="wont_do"});
+function branchById(id) {
+  for (var i = 0; i < state.branches.length; i++) { if (state.branches[i].id === id) return state.branches[i]; }
+  return null;
 }
 
-function autoUnblock(){
-  var all=getAllTasks();
-  all.forEach(function(a){
-    if(a.t.s==="blocked"&&a.t.dep&&a.t.dep.length){
-      var met=a.t.dep.every(function(did){var d=all.find(function(x){return x.t.id===did});return!d||d.t.s==="done"||d.t.s==="wont_do"});
-      if(met)a.t.s="ready";
+function countByStatus(tasks, st) {
+  var c = 0; tasks.forEach(function(t) { if (t.status === st) c++; }); return c;
+}
+
+function depsMetFor(t) {
+  if (!t.dep || !t.dep.length) return true;
+  for (var i = 0; i < t.dep.length; i++) {
+    var d = findTask(t.dep[i]);
+    if (!d || d.status !== "done") return false;
+  }
+  return true;
+}
+
+function todayStr() {
+  var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+
+function yesterdayStr() {
+  var d = new Date(); d.setDate(d.getDate()-1);
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+
+/* ---- STREAK ---- */
+function updateStreak() {
+  var today = todayStr();
+  var yesterday = yesterdayStr();
+  if (state.streak.lastDate === today) return;
+  if (state.streak.lastDate === yesterday) {
+    state.streak.count++;
+  } else if (state.streak.lastDate !== today) {
+    state.streak.count = 1;
+  }
+  state.streak.lastDate = today;
+  saveState();
+}
+
+/* ---- BURNDOWN ---- */
+function recordBurndown() {
+  var today = todayStr();
+  var all = allTasks();
+  var done = countByStatus(all, "done");
+  var total = all.length;
+  var last = state.burndown.length ? state.burndown[state.burndown.length-1] : null;
+  if (last && last.date === today) {
+    last.done = done; last.total = total;
+  } else {
+    state.burndown.push({date:today,done:done,total:total});
+  }
+  if (state.burndown.length > 30) state.burndown = state.burndown.slice(-30);
+  saveState();
+}
+
+/* ---- AUTO-UNBLOCK ---- */
+function autoUnblock() {
+  var changed = false;
+  allTasks().forEach(function(t) {
+    if (t.status === "blocked" && depsMetFor(t)) {
+      t.status = "ready";
+      changed = true;
+      addChangelog("unblocked", t.id + " \u2014 " + t.name + " auto-unblocked (deps met)");
     }
   });
+  if (changed) saveState();
 }
 
-function updateStatus(taskId,newStatus){
-  state.data.branches.forEach(function(b){b.tasks.forEach(function(t){
-    if(t.id===taskId){t.s=newStatus;if(newStatus==="done"&&!t.fix)t.fix=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"})}
-  })});
-  autoUnblock();recordHistory();save();render();
+function addChangelog(tag, text) {
+  var today = todayStr();
+  var day = null;
+  for (var i = 0; i < state.changelog.length; i++) {
+    if (state.changelog[i].date === today) { day = state.changelog[i]; break; }
+  }
+  if (!day) { day = {date:today,entries:[]}; state.changelog.unshift(day); }
+  day.entries.unshift({tag:tag,text:text});
 }
 
-function addTask(){
-  var nm=document.getElementById("addName").value.trim();if(!nm)return;
-  var bid=document.getElementById("addBranch").value;
-  var br=state.data.branches.find(function(b){return b.id===bid});if(!br)return;
-  var id="x"+Date.now().toString(36);
-  br.tasks.push({id:id,name:nm,s:"todo",p:document.getElementById("addPri").value,type:document.getElementById("addType").value,dep:[],eff:document.getElementById("addEff").value||"",dl:document.getElementById("addDl").value||"",note:document.getElementById("addNote").value||"",where:document.getElementById("addWhere").value||""});
-  save();state.showAdd=false;render();
+/* ---- STATUS CHANGE ---- */
+function changeStatus(taskId, newStatus) {
+  var t = findTask(taskId);
+  if (!t) return;
+  var old = t.status;
+  t.status = newStatus;
+  if (newStatus === "done" && old !== "done") {
+    addChangelog("fixed", t.id + " \u2014 " + t.name + " completed");
+    updateStreak();
+  }
+  autoUnblock();
+  recordBurndown();
+  saveState();
+  renderAll();
 }
 
-function setView(v){state.view=v;render()}
-function setFilter(f){state.filter=f;render()}
-function setTypeFilter(f){state.typeFilter=f;render()}
-function toggleCollapse(bid){state.collapsed[bid]=!state.collapsed[bid];render()}
-function toggleAdd(){state.showAdd=!state.showAdd;render()}
+/* ---- VIEWS ---- */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  var labels = {dashboard:0,tasks:1,changelog:2};
+  document.querySelectorAll('.nav-btn')[labels[name]].classList.add('active');
+}
 
-function render(){
-  var d=state.data;var all=getAllTasks();
-  var stats={total:all.length,done:all.filter(function(a){return a.t.s==="done"}).length,inp:all.filter(function(a){return a.t.s==="in_progress"}).length,rdy:all.filter(function(a){return a.t.s==="ready"}).length,blk:all.filter(function(a){return a.t.s==="blocked"}).length,crit:all.filter(function(a){return a.t.p==="critical"}).length,critD:all.filter(function(a){return a.t.p==="critical"&&a.t.s==="done"}).length};
-  var pct=stats.total?Math.round(stats.done/stats.total*100):0;
+/* ---- RENDER DASHBOARD ---- */
+function renderDashboard() {
+  var el = document.getElementById('view-dashboard');
+  var all = allTasks();
+  var total = all.length;
+  var done = countByStatus(all,"done");
+  var active = countByStatus(all,"in_progress");
+  var ready = countByStatus(all,"ready");
+  var blocked = countByStatus(all,"blocked");
+  var critical = 0; all.forEach(function(t){if(t.pri==="critical"&&t.status!=="done")critical++;});
+  var pct = total ? Math.round(done/total*100) : 0;
+  var ringColor = pct < 30 ? "#ef4444" : pct < 60 ? "#f97316" : "#22c55e";
+  var circ = 2 * Math.PI * 70;
+  var offset = circ - (pct/100)*circ;
 
-  var filtered=all;
-  if(state.filter!=="all")filtered=filtered.filter(function(a){return a.b.id===state.filter});
-  if(state.typeFilter!=="all")filtered=filtered.filter(function(a){return a.t.type===state.typeFilter});
-
-  var h="";
-  var quote=QUOTES[Math.floor(Math.random()*QUOTES.length)];
-
-  // Header
-  h+='<div class="hdr"><div><div class="brand">SmartGumastha Technologies</div><h1>MediHost Command Center</h1>';
-  h+='<div class="sub">Updated: <span>'+new Date(d.updated).toLocaleString()+'</span> \u00B7 '+stats.done+'/'+stats.total+' tasks ('+pct+'%)</div></div>';
-  h+='<div class="nav">';
-  ["dashboard","board","changelog"].forEach(function(v){h+='<button class="'+(state.view===v?"on":"")+'" onclick="setView(\''+v+'\')">'+({dashboard:"Dashboard",board:"All Tasks",changelog:"Changelog"}[v])+'</button>'});
-  h+='<button class="'+(state.showAdd?"on":"")+'" onclick="toggleAdd()">+ Add</button>';
-  h+='</div></div>';
+  var h = '';
+  // Stats
+  h += '<div class="stats-grid">';
+  h += statCard(total,"Total","var(--text)") + statCard(done,"Done","var(--done)") + statCard(active,"Active","var(--in_progress)");
+  h += statCard(ready,"Ready","var(--ready)") + statCard(blocked,"Blocked","var(--blocked)") + statCard(critical,"Critical","var(--critical)");
+  h += '</div>';
 
   // Quote
-  h+='<div class="quote">"'+quote+'"</div>';
+  h += '<div class="quote-box">&ldquo;' + QUOTES[Math.floor(Math.random()*QUOTES.length)] + '&rdquo;</div>';
 
-  // Add form
-  if(state.showAdd){
-    h+='<div class="add-form">';
-    h+='<div class="row r2"><div><label>Task name</label><input id="addName" placeholder="What needs doing?"></div>';
-    h+='<div><label>Branch</label><select id="addBranch">';
-    d.branches.forEach(function(b){h+='<option value="'+b.id+'">'+b.icon+' '+b.name+'</option>'});
-    h+='</select></div></div>';
-    h+='<div class="row r4"><div><label>Priority</label><select id="addPri"><option value="critical">Critical</option><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>';
-    h+='<div><label>Type</label><select id="addType"><option value="code">Code</option><option value="ops">Ops</option><option value="vendor">Vendor</option><option value="test">Test</option></select></div>';
-    h+='<div><label>Deadline</label><input id="addDl" placeholder="Apr 10"></div>';
-    h+='<div><label>Effort</label><input id="addEff" placeholder="1 session"></div></div>';
-    h+='<div class="row r2"><div><label>Notes</label><input id="addNote" placeholder="Details..."></div>';
-    h+='<div><label>Where (for ops)</label><input id="addWhere" placeholder="Razorpay panel"></div></div>';
-    h+='<button onclick="addTask()">Add Task</button></div>';
-  }
+  h += '<div class="dash-grid">';
 
-  // DASHBOARD VIEW
-  if(state.view==="dashboard"){
-    // Stats
-    h+='<div class="stats-grid">';
-    [{l:"Total",v:stats.total,c:"#fafafa"},{l:"Done",v:stats.done,c:"#22c55e"},{l:"Active",v:stats.inp,c:"#f97316"},{l:"Ready",v:stats.rdy,c:"#3b82f6"},{l:"Blocked",v:stats.blk,c:"#ef4444"},{l:"Critical",v:(stats.crit-stats.critD)+"/"+stats.crit,c:"#ef4444"}].forEach(function(s){
-      h+='<div class="stat"><div class="n" style="color:'+s.c+'">'+s.v+'</div><div class="l">'+s.l+'</div></div>';
-    });
-    h+='</div>';
+  // Streak
+  var dots = '';
+  for (var i = 0; i < 7; i++) dots += '<div class="streak-dot' + (i < (state.streak.count % 7 || (state.streak.count ? 7 : 0)) ? ' lit' : '') + '"></div>';
+  h += '<div class="dash-card"><h3>Streak</h3><div class="streak-wrap"><div class="streak-num mono" style="color:var(--in_progress)">' + state.streak.count + '</div><div><div style="font-size:13px;color:var(--text2)">\ud83d\udd25 consecutive days</div><div class="streak-dots">' + dots + '</div><div style="font-size:10px;color:var(--text2);margin-top:4px">7-day milestone tracker</div></div></div></div>';
 
-    // Streak + Ring
-    h+='<div class="streak-card"><div class="streak-num">'+(d.streak?d.streak.count:1)+'</div><div class="streak-info"><div class="t">Day Streak \u{1F525}</div><div class="d">Consecutive days working on MediHost</div>';
-    h+='<div class="milestone">';
-    for(var mi=0;mi<7;mi++){h+='<div class="dot '+(mi<(d.streak?d.streak.count:1)?"lit":"")+'"></div>'}
-    h+='</div></div></div>';
+  // Ring
+  h += '<div class="dash-card"><h3>Overall Progress</h3><div class="ring-wrap"><svg width="160" height="160" viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="none" stroke="var(--border)" stroke-width="12"/><circle cx="80" cy="80" r="70" fill="none" stroke="' + ringColor + '" stroke-width="12" stroke-linecap="round" stroke-dasharray="' + circ + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 80 80)" style="transition:stroke-dashoffset .6s"/></svg><div class="ring-pct mono" style="color:' + ringColor + '">' + pct + '%</div></div></div>';
 
-    // Charts row
-    h+='<div class="chart-row">';
+  // Branch bars
+  h += '<div class="dash-card"><h3>Branch Progress</h3>';
+  state.branches.forEach(function(b) {
+    var bd = countByStatus(b.tasks,"done");
+    var bt = b.tasks.length;
+    var bp = bt ? Math.round(bd/bt*100) : 0;
+    h += '<div class="branch-bar"><div class="branch-bar-hdr"><span>' + b.icon + ' ' + b.name + '</span><span class="mono" style="font-size:11px">' + bd + '/' + bt + '</span></div><div class="branch-bar-track"><div class="branch-bar-fill" style="width:' + bp + '%;background:' + b.color + '"></div></div></div>';
+  });
+  h += '</div>';
 
-    // Ring chart
-    h+='<div class="card ring-wrap"><h3>Overall Progress</h3>';
-    var radius=70,circ=2*Math.PI*radius,offset=circ-(pct/100)*circ;
-    h+='<svg width="170" height="170" style="transform:rotate(-90deg)">';
-    h+='<circle cx="85" cy="85" r="'+radius+'" fill="none" stroke="#27272a" stroke-width="12"/>';
-    h+='<circle cx="85" cy="85" r="'+radius+'" fill="none" stroke="'+(pct>60?"#22c55e":pct>30?"#f97316":"#ef4444")+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+offset+'" style="transition:stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1)"/>';
-    h+='</svg>';
-    h+='<div class="ring-center" style="margin-top:-110px">'+pct+'%</div>';
-    h+='<div class="ring-label" style="margin-top:4px">'+stats.done+' of '+stats.total+' tasks</div>';
-    h+='</div>';
-
-    // Branch bars
-    h+='<div class="card"><h3>Progress by Branch</h3>';
-    d.branches.forEach(function(b){
-      var bd=b.tasks.filter(function(t){return t.s==="done"}).length;
-      var bt=b.tasks.length;
-      var bp=bt?Math.round(bd/bt*100):0;
-      h+='<div class="branch-bar">';
-      h+='<div class="info"><span class="icon">'+b.icon+'</span><span class="nm">'+b.name+'</span></div>';
-      h+='<div class="track"><div class="fill" style="width:'+bp+'%;background:'+b.color+'"></div></div>';
-      h+='<div class="pct" style="color:'+b.color+'">'+bp+'%</div>';
-      h+='<div class="cnt">'+bd+'/'+bt+'</div>';
-      h+='</div>';
-    });
-    h+='</div></div>';
-
-    // Daily burndown
-    var hist=d.history||[];
-    if(hist.length>0){
-      h+='<div class="card timeline-card"><h3>Daily Progress (tasks completed)</h3>';
-      var maxDone=Math.max.apply(null,hist.map(function(x){return x.done}))||1;
-      hist.slice(-14).forEach(function(day){
-        var dp=Math.round(day.done/day.total*100);
-        var label=day.date.slice(5);
-        h+='<div class="day-row">';
-        h+='<div class="day">'+label+'</div>';
-        h+='<div class="bar-track"><div class="bar-fill" style="width:'+dp+'%;background:'+(dp>60?"#22c55e":dp>30?"#f97316":"#ef4444")+'"></div></div>';
-        h+='<div class="count">'+day.done+'</div>';
-        h+='</div>';
-      });
-      h+='</div>';
-    }
-
-    // What's next
-    h+='<div class="card"><h3>Up Next — Ready to Work</h3>';
-    var ready=all.filter(function(a){return a.t.s==="ready"||a.t.s==="in_progress"}).sort(function(a,b){var po={critical:0,high:1,medium:2,low:3};return(po[a.t.p]||3)-(po[b.t.p]||3)});
-    if(!ready.length)h+='<div style="font-size:12px;color:#52525b;padding:8px">No tasks ready — check blocked items!</div>';
-    ready.slice(0,8).forEach(function(a){
-      var sc=ST[a.t.s];var pc=PR[a.t.p];var tc=TC[a.t.type]||TC.code;
-      h+='<div class="task">';
-      h+=makeSelect(a.t);
-      h+='<div class="info"><div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap"><span class="name">'+a.t.name+'</span>';
-      h+='<span class="badge type-badge-'+a.t.type+'">'+tc.l+'</span>';
-      h+='<span class="badge" style="background:'+pc.c+'18;color:'+pc.c+'">'+pc.l+'</span></div>';
-      h+='<div class="note">'+a.t.note+'</div>';
-      h+='<div class="meta"><span>'+a.b.icon+' '+a.b.name+'</span>';
-      if(a.t.dl)h+='<span>\u{1F4C5}'+a.t.dl+'</span>';
-      h+='</div></div>';
-      h+='<span class="tid">'+a.t.id+'</span></div>';
-    });
-    h+='</div>';
-  }
-
-  // BOARD VIEW
-  if(state.view==="board"){
-    // Type filter
-    h+='<div class="filter-row">';
-    ["all","code","ops","vendor","test"].forEach(function(t){
-      var cnt=t==="all"?all.length:all.filter(function(a){return a.t.type===t}).length;
-      h+='<button class="'+(state.typeFilter===t?"on":"")+'" onclick="setTypeFilter(\''+t+'\')">'+(t==="all"?"All":TC[t]?TC[t].l:t)+' ('+cnt+')</button>';
-    });
-    h+='</div>';
-    // Branch filter
-    h+='<div class="filter-row">';
-    h+='<button class="'+(state.filter==="all"?"on":"")+'" onclick="setFilter(\'all\')">All</button>';
-    d.branches.forEach(function(b){
-      h+='<button class="'+(state.filter===b.id?"on":"")+'" onclick="setFilter(\''+b.id+'\')">'+b.icon+' '+b.name+'</button>';
-    });
-    h+='</div>';
-
-    var fb=state.filter==="all"?d.branches:d.branches.filter(function(b){return b.id===state.filter});
-    fb.forEach(function(branch){
-      var bt=branch.tasks;
-      if(state.typeFilter!=="all")bt=bt.filter(function(t){return t.type===state.typeFilter});
-      if(!bt.length)return;
-      var bd=bt.filter(function(t){return t.s==="done"}).length;
-      var bp=bt.length?Math.round(bd/bt.length*100):0;
-      var collapsed=state.collapsed[branch.id];
-
-      h+='<div class="branch-card"><div class="branch-head" onclick="toggleCollapse(\''+branch.id+'\')">';
-      h+='<div class="left"><span>'+branch.icon+'</span><span class="nm">'+branch.name+'</span><span class="desc">'+bd+'/'+bt.length+' ('+bp+'%)</span></div>';
-      h+='<div style="display:flex;align-items:center;gap:6px"><div style="width:60px;height:4px;border-radius:2px;background:#27272a;overflow:hidden"><div style="width:'+bp+'%;height:100%;background:'+branch.color+';border-radius:2px"></div></div>';
-      h+='<span style="font-size:11px;font-weight:600;color:'+branch.color+'">'+bp+'%</span>';
-      h+='<span style="font-size:10px;color:#52525b">'+(collapsed?'\u25B6':'\u25BC')+'</span></div></div>';
-
-      if(!collapsed){
-        h+='<div class="branch-body">';
-        bt.forEach(function(task){
-          var sc=ST[task.s];var pc=PR[task.p];var tc=TC[task.type]||TC.code;
-          var blocked=getBlockedBy(task);var done=task.s==="done";
-          h+='<div class="task" style="opacity:'+(done?0.4:1)+'">';
-          h+=makeSelect(task);
-          h+='<div class="info"><div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">';
-          h+='<span class="name" style="text-decoration:'+(done?"line-through":"none")+'">'+task.name+'</span>';
-          h+='<span class="badge type-badge-'+task.type+'">'+tc.l+'</span>';
-          h+='<span class="badge" style="background:'+pc.c+'18;color:'+pc.c+'">'+pc.l+'</span>';
-          if(task.fix)h+='<span class="badge fix-badge">FIXED '+task.fix+'</span>';
-          h+='</div>';
-          h+='<div class="note">'+task.note+'</div>';
-          if(task.where)h+='<div class="where">\u{1F4CD} '+task.where+'</div>';
-          if(task.res)h+='<div style="font-size:10px;color:#22c55e;margin-top:1px;font-style:italic">Fix: '+task.res+'</div>';
-          h+='<div class="meta">';
-          if(task.eff)h+='<span>\u23F1'+task.eff+'</span>';
-          if(task.dl)h+='<span>\u{1F4C5}'+task.dl+'</span>';
-          if(blocked.length)h+='<span class="blocked">\u{1F6AB} Blocked: '+blocked.map(function(b){return b.name}).join(", ")+'</span>';
-          else if(task.dep&&task.dep.length&&!done)h+='<span class="deps-met">\u2705 Deps met</span>';
-          h+='</div></div>';
-          h+='<span class="tid">'+task.id+'</span></div>';
-        });
-        h+='</div>';
-      }
-      h+='</div>';
+  // Burndown
+  h += '<div class="dash-card"><h3>Daily Burndown (last 14 days)</h3>';
+  var burn = state.burndown.slice(-14);
+  if (burn.length === 0) {
+    h += '<div style="color:var(--text2);font-size:12px">No data yet \u2014 change a task status to start tracking</div>';
+  } else {
+    burn.forEach(function(b) {
+      var lbl = b.date.slice(5);
+      h += '<div class="burn-bar"><span class="burn-lbl mono">' + lbl + '</span><div class="burn-track" style="position:relative"><div class="burn-done" style="width:' + (b.total?Math.round(b.done/b.total*100):0) + '%"></div></div><span class="burn-ct mono">' + b.done + '/' + b.total + '</span></div>';
     });
   }
+  h += '</div>';
+  h += '</div>';
 
-  // CHANGELOG VIEW
-  if(state.view==="changelog"){
-    (d.log||[]).forEach(function(entry){
-      h+='<div class="log-entry"><div class="log-head">'+entry.d+'</div><div class="log-body">';
-      entry.items.forEach(function(item){
-        var ac={fixed:"#22c55e",closed:"#3b82f6",unblocked:"#f97316"};
-        h+='<div class="log-item"><span class="log-tag" style="background:'+(ac[item.a]||"#52525b")+'22;color:'+(ac[item.a]||"#52525b")+'">'+item.a.toUpperCase()+'</span>';
-        h+='<div style="flex:1"><span style="font-size:12px;font-weight:600;color:#e4e4e7">'+item.t+'</span>';
-        h+='<div style="font-size:11px;color:#52525b;margin-top:1px">'+item.n+'</div></div></div>';
-      });
-      h+='</div></div>';
-    });
-    // Fixed summary
-    var fixed=all.filter(function(a){return a.t.fix});
-    if(fixed.length){
-      h+='<div class="card" style="margin-top:12px;border-color:#052e16"><h3 style="color:#22c55e">All Fixed Tasks ('+fixed.length+')</h3>';
-      fixed.forEach(function(a){
-        h+='<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px">';
-        h+='<span style="color:#22c55e;font-weight:600;min-width:28px">'+a.t.id+'</span>';
-        h+='<span style="color:#a1a1aa;text-decoration:line-through;flex:1">'+a.t.name+'</span>';
-        h+='<span style="font-size:10px;color:#22c55e">'+a.t.fix+'</span></div>';
-      });
-      h+='</div>';
-    }
-  }
+  // Up Next
+  h += '<div class="dash-card" style="margin-top:0"><h3>Up Next</h3>';
+  var upnext = all.filter(function(t){return t.status==="ready"||t.status==="in_progress";}).sort(function(a,b){return (PRI_ORDER[a.pri]||9)-(PRI_ORDER[b.pri]||9);}).slice(0,8);
+  if (upnext.length === 0) h += '<div style="color:var(--text2);font-size:12px">No ready tasks</div>';
+  upnext.forEach(function(t) {
+    var b = branchById(t._branch);
+    h += '<div class="upnext-item"><span class="upnext-pri badge-' + t.pri + '" style="padding:2px 8px;border-radius:4px">' + t.pri + '</span><span style="color:' + STATUS_COLORS[t.status] + ';">\u25cf</span><span>' + t.name + '</span><span style="margin-left:auto;font-size:11px;color:var(--text2)">' + (b?b.icon+" "+b.name:"") + '</span></div>';
+  });
+  h += '</div>';
 
-  // Footer
-  h+='<div class="footer">SmartGumastha Technologies \u00B7 MediHost\u2122 Command Center v6 \u00B7 '+stats.done+'/'+stats.total+' ('+pct+'%) \u00B7 Built with \u2764\uFE0F by a solo founder</div>';
-
-  document.getElementById("app").innerHTML=h;
+  el.innerHTML = h;
 }
 
-function makeSelect(task){
-  var sc=ST[task.s];
-  var h='<select onchange="updateStatus(\''+task.id+'\',this.value)" style="color:'+sc.c+';background:'+sc.bg+';border-color:'+sc.c+'40">';
-  Object.keys(ST).forEach(function(s){h+='<option value="'+s+'"'+(task.s===s?" selected":"")+'>'+ST[s].i+' '+ST[s].l+'</option>'});
-  h+='</select>';
+function statCard(n, lbl, col) {
+  return '<div class="stat-card"><div class="num mono" style="color:' + col + '">' + n + '</div><div class="lbl">' + lbl + '</div></div>';
+}
+
+/* ---- RENDER TASKS ---- */
+var taskFilterType = "all";
+var taskFilterBranch = "all";
+
+function setFilterType(v) { taskFilterType = v; renderTasks(); }
+function setFilterBranch(v) { taskFilterBranch = v; renderTasks(); }
+
+function renderTasks() {
+  var el = document.getElementById('view-tasks');
+  var h = '';
+
+  // Type filters
+  h += '<div class="filters"><strong style="font-size:12px;line-height:28px;margin-right:4px">Type:</strong>';
+  ["all","code","ops","vendor","test"].forEach(function(t) {
+    h += '<button class="fbtn' + (taskFilterType===t?' active':'') + '" onclick="setFilterType(\'' + t + '\')">' + t.toUpperCase() + '</button>';
+  });
+  h += '</div>';
+
+  // Branch filters
+  h += '<div class="filters"><strong style="font-size:12px;line-height:28px;margin-right:4px">Branch:</strong>';
+  h += '<button class="fbtn' + (taskFilterBranch==="all"?' active':'') + '" onclick="setFilterBranch(\'all\')">All</button>';
+  state.branches.forEach(function(b) {
+    h += '<button class="fbtn' + (taskFilterBranch===b.id?' active':'') + '" onclick="setFilterBranch(\'' + b.id + '\')">' + b.icon + ' ' + b.name + '</button>';
+  });
+  h += '</div>';
+
+  // Branch sections
+  state.branches.forEach(function(b) {
+    if (taskFilterBranch !== "all" && taskFilterBranch !== b.id) return;
+    var filtered = b.tasks.filter(function(t) {
+      if (taskFilterType !== "all" && t.type !== taskFilterType) return false;
+      return true;
+    });
+    if (filtered.length === 0) return;
+    var bd = countByStatus(b.tasks,"done"), bt = b.tasks.length, bp = bt?Math.round(bd/bt*100):0;
+
+    h += '<div class="branch-section"><div class="branch-hdr" onclick="toggleBranch(this)"><div class="branch-hdr-left"><span>' + b.icon + '</span><span>' + b.name + '</span></div><div class="branch-hdr-bar"><div class="branch-hdr-fill" style="width:' + bp + '%;background:' + b.color + '"></div></div><span class="branch-hdr-count mono">' + bd + '/' + bt + ' (' + bp + '%)</span><span class="chevron">\u25bc</span></div>';
+    h += '<div class="branch-body">';
+    filtered.forEach(function(t) {
+      h += renderTaskRow(t, b);
+    });
+    h += '</div></div>';
+  });
+
+  el.innerHTML = h;
+}
+
+function renderTaskRow(t, b) {
+  var h = '<div class="task-row">';
+  // Status
+  h += '<div class="task-status"><select onchange="changeStatus(\'' + t.id + '\',this.value)" style="background:' + STATUS_COLORS[t.status] + '22;border-color:' + STATUS_COLORS[t.status] + '">';
+  ["done","in_progress","ready","todo","blocked","partial","wont_do"].forEach(function(s) {
+    h += '<option value="' + s + '"' + (t.status===s?' selected':'') + '>' + s.replace(/_/g,' ') + '</option>';
+  });
+  h += '</select></div>';
+  // Name + badges
+  h += '<div><div class="task-name">' + t.name;
+  h += ' <span class="badge badge-' + t.type + '">' + t.type.toUpperCase() + '</span>';
+  h += ' <span class="badge badge-' + t.pri + '">' + t.pri + '</span>';
+  if (t.fix) h += ' <span class="fixed-badge">\u2705 ' + t.fix + '</span>';
+  h += '</div>';
+  // Meta
+  var meta = [];
+  if (t.res) meta.push('<span class="task-meta">Resolution: ' + t.res + '</span>');
+  if (t.notes) meta.push('<span class="task-meta">Notes: ' + t.notes + '</span>');
+  if (t.where) meta.push('<span class="task-where">\ud83d\udccd ' + t.where + '</span>');
+  if (t.dep && t.dep.length) {
+    if (depsMetFor(t)) {
+      meta.push('<span class="task-deps-met">\u2705 deps met</span>');
+    } else {
+      meta.push('<span class="task-blocked">\ud83d\udd12 blocked by: ' + t.dep.join(', ') + '</span>');
+    }
+  }
+  if (meta.length) h += '<div style="margin-top:2px">' + meta.join(' &middot; ') + '</div>';
+  h += '</div>';
+  // Priority indicator
+  h += '<div style="width:6px;height:6px;border-radius:50%;background:var(--' + t.pri + ');margin-top:6px"></div>';
+  h += '</div>';
   return h;
 }
 
-init();
+function toggleBranch(hdr) {
+  hdr.classList.toggle('open');
+  var body = hdr.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+/* ---- RENDER CHANGELOG ---- */
+function renderChangelog() {
+  var el = document.getElementById('view-changelog');
+  var h = '';
+  state.changelog.forEach(function(day) {
+    h += '<div class="changelog-day"><h3>' + day.date + '</h3>';
+    day.entries.forEach(function(e) {
+      h += '<div class="cl-entry"><span class="cl-tag cl-tag-' + e.tag + '">' + e.tag + '</span><span>' + e.text + '</span></div>';
+    });
+    h += '</div>';
+  });
+  if (state.changelog.length === 0) h = '<div style="color:var(--text2)">No changelog entries yet.</div>';
+  el.innerHTML = h;
+}
+
+/* ---- ADD TASK ---- */
+function toggleAddForm() {
+  var f = document.getElementById('addForm');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) populateBranchSelect();
+}
+
+function populateBranchSelect() {
+  var sel = document.getElementById('af-branch');
+  sel.innerHTML = '';
+  state.branches.forEach(function(b) {
+    sel.innerHTML += '<option value="' + b.id + '">' + b.icon + ' ' + b.name + '</option>';
+  });
+}
+
+function addTask() {
+  var name = document.getElementById('af-name').value.trim();
+  if (!name) return;
+  var branchId = document.getElementById('af-branch').value;
+  var pri = document.getElementById('af-pri').value;
+  var type = document.getElementById('af-type').value;
+  var where = document.getElementById('af-where').value.trim();
+  var notes = document.getElementById('af-notes').value.trim();
+  var branch = branchById(branchId);
+  if (!branch) return;
+
+  var id = "u" + Date.now();
+  var task = {id:id,name:name,status:"todo",pri:pri,type:type};
+  if (where) task.where = where;
+  if (notes) task.notes = notes;
+
+  branch.tasks.push(task);
+  addChangelog("fixed", id + " \u2014 " + name + " added");
+  saveState();
+  toggleAddForm();
+  document.getElementById('af-name').value = '';
+  document.getElementById('af-where').value = '';
+  document.getElementById('af-notes').value = '';
+  renderAll();
+}
+
+/* ---- INIT ---- */
+function renderAll() {
+  renderDashboard();
+  renderTasks();
+  renderChangelog();
+}
+
+renderAll();
+recordBurndown();
 </script>
 </body>
 </html>
