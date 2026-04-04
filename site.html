@@ -288,6 +288,11 @@ img{max-width:100%;display:block;}
     <a href="#" class="nav-logo" id="navLogo"><span id="navName">Clinic</span></a>
     <div class="nav-links"><a href="#doctors">Doctors</a><a href="#services">Services</a><a href="#book">Book</a><a href="javascript:void(0)" onclick="openReportModal()">Reports</a><a href="#contact">Contact</a><a href="#reviews">Reviews</a></div>
     <div style="display:flex;align-items:center;gap:12px;">
+      <div id="siteLangToggle" onclick="toggleSiteLangDropdown()" style="display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:var(--gray-100);cursor:pointer;font-size:12px;color:var(--gray-600);border:1px solid var(--gray-200);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+        <span id="siteLangLabel">English</span>
+        <span style="font-size:10px;opacity:0.6;">&#9662;</span>
+      </div>
       <a class="nav-phone" id="navPhone" href="tel:"></a>
       <a href="#book" class="nav-book">Book Now</a>
     </div>
@@ -516,6 +521,103 @@ var hospitalId = '';
 var allDoctors = [];
 var allProducts = [];
 var consultProduct = null;
+var siteLang = localStorage.getItem('medihost_site_lang') || 'en';
+
+var SITE_LANGUAGES = [
+  {code:'en', name:'English', nativeName:'English'},
+  {code:'hi', name:'Hindi', nativeName:'\u0939\u093F\u0928\u094D\u0926\u0940'},
+  {code:'bn', name:'Bengali', nativeName:'\u09AC\u09BE\u0982\u09B2\u09BE'},
+  {code:'mr', name:'Marathi', nativeName:'\u092E\u0930\u093E\u0920\u0940'},
+  {code:'te', name:'Telugu', nativeName:'\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41'},
+  {code:'ta', name:'Tamil', nativeName:'\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD'},
+  {code:'gu', name:'Gujarati', nativeName:'\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0'},
+  {code:'ur', name:'Urdu', nativeName:'\u0627\u0631\u062F\u0648'},
+  {code:'kn', name:'Kannada', nativeName:'\u0C95\u0CA8\u0CCD\u0CA8\u0CA1'},
+  {code:'ml', name:'Malayalam', nativeName:'\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02'}
+];
+
+// --- Notification system ---
+var SITE_NOTIF_COLORS = {
+  error:   { bg:'#fef2f2', border:'#fca5a5', strip:'#dc2626', icon:'!',  iconBg:'#fef2f2', iconColor:'#dc2626', titleColor:'#dc2626', btnBg:'#dc2626' },
+  success: { bg:'#f0fdf4', border:'#6ee7b7', strip:'#059669', icon:'\u2713', iconBg:'#f0fdf4', iconColor:'#059669', titleColor:'#059669', btnBg:'#059669' },
+  info:    { bg:'#eff6ff', border:'#93c5fd', strip:'#2563eb', icon:'i',  iconBg:'#eff6ff', iconColor:'#2563eb', titleColor:'#2563eb', btnBg:'#2563eb' }
+};
+
+function showSiteNotification(type, title, message) {
+  var c = SITE_NOTIF_COLORS[type] || SITE_NOTIF_COLORS.info;
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.2);z-index:10000;display:flex;align-items:center;justify-content:center;';
+  var card = document.createElement('div');
+  card.style.cssText = 'max-width:380px;width:90%;background:#fff;border-radius:12px;border:1.5px solid ' + c.border + ';overflow:hidden;';
+  var strip = document.createElement('div');
+  strip.style.cssText = 'height:4px;background:' + c.strip + ';';
+  var body = document.createElement('div');
+  body.style.cssText = 'padding:24px 20px 20px;text-align:center;';
+  var iconCircle = document.createElement('div');
+  iconCircle.style.cssText = 'width:44px;height:44px;border-radius:50%;background:' + c.iconBg + ';color:' + c.iconColor + ';display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 12px;border:2px solid ' + c.border + ';';
+  iconCircle.textContent = c.icon;
+  var titleEl = document.createElement('div');
+  titleEl.style.cssText = 'font-size:16px;font-weight:500;color:' + c.titleColor + ';margin-bottom:6px;';
+  titleEl.textContent = title;
+  var msgEl = document.createElement('div');
+  msgEl.style.cssText = 'font-size:14px;color:#64748b;line-height:1.6;max-width:320px;margin:0 auto 20px;';
+  msgEl.textContent = message;
+  var btn = document.createElement('button');
+  btn.style.cssText = 'width:100%;padding:10px;border-radius:8px;background:' + c.btnBg + ';color:#fff;font-size:14px;font-weight:500;border:none;cursor:pointer;height:44px;font-family:inherit;';
+  btn.textContent = 'OK';
+  btn.onclick = function() { document.body.removeChild(overlay); };
+  body.appendChild(iconCircle);
+  body.appendChild(titleEl);
+  body.appendChild(msgEl);
+  body.appendChild(btn);
+  card.appendChild(strip);
+  card.appendChild(body);
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+}
+
+// --- Language selector ---
+function toggleSiteLangDropdown() {
+  var dd = document.getElementById('siteLangDropdown');
+  if (dd) { dd.style.display = dd.style.display === 'block' ? 'none' : 'block'; return; }
+  var toggle = document.getElementById('siteLangToggle');
+  var rect = toggle.getBoundingClientRect();
+  dd = document.createElement('div');
+  dd.id = 'siteLangDropdown';
+  dd.style.cssText = 'position:fixed;top:' + (rect.bottom + 4) + 'px;right:' + (window.innerWidth - rect.right) + 'px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.12);max-height:300px;overflow-y:auto;z-index:10001;min-width:200px;';
+  for (var i = 0; i < SITE_LANGUAGES.length; i++) {
+    (function(lang) {
+      var opt = document.createElement('div');
+      opt.style.cssText = 'padding:10px 16px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s;';
+      opt.onmouseover = function() { opt.style.background = '#f8fafc'; };
+      opt.onmouseout = function() { opt.style.background = '#fff'; };
+      var label = document.createElement('span');
+      label.innerHTML = '<span style="font-weight:600;">' + lang.nativeName + '</span> <span style="font-size:12px;color:#94a3b8;margin-left:6px;">' + lang.name + '</span>';
+      opt.appendChild(label);
+      if (lang.code === siteLang) {
+        var check = document.createElement('span');
+        check.style.cssText = 'color:#059669;font-weight:700;font-size:14px;';
+        check.textContent = '\u2713';
+        opt.appendChild(check);
+      }
+      opt.onclick = function() {
+        siteLang = lang.code;
+        localStorage.setItem('medihost_site_lang', lang.code);
+        var lbl = document.getElementById('siteLangLabel');
+        if (lbl) lbl.textContent = lang.nativeName;
+        dd.style.display = 'none';
+      };
+      dd.appendChild(opt);
+    })(SITE_LANGUAGES[i]);
+  }
+  document.body.appendChild(dd);
+  document.addEventListener('click', function closeLangDD(e) {
+    if (!dd.contains(e.target) && !toggle.contains(e.target)) {
+      dd.style.display = 'none';
+      document.removeEventListener('click', closeLangDD);
+    }
+  });
+}
 
 // Theme colors
 var THEMES = { blue: '#2563eb', teal: '#0d9488', purple: '#7c3aed', coral: '#ea580c', green: '#16a34a' };
@@ -793,8 +895,8 @@ function submitBooking() {
   var notes = document.getElementById('bNotes').value.trim();
   var msg = document.getElementById('bookMsg');
 
-  if (!name) { showMsg(msg, 'Please enter your name', 'red'); return; }
-  if (!phone || phone.replace(/\D/g, '').length < 10) { showMsg(msg, 'Please enter a valid 10-digit phone number', 'red'); return; }
+  if (!name) { showSiteNotification('error', 'Name is required', 'Please enter your name to book an appointment.'); return; }
+  if (!phone || phone.replace(/\D/g, '').length < 10) { showSiteNotification('error', 'Invalid phone number', 'Please enter a valid 10-digit phone number.'); return; }
 
   var btn = document.getElementById('bookBtn');
   btn.disabled = true; btn.textContent = 'Booking...';
@@ -810,17 +912,17 @@ function submitBooking() {
   .then(function(r) { return r.json(); })
   .then(function(data) {
     if (data.success) {
-      showMsg(msg, 'Appointment booked! Your booking number: ' + data.order_number + '. We will call you to confirm.', 'green');
+      showSiteNotification('success', 'Appointment booked!', 'Your booking number: ' + data.order_number + '. We will call you to confirm.');
       document.getElementById('bName').value = '';
       document.getElementById('bPhone').value = '';
       document.getElementById('bNotes').value = '';
     } else {
-      showMsg(msg, data.error || 'Could not book appointment. Please call us directly.', 'red');
+      showSiteNotification('error', 'Booking failed', data.error || 'Could not book appointment. Please call us directly.');
     }
     btn.disabled = false; btn.textContent = 'Book Appointment';
   })
   .catch(function() {
-    showMsg(msg, 'Network error. Please call us directly.', 'red');
+    showSiteNotification('error', 'Network error', 'Could not reach the server. Please call us directly.');
     btn.disabled = false; btn.textContent = 'Book Appointment';
   });
 }
@@ -933,7 +1035,7 @@ function closeReportModal() {
 function checkReportStatus() {
   var phone = document.getElementById('rptPhone').value.trim().replace(/\D/g, '');
   if (phone.length < 10) {
-    alert('Please enter a valid 10-digit phone number');
+    showSiteNotification('error', 'Invalid phone number', 'Please enter a valid 10-digit phone number.');
     return;
   }
   // Demo: show mock results
