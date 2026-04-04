@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MediHost Command Center v6</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0a0a0b;--card:#18181b;--border:#27272a;--text:#e4e4e7;--dim:#a1a1aa;--done:#22c55e;--inp:#f97316;--ready:#3b82f6;--todo:#71717a;--blocked:#ef4444;--partial:#a855f7;--wont:#525252}
@@ -32,6 +32,15 @@ main{max-width:1180px;margin:0 auto;padding:20px 24px}
 .sc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
 .sc .n{font-size:26px;font-weight:700;line-height:1}
 .sc .l{font-size:10px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.6px}
+
+/* streak */
+.streak-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.streak-fire{font-size:28px;line-height:1}
+.streak-num{font-size:22px;font-weight:700;color:var(--inp)}
+.streak-label{font-size:12px;color:var(--dim)}
+.streak-dots{display:flex;gap:3px;margin-left:auto}
+.streak-dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.streak-dot.active{background:var(--inp)}
 
 /* dash grid */
 .dg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
@@ -78,6 +87,7 @@ main{max-width:1180px;margin:0 auto;padding:20px 24px}
 .b-code{background:#1e3a5f;color:#60a5fa}.b-ops{background:#3b2f1a;color:#f59e0b}.b-vendor{background:#2d1f3d;color:#c084fc}.b-test{background:#1a2f2f;color:#2dd4bf}
 .b-critical{background:#3b1111;color:#f87171}.b-high{background:#3b2811;color:#fb923c}.b-medium{background:#3b3511;color:#facc15}.b-low{background:#112840;color:#60a5fa}
 .fix{background:#052e16;color:#4ade80;padding:1px 6px;border-radius:4px;font-size:10px;margin-left:3px}
+.dl-badge{background:#1e1b4b;color:#818cf8;padding:1px 6px;border-radius:4px;font-size:10px;margin-left:3px}
 .tm{font-size:11px;color:var(--dim);margin-top:2px}
 .t-blk{color:var(--blocked);font-size:11px}
 .t-ok{color:var(--done);font-size:11px}
@@ -149,8 +159,12 @@ var DEF_B = [
     {id:"t4",name:"Prescription gen + print",status:"todo",pri:"high",type:"code",dep:["t2"]},
     {id:"t5",name:"Multi-branch support",status:"todo",pri:"high",type:"code",dep:["t2"]},
     {id:"t6",name:"Pharmacy stock mgmt",status:"todo",pri:"medium",type:"code",dep:["t4"]},
-    {id:"t7",name:"LIS \u2192 billing",status:"todo",pri:"medium",type:"code",dep:["t2"]},
-    {id:"t8",name:"Appointment \u2192 queue",status:"todo",pri:"medium",type:"code",dep:["t2"]}
+    {id:"t7",name:"LIS \u2192 billing integration",status:"todo",pri:"medium",type:"code",dep:["t2"]},
+    {id:"t8",name:"Appointment \u2192 queue auto-link",status:"todo",pri:"medium",type:"code",dep:["t2"]},
+    {id:"t63",name:"i18n notification system",status:"done",pri:"high",type:"code",fix:"Apr 5",res:"showNotification + t() + LANG_EN 150+ keys"},
+    {id:"t64",name:"Error mapping + handlePgError",status:"done",pri:"high",type:"code",fix:"Apr 5",res:"errors.js + PG error handler"},
+    {id:"t65",name:"Triage queue module",status:"todo",pri:"medium",type:"code",dep:["t2"]},
+    {id:"t66",name:"EMR template builder",status:"todo",pri:"medium",type:"code",dep:["t4"]}
   ]},
   {id:"b2",name:"MediHost Platform",color:"#3b82f6",icon:"\ud83c\udf10",tasks:[
     {id:"t9",name:"Admin pricing save fix",status:"done",pri:"critical",type:"code",fix:"Apr 5",res:"subscription_plan \u2192 plan_tier"},
@@ -163,55 +177,75 @@ var DEF_B = [
     {id:"t15",name:"Dashboard analytics",status:"todo",pri:"medium",type:"code",dep:["t14"]},
     {id:"t16",name:"Onboarding wizard",status:"todo",pri:"medium",type:"code",dep:["t12","t13"]},
     {id:"t17",name:"Admin partner mgmt",status:"todo",pri:"medium",type:"code"},
-    {id:"t18",name:"Plan enforcement",status:"todo",pri:"medium",type:"code",dep:["t16"]}
+    {id:"t18",name:"Plan enforcement middleware",status:"todo",pri:"medium",type:"code",dep:["t16"]},
+    {id:"t67",name:"Rate limiting middleware",status:"todo",pri:"high",type:"code"},
+    {id:"t68",name:"SEO meta + OG tags",status:"todo",pri:"medium",type:"code",dep:["t11"]},
+    {id:"t69",name:"Mobile PWA manifest",status:"todo",pri:"low",type:"code"}
   ]},
   {id:"b3",name:"Storefront",color:"#22c55e",icon:"\ud83d\uded2",tasks:[
     {id:"t19",name:"First client domain setup",status:"todo",pri:"critical",type:"code"},
     {id:"t46",name:"Booking appt vs service fix",status:"todo",pri:"high",type:"code"},
-    {id:"t20",name:"Razorpay checkout",status:"todo",pri:"high",type:"code"},
-    {id:"t21",name:"Mobile responsiveness",status:"todo",pri:"high",type:"code"},
-    {id:"t22",name:"Doctor profile SEO",status:"todo",pri:"medium",type:"code"},
-    {id:"t23",name:"Real-time slots",status:"todo",pri:"medium",type:"code",dep:["t8"]},
-    {id:"t24",name:"Template variants",status:"todo",pri:"low",type:"code"}
+    {id:"t20",name:"Razorpay checkout integration",status:"todo",pri:"high",type:"code"},
+    {id:"t21",name:"Mobile responsiveness audit",status:"todo",pri:"high",type:"code"},
+    {id:"t22",name:"Doctor profile SEO pages",status:"todo",pri:"medium",type:"code"},
+    {id:"t23",name:"Real-time slot availability",status:"todo",pri:"medium",type:"code",dep:["t8"]},
+    {id:"t24",name:"Template variants (3 themes)",status:"todo",pri:"low",type:"code"},
+    {id:"t70",name:"WhatsApp order share link",status:"todo",pri:"medium",type:"code"},
+    {id:"t71",name:"Google Reviews widget embed",status:"todo",pri:"medium",type:"code"},
+    {id:"t72",name:"Lab report download page",status:"todo",pri:"high",type:"code"}
   ]},
   {id:"b4",name:"WhatsApp AI",color:"#16a34a",icon:"\ud83d\udcac",tasks:[
-    {id:"t25",name:"WA DB tables",status:"todo",pri:"high",type:"code"},
-    {id:"t26",name:"Meta Cloud API",status:"todo",pri:"high",type:"code",dep:["t25"]},
-    {id:"t27",name:"6 message flows",status:"todo",pri:"high",type:"code",dep:["t26"]},
-    {id:"t28",name:"AI chatbot",status:"todo",pri:"medium",type:"code",dep:["t27"]},
-    {id:"t29",name:"Opt-in compliance",status:"todo",pri:"medium",type:"code",dep:["t26"]}
+    {id:"t25",name:"WA DB tables + schema",status:"todo",pri:"high",type:"code"},
+    {id:"t26",name:"Meta Cloud API integration",status:"todo",pri:"high",type:"code",dep:["t25"]},
+    {id:"t27",name:"6 message flows (appt/Rx/bill/report/reminder/promo)",status:"todo",pri:"high",type:"code",dep:["t26"]},
+    {id:"t28",name:"AI chatbot (Claude)",status:"todo",pri:"medium",type:"code",dep:["t27"]},
+    {id:"t29",name:"Opt-in compliance + DND check",status:"todo",pri:"medium",type:"code",dep:["t26"]},
+    {id:"t73",name:"Webhook signature verification",status:"todo",pri:"high",type:"code",dep:["t26"]},
+    {id:"t74",name:"Session timeout + re-engage",status:"todo",pri:"medium",type:"code",dep:["t27"]}
   ]},
   {id:"b5",name:"Commerce",color:"#f97316",icon:"\ud83d\udce6",tasks:[
-    {id:"t30",name:"Cart + checkout",status:"todo",pri:"high",type:"code",dep:["t20"]},
-    {id:"t31",name:"Lab booking",status:"todo",pri:"high",type:"code",dep:["t30"]},
-    {id:"t32",name:"Pharmacy Rx upload",status:"todo",pri:"high",type:"code",dep:["t30","t6"]},
+    {id:"t30",name:"Cart + checkout flow",status:"todo",pri:"high",type:"code",dep:["t20"]},
+    {id:"t31",name:"Lab test booking flow",status:"todo",pri:"high",type:"code",dep:["t30"]},
+    {id:"t32",name:"Pharmacy Rx upload + order",status:"todo",pri:"high",type:"code",dep:["t30","t6"]},
     {id:"t33",name:"HMS order relay (MOAT)",status:"todo",pri:"critical",type:"code",dep:["t30","t2"]},
-    {id:"t34",name:"Field tracking",status:"todo",pri:"medium",type:"code",dep:["t31"]}
+    {id:"t34",name:"Field agent tracking",status:"todo",pri:"medium",type:"code",dep:["t31"]},
+    {id:"t75",name:"Refund + cancellation flow",status:"todo",pri:"high",type:"code",dep:["t30"]},
+    {id:"t76",name:"Invoice PDF generation",status:"todo",pri:"medium",type:"code",dep:["t30"]}
   ]},
   {id:"b6",name:"GBP + Marketing",color:"#a855f7",icon:"\ud83d\udce3",tasks:[
-    {id:"t35",name:"GBP OAuth",status:"todo",pri:"medium",type:"code"},
-    {id:"t36",name:"Auto-sync GBP",status:"todo",pri:"medium",type:"code",dep:["t35"]},
-    {id:"t37",name:"Review dashboard",status:"todo",pri:"medium",type:"code",dep:["t35"]},
+    {id:"t35",name:"GBP OAuth + connect",status:"todo",pri:"medium",type:"code"},
+    {id:"t36",name:"Auto-sync GBP listings",status:"todo",pri:"medium",type:"code",dep:["t35"]},
+    {id:"t37",name:"Review dashboard + respond",status:"todo",pri:"medium",type:"code",dep:["t35"]},
     {id:"t38",name:"AI campaign engine",status:"todo",pri:"medium",type:"code",dep:["t27"]},
-    {id:"t39",name:"Content library",status:"todo",pri:"low",type:"code",dep:["t38"]}
+    {id:"t39",name:"Content library + templates",status:"todo",pri:"low",type:"code",dep:["t38"]},
+    {id:"t77",name:"Auto GMB post scheduler",status:"todo",pri:"medium",type:"code",dep:["t36"]},
+    {id:"t78",name:"Social proof widget",status:"todo",pri:"low",type:"code",dep:["t37"]}
   ]},
   {id:"b7",name:"Hemato Marketplace",color:"#14b8a6",icon:"\ud83c\udfea",tasks:[
-    {id:"t40",name:"Marketplace DB",status:"todo",pri:"medium",type:"code"},
-    {id:"t41",name:"Search + compare",status:"todo",pri:"medium",type:"code",dep:["t40"]},
-    {id:"t42",name:"Marketplace ordering",status:"todo",pri:"medium",type:"code",dep:["t41","t30"]},
-    {id:"t43",name:"Commission system",status:"todo",pri:"medium",type:"code",dep:["t42"]},
-    {id:"t44",name:"Wallet + referrals",status:"todo",pri:"low",type:"code",dep:["t43"]}
+    {id:"t40",name:"Marketplace DB + schema",status:"todo",pri:"medium",type:"code"},
+    {id:"t41",name:"Search + compare UI",status:"todo",pri:"medium",type:"code",dep:["t40"]},
+    {id:"t42",name:"Marketplace ordering flow",status:"todo",pri:"medium",type:"code",dep:["t41","t30"]},
+    {id:"t43",name:"Commission + payout system",status:"todo",pri:"medium",type:"code",dep:["t42"]},
+    {id:"t44",name:"Wallet + referrals",status:"todo",pri:"low",type:"code",dep:["t43"]},
+    {id:"t79",name:"Vendor onboarding flow",status:"todo",pri:"medium",type:"code",dep:["t40"]},
+    {id:"t80",name:"Marketplace search filters",status:"todo",pri:"low",type:"code",dep:["t41"]}
   ]},
   {id:"b8",name:"Ops & Vendors",color:"#71717a",icon:"\ud83d\udd27",tasks:[
-    {id:"n01",name:"DMARC record",status:"todo",pri:"high",type:"ops",where:"RC DNS panel"},
-    {id:"n11",name:"Razorpay KYC",status:"todo",pri:"high",type:"vendor",where:"Razorpay"},
-    {id:"n20",name:"Call friend \u2014 clinic data",status:"todo",pri:"critical",type:"ops",where:"WhatsApp/call"},
-    {id:"n35",name:"Submit WA templates (24-48hr!)",status:"todo",pri:"high",type:"vendor",where:"Meta Business Suite"},
-    {id:"n43",name:"GA4 for medihost.in",status:"todo",pri:"high",type:"ops",where:"analytics.google.com"},
-    {id:"n47",name:"Test pricing save fix",status:"todo",pri:"high",type:"test",where:"medihost.in admin"},
-    {id:"n48",name:"Test module gating",status:"todo",pri:"high",type:"test",where:"medihost.in dashboard"},
-    {id:"n49",name:"Test OPD flow",status:"todo",pri:"critical",type:"test",where:"app.hemato.in"},
-    {id:"n53",name:"Draft Terms of Service",status:"todo",pri:"high",type:"ops",where:"Document"}
+    {id:"n01",name:"DMARC + SPF record setup",status:"todo",pri:"high",type:"ops",where:"RC DNS panel"},
+    {id:"n11",name:"Razorpay KYC + activation",status:"todo",pri:"high",type:"vendor",where:"Razorpay dashboard"},
+    {id:"n12",name:"SSL wildcard for subdomains",status:"todo",pri:"high",type:"ops",where:"RC hosting panel"},
+    {id:"n16",name:"Backup cron + S3 config",status:"todo",pri:"high",type:"ops",where:"Server"},
+    {id:"n20",name:"Call friend \u2014 first clinic data",status:"todo",pri:"critical",type:"ops",where:"WhatsApp/call"},
+    {id:"n30",name:"Domain mapping CNAME guide",status:"todo",pri:"medium",type:"ops",where:"Documentation"},
+    {id:"n35",name:"Submit WA message templates (24-48hr!)",status:"todo",pri:"high",type:"vendor",where:"Meta Business Suite",deadline:"2026-04-07"},
+    {id:"n37",name:"UPI autopay setup for subscriptions",status:"todo",pri:"medium",type:"vendor",where:"Razorpay"},
+    {id:"n43",name:"GA4 property for medihost.in",status:"todo",pri:"high",type:"ops",where:"analytics.google.com"},
+    {id:"n44",name:"Uptime monitoring (BetterStack)",status:"todo",pri:"medium",type:"ops",where:"betterstack.com"},
+    {id:"n47",name:"Test pricing save fix end-to-end",status:"todo",pri:"high",type:"test",where:"medihost.in admin"},
+    {id:"n48",name:"Test module gating all plans",status:"todo",pri:"high",type:"test",where:"medihost.in dashboard"},
+    {id:"n49",name:"Test OPD flow doctor+staff",status:"todo",pri:"critical",type:"test",where:"app.hemato.in"},
+    {id:"n53",name:"Draft Terms of Service + Privacy Policy",status:"todo",pri:"high",type:"ops",where:"Google Docs"},
+    {id:"n57",name:"Cloudflare CDN + page rules",status:"todo",pri:"medium",type:"ops",where:"Cloudflare dashboard"}
   ]}
 ];
 
@@ -223,169 +257,263 @@ var DEF_CL = [{date:"Apr 5 Night",entries:[
 
 /* --- state --- */
 var S = load();
-function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.branches)return d}catch(e){}return{branches:JSON.parse(JSON.stringify(DEF_B)),changelog:JSON.parse(JSON.stringify(DEF_CL))}}
-function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function load() {
+  try {
+    var d = JSON.parse(localStorage.getItem(KEY));
+    if (d && d.branches) return d;
+  } catch (e) {}
+  return {branches: JSON.parse(JSON.stringify(DEF_B)), changelog: JSON.parse(JSON.stringify(DEF_CL)), streak: {count: 0, lastDate: ""}};
+}
+function save() { localStorage.setItem(KEY, JSON.stringify(S)); }
 
 /* --- helpers --- */
-function allT(){var o=[];S.branches.forEach(function(b){b.tasks.forEach(function(t){t._b=b.id;o.push(t)})});return o}
-function findT(id){var a=allT();for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return null}
-function brById(id){for(var i=0;i<S.branches.length;i++)if(S.branches[i].id===id)return S.branches[i];return null}
-function cnt(arr,st){var c=0;arr.forEach(function(t){if(t.status===st)c++});return c}
-function depsMet(t){if(!t.dep||!t.dep.length)return true;for(var i=0;i<t.dep.length;i++){var d=findT(t.dep[i]);if(!d||d.status!=="done")return false}return true}
-function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-
-function autoUnblock(){
-  var ch=false;
-  allT().forEach(function(t){
-    if(t.status==="blocked"&&depsMet(t)){t.status="ready";ch=true;addCL("unblocked",t.id+" \u2014 "+t.name+" auto-unblocked")}
+function allT() {
+  var o = [];
+  S.branches.forEach(function(b) {
+    b.tasks.forEach(function(t) { t._b = b.id; o.push(t); });
   });
-  if(ch)save();
+  return o;
 }
-function addCL(tag,text){
-  var td=today(),day=null;
-  for(var i=0;i<S.changelog.length;i++){if(S.changelog[i].date===td){day=S.changelog[i];break}}
-  if(!day){day={date:td,entries:[]};S.changelog.unshift(day)}
-  day.entries.unshift({tag:tag,text:text});
+function findT(id) {
+  var a = allT();
+  for (var i = 0; i < a.length; i++) {
+    if (a[i].id === id) return a[i];
+  }
+  return null;
 }
-function chgStatus(id,ns){
-  var t=findT(id);if(!t)return;
-  var old=t.status;t.status=ns;
-  if(ns==="done"&&old!=="done")addCL("fixed",t.id+" \u2014 "+t.name+" completed");
-  autoUnblock();save();renderAll();
+function brById(id) {
+  for (var i = 0; i < S.branches.length; i++) {
+    if (S.branches[i].id === id) return S.branches[i];
+  }
+  return null;
+}
+function cnt(arr, st) {
+  var c = 0;
+  arr.forEach(function(t) { if (t.status === st) c++; });
+  return c;
+}
+function depsMet(t) {
+  if (!t.dep || !t.dep.length) return true;
+  for (var i = 0; i < t.dep.length; i++) {
+    var d = findT(t.dep[i]);
+    if (!d || d.status !== "done") return false;
+  }
+  return true;
+}
+function today() {
+  var d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function updateStreak() {
+  if (!S.streak) S.streak = {count: 0, lastDate: ""};
+  var td = today();
+  if (S.streak.lastDate === td) return;
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  var yd = yesterday.getFullYear() + "-" + String(yesterday.getMonth() + 1).padStart(2, "0") + "-" + String(yesterday.getDate()).padStart(2, "0");
+  if (S.streak.lastDate === yd) {
+    S.streak.count++;
+  } else if (S.streak.lastDate !== td) {
+    S.streak.count = 1;
+  }
+  S.streak.lastDate = td;
+  save();
+}
+
+function autoUnblock() {
+  var ch = false;
+  allT().forEach(function(t) {
+    if (t.status === "blocked" && depsMet(t)) {
+      t.status = "ready";
+      ch = true;
+      addCL("unblocked", t.id + " \u2014 " + t.name + " auto-unblocked");
+    }
+  });
+  if (ch) save();
+}
+function addCL(tag, text) {
+  var td = today(), day = null;
+  for (var i = 0; i < S.changelog.length; i++) {
+    if (S.changelog[i].date === td) { day = S.changelog[i]; break; }
+  }
+  if (!day) { day = {date: td, entries: []}; S.changelog.unshift(day); }
+  day.entries.unshift({tag: tag, text: text});
+}
+function chgStatus(id, ns) {
+  var t = findT(id);
+  if (!t) return;
+  var old = t.status;
+  t.status = ns;
+  if (ns === "done" && old !== "done") {
+    addCL("fixed", t.id + " \u2014 " + t.name + " completed");
+    updateStreak();
+  }
+  if (ns === "blocked" || ns === "wont_do") {
+    addCL("closed", t.id + " \u2014 " + t.name + " \u2192 " + ns.replace(/_/g, " "));
+  }
+  autoUnblock();
+  save();
+  renderAll();
 }
 
 /* --- NAV --- */
-document.querySelectorAll('.nav-b').forEach(function(b){
-  b.addEventListener('click',function(){
-    document.querySelectorAll('.nav-b').forEach(function(x){x.classList.remove('on')});
+document.querySelectorAll('.nav-b').forEach(function(b) {
+  b.addEventListener('click', function() {
+    document.querySelectorAll('.nav-b').forEach(function(x) { x.classList.remove('on'); });
     b.classList.add('on');
-    document.querySelectorAll('.v').forEach(function(x){x.classList.remove('on')});
-    document.getElementById('v-'+b.dataset.v).classList.add('on');
+    document.querySelectorAll('.v').forEach(function(x) { x.classList.remove('on'); });
+    document.getElementById('v-' + b.dataset.v).classList.add('on');
   });
 });
 
 /* --- DASHBOARD --- */
-function renderDash(){
-  var el=document.getElementById('v-dashboard');
-  var all=allT(),total=all.length,done=cnt(all,"done"),inp=cnt(all,"in_progress"),rdy=cnt(all,"ready"),blk=cnt(all,"blocked");
-  var crit=0;all.forEach(function(t){if(t.pri==="critical"&&t.status!=="done")crit++});
-  var pct=total?Math.round(done/total*100):0;
-  var rc=pct<30?"#ef4444":pct<60?"#f97316":"#22c55e";
-  var circ=2*Math.PI*70,off=circ-(pct/100)*circ;
+function renderDash() {
+  var el = document.getElementById('v-dashboard');
+  var all = allT(), total = all.length, done = cnt(all, "done"), inp = cnt(all, "in_progress"), rdy = cnt(all, "ready"), blk = cnt(all, "blocked");
+  var crit = 0;
+  all.forEach(function(t) { if (t.pri === "critical" && t.status !== "done") crit++; });
+  var pct = total ? Math.round(done / total * 100) : 0;
+  var rc = pct < 30 ? "#ef4444" : pct < 60 ? "#f97316" : "#22c55e";
+  var circ = 2 * Math.PI * 70, off = circ - (pct / 100) * circ;
 
-  var h='<div class="sg">';
-  h+=sc(total,"Total","var(--text)")+sc(done,"Done","var(--done)")+sc(inp,"In Progress","var(--inp)");
-  h+=sc(rdy,"Ready","var(--ready)")+sc(blk,"Blocked","var(--blocked)")+sc(crit,"Critical","var(--blocked)");
-  h+='</div><div class="dg">';
+  /* streak */
+  var streak = (S.streak && S.streak.count) ? S.streak.count : 0;
+  var h = '<div class="streak-card"><span class="streak-fire">' + (streak > 0 ? "\ud83d\udd25" : "\u2744\ufe0f") + '</span>';
+  h += '<div><div class="streak-num m">' + streak + ' day' + (streak !== 1 ? 's' : '') + '</div>';
+  h += '<div class="streak-label">Completion streak</div></div>';
+  h += '<div class="streak-dots">';
+  for (var si = 0; si < 7; si++) {
+    h += '<div class="streak-dot' + (si < streak ? ' active' : '') + '"></div>';
+  }
+  h += '</div></div>';
+
+  /* stats */
+  h += '<div class="sg">';
+  h += sc(total, "Total", "var(--text)") + sc(done, "Done", "var(--done)") + sc(inp, "In Progress", "var(--inp)");
+  h += sc(rdy, "Ready", "var(--ready)") + sc(blk, "Blocked", "var(--blocked)") + sc(crit, "Critical", "var(--blocked)");
+  h += '</div><div class="dg">';
 
   /* ring */
-  h+='<div class="dc"><h3>Overall Progress</h3><div class="rw">';
-  h+='<svg width="160" height="160" viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="none" stroke="var(--border)" stroke-width="12"/>';
-  h+='<circle cx="80" cy="80" r="70" fill="none" stroke="'+rc+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+off+'" transform="rotate(-90 80 80)" style="transition:stroke-dashoffset .5s"/>';
-  h+='</svg><div class="rp m" style="color:'+rc+'">'+pct+'%</div></div></div>';
+  h += '<div class="dc"><h3>Overall Progress</h3><div class="rw">';
+  h += '<svg width="160" height="160" viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="none" stroke="var(--border)" stroke-width="12"/>';
+  h += '<circle cx="80" cy="80" r="70" fill="none" stroke="' + rc + '" stroke-width="12" stroke-linecap="round" stroke-dasharray="' + circ + '" stroke-dashoffset="' + off + '" transform="rotate(-90 80 80)" style="transition:stroke-dashoffset .5s"/>';
+  h += '</svg><div class="rp m" style="color:' + rc + '">' + pct + '%</div></div></div>';
 
   /* branch bars */
-  h+='<div class="dc"><h3>Branch Progress</h3>';
-  S.branches.forEach(function(b){
-    var bd=cnt(b.tasks,"done"),bt=b.tasks.length,bp=bt?Math.round(bd/bt*100):0;
-    h+='<div class="bb"><div class="bb-h"><span>'+b.icon+' '+b.name+'</span><span class="m" style="font-size:11px">'+bd+'/'+bt+'</span></div>';
-    h+='<div class="bb-t"><div class="bb-f" style="width:'+bp+'%;background:'+b.color+'"></div></div></div>';
+  h += '<div class="dc"><h3>Branch Progress</h3>';
+  S.branches.forEach(function(b) {
+    var bd = cnt(b.tasks, "done"), bt = b.tasks.length, bp = bt ? Math.round(bd / bt * 100) : 0;
+    h += '<div class="bb"><div class="bb-h"><span>' + b.icon + ' ' + b.name + '</span><span class="m" style="font-size:11px">' + bd + '/' + bt + '</span></div>';
+    h += '<div class="bb-t"><div class="bb-f" style="width:' + bp + '%;background:' + b.color + '"></div></div></div>';
   });
-  h+='</div></div>';
+  h += '</div></div>';
 
   /* up next */
-  h+='<div class="dc"><h3>Up Next</h3>';
-  var up=all.filter(function(t){return t.status==="ready"||t.status==="in_progress"}).sort(function(a,b){return(PO[a.pri]||9)-(PO[b.pri]||9)}).slice(0,10);
-  if(!up.length)h+='<div style="color:var(--dim);font-size:12px">No tasks ready</div>';
-  up.forEach(function(t){
-    var b=brById(t._b);
-    h+='<div class="un"><span class="un-p b-'+t.pri+'">'+t.pri+'</span>';
-    h+='<span style="color:'+SC[t.status]+'">&#9679;</span>';
-    h+='<span>'+t.name+'</span>';
-    h+='<span style="margin-left:auto;font-size:11px;color:var(--dim)">'+(b?b.icon+' '+b.name:'')+'</span></div>';
+  h += '<div class="dc"><h3>\u26a1 Up Next</h3>';
+  var up = all.filter(function(t) { return t.status === "ready" || t.status === "in_progress"; }).sort(function(a, b) { return (PO[a.pri] || 9) - (PO[b.pri] || 9); }).slice(0, 12);
+  if (!up.length) h += '<div style="color:var(--dim);font-size:12px">No tasks ready \u2014 complete dependencies to unlock more.</div>';
+  up.forEach(function(t) {
+    var b = brById(t._b);
+    h += '<div class="un"><span class="un-p b-' + t.pri + '">' + t.pri + '</span>';
+    h += '<span style="color:' + SC[t.status] + '">\u25cf</span>';
+    h += '<span>' + t.name + '</span>';
+    if (t.deadline) h += '<span class="dl-badge">\ud83d\udcc5 ' + t.deadline + '</span>';
+    h += '<span style="margin-left:auto;font-size:11px;color:var(--dim)">' + (b ? b.icon + ' ' + b.name : '') + '</span></div>';
   });
-  h+='</div>';
-  el.innerHTML=h;
+  h += '</div>';
+  el.innerHTML = h;
 }
-function sc(n,l,c){return'<div class="sc"><div class="n m" style="color:'+c+'">'+n+'</div><div class="l">'+l+'</div></div>'}
+function sc(n, l, c) { return '<div class="sc"><div class="n m" style="color:' + c + '">' + n + '</div><div class="l">' + l + '</div></div>'; }
 
 /* --- TASKS --- */
-function renderTasks(){
-  var el=document.getElementById('v-tasks');
-  var h='';
-  S.branches.forEach(function(b){
-    var bd=cnt(b.tasks,"done"),bt=b.tasks.length,bp=bt?Math.round(bd/bt*100):0;
-    h+='<div class="bs"><div class="bh" onclick="togBr(this)">';
-    h+='<span class="bh-n">'+b.icon+' '+b.name+'</span>';
-    h+='<div class="bh-bar"><div class="bh-fill" style="width:'+bp+'%;background:'+b.color+'"></div></div>';
-    h+='<span class="bh-c m">'+bd+'/'+bt+' ('+bp+'%)</span>';
-    h+='<span class="ch">&#9660;</span></div>';
-    h+='<div class="bd">';
-    b.tasks.forEach(function(t){h+=tRow(t)});
-    h+='</div></div>';
+function renderTasks() {
+  var el = document.getElementById('v-tasks');
+  var h = '';
+  S.branches.forEach(function(b) {
+    var bd = cnt(b.tasks, "done"), bt = b.tasks.length, bp = bt ? Math.round(bd / bt * 100) : 0;
+    h += '<div class="bs"><div class="bh" onclick="togBr(this)">';
+    h += '<span class="bh-n">' + b.icon + ' ' + b.name + '</span>';
+    h += '<div class="bh-bar"><div class="bh-fill" style="width:' + bp + '%;background:' + b.color + '"></div></div>';
+    h += '<span class="bh-c m">' + bd + '/' + bt + ' (' + bp + '%)</span>';
+    h += '<span class="ch">\u25bc</span></div>';
+    h += '<div class="bd">';
+    b.tasks.forEach(function(t) { h += tRow(t); });
+    h += '</div></div>';
   });
-  el.innerHTML=h;
+  el.innerHTML = h;
 }
-function tRow(t){
-  var h='<div class="tr"><div><select onchange="chgStatus(\''+t.id+'\',this.value)" style="background:'+SC[t.status]+'22;border:1px solid '+SC[t.status]+'">';
-  ["done","in_progress","ready","todo","blocked","partial","wont_do"].forEach(function(s){
-    h+='<option value="'+s+'"'+(t.status===s?' selected':'')+'>'+s.replace(/_/g,' ')+'</option>';
+function tRow(t) {
+  var h = '<div class="tr"><div><select onchange="chgStatus(\'' + t.id + '\',this.value)" style="background:' + SC[t.status] + '22;border:1px solid ' + SC[t.status] + '">';
+  ["done", "in_progress", "ready", "todo", "blocked", "partial", "wont_do"].forEach(function(s) {
+    h += '<option value="' + s + '"' + (t.status === s ? ' selected' : '') + '>' + s.replace(/_/g, ' ') + '</option>';
   });
-  h+='</select></div><div><div class="tn">'+t.name;
-  h+=' <span class="badge b-'+t.type+'">'+t.type.toUpperCase()+'</span>';
-  h+=' <span class="badge b-'+t.pri+'">'+t.pri+'</span>';
-  if(t.fix)h+=' <span class="fix">\u2705 '+t.fix+'</span>';
-  h+='</div>';
-  var m=[];
-  if(t.res)m.push('<span class="tm">Resolution: '+t.res+'</span>');
-  if(t.notes)m.push('<span class="tm">'+t.notes+'</span>');
-  if(t.where)m.push('<span class="t-where">\ud83d\udccd '+t.where+'</span>');
-  if(t.dep&&t.dep.length){
-    if(depsMet(t))m.push('<span class="t-ok">\u2705 deps met</span>');
-    else m.push('<span class="t-blk">\ud83d\udd12 blocked by: '+t.dep.join(', ')+'</span>');
+  h += '</select></div><div><div class="tn">' + t.name;
+  h += ' <span class="badge b-' + t.type + '">' + t.type.toUpperCase() + '</span>';
+  h += ' <span class="badge b-' + t.pri + '">' + t.pri + '</span>';
+  if (t.fix) h += ' <span class="fix">\u2705 ' + t.fix + '</span>';
+  if (t.deadline) h += ' <span class="dl-badge">\ud83d\udcc5 ' + t.deadline + '</span>';
+  h += '</div>';
+  var m = [];
+  if (t.res) m.push('<span class="tm">Resolution: ' + t.res + '</span>');
+  if (t.notes) m.push('<span class="tm">' + t.notes + '</span>');
+  if (t.where) m.push('<span class="t-where">\ud83d\udccd ' + t.where + '</span>');
+  if (t.dep && t.dep.length) {
+    if (depsMet(t)) m.push('<span class="t-ok">\u2705 deps met</span>');
+    else m.push('<span class="t-blk">\ud83d\udd12 blocked by: ' + t.dep.join(', ') + '</span>');
   }
-  if(m.length)h+='<div style="margin-top:2px">'+m.join(' \u00b7 ')+'</div>';
-  h+='</div></div>';
+  if (m.length) h += '<div style="margin-top:2px">' + m.join(' \u00b7 ') + '</div>';
+  h += '</div></div>';
   return h;
 }
-function togBr(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open')}
+function togBr(el) { el.classList.toggle('open'); el.nextElementSibling.classList.toggle('open'); }
 
 /* --- CHANGELOG --- */
-function renderCL(){
-  var el=document.getElementById('v-changelog'),h='';
-  S.changelog.forEach(function(d){
-    h+='<div class="cld"><h3>'+d.date+'</h3>';
-    d.entries.forEach(function(e){
-      h+='<div class="cle"><span class="clt clt-'+e.tag+'">'+e.tag+'</span><span>'+e.text+'</span></div>';
+function renderCL() {
+  var el = document.getElementById('v-changelog'), h = '';
+  S.changelog.forEach(function(d) {
+    h += '<div class="cld"><h3>' + d.date + '</h3>';
+    d.entries.forEach(function(e) {
+      h += '<div class="cle"><span class="clt clt-' + e.tag + '">' + e.tag + '</span><span>' + e.text + '</span></div>';
     });
-    h+='</div>';
+    h += '</div>';
   });
-  if(!S.changelog.length)h='<div style="color:var(--dim)">No entries yet.</div>';
-  el.innerHTML=h;
+  if (!S.changelog.length) h = '<div style="color:var(--dim)">No entries yet.</div>';
+  el.innerHTML = h;
 }
 
 /* --- ADD TASK --- */
-function toggleForm(){
-  var f=document.getElementById('aForm');f.classList.toggle('open');
-  if(f.classList.contains('open')){
-    var sel=document.getElementById('af-b');sel.innerHTML='';
-    S.branches.forEach(function(b){sel.innerHTML+='<option value="'+b.id+'">'+b.icon+' '+b.name+'</option>'});
+function toggleForm() {
+  var f = document.getElementById('aForm');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) {
+    var sel = document.getElementById('af-b');
+    sel.innerHTML = '';
+    S.branches.forEach(function(b) { sel.innerHTML += '<option value="' + b.id + '">' + b.icon + ' ' + b.name + '</option>'; });
   }
 }
-function addTask(){
-  var name=document.getElementById('af-n').value.trim();if(!name)return;
-  var br=brById(document.getElementById('af-b').value);if(!br)return;
-  var task={id:"u"+Date.now(),name:name,status:"todo",pri:document.getElementById('af-p').value,type:document.getElementById('af-t').value};
-  var notes=document.getElementById('af-no').value.trim();if(notes)task.notes=notes;
+function addTask() {
+  var name = document.getElementById('af-n').value.trim();
+  if (!name) return;
+  var br = brById(document.getElementById('af-b').value);
+  if (!br) return;
+  var task = {id: "u" + Date.now(), name: name, status: "todo", pri: document.getElementById('af-p').value, type: document.getElementById('af-t').value};
+  var deadline = document.getElementById('af-d').value;
+  if (deadline) task.deadline = deadline;
+  var notes = document.getElementById('af-no').value.trim();
+  if (notes) task.notes = notes;
   br.tasks.push(task);
-  addCL("fixed",task.id+" \u2014 "+name+" added");
-  save();toggleForm();
-  document.getElementById('af-n').value='';document.getElementById('af-no').value='';
+  addCL("fixed", task.id + " \u2014 " + name + " added");
+  save();
+  toggleForm();
+  document.getElementById('af-n').value = '';
+  document.getElementById('af-no').value = '';
+  document.getElementById('af-d').value = '';
   renderAll();
 }
 
 /* --- INIT --- */
-function renderAll(){renderDash();renderTasks();renderCL()}
+function renderAll() { renderDash(); renderTasks(); renderCL(); }
 renderAll();
 </script>
 </body>
