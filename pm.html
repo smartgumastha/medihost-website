@@ -3,342 +3,507 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MediHost — Dev Command Center</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>MediHost — Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: #f8f8f8; color: #111; }
-.wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
-.header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #111; }
-.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-.header .sub { font-size: 11px; color: #999; }
-.views { display: flex; gap: 4px; }
-.views button { padding: 5px 14px; border-radius: 6px; border: 1.5px solid #ddd; background: #fff; color: #666; font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-.views button.active { border-color: #111; background: #111; color: #fff; }
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 6px; margin-bottom: 14px; }
-.stat-card { padding: 10px; border-radius: 8px; background: #fff; border: 1px solid #eee; text-align: center; }
-.stat-card .num { font-size: 24px; font-weight: 700; }
-.stat-card .lbl { font-size: 10px; color: #999; font-weight: 500; margin-top: 2px; }
-.branch-filter { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
-.branch-filter button { padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd; background: #fff; color: #666; font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-.branch-filter button.active { color: #fff; }
-.branch-card { margin-bottom: 14px; border: 1px solid #e5e5e5; border-radius: 10px; overflow: hidden; background: #fff; }
-.branch-header { padding: 10px 14px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; }
-.branch-header .info { display: flex; align-items: center; gap: 8px; }
-.branch-header .icon { font-size: 18px; }
-.branch-header .name { font-size: 14px; font-weight: 700; }
-.branch-header .desc { font-size: 10px; color: #999; }
-.progress-bar { width: 80px; height: 5px; border-radius: 3px; background: #eee; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
-.progress-pct { font-size: 11px; font-weight: 700; margin-left: 6px; }
-.branch-body { padding: 8px; }
-.task-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; margin-bottom: 4px; border-radius: 6px; border: 1px solid #f5f5f5; transition: all 0.1s; }
-.task-row:hover { border-color: #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-.task-row select { padding: 2px 3px; border-radius: 5px; border: 1px solid #ddd; font-size: 10px; font-weight: 600; cursor: pointer; font-family: inherit; min-width: 80px; }
-.task-info { flex: 1; min-width: 0; }
-.task-name { font-size: 12px; font-weight: 600; color: #222; }
-.task-badges { display: flex; align-items: center; gap: 5px; margin-top: 1px; flex-wrap: wrap; }
-.badge { font-size: 9px; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
-.task-notes { font-size: 10px; color: #999; margin-top: 2px; }
-.task-meta { display: flex; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
-.task-meta span { font-size: 9px; color: #bbb; }
-.task-meta .blocked { color: #dc2626; font-weight: 600; }
-.task-meta .deps-met { color: #059669; }
-.task-id { font-size: 9px; color: #ddd; white-space: nowrap; }
-.timeline-week { margin-bottom: 10px; }
-.timeline-week .week-label { font-size: 12px; font-weight: 700; padding: 6px 10px; background: #fafafa; border-radius: 6px 6px 0 0; border: 1px solid #eee; border-bottom: 2px solid #111; }
-.timeline-week .week-body { border: 1px solid #eee; border-top: none; border-radius: 0 0 6px 6px; padding: 6px; }
-.timeline-task { display: flex; align-items: center; gap: 6px; padding: 5px 8px; margin-bottom: 3px; border-radius: 5px; background: #fff; border: 1px solid #f5f5f5; }
-.timeline-task .branch-bar { width: 3px; height: 22px; border-radius: 2px; flex-shrink: 0; }
-.timeline-task .status { font-size: 10px; font-weight: 600; min-width: 65px; }
-.timeline-task .tname { font-size: 11px; font-weight: 500; flex: 1; }
-.timeline-task .tbranch { font-size: 9px; color: #bbb; }
-.critical-section { margin-bottom: 16px; }
-.critical-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
-.critical-task { display: flex; align-items: center; gap: 8px; padding: 8px 12px; margin-bottom: 5px; border-radius: 8px; background: #fff; }
-.critical-task .bar { width: 4px; height: 30px; border-radius: 2px; flex-shrink: 0; }
-.critical-task .cinfo { flex: 1; }
-.critical-task .cname { font-size: 12px; font-weight: 600; }
-.critical-task .cmeta { font-size: 10px; color: #999; }
-.footer { text-align: center; padding: 16px 0; font-size: 10px; color: #ccc; }
-.save-indicator { position: fixed; bottom: 16px; right: 16px; padding: 6px 14px; border-radius: 8px; background: #059669; color: #fff; font-size: 11px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-.save-indicator.show { opacity: 1; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#0a0a0b;color:#e4e4e7;min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:16px}
+.hdr{display:flex;align-items:flex-end;justify-content:space-between;padding:12px 0 16px;border-bottom:2px solid #27272a;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.hdr h1{font-size:20px;font-weight:700;color:#fafafa;letter-spacing:-0.5px}
+.hdr .sub{font-size:11px;color:#52525b;margin-top:2px}
+.hdr .sub span{color:#a1a1aa}
+.brand{font-size:10px;font-weight:700;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav button{padding:5px 14px;border-radius:6px;border:1px solid #27272a;background:#18181b;color:#71717a;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.nav button.on{border-color:#fafafa;background:#fafafa;color:#09090b}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:16px}
+.stat{padding:12px 14px;border-radius:10px;background:#18181b;border:1px solid #27272a}
+.stat .n{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600}
+.stat .l{font-size:10px;color:#52525b;font-weight:600;margin-top:2px;letter-spacing:0.3px;text-transform:uppercase}
+.chart-row{display:grid;grid-template-columns:220px 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:700px){.chart-row{grid-template-columns:1fr}}
+.card{background:#18181b;border:1px solid #27272a;border-radius:12px;padding:16px;overflow:hidden}
+.card h3{font-size:13px;font-weight:700;color:#a1a1aa;margin-bottom:12px;letter-spacing:0.3px}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-center{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;color:#fafafa}
+.ring-label{font-size:11px;color:#52525b;margin-top:2px}
+.branch-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.branch-bar .info{min-width:120px;display:flex;align-items:center;gap:6px}
+.branch-bar .icon{font-size:14px}
+.branch-bar .nm{font-size:11px;font-weight:600;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px}
+.branch-bar .track{flex:1;height:18px;background:#27272a;border-radius:4px;overflow:hidden;position:relative;min-width:60px}
+.branch-bar .fill{height:100%;border-radius:4px;transition:width 0.6s cubic-bezier(0.22,1,0.36,1)}
+.branch-bar .pct{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;min-width:36px;text-align:right}
+.branch-bar .cnt{font-size:10px;color:#52525b;min-width:30px;text-align:right}
+.streak-card{display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,#18181b 0%,#1c1917 100%);border:1px solid #292524;border-radius:12px;margin-bottom:16px}
+.streak-num{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:700;color:#f59e0b;line-height:1}
+.streak-info{flex:1}
+.streak-info .t{font-size:14px;font-weight:700;color:#fafafa}
+.streak-info .d{font-size:11px;color:#78716c;margin-top:2px}
+.milestone{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.milestone .dot{width:10px;height:10px;border-radius:50%;border:2px solid #27272a}
+.milestone .dot.lit{border-color:#f59e0b;background:#f59e0b}
+.timeline-card{margin-bottom:16px}
+.day-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.day-row .day{font-family:'JetBrains Mono',monospace;font-size:10px;color:#52525b;min-width:50px}
+.day-row .bar-track{flex:1;height:14px;background:#27272a;border-radius:3px;overflow:hidden;position:relative}
+.day-row .bar-fill{height:100%;border-radius:3px}
+.day-row .count{font-family:'JetBrains Mono',monospace;font-size:10px;color:#71717a;min-width:20px;text-align:right}
+.branch-card{margin-bottom:10px;border:1px solid #27272a;border-radius:10px;overflow:hidden}
+.branch-head{padding:8px 12px;background:#18181b;border-bottom:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.branch-head .left{display:flex;align-items:center;gap:6px}
+.branch-head .nm{font-size:13px;font-weight:700;color:#e4e4e7}
+.branch-head .desc{font-size:10px;color:#52525b}
+.branch-body{padding:6px}
+.task{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;margin-bottom:3px;border-radius:6px;border:1px solid #1f1f23;transition:border-color 0.1s}
+.task:hover{border-color:#3f3f46}
+.task select{padding:3px 4px;border-radius:5px;border:1px solid #3f3f46;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;min-width:82px;background:#18181b;color:#a1a1aa}
+.task .info{flex:1;min-width:0}
+.task .name{font-size:12px;font-weight:600;color:#e4e4e7}
+.task .note{font-size:10px;color:#52525b;margin-top:1px}
+.task .where{font-size:10px;color:#78716c;margin-top:1px}
+.task .meta{display:flex;gap:6px;margin-top:2px;flex-wrap:wrap}
+.task .meta span{font-size:9px;color:#3f3f46}
+.task .blocked{color:#ef4444;font-weight:600}
+.task .deps-met{color:#22c55e}
+.task .tid{font-size:9px;color:#27272a}
+.badge{font-size:9px;padding:1px 6px;border-radius:4px;font-weight:600}
+.fix-badge{background:#052e16;color:#22c55e}
+.type-badge-code{background:#172554;color:#3b82f6}
+.type-badge-ops{background:#2e1065;color:#a855f7}
+.type-badge-vendor{background:#052e16;color:#22c55e}
+.type-badge-test{background:#431407;color:#f97316}
+.add-form{padding:14px;margin-bottom:14px;background:#18181b;border:1px solid #27272a;border-radius:10px}
+.add-form input,.add-form select{background:#09090b;border:1px solid #27272a;color:#e4e4e7;padding:6px 8px;border-radius:6px;font-size:12px;font-family:inherit;width:100%}
+.add-form label{font-size:10px;color:#52525b;display:block;margin-bottom:3px}
+.add-form .row{display:grid;gap:8px;margin-bottom:8px}
+.add-form .r2{grid-template-columns:1fr 1fr}
+.add-form .r4{grid-template-columns:1fr 1fr 1fr 1fr}
+.add-form button{padding:6px 16px;border-radius:6px;border:1px solid #27272a;background:#27272a;color:#fafafa;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.add-form button:hover{background:#3f3f46}
+.log-entry{margin-bottom:12px}
+.log-head{font-size:12px;font-weight:700;color:#a1a1aa;padding:6px 10px;background:#18181b;border-radius:6px 6px 0 0;border:1px solid #27272a;border-bottom:2px solid #22c55e}
+.log-body{border:1px solid #27272a;border-top:none;border-radius:0 0 6px 6px;padding:6px}
+.log-item{display:flex;gap:8px;padding:5px 8px;margin-bottom:2px;border-radius:4px;background:#09090b}
+.log-tag{font-size:10px;padding:1px 7px;border-radius:4px;font-weight:600;min-width:60px;text-align:center}
+.footer{text-align:center;padding:20px 0;font-size:10px;color:#27272a}
+.quote{text-align:center;padding:10px;margin-bottom:16px;font-style:italic;color:#3f3f46;font-size:12px;border:1px solid #1f1f23;border-radius:8px;background:#18181b}
+.filter-row{display:flex;gap:3px;margin-bottom:12px;flex-wrap:wrap}
+.filter-row button{padding:3px 9px;border-radius:5px;border:1px solid #27272a;background:#18181b;color:#52525b;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit}
+.filter-row button.on{border-color:#fafafa;background:#fafafa;color:#09090b}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
-<div class="save-indicator" id="saveIndicator">Saved</div>
-
 <script>
-var STORAGE_KEY = "medihost-pm-v2";
+var SK = "medihost-cmd-v6";
+var ST = {done:{l:"Done",c:"#22c55e",bg:"#052e16"},in_progress:{l:"In Progress",c:"#f97316",bg:"#431407"},ready:{l:"Ready",c:"#3b82f6",bg:"#172554"},todo:{l:"To Do",c:"#71717a",bg:"#18181b"},blocked:{l:"Blocked",c:"#ef4444",bg:"#2a0a0a"},partial:{l:"Partial",c:"#a855f7",bg:"#2e1065"},wont_do:{l:"Won't Do",c:"#52525b",bg:"#18181b"}};
+var PR = {critical:{l:"Critical",c:"#ef4444"},high:{l:"High",c:"#f97316"},medium:{l:"Medium",c:"#3b82f6"},low:{l:"Low",c:"#71717a"}};
+var TC = {code:{l:"CODE",bg:"#172554",c:"#3b82f6"},ops:{l:"OPS",bg:"#2e1065",c:"#a855f7"},vendor:{l:"VENDOR",bg:"#052e16",c:"#22c55e"},test:{l:"TEST",bg:"#431407",c:"#f97316"}};
 
-var STATUS = {
-  done: { label: "Done", color: "#059669", bg: "#ecfdf5" },
-  in_progress: { label: "In Progress", color: "#d97706", bg: "#fffbeb" },
-  ready: { label: "Ready", color: "#2563eb", bg: "#eff6ff" },
-  todo: { label: "To Do", color: "#6b7280", bg: "#f3f4f6" },
-  blocked: { label: "Blocked", color: "#dc2626", bg: "#fef2f2" },
-  partial: { label: "Partial", color: "#7c3aed", bg: "#f5f3ff" }
-};
+var QUOTES = [
+  "Practo rents you patients. We build you a brand.",
+  "Every commit is one step closer to the first paying client.",
+  "Multi-tenant. Multi-branch. One unstoppable founder.",
+  "The moat is HMS order relay. Build the moat.",
+  "13 years of healthcare domain knowledge, weaponized.",
+  "Shopify for Healthcare — and you're building it solo.",
+  "Tonight's fix unblocks tomorrow's feature.",
+  "Chain clinics need this. Your friend needs this. Ship it."
+];
 
-var PRIORITY = {
-  critical: { label: "Critical", color: "#dc2626" },
-  high: { label: "High", color: "#d97706" },
-  medium: { label: "Medium", color: "#2563eb" },
-  low: { label: "Low", color: "#6b7280" }
-};
+var DEFAULT = {v:6,updated:Date.now(),streak:{count:1,lastDate:new Date().toISOString().split('T')[0]},history:[],log:[{d:"Apr 5 Night",items:[{t:"t1",a:"closed",n:"Already done in hemato-app — 115 api.get/api.post calls."},{t:"t9",a:"fixed",n:"subscription_plan → plan_tier. 7+5 lines."},{t:"t45",a:"fixed",n:"Shared modules.js + dedup 4 copies + API + gating."}]}],
+branches:[
+{id:"b1",name:"HMS Backbone",color:"#ef4444",icon:"\u{1F3E5}",desc:"Core HMS — patient, OPD, billing, LIS",tasks:[
+{id:"t1",name:"V44 apiRequest→api.get fix",s:"done",p:"critical",type:"code",dep:[],eff:"0",dl:"Apr 5",note:"Already done in hemato-app.",fix:"Apr 5",res:"Verified — never broken"},
+{id:"t2",name:"Test full OPD flow E2E",s:"ready",p:"critical",type:"test",dep:[],eff:"1 session",dl:"Apr 6",note:"All V44 screens verified. Manual test needed."},
+{id:"t3",name:"Collection reports",s:"todo",p:"high",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 9",note:"Client #1 ask. API + screen + print."},
+{id:"t4",name:"Prescription gen + print",s:"todo",p:"high",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 10",note:"Rx → print → pharmacy."},
+{id:"t5",name:"Multi-branch support",s:"todo",p:"high",type:"code",dep:["t2"],eff:"2 sessions",dl:"Apr 8",note:"KEY for chain clinics."},
+{id:"t6",name:"Pharmacy stock mgmt",s:"todo",p:"medium",type:"code",dep:["t4"],eff:"2 sessions",dl:"Apr 21",note:"Stock, expiry, purchase."},
+{id:"t7",name:"LIS → billing",s:"todo",p:"medium",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 21",note:"Test results → bills."},
+{id:"t8",name:"Appointment → queue",s:"todo",p:"medium",type:"code",dep:["t2"],eff:"1 session",dl:"Apr 25",note:"Online booking → doctor queue."}
+]},
+{id:"b2",name:"MediHost Platform",color:"#3b82f6",icon:"\u{1F310}",desc:"Partner SaaS — signup, dashboard, admin",tasks:[
+{id:"t9",name:"Admin pricing save fix",s:"done",p:"critical",type:"code",dep:[],eff:"0.5 session",dl:"Apr 5",note:"subscription_plan → plan_tier.",fix:"Apr 5",res:"7 backend + 5 frontend lines"},
+{id:"t10",name:"Signup pipeline E2E",s:"partial",p:"critical",type:"code",dep:[],eff:"1 session",dl:"Apr 7",note:"Payment+domain OK. Auto-website pending."},
+{id:"t45",name:"Module gating fix",s:"done",p:"high",type:"code",dep:[],eff:"0.5 session",dl:"Apr 6",note:"Shared modules.js + API.",fix:"Apr 5",res:"helpers/modules.js + dedup"},
+{id:"t11",name:"Welcome page live link",s:"todo",p:"high",type:"code",dep:["t10"],eff:"0.5 session",dl:"Apr 7",note:"Your site is live at domain."},
+{id:"t12",name:"Partner dashboard — editor",s:"todo",p:"high",type:"code",dep:["t10"],eff:"2 sessions",dl:"Apr 14",note:"Edit tagline, about, services."},
+{id:"t13",name:"Partner dashboard — doctors",s:"todo",p:"high",type:"code",dep:["t12"],eff:"1 session",dl:"Apr 14",note:"Add/edit doctors, schedules."},
+{id:"t14",name:"Partner dashboard — orders",s:"todo",p:"high",type:"code",dep:["t12"],eff:"1 session",dl:"Apr 16",note:"View bookings, status."},
+{id:"t15",name:"Dashboard analytics",s:"todo",p:"medium",type:"code",dep:["t14"],eff:"1 session",dl:"Apr 18",note:"Visitors, revenue."},
+{id:"t16",name:"Onboarding wizard",s:"todo",p:"medium",type:"code",dep:["t12","t13"],eff:"2 sessions",dl:"Apr 21",note:"10 min target."},
+{id:"t17",name:"Admin partner mgmt",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"Apr 25",note:"View all partners."},
+{id:"t18",name:"Plan enforcement",s:"todo",p:"medium",type:"code",dep:["t16"],eff:"2 sessions",dl:"May 5",note:"Feature gating + billing."}
+]},
+{id:"b3",name:"Storefront + Websites",color:"#22c55e",icon:"\u{1F6D2}",desc:"Patient websites, booking, payments",tasks:[
+{id:"t19",name:"First client domain setup",s:"todo",p:"critical",type:"code",dep:[],eff:"1 session",dl:"Apr 10",note:"Register domain, seed data."},
+{id:"t46",name:"Booking: appt vs service fix",s:"todo",p:"high",type:"code",dep:[],eff:"0.5 session",dl:"Apr 7",note:"Free appt vs ₹500 bug."},
+{id:"t20",name:"Razorpay checkout",s:"todo",p:"high",type:"code",dep:[],eff:"1 session",dl:"Apr 10",note:"Checkout.js on site.html."},
+{id:"t21",name:"Mobile responsiveness",s:"todo",p:"high",type:"code",dep:[],eff:"1 session",dl:"Apr 10",note:"Test + fix on phone."},
+{id:"t22",name:"Doctor profile SEO pages",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"Apr 14",note:"Individual pages for Google."},
+{id:"t23",name:"Real-time slot availability",s:"todo",p:"medium",type:"code",dep:["t8"],eff:"1 session",dl:"Apr 14",note:"Block taken slots."},
+{id:"t24",name:"Template variants",s:"todo",p:"low",type:"code",dep:[],eff:"3 sessions",dl:"May 5",note:"5+ designs."}
+]},
+{id:"b4",name:"WhatsApp AI",color:"#16a34a",icon:"\u{1F4AC}",desc:"WA API, automation, chatbot",tasks:[
+{id:"t25",name:"WA DB tables",s:"todo",p:"high",type:"code",dep:[],eff:"0.5 session",dl:"Apr 14",note:"Config, templates, messages."},
+{id:"t26",name:"Meta Cloud API",s:"todo",p:"high",type:"code",dep:["t25"],eff:"1 session",dl:"Apr 16",note:"WA number + webhook."},
+{id:"t27",name:"6 message flows",s:"todo",p:"high",type:"code",dep:["t26"],eff:"2 sessions",dl:"Apr 21",note:"Confirm, remind, report, etc."},
+{id:"t28",name:"AI chatbot",s:"todo",p:"medium",type:"code",dep:["t27"],eff:"2 sessions",dl:"Apr 28",note:"Claude-powered WA bot."},
+{id:"t29",name:"Opt-in compliance",s:"todo",p:"medium",type:"code",dep:["t26"],eff:"0.5 session",dl:"Apr 28",note:"Opt-in/out handling."}
+]},
+{id:"b5",name:"Commerce + Logistics",color:"#f97316",icon:"\u{1F4E6}",desc:"Cart, checkout, delivery, HMS relay",tasks:[
+{id:"t30",name:"Cart + checkout",s:"todo",p:"high",type:"code",dep:["t20"],eff:"2 sessions",dl:"Apr 21",note:"Cart, coupon, pay."},
+{id:"t31",name:"Lab booking",s:"todo",p:"high",type:"code",dep:["t30"],eff:"1 session",dl:"Apr 25",note:"Slot, home/walk-in."},
+{id:"t32",name:"Pharmacy Rx upload",s:"todo",p:"high",type:"code",dep:["t30","t6"],eff:"2 sessions",dl:"Apr 28",note:"Upload → review → deliver."},
+{id:"t33",name:"HMS order relay (MOAT)",s:"todo",p:"critical",type:"code",dep:["t30","t2"],eff:"2 sessions",dl:"May 1",note:"Orders → HMS bills + LIS."},
+{id:"t34",name:"Field tracking",s:"todo",p:"medium",type:"code",dep:["t31"],eff:"3 sessions",dl:"May 15",note:"GPS, barcode, custody."}
+]},
+{id:"b6",name:"GBP + Marketing",color:"#a855f7",icon:"\u{1F4E3}",desc:"Google Business, AI content",tasks:[
+{id:"t35",name:"GBP OAuth",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"May 5",note:"Connect GBP."},
+{id:"t36",name:"Auto-sync GBP",s:"todo",p:"medium",type:"code",dep:["t35"],eff:"1 session",dl:"May 8",note:"Push hours/photos."},
+{id:"t37",name:"Review dashboard",s:"todo",p:"medium",type:"code",dep:["t35"],eff:"1 session",dl:"May 12",note:"Pull/reply reviews."},
+{id:"t38",name:"AI campaign engine",s:"todo",p:"medium",type:"code",dep:["t27"],eff:"2 sessions",dl:"May 19",note:"Multi-channel AI posts."},
+{id:"t39",name:"Content library",s:"todo",p:"low",type:"code",dep:["t38"],eff:"1 session",dl:"May 25",note:"Health day templates."}
+]},
+{id:"b7",name:"Hemato Marketplace",color:"#14b8a6",icon:"\u{1F3EA}",desc:"Search, compare, book across partners",tasks:[
+{id:"t40",name:"Marketplace DB",s:"todo",p:"medium",type:"code",dep:[],eff:"1 session",dl:"May 15",note:"8 tables."},
+{id:"t41",name:"Search + compare",s:"todo",p:"medium",type:"code",dep:["t40"],eff:"3 sessions",dl:"May 30",note:"CBC near me → labs."},
+{id:"t42",name:"Marketplace ordering",s:"todo",p:"medium",type:"code",dep:["t41","t30"],eff:"2 sessions",dl:"Jun 7",note:"Unified cart."},
+{id:"t43",name:"Commission system",s:"todo",p:"medium",type:"code",dep:["t42"],eff:"1 session",dl:"Jun 14",note:"Per-partner payout."},
+{id:"t44",name:"Wallet + referrals",s:"todo",p:"low",type:"code",dep:["t43"],eff:"2 sessions",dl:"Jun 25",note:"Cashback, subscriptions."}
+]},
+{id:"b8",name:"Ops & Vendors",color:"#71717a",icon:"\u{1F527}",desc:"DNS, Razorpay, RC, Meta, Google, Legal",tasks:[
+{id:"n01",name:"DMARC record medihost.in",s:"todo",p:"high",type:"ops",dep:[],eff:"2 min",dl:"Apr 5",note:"TXT: _dmarc",where:"DNS panel"},
+{id:"n02",name:"SPF record check",s:"todo",p:"high",type:"ops",dep:[],eff:"2 min",dl:"Apr 5",note:"v=spf1 include:...",where:"DNS panel"},
+{id:"n04",name:"Verify medihost.in Resend",s:"todo",p:"high",type:"ops",dep:[],eff:"5 min",dl:"Apr 5",note:"DKIM + domain verify",where:"Resend"},
+{id:"n07",name:"Add client domain Vercel",s:"todo",p:"high",type:"ops",dep:[],eff:"2 min",dl:"Apr 10",note:"medihost-website → Domains",where:"Vercel"},
+{id:"n11",name:"Razorpay KYC verify",s:"todo",p:"high",type:"vendor",dep:[],eff:"5 min",dl:"Apr 6",note:"Full activation status",where:"Razorpay"},
+{id:"n12",name:"Razorpay webhook setup",s:"todo",p:"high",type:"vendor",dep:[],eff:"5 min",dl:"Apr 6",note:"payment.captured event",where:"Razorpay"},
+{id:"n14",name:"Create subscription plans",s:"todo",p:"medium",type:"vendor",dep:[],eff:"10 min",dl:"Apr 10",note:"Growth/Pro/Enterprise",where:"Razorpay"},
+{id:"n16",name:"RC wallet balance check",s:"todo",p:"high",type:"vendor",dep:[],eff:"2 min",dl:"Apr 6",note:"Need ₹500+ per domain",where:"ResellerClub"},
+{id:"n20",name:"Call friend — clinic data",s:"todo",p:"critical",type:"ops",dep:[],eff:"15 min",dl:"Apr 6",note:"Doctors, services, prices, domain",where:"WhatsApp/call"},
+{id:"n23",name:"Agree plan tier + pricing",s:"todo",p:"high",type:"ops",dep:["n20"],eff:"5 min",dl:"Apr 7",note:"Enterprise ₹4,999/mo?",where:"Call"},
+{id:"n30",name:"Create Meta Business account",s:"todo",p:"high",type:"vendor",dep:[],eff:"10 min",dl:"Apr 7",note:"Required for WA API",where:"business.facebook.com"},
+{id:"n33",name:"Create Meta Developer App",s:"todo",p:"high",type:"vendor",dep:["n30"],eff:"10 min",dl:"Apr 8",note:"WA product + API token",where:"developers.facebook.com"},
+{id:"n35",name:"Submit WA message templates",s:"todo",p:"high",type:"vendor",dep:["n30"],eff:"20 min",dl:"Apr 8",note:"24-48hr approval! 6 templates.",where:"Meta Business Suite"},
+{id:"n25",name:"GCP project for GBP API",s:"todo",p:"medium",type:"vendor",dep:[],eff:"10 min",dl:"Apr 20",note:"Enable GBP APIs",where:"console.cloud.google.com"},
+{id:"n37",name:"MediHost Facebook Page",s:"todo",p:"medium",type:"ops",dep:[],eff:"10 min",dl:"Apr 10",note:"Logo + cover + about",where:"facebook.com"},
+{id:"n38",name:"MediHost Instagram",s:"todo",p:"medium",type:"ops",dep:["n37"],eff:"5 min",dl:"Apr 10",note:"Link to FB page",where:"Instagram"},
+{id:"n41",name:"SmartGumastha LinkedIn",s:"todo",p:"low",type:"ops",dep:[],eff:"10 min",dl:"Apr 15",note:"Company page",where:"linkedin.com"},
+{id:"n43",name:"GA4 for medihost.in",s:"todo",p:"high",type:"ops",dep:[],eff:"10 min",dl:"Apr 7",note:"Measurement ID → add to sites",where:"analytics.google.com"},
+{id:"n44",name:"Search Console medihost.in",s:"todo",p:"high",type:"ops",dep:[],eff:"5 min",dl:"Apr 7",note:"Verify + submit sitemap",where:"search.google.com"},
+{id:"n47",name:"Test pricing save (t9)",s:"todo",p:"high",type:"test",dep:[],eff:"3 min",dl:"Apr 5",note:"Admin → Plans → Save",where:"medihost.in"},
+{id:"n48",name:"Test module gating (t45)",s:"todo",p:"high",type:"test",dep:[],eff:"3 min",dl:"Apr 5",note:"Sidebar → tier check",where:"medihost.in"},
+{id:"n49",name:"Test OPD flow (t2)",s:"todo",p:"critical",type:"test",dep:[],eff:"15 min",dl:"Apr 6",note:"Register → bill full flow",where:"app.hemato.in"},
+{id:"n50",name:"Mobile test site.html",s:"todo",p:"high",type:"test",dep:[],eff:"5 min",dl:"Apr 6",note:"Check layout on phone",where:"Phone browser"},
+{id:"n53",name:"Draft Terms of Service",s:"todo",p:"high",type:"ops",dep:[],eff:"30 min",dl:"Apr 9",note:"ToS + Privacy + Refund",where:"Document"},
+{id:"n52",name:"Check trademark status",s:"todo",p:"medium",type:"ops",dep:[],eff:"5 min",dl:"Apr 10",note:"Ref 14007693",where:"ipindiaservices.gov.in"},
+{id:"n57",name:"Check PostgreSQL backups",s:"todo",p:"high",type:"ops",dep:[],eff:"3 min",dl:"Apr 6",note:"Daily backups enabled?",where:"Railway"},
+{id:"t48",name:"Seed-demo idempotent",s:"todo",p:"low",type:"code",dep:[],eff:"15 min",dl:"Apr 10",note:"Check-before-insert."},
+{id:"t49",name:"Doctor placeholder photos",s:"todo",p:"low",type:"code",dep:[],eff:"15 min",dl:"Apr 10",note:"Generic avatar or upload."}
+]}
+]};
 
-var DEFAULT = {
-  updated: Date.now(),
-  branches: [
-    { id:"b1", name:"HMS Backbone", color:"#dc2626", icon:"\u{1F3E5}", desc:"Core HMS — patient reg, OPD, billing, pharmacy, LIS", tasks:[
-      { id:"t1", name:"Apply V44 apiRequest\u2192api.get fix", status:"ready", priority:"critical", effort:"1 session", deadline:"Apr 5", depends:[], notes:"v44_fix7.py ready. Blocks all V44 screens." },
-      { id:"t2", name:"Test full OPD flow end-to-end", status:"blocked", priority:"critical", effort:"1 session", deadline:"Apr 6", depends:["t1"], notes:"Register patient \u2192 queue \u2192 doctor \u2192 prescribe \u2192 bill" },
-      { id:"t3", name:"Daily/monthly collection reports", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 7", depends:["t2"], notes:"First client's #1 requirement" },
-      { id:"t4", name:"Prescription generation + print", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 10", depends:["t2"], notes:"Doctor writes Rx \u2192 print \u2192 send to pharmacy" },
-      { id:"t5", name:"Multi-branch support", status:"todo", priority:"high", effort:"2 sessions", deadline:"Apr 14", depends:["t2"], notes:"Chain clinics need multiple branches, one dashboard" },
-      { id:"t6", name:"Pharmacy stock management", status:"todo", priority:"medium", effort:"2 sessions", deadline:"Apr 21", depends:["t4"], notes:"Purchase entry, stock tracking, expiry alerts" },
-      { id:"t7", name:"LIS \u2192 billing integration", status:"todo", priority:"medium", effort:"1 session", deadline:"Apr 21", depends:["t2"], notes:"Test results auto-linked to bills" },
-      { id:"t8", name:"Appointment \u2192 queue integration", status:"todo", priority:"medium", effort:"1 session", deadline:"Apr 25", depends:["t2"], notes:"Online booking lands in doctor queue" }
-    ]},
-    { id:"b2", name:"MediHost Platform", color:"#2563eb", icon:"\u{1F310}", desc:"Partner SaaS \u2014 signup, dashboard, website editor, admin", tasks:[
-      { id:"t9", name:"Fix admin pricing save bug", status:"todo", priority:"critical", effort:"0.5 session", deadline:"Apr 5", depends:[], notes:"Admin panel 'Failed to update plan' error" },
-      { id:"t10", name:"Signup\u2192payment\u2192domain\u2192website pipeline", status:"partial", priority:"critical", effort:"1 session", deadline:"Apr 7", depends:["t9"], notes:"End-to-end auto. Payment+domain working, auto-generate website pending." },
-      { id:"t11", name:"Welcome page: live website link", status:"todo", priority:"high", effort:"0.5 session", deadline:"Apr 7", depends:["t10"], notes:"After payment: Your website is live at yourdomain.in" },
-      { id:"t12", name:"Partner dashboard \u2014 website editor", status:"todo", priority:"high", effort:"2 sessions", deadline:"Apr 14", depends:["t10"], notes:"Edit tagline, about, photos, services, timings" },
-      { id:"t13", name:"Partner dashboard \u2014 doctor manager", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 14", depends:["t12"], notes:"Add/edit/remove doctors, set schedules" },
-      { id:"t14", name:"Partner dashboard \u2014 orders inbox", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 16", depends:["t12"], notes:"View bookings, change status, contact patient" },
-      { id:"t15", name:"Partner dashboard \u2014 analytics", status:"todo", priority:"medium", effort:"1 session", deadline:"Apr 18", depends:["t14"], notes:"Visitors, bookings, revenue, top services" },
-      { id:"t16", name:"Onboarding wizard (10 min target)", status:"todo", priority:"medium", effort:"2 sessions", deadline:"Apr 21", depends:["t12","t13"], notes:"Practice type \u2192 info \u2192 doctors \u2192 services \u2192 publish" },
-      { id:"t17", name:"Admin \u2014 partner management", status:"todo", priority:"medium", effort:"1 session", deadline:"Apr 25", depends:[], notes:"View all partners, websites, plans, domain status" },
-      { id:"t18", name:"Plan enforcement + billing", status:"todo", priority:"medium", effort:"2 sessions", deadline:"May 5", depends:["t16"], notes:"Feature gating + Razorpay subscriptions" }
-    ]},
-    { id:"b3", name:"Storefront + Websites", color:"#059669", icon:"\u{1F6D2}", desc:"Patient websites, booking, payments, dynamic rendering", tasks:[
-      { id:"t19", name:"First client domain + data setup", status:"todo", priority:"critical", effort:"1 session", deadline:"Apr 5", depends:[], notes:"Register friend's domain, seed real doctors/services" },
-      { id:"t20", name:"Razorpay checkout on site.html", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 10", depends:[], notes:"Pay for tests/packages on partner website" },
-      { id:"t21", name:"Mobile responsiveness polish", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 10", depends:[], notes:"Test site.html on phone, fix layout" },
-      { id:"t22", name:"Doctor profile SEO pages", status:"todo", priority:"medium", effort:"1 session", deadline:"Apr 14", depends:[], notes:"drclinic.in/doctors/dr-name individual pages" },
-      { id:"t23", name:"Real-time slot availability", status:"todo", priority:"medium", effort:"1 session", deadline:"Apr 14", depends:["t8"], notes:"Show booked/available, block taken slots" },
-      { id:"t24", name:"Website template variants", status:"todo", priority:"low", effort:"3 sessions", deadline:"May 5", depends:[], notes:"5+ designs per practice type" }
-    ]},
-    { id:"b4", name:"WhatsApp AI", color:"#16a34a", icon:"\u{1F4AC}", desc:"WA Business API, automated messages, AI chatbot", tasks:[
-      { id:"t25", name:"Create WhatsApp DB tables", status:"todo", priority:"high", effort:"0.5 session", deadline:"Apr 14", depends:[], notes:"4 WA tables + 2 chatbot tables" },
-      { id:"t26", name:"Meta Cloud API connection", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 16", depends:["t25"], notes:"Connect partner WA number, webhook" },
-      { id:"t27", name:"6 automated message flows", status:"todo", priority:"high", effort:"2 sessions", deadline:"Apr 21", depends:["t26"], notes:"Confirm, remind, report, payment, feedback, follow-up" },
-      { id:"t28", name:"AI chatbot \u2014 book + report + order", status:"todo", priority:"medium", effort:"2 sessions", deadline:"Apr 28", depends:["t27"], notes:"Claude-powered WA chatbot" },
-      { id:"t29", name:"Contact opt-in + compliance", status:"todo", priority:"medium", effort:"0.5 session", deadline:"Apr 28", depends:["t26"], notes:"GDPR/regulatory opt-in/out handling" }
-    ]},
-    { id:"b5", name:"Commerce + Logistics", color:"#d97706", icon:"\u{1F4E6}", desc:"Cart, checkout, lab booking, pharmacy delivery, HMS relay", tasks:[
-      { id:"t30", name:"Cart + checkout + Razorpay", status:"todo", priority:"high", effort:"2 sessions", deadline:"Apr 21", depends:["t20"], notes:"Add to cart, coupon, pay, order created" },
-      { id:"t31", name:"Lab booking + slot selection", status:"todo", priority:"high", effort:"1 session", deadline:"Apr 25", depends:["t30"], notes:"Test, slot, home collection or walk-in" },
-      { id:"t32", name:"Pharmacy Rx upload (real)", status:"todo", priority:"high", effort:"2 sessions", deadline:"Apr 28", depends:["t30","t6"], notes:"Upload \u2192 review \u2192 approve \u2192 deliver" },
-      { id:"t33", name:"HMS order relay (THE moat)", status:"todo", priority:"critical", effort:"2 sessions", deadline:"May 1", depends:["t30","t2"], notes:"Online orders \u2192 HMS bills + LIS samples" },
-      { id:"t34", name:"Field tracking + phlebotomist", status:"todo", priority:"medium", effort:"3 sessions", deadline:"May 15", depends:["t31"], notes:"GPS, routes, barcode, chain of custody" }
-    ]},
-    { id:"b6", name:"GBP + AI Marketing", color:"#7c3aed", icon:"\u{1F4E3}", desc:"Google Business sync, AI content, multi-channel campaigns", tasks:[
-      { id:"t35", name:"GBP OAuth connect", status:"todo", priority:"medium", effort:"1 session", deadline:"May 5", depends:[], notes:"Partner connects Google Business Profile" },
-      { id:"t36", name:"Auto-sync hours/photos/services", status:"todo", priority:"medium", effort:"1 session", deadline:"May 8", depends:["t35"], notes:"Push data to GBP automatically" },
-      { id:"t37", name:"Review management dashboard", status:"todo", priority:"medium", effort:"1 session", deadline:"May 12", depends:["t35"], notes:"Pull reviews, reply, display on website" },
-      { id:"t38", name:"AI marketing campaign engine", status:"todo", priority:"medium", effort:"2 sessions", deadline:"May 19", depends:["t27"], notes:"AI posts \u2192 WA + GBP + website + social" },
-      { id:"t39", name:"Content library + seasonal", status:"todo", priority:"low", effort:"1 session", deadline:"May 25", depends:["t38"], notes:"WHO health days, festive, offer templates" }
-    ]},
-    { id:"b7", name:"Hemato Marketplace", color:"#0d9488", icon:"\u{1F3EA}", desc:"Patient marketplace \u2014 search, compare, book across partners", tasks:[
-      { id:"t40", name:"Create marketplace DB tables", status:"todo", priority:"medium", effort:"1 session", deadline:"May 15", depends:[], notes:"8 new tables for marketplace" },
-      { id:"t41", name:"hemato.in search + compare", status:"todo", priority:"medium", effort:"3 sessions", deadline:"May 30", depends:["t40"], notes:"'CBC near me' \u2192 all labs with prices" },
-      { id:"t42", name:"Marketplace ordering", status:"todo", priority:"medium", effort:"2 sessions", deadline:"Jun 7", depends:["t41","t30"], notes:"Unified cart, route to right partner" },
-      { id:"t43", name:"Commission + settlements", status:"todo", priority:"medium", effort:"1 session", deadline:"Jun 14", depends:["t42"], notes:"Per-partner commission, weekly payout" },
-      { id:"t44", name:"Wallet + referrals + plans", status:"todo", priority:"low", effort:"2 sessions", deadline:"Jun 25", depends:["t43"], notes:"Cashback, refer-a-friend, subscriptions" }
-    ]}
-  ]
-};
+var state = {data:null,view:"dashboard",filter:"all",typeFilter:"all",showAdd:false,collapsed:{}};
 
-var state = { data: null, view: "board", branch: "all" };
-
-function init() {
-  var saved = localStorage.getItem(STORAGE_KEY);
-  state.data = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT));
+function init(){
+  var saved = localStorage.getItem(SK);
+  if(saved){try{var d=JSON.parse(saved);if(d.v===6)state.data=d;else state.data=JSON.parse(JSON.stringify(DEFAULT))}catch(e){state.data=JSON.parse(JSON.stringify(DEFAULT))}}
+  else state.data=JSON.parse(JSON.stringify(DEFAULT));
+  updateStreak();
   render();
 }
 
-function save() {
-  state.data.updated = Date.now();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
-  var ind = document.getElementById("saveIndicator");
-  ind.classList.add("show");
-  setTimeout(function(){ ind.classList.remove("show"); }, 1200);
+function save(){state.data.updated=Date.now();localStorage.setItem(SK,JSON.stringify(state.data))}
+
+function updateStreak(){
+  var today=new Date().toISOString().split('T')[0];
+  var s=state.data.streak;
+  if(!s){state.data.streak={count:1,lastDate:today};return}
+  if(s.lastDate===today)return;
+  var yesterday=new Date(Date.now()-86400000).toISOString().split('T')[0];
+  if(s.lastDate===yesterday){s.count++;s.lastDate=today}
+  else{s.count=1;s.lastDate=today}
 }
 
-function getAllTasks() {
-  var tasks = [];
-  state.data.branches.forEach(function(b) {
-    b.tasks.forEach(function(t) { tasks.push({ t:t, b:b }); });
-  });
+function recordHistory(){
+  var today=new Date().toISOString().split('T')[0];
+  var all=getAllTasks();
+  var done=all.filter(function(t){return t.t.s==="done"}).length;
+  var hist=state.data.history||(state.data.history=[]);
+  var existing=hist.find(function(h){return h.date===today});
+  if(existing)existing.done=done;
+  else hist.push({date:today,done:done,total:all.length});
+  if(hist.length>30)hist.shift();
+}
+
+function getAllTasks(){
+  var tasks=[];
+  state.data.branches.forEach(function(b){b.tasks.forEach(function(t){tasks.push({t:t,b:b})})});
   return tasks;
 }
 
-function getBlockedBy(task) {
-  if (!task.depends || !task.depends.length) return [];
-  var all = getAllTasks();
-  return task.depends.map(function(did) {
-    var found = all.find(function(a){ return a.t.id === did; });
-    return found ? found.t : null;
-  }).filter(function(t){ return t && t.status !== "done"; });
+function getBlockedBy(task){
+  if(!task.dep||!task.dep.length)return[];
+  var all=getAllTasks();
+  return task.dep.map(function(did){var f=all.find(function(a){return a.t.id===did});return f?f.t:null}).filter(function(t){return t&&t.s!=="done"&&t.s!=="wont_do"});
 }
 
-function updateStatus(taskId, newStatus) {
-  state.data.branches.forEach(function(b) {
-    b.tasks.forEach(function(t) {
-      if (t.id === taskId) t.status = newStatus;
-    });
+function autoUnblock(){
+  var all=getAllTasks();
+  all.forEach(function(a){
+    if(a.t.s==="blocked"&&a.t.dep&&a.t.dep.length){
+      var met=a.t.dep.every(function(did){var d=all.find(function(x){return x.t.id===did});return!d||d.t.s==="done"||d.t.s==="wont_do"});
+      if(met)a.t.s="ready";
+    }
   });
-  save();
-  render();
 }
 
-function setView(v) { state.view = v; render(); }
-function setBranch(b) { state.branch = b; render(); }
-
-function resetData() {
-  if (confirm("Reset all task statuses to defaults? This cannot be undone.")) {
-    state.data = JSON.parse(JSON.stringify(DEFAULT));
-    save();
-    render();
-  }
+function updateStatus(taskId,newStatus){
+  state.data.branches.forEach(function(b){b.tasks.forEach(function(t){
+    if(t.id===taskId){t.s=newStatus;if(newStatus==="done"&&!t.fix)t.fix=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+  })});
+  autoUnblock();recordHistory();save();render();
 }
 
-function render() {
-  var d = state.data;
-  var all = getAllTasks();
-  var stats = {
-    total: all.length,
-    done: all.filter(function(a){return a.t.status==="done"}).length,
-    inp: all.filter(function(a){return a.t.status==="in_progress"}).length,
-    ready: all.filter(function(a){return a.t.status==="ready"}).length,
-    blocked: all.filter(function(a){return a.t.status==="blocked"}).length,
-    critical: all.filter(function(a){return a.t.priority==="critical"}).length,
-    critDone: all.filter(function(a){return a.t.priority==="critical"&&a.t.status==="done"}).length
-  };
+function addTask(){
+  var nm=document.getElementById("addName").value.trim();if(!nm)return;
+  var bid=document.getElementById("addBranch").value;
+  var br=state.data.branches.find(function(b){return b.id===bid});if(!br)return;
+  var id="x"+Date.now().toString(36);
+  br.tasks.push({id:id,name:nm,s:"todo",p:document.getElementById("addPri").value,type:document.getElementById("addType").value,dep:[],eff:document.getElementById("addEff").value||"",dl:document.getElementById("addDl").value||"",note:document.getElementById("addNote").value||"",where:document.getElementById("addWhere").value||""});
+  save();state.showAdd=false;render();
+}
 
-  var filteredBranches = state.branch === "all" ? d.branches : d.branches.filter(function(b){return b.id===state.branch});
+function setView(v){state.view=v;render()}
+function setFilter(f){state.filter=f;render()}
+function setTypeFilter(f){state.typeFilter=f;render()}
+function toggleCollapse(bid){state.collapsed[bid]=!state.collapsed[bid];render()}
+function toggleAdd(){state.showAdd=!state.showAdd;render()}
 
-  var html = "";
+function render(){
+  var d=state.data;var all=getAllTasks();
+  var stats={total:all.length,done:all.filter(function(a){return a.t.s==="done"}).length,inp:all.filter(function(a){return a.t.s==="in_progress"}).length,rdy:all.filter(function(a){return a.t.s==="ready"}).length,blk:all.filter(function(a){return a.t.s==="blocked"}).length,crit:all.filter(function(a){return a.t.p==="critical"}).length,critD:all.filter(function(a){return a.t.p==="critical"&&a.t.s==="done"}).length};
+  var pct=stats.total?Math.round(stats.done/stats.total*100):0;
+
+  var filtered=all;
+  if(state.filter!=="all")filtered=filtered.filter(function(a){return a.b.id===state.filter});
+  if(state.typeFilter!=="all")filtered=filtered.filter(function(a){return a.t.type===state.typeFilter});
+
+  var h="";
+  var quote=QUOTES[Math.floor(Math.random()*QUOTES.length)];
 
   // Header
-  html += '<div class="header"><div><h1>MediHost Dev Command Center</h1><div class="sub">SmartGumastha Technologies \u2022 Updated: '+new Date(d.updated).toLocaleString()+'</div></div>';
-  html += '<div style="display:flex;gap:6px;align-items:center"><div class="views">';
-  ["board","timeline","critical"].forEach(function(v){
-    html += '<button class="'+(state.view===v?"active":"")+'" onclick="setView(\''+v+'\')">'+(v==="board"?"Board":v==="timeline"?"Timeline":"Critical Path")+'</button>';
-  });
-  html += '</div><button onclick="resetData()" style="padding:4px 10px;border-radius:5px;border:1px solid #eee;background:#fff;color:#bbb;font-size:10px;cursor:pointer;font-family:inherit" title="Reset all tasks">Reset</button></div></div>';
+  h+='<div class="hdr"><div><div class="brand">SmartGumastha Technologies</div><h1>MediHost Command Center</h1>';
+  h+='<div class="sub">Updated: <span>'+new Date(d.updated).toLocaleString()+'</span> \u00B7 '+stats.done+'/'+stats.total+' tasks ('+pct+'%)</div></div>';
+  h+='<div class="nav">';
+  ["dashboard","board","changelog"].forEach(function(v){h+='<button class="'+(state.view===v?"on":"")+'" onclick="setView(\''+v+'\')">'+({dashboard:"Dashboard",board:"All Tasks",changelog:"Changelog"}[v])+'</button>'});
+  h+='<button class="'+(state.showAdd?"on":"")+'" onclick="toggleAdd()">+ Add</button>';
+  h+='</div></div>';
 
-  // Stats
-  html += '<div class="stats-row">';
-  [{l:"Total",v:stats.total,c:"#111"},{l:"Done",v:stats.done,c:"#059669"},{l:"In Progress",v:stats.inp,c:"#d97706"},{l:"Ready",v:stats.ready,c:"#2563eb"},{l:"Blocked",v:stats.blocked,c:"#dc2626"},{l:"Critical",v:(stats.critical-stats.critDone)+"/"+stats.critical,c:"#dc2626"}].forEach(function(s){
-    html += '<div class="stat-card"><div class="num" style="color:'+s.c+'">'+s.v+'</div><div class="lbl">'+s.l+'</div></div>';
-  });
-  html += '</div>';
+  // Quote
+  h+='<div class="quote">"'+quote+'"</div>';
 
-  // Branch filter
-  html += '<div class="branch-filter">';
-  html += '<button class="'+(state.branch==="all"?"active":"")+'" style="'+(state.branch==="all"?"background:#111;color:#fff;border-color:#111":"")+'" onclick="setBranch(\'all\')">All Branches</button>';
-  d.branches.forEach(function(b){
-    html += '<button class="'+(state.branch===b.id?"active":"")+'" style="'+(state.branch===b.id?"background:"+b.color+";color:#fff;border-color:"+b.color:"")+'" onclick="setBranch(\''+b.id+'\')">'+b.icon+' '+b.name+'</button>';
-  });
-  html += '</div>';
-
-  // Board View
-  if (state.view === "board") {
-    filteredBranches.forEach(function(branch){
-      var done = branch.tasks.filter(function(t){return t.status==="done"}).length;
-      var pct = Math.round((done/branch.tasks.length)*100);
-      html += '<div class="branch-card"><div class="branch-header"><div class="info"><span class="icon">'+branch.icon+'</span><div><div class="name">'+branch.name+'</div><div class="desc">'+branch.desc+'</div></div></div>';
-      html += '<div style="display:flex;align-items:center"><div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%;background:'+branch.color+'"></div></div><span class="progress-pct" style="color:'+branch.color+'">'+pct+'%</span></div></div>';
-      html += '<div class="branch-body">';
-      branch.tasks.forEach(function(task){
-        var sc = STATUS[task.status];
-        var pc = PRIORITY[task.priority];
-        var blocked = getBlockedBy(task);
-        html += '<div class="task-row">';
-        html += '<select onchange="updateStatus(\''+task.id+'\',this.value)" style="color:'+sc.color+';background:'+sc.bg+'">';
-        Object.keys(STATUS).forEach(function(s){ html += '<option value="'+s+'"'+(task.status===s?" selected":"")+'>'+STATUS[s].label+'</option>'; });
-        html += '</select>';
-        html += '<div class="task-info"><div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap"><span class="task-name">'+task.name+'</span><span class="badge" style="background:'+pc.color+'18;color:'+pc.color+'">'+pc.label+'</span></div>';
-        html += '<div class="task-notes">'+task.notes+'</div>';
-        html += '<div class="task-meta"><span>\u23F1 '+task.effort+'</span><span>\u{1F4C5} '+task.deadline+'</span>';
-        if (blocked.length) html += '<span class="blocked">\u{1F6AB} Blocked by: '+blocked.map(function(b){return b.name}).join(", ")+'</span>';
-        else if (task.depends.length && task.status !== "done") html += '<span class="deps-met">\u2705 Dependencies met</span>';
-        html += '</div></div>';
-        html += '<span class="task-id">'+task.id+'</span></div>';
-      });
-      html += '</div></div>';
-    });
+  // Add form
+  if(state.showAdd){
+    h+='<div class="add-form">';
+    h+='<div class="row r2"><div><label>Task name</label><input id="addName" placeholder="What needs doing?"></div>';
+    h+='<div><label>Branch</label><select id="addBranch">';
+    d.branches.forEach(function(b){h+='<option value="'+b.id+'">'+b.icon+' '+b.name+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="row r4"><div><label>Priority</label><select id="addPri"><option value="critical">Critical</option><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>';
+    h+='<div><label>Type</label><select id="addType"><option value="code">Code</option><option value="ops">Ops</option><option value="vendor">Vendor</option><option value="test">Test</option></select></div>';
+    h+='<div><label>Deadline</label><input id="addDl" placeholder="Apr 10"></div>';
+    h+='<div><label>Effort</label><input id="addEff" placeholder="1 session"></div></div>';
+    h+='<div class="row r2"><div><label>Notes</label><input id="addNote" placeholder="Details..."></div>';
+    h+='<div><label>Where (for ops)</label><input id="addWhere" placeholder="Razorpay panel"></div></div>';
+    h+='<button onclick="addTask()">Add Task</button></div>';
   }
 
-  // Timeline View
-  if (state.view === "timeline") {
-    var weeks = [
-      {l:"Apr 5-7",id:"w1"},{l:"Apr 7-12",id:"w2"},{l:"Apr 14-19",id:"w3"},{l:"Apr 21-26",id:"w4"},
-      {l:"Apr 28-May 4",id:"w5"},{l:"May 5-12",id:"w6"},{l:"May 13-25",id:"w7"},{l:"May 26-Jun 7",id:"w8"},{l:"Jun 8-25",id:"w9"}
-    ];
-    function getWeek(dl) {
-      if (!dl) return "w9";
-      var n = parseInt(dl.replace(/\D/g,""));
-      if (dl.indexOf("Apr")>=0) { if(n<=7) return "w1"; if(n<=12) return "w2"; if(n<=19) return "w3"; if(n<=26) return "w4"; return "w5"; }
-      if (dl.indexOf("May")>=0) { if(n<=4) return "w5"; if(n<=12) return "w6"; if(n<=25) return "w7"; return "w8"; }
-      if (dl.indexOf("Jun")>=0) { if(n<=7) return "w8"; return "w9"; }
-      return "w9";
+  // DASHBOARD VIEW
+  if(state.view==="dashboard"){
+    // Stats
+    h+='<div class="stats-grid">';
+    [{l:"Total",v:stats.total,c:"#fafafa"},{l:"Done",v:stats.done,c:"#22c55e"},{l:"Active",v:stats.inp,c:"#f97316"},{l:"Ready",v:stats.rdy,c:"#3b82f6"},{l:"Blocked",v:stats.blk,c:"#ef4444"},{l:"Critical",v:(stats.crit-stats.critD)+"/"+stats.crit,c:"#ef4444"}].forEach(function(s){
+      h+='<div class="stat"><div class="n" style="color:'+s.c+'">'+s.v+'</div><div class="l">'+s.l+'</div></div>';
+    });
+    h+='</div>';
+
+    // Streak + Ring
+    h+='<div class="streak-card"><div class="streak-num">'+(d.streak?d.streak.count:1)+'</div><div class="streak-info"><div class="t">Day Streak \u{1F525}</div><div class="d">Consecutive days working on MediHost</div>';
+    h+='<div class="milestone">';
+    for(var mi=0;mi<7;mi++){h+='<div class="dot '+(mi<(d.streak?d.streak.count:1)?"lit":"")+'"></div>'}
+    h+='</div></div></div>';
+
+    // Charts row
+    h+='<div class="chart-row">';
+
+    // Ring chart
+    h+='<div class="card ring-wrap"><h3>Overall Progress</h3>';
+    var radius=70,circ=2*Math.PI*radius,offset=circ-(pct/100)*circ;
+    h+='<svg width="170" height="170" style="transform:rotate(-90deg)">';
+    h+='<circle cx="85" cy="85" r="'+radius+'" fill="none" stroke="#27272a" stroke-width="12"/>';
+    h+='<circle cx="85" cy="85" r="'+radius+'" fill="none" stroke="'+(pct>60?"#22c55e":pct>30?"#f97316":"#ef4444")+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+offset+'" style="transition:stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1)"/>';
+    h+='</svg>';
+    h+='<div class="ring-center" style="margin-top:-110px">'+pct+'%</div>';
+    h+='<div class="ring-label" style="margin-top:4px">'+stats.done+' of '+stats.total+' tasks</div>';
+    h+='</div>';
+
+    // Branch bars
+    h+='<div class="card"><h3>Progress by Branch</h3>';
+    d.branches.forEach(function(b){
+      var bd=b.tasks.filter(function(t){return t.s==="done"}).length;
+      var bt=b.tasks.length;
+      var bp=bt?Math.round(bd/bt*100):0;
+      h+='<div class="branch-bar">';
+      h+='<div class="info"><span class="icon">'+b.icon+'</span><span class="nm">'+b.name+'</span></div>';
+      h+='<div class="track"><div class="fill" style="width:'+bp+'%;background:'+b.color+'"></div></div>';
+      h+='<div class="pct" style="color:'+b.color+'">'+bp+'%</div>';
+      h+='<div class="cnt">'+bd+'/'+bt+'</div>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+
+    // Daily burndown
+    var hist=d.history||[];
+    if(hist.length>0){
+      h+='<div class="card timeline-card"><h3>Daily Progress (tasks completed)</h3>';
+      var maxDone=Math.max.apply(null,hist.map(function(x){return x.done}))||1;
+      hist.slice(-14).forEach(function(day){
+        var dp=Math.round(day.done/day.total*100);
+        var label=day.date.slice(5);
+        h+='<div class="day-row">';
+        h+='<div class="day">'+label+'</div>';
+        h+='<div class="bar-track"><div class="bar-fill" style="width:'+dp+'%;background:'+(dp>60?"#22c55e":dp>30?"#f97316":"#ef4444")+'"></div></div>';
+        h+='<div class="count">'+day.done+'</div>';
+        h+='</div>';
+      });
+      h+='</div>';
     }
-    weeks.forEach(function(week){
-      var wt = all.filter(function(a){return getWeek(a.t.deadline)===week.id});
-      if (state.branch!=="all") wt = wt.filter(function(a){return a.b.id===state.branch});
-      if (!wt.length) return;
-      html += '<div class="timeline-week"><div class="week-label">'+week.l+' ('+wt.length+' tasks)</div><div class="week-body">';
-      wt.forEach(function(a){
-        var sc = STATUS[a.t.status]; var pc = PRIORITY[a.t.priority];
-        html += '<div class="timeline-task"><div class="branch-bar" style="background:'+a.b.color+'"></div>';
-        html += '<select onchange="updateStatus(\''+a.t.id+'\',this.value)" style="color:'+sc.color+';background:'+sc.bg+';font-size:10px;padding:2px;border-radius:4px;border:1px solid #ddd;font-family:inherit;cursor:pointer;min-width:75px">';
-        Object.keys(STATUS).forEach(function(s){ html += '<option value="'+s+'"'+(a.t.status===s?" selected":"")+'>'+STATUS[s].label+'</option>'; });
-        html += '</select>';
-        html += '<span class="tname">'+a.t.name+'</span><span class="tbranch">'+a.b.icon+' '+a.b.name+'</span>';
-        html += '<span class="badge" style="background:'+pc.color+'15;color:'+pc.color+'">'+pc.label+'</span></div>';
-      });
-      html += '</div></div>';
+
+    // What's next
+    h+='<div class="card"><h3>Up Next — Ready to Work</h3>';
+    var ready=all.filter(function(a){return a.t.s==="ready"||a.t.s==="in_progress"}).sort(function(a,b){var po={critical:0,high:1,medium:2,low:3};return(po[a.t.p]||3)-(po[b.t.p]||3)});
+    if(!ready.length)h+='<div style="font-size:12px;color:#52525b;padding:8px">No tasks ready — check blocked items!</div>';
+    ready.slice(0,8).forEach(function(a){
+      var sc=ST[a.t.s];var pc=PR[a.t.p];var tc=TC[a.t.type]||TC.code;
+      h+='<div class="task">';
+      h+=makeSelect(a.t);
+      h+='<div class="info"><div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap"><span class="name">'+a.t.name+'</span>';
+      h+='<span class="badge type-badge-'+a.t.type+'">'+tc.l+'</span>';
+      h+='<span class="badge" style="background:'+pc.c+'18;color:'+pc.c+'">'+pc.l+'</span></div>';
+      h+='<div class="note">'+a.t.note+'</div>';
+      h+='<div class="meta"><span>'+a.b.icon+' '+a.b.name+'</span>';
+      if(a.t.dl)h+='<span>\u{1F4C5}'+a.t.dl+'</span>';
+      h+='</div></div>';
+      h+='<span class="tid">'+a.t.id+'</span></div>';
+    });
+    h+='</div>';
+  }
+
+  // BOARD VIEW
+  if(state.view==="board"){
+    // Type filter
+    h+='<div class="filter-row">';
+    ["all","code","ops","vendor","test"].forEach(function(t){
+      var cnt=t==="all"?all.length:all.filter(function(a){return a.t.type===t}).length;
+      h+='<button class="'+(state.typeFilter===t?"on":"")+'" onclick="setTypeFilter(\''+t+'\')">'+(t==="all"?"All":TC[t]?TC[t].l:t)+' ('+cnt+')</button>';
+    });
+    h+='</div>';
+    // Branch filter
+    h+='<div class="filter-row">';
+    h+='<button class="'+(state.filter==="all"?"on":"")+'" onclick="setFilter(\'all\')">All</button>';
+    d.branches.forEach(function(b){
+      h+='<button class="'+(state.filter===b.id?"on":"")+'" onclick="setFilter(\''+b.id+'\')">'+b.icon+' '+b.name+'</button>';
+    });
+    h+='</div>';
+
+    var fb=state.filter==="all"?d.branches:d.branches.filter(function(b){return b.id===state.filter});
+    fb.forEach(function(branch){
+      var bt=branch.tasks;
+      if(state.typeFilter!=="all")bt=bt.filter(function(t){return t.type===state.typeFilter});
+      if(!bt.length)return;
+      var bd=bt.filter(function(t){return t.s==="done"}).length;
+      var bp=bt.length?Math.round(bd/bt.length*100):0;
+      var collapsed=state.collapsed[branch.id];
+
+      h+='<div class="branch-card"><div class="branch-head" onclick="toggleCollapse(\''+branch.id+'\')">';
+      h+='<div class="left"><span>'+branch.icon+'</span><span class="nm">'+branch.name+'</span><span class="desc">'+bd+'/'+bt.length+' ('+bp+'%)</span></div>';
+      h+='<div style="display:flex;align-items:center;gap:6px"><div style="width:60px;height:4px;border-radius:2px;background:#27272a;overflow:hidden"><div style="width:'+bp+'%;height:100%;background:'+branch.color+';border-radius:2px"></div></div>';
+      h+='<span style="font-size:11px;font-weight:600;color:'+branch.color+'">'+bp+'%</span>';
+      h+='<span style="font-size:10px;color:#52525b">'+(collapsed?'\u25B6':'\u25BC')+'</span></div></div>';
+
+      if(!collapsed){
+        h+='<div class="branch-body">';
+        bt.forEach(function(task){
+          var sc=ST[task.s];var pc=PR[task.p];var tc=TC[task.type]||TC.code;
+          var blocked=getBlockedBy(task);var done=task.s==="done";
+          h+='<div class="task" style="opacity:'+(done?0.4:1)+'">';
+          h+=makeSelect(task);
+          h+='<div class="info"><div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">';
+          h+='<span class="name" style="text-decoration:'+(done?"line-through":"none")+'">'+task.name+'</span>';
+          h+='<span class="badge type-badge-'+task.type+'">'+tc.l+'</span>';
+          h+='<span class="badge" style="background:'+pc.c+'18;color:'+pc.c+'">'+pc.l+'</span>';
+          if(task.fix)h+='<span class="badge fix-badge">FIXED '+task.fix+'</span>';
+          h+='</div>';
+          h+='<div class="note">'+task.note+'</div>';
+          if(task.where)h+='<div class="where">\u{1F4CD} '+task.where+'</div>';
+          if(task.res)h+='<div style="font-size:10px;color:#22c55e;margin-top:1px;font-style:italic">Fix: '+task.res+'</div>';
+          h+='<div class="meta">';
+          if(task.eff)h+='<span>\u23F1'+task.eff+'</span>';
+          if(task.dl)h+='<span>\u{1F4C5}'+task.dl+'</span>';
+          if(blocked.length)h+='<span class="blocked">\u{1F6AB} Blocked: '+blocked.map(function(b){return b.name}).join(", ")+'</span>';
+          else if(task.dep&&task.dep.length&&!done)h+='<span class="deps-met">\u2705 Deps met</span>';
+          h+='</div></div>';
+          h+='<span class="tid">'+task.id+'</span></div>';
+        });
+        h+='</div>';
+      }
+      h+='</div>';
     });
   }
 
-  // Critical Path View
-  if (state.view === "critical") {
-    html += '<div class="critical-section"><h3 style="color:#dc2626">\u{1F534} Critical Path \u2014 Must complete for first client</h3>';
-    all.filter(function(a){return a.t.priority==="critical"}).forEach(function(a){
-      var sc = STATUS[a.t.status]; var blocked = getBlockedBy(a.t);
-      html += '<div class="critical-task" style="border:2px solid '+(a.t.status==="done"?"#059669":"#fecaca")+'">';
-      html += '<select onchange="updateStatus(\''+a.t.id+'\',this.value)" style="color:'+sc.color+';background:'+sc.bg+';font-size:10px;padding:2px 4px;border-radius:5px;border:1px solid #ddd;font-family:inherit;cursor:pointer">';
-      Object.keys(STATUS).forEach(function(s){ html += '<option value="'+s+'"'+(a.t.status===s?" selected":"")+'>'+STATUS[s].label+'</option>'; });
-      html += '</select>';
-      html += '<div class="bar" style="background:'+a.b.color+'"></div><div class="cinfo"><div class="cname">'+a.t.name+'</div>';
-      html += '<div class="cmeta">'+a.b.icon+' '+a.b.name+' \u2022 \u23F1 '+a.t.effort+' \u2022 \u{1F4C5} '+a.t.deadline+'</div>';
-      if (blocked.length) html += '<div style="font-size:10px;color:#dc2626;font-weight:600;margin-top:2px">\u{1F6AB} Blocked by: '+blocked.map(function(b){return b.name}).join(", ")+'</div>';
-      html += '</div></div>';
+  // CHANGELOG VIEW
+  if(state.view==="changelog"){
+    (d.log||[]).forEach(function(entry){
+      h+='<div class="log-entry"><div class="log-head">'+entry.d+'</div><div class="log-body">';
+      entry.items.forEach(function(item){
+        var ac={fixed:"#22c55e",closed:"#3b82f6",unblocked:"#f97316"};
+        h+='<div class="log-item"><span class="log-tag" style="background:'+(ac[item.a]||"#52525b")+'22;color:'+(ac[item.a]||"#52525b")+'">'+item.a.toUpperCase()+'</span>';
+        h+='<div style="flex:1"><span style="font-size:12px;font-weight:600;color:#e4e4e7">'+item.t+'</span>';
+        h+='<div style="font-size:11px;color:#52525b;margin-top:1px">'+item.n+'</div></div></div>';
+      });
+      h+='</div></div>';
     });
-    html += '</div>';
-
-    html += '<div class="critical-section"><h3 style="color:#d97706">\u{1F7E0} High Priority \u2014 Next in queue</h3>';
-    all.filter(function(a){return a.t.priority==="high"}).forEach(function(a){
-      var sc = STATUS[a.t.status];
-      html += '<div class="critical-task" style="border:1px solid #eee">';
-      html += '<select onchange="updateStatus(\''+a.t.id+'\',this.value)" style="color:'+sc.color+';background:'+sc.bg+';font-size:10px;padding:2px 4px;border-radius:5px;border:1px solid #ddd;font-family:inherit;cursor:pointer">';
-      Object.keys(STATUS).forEach(function(s){ html += '<option value="'+s+'"'+(a.t.status===s?" selected":"")+'>'+STATUS[s].label+'</option>'; });
-      html += '</select>';
-      html += '<div class="bar" style="background:'+a.b.color+'"></div><div class="cinfo"><div class="cname">'+a.t.name+'</div>';
-      html += '<div class="cmeta">'+a.b.icon+' '+a.b.name+' \u2022 \u{1F4C5} '+a.t.deadline+'</div></div></div>';
-    });
-    html += '</div>';
+    // Fixed summary
+    var fixed=all.filter(function(a){return a.t.fix});
+    if(fixed.length){
+      h+='<div class="card" style="margin-top:12px;border-color:#052e16"><h3 style="color:#22c55e">All Fixed Tasks ('+fixed.length+')</h3>';
+      fixed.forEach(function(a){
+        h+='<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px">';
+        h+='<span style="color:#22c55e;font-weight:600;min-width:28px">'+a.t.id+'</span>';
+        h+='<span style="color:#a1a1aa;text-decoration:line-through;flex:1">'+a.t.name+'</span>';
+        h+='<span style="font-size:10px;color:#22c55e">'+a.t.fix+'</span></div>';
+      });
+      h+='</div>';
+    }
   }
 
   // Footer
-  html += '<div class="footer">SmartGumastha Technologies \u2022 MediHost Dev Command Center \u2022 '+stats.done+'/'+stats.total+' tasks complete \u2022 '+Math.round((stats.done/stats.total)*100)+'% overall</div>';
+  h+='<div class="footer">SmartGumastha Technologies \u00B7 MediHost\u2122 Command Center v6 \u00B7 '+stats.done+'/'+stats.total+' ('+pct+'%) \u00B7 Built with \u2764\uFE0F by a solo founder</div>';
 
-  document.getElementById("app").innerHTML = html;
+  document.getElementById("app").innerHTML=h;
+}
+
+function makeSelect(task){
+  var sc=ST[task.s];
+  var h='<select onchange="updateStatus(\''+task.id+'\',this.value)" style="color:'+sc.c+';background:'+sc.bg+';border-color:'+sc.c+'40">';
+  Object.keys(ST).forEach(function(s){h+='<option value="'+s+'"'+(task.s===s?" selected":"")+'>'+ST[s].i+' '+ST[s].l+'</option>'});
+  h+='</select>';
+  return h;
 }
 
 init();
