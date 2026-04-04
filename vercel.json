@@ -7,6 +7,10 @@
       "destination": "https://smartgumastha-backend-production.up.railway.app/api/:path*"
     },
     {
+      "source": "/verify/:hash",
+      "destination": "/qr-verify.html"
+    },
+    {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "medihost.in" }],
       "destination": "/$1"
@@ -15,10 +19,6 @@
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.medihost.in" }],
       "destination": "/$1"
-    },
-    {
-      "source": "/verify/:hash",
-      "destination": "/qr-verify.html"
     },
     {
       "source": "/(.*)",
