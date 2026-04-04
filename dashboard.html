@@ -423,7 +423,7 @@ function renderDashboard() {
 
     var name = partner.business_name || 'Partner';
     var pType = partner.partner_type || 'clinic';
-    var plan = partner.subscription_plan || 'starter';
+    var plan = partner.plan_tier || 'starter';
     var slug = partner.slug || '';
 
     // Nav
@@ -465,7 +465,7 @@ function renderDashboard() {
 
 function renderChecklist() {
     var status = partner.onboarding_status || 'phone_verified';
-    var plan = partner.subscription_plan || 'starter';
+    var plan = partner.plan_tier || 'starter';
     var items = [
         { done: true, text: 'Phone verified' },
         { done: status !== 'phone_verified', text: 'Profile created' },
@@ -607,7 +607,7 @@ function loadPricing() {
 }
 
 function updatePlanDisplay() {
-    var plan = partner.subscription_plan || 'starter';
+    var plan = partner.plan_tier || 'starter';
     var match = pricingPlans.find(function(p) { return p.id === plan; });
     if (match) {
         var priceText = match.price === 0 ? 'Free forever' : '<strong>\u20B9' + match.price.toLocaleString('en-IN') + '</strong>/mo';
@@ -648,7 +648,7 @@ function pickPlan(planId, ctx) {
         c.classList.toggle('selected', c.getAttribute('data-plan') === planId);
     });
     var btn = document.getElementById('btn-save-plan-' + ctx);
-    if (planId !== (partner.subscription_plan || 'starter')) {
+    if (planId !== (partner.plan_tier || 'starter')) {
         btn.classList.add('show');
     } else {
         btn.classList.remove('show');
@@ -663,7 +663,7 @@ function savePlan(ctx) {
 
     authFetch(API + '/presence/partners/' + partnerId, {
         method: 'PUT',
-        body: JSON.stringify({ subscription_plan: selectedNewPlan, onboarding_status: 'plan_selected' })
+        body: JSON.stringify({ plan_tier: selectedNewPlan, onboarding_status: 'plan_selected' })
     })
     .then(function(res) {
         btn.disabled = false;
