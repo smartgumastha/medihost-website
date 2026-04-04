@@ -17,6 +17,10 @@
       "destination": "/$1"
     },
     {
+      "source": "/verify/:hash",
+      "destination": "/qr-verify.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/site.html"
     }

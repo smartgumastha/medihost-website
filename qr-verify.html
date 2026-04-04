@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Verify Document — MediHost&trade;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#1D9E75;--green-dark:#178A65;--green-light:#E8F7F1;--green-subtle:#F4FBF8;--dark:#111827;--gray-700:#374151;--gray-600:#4B5563;--gray-500:#6B7280;--gray-400:#9CA3AF;--gray-300:#D1D5DB;--gray-200:#E5E7EB;--gray-100:#F3F4F6;--gray-50:#F9FAFB;--white:#FFF;--red:#EF4444;--red-light:#FEF2F2;--amber:#F59E0B;--heading:'Plus Jakarta Sans',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--radius:8px;--radius-lg:12px;--radius-xl:16px;--shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1)}
+html,body{height:100%}
+body{font-family:var(--body);color:var(--gray-700);background:var(--gray-50);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--heading);color:var(--dark);line-height:1.2}
+
+.top-bar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:center}
+.top-bar-logo{font-family:var(--heading);font-size:20px;font-weight:800;letter-spacing:-.5px}
+.top-bar-logo .medi{color:var(--dark)}.top-bar-logo .host{color:var(--green)}.top-bar-logo .tm{font-size:9px;color:var(--gray-400);vertical-align:super}
+
+.page-body{max-width:520px;margin:0 auto;padding:40px 20px 80px}
+.card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-lg)}
+
+/* Loading */
+.loading-state{text-align:center;padding:48px 0}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--gray-200);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Verified banner */
+.result-icon{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;animation:popIn .5s ease}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.result-icon.success{background:var(--green-light);color:var(--green)}
+.result-icon.error{background:var(--red-light);color:var(--red)}
+
+.result-title{font-size:22px;font-weight:800;text-align:center;margin-bottom:8px}
+.result-title.success{color:var(--green)}
+.result-title.error{color:var(--red)}
+.result-subtitle{font-size:14px;color:var(--gray-500);text-align:center;margin-bottom:28px}
+
+/* Detail rows */
+.detail-section{border-top:1px solid var(--gray-200);padding-top:20px}
+.detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+.detail-row:last-child{border-bottom:none}
+.detail-label{font-size:13px;color:var(--gray-500);flex-shrink:0;min-width:120px}
+.detail-value{font-size:14px;font-weight:600;color:var(--dark);text-align:right;word-break:break-word}
+
+/* Verification count */
+.verify-count{text-align:center;margin-top:20px;padding:12px;background:var(--green-subtle);border-radius:var(--radius);font-size:13px;color:var(--green-dark)}
+.verify-count i{margin-right:4px}
+
+/* Footer note */
+.footer-note{text-align:center;margin-top:24px;font-size:12px;color:var(--gray-400);line-height:1.6}
+
+/* Error state */
+.error-warning{background:var(--red-light);border:1px solid #FECACA;border-radius:var(--radius);padding:16px;margin-top:20px;font-size:13px;color:#B91C1C;line-height:1.6}
+.error-warning i{margin-right:6px}
+.support-link{display:inline-flex;align-items:center;gap:6px;margin-top:20px;padding:12px 24px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);font-family:var(--heading);font-size:14px;font-weight:600;color:var(--gray-700);transition:all .2s;text-decoration:none}
+.support-link:hover{border-color:var(--green);color:var(--green)}
+
+/* No hash */
+.no-hash{text-align:center;padding:40px 0}
+.no-hash i{font-size:48px;color:var(--gray-300);margin-bottom:16px}
+.no-hash h2{font-size:18px;margin-bottom:8px;color:var(--gray-600)}
+.no-hash p{font-size:14px;color:var(--gray-400)}
+
+@media(max-width:480px){
+  .card{padding:24px 20px}
+  .detail-row{flex-direction:column;gap:4px}
+  .detail-value{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-bar-logo"><span class="medi">Medi</span><span class="host">Host</span><span class="tm">&trade;</span></div>
+</div>
+
+<div class="page-body">
+
+  <!-- LOADING -->
+  <div class="card" id="loadingState">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p style="color:var(--gray-500)">Verifying document...</p>
+    </div>
+  </div>
+
+  <!-- VERIFIED -->
+  <div class="card" id="verifiedState" style="display:none">
+    <div class="result-icon success"><i class="fas fa-check"></i></div>
+    <div class="result-title success">Verified by MediHost&trade;</div>
+    <div class="result-subtitle">This document is authentic and registered in our system.</div>
+
+    <div class="detail-section" id="detailSection"></div>
+
+    <div class="verify-count" id="verifyCount"></div>
+
+    <div class="footer-note" id="footerNote"></div>
+  </div>
+
+  <!-- NOT FOUND -->
+  <div class="card" id="errorState" style="display:none">
+    <div class="result-icon error"><i class="fas fa-times"></i></div>
+    <div class="result-title error">This document could not be verified</div>
+    <div class="result-subtitle">The verification code was not found in the MediHost registry.</div>
+
+    <div class="error-warning">
+      <i class="fas fa-exclamation-triangle"></i>
+      This document may not be authentic. Please contact the hospital directly to confirm the document's validity before relying on it.
+    </div>
+
+    <div style="text-align:center">
+      <a href="mailto:support@medihost.in" class="support-link"><i class="fas fa-envelope"></i> Contact MediHost Support</a>
+    </div>
+  </div>
+
+  <!-- NO HASH IN URL -->
+  <div class="card" id="noHashState" style="display:none">
+    <div class="no-hash">
+      <i class="fas fa-qrcode"></i>
+      <h2>Scan a QR code to verify</h2>
+      <p>This page verifies bills, prescriptions, and lab reports generated through MediHost&trade;.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var pathParts = window.location.pathname.split('/');
+  var hash = pathParts[pathParts.length - 1];
+
+  if (!hash || hash === 'verify') {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('noHashState').style.display = 'block';
+    return;
+  }
+
+  fetch('/api/verify/' + encodeURIComponent(hash))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      document.getElementById('loadingState').style.display = 'none';
+
+      if (data.success && data.document) {
+        showVerified(data.document, data.verify_count);
+      } else if (data.success && data.hospital_name) {
+        showVerified(data, data.verify_count);
+      } else {
+        showError();
+      }
+    })
+    .catch(function() {
+      document.getElementById('loadingState').style.display = 'none';
+      showError();
+    });
+
+  function showVerified(doc, verifyCount) {
+    document.getElementById('verifiedState').style.display = 'block';
+
+    var typeMap = {
+      bill: 'Bill',
+      prescription: 'Prescription',
+      lab_report: 'Lab Report',
+      receipt: 'Receipt',
+      report: 'Lab Report'
+    };
+    var docType = typeMap[doc.document_type || doc.type] || doc.document_type || doc.type || 'Document';
+
+    var rows = [];
+    if (doc.hospital_name) rows.push({ label: 'Hospital', value: doc.hospital_name });
+    rows.push({ label: 'Document Type', value: docType });
+    if (doc.document_number || doc.bill_number || doc.receipt_number) {
+      rows.push({ label: 'Document No.', value: doc.document_number || doc.bill_number || doc.receipt_number });
+    }
+    if (doc.created_at || doc.date) {
+      var ts = Number(doc.created_at || doc.date);
+      if (ts > 0 && ts < 9999999999) ts = ts * 1000;
+      var d = new Date(ts);
+      if (!isNaN(d.getTime())) {
+        var dd = ('0' + d.getDate()).slice(-2);
+        var mm = ('0' + (d.getMonth() + 1)).slice(-2);
+        var yyyy = d.getFullYear();
+        rows.push({ label: 'Date', value: dd + '/' + mm + '/' + yyyy });
+      }
+    }
+    if (doc.patient_name || doc.patient_first_name) {
+      var firstName = doc.patient_first_name || (doc.patient_name || '').split(' ')[0];
+      if (firstName) rows.push({ label: 'Patient', value: firstName });
+    }
+    if (doc.amount || doc.total) {
+      var amt = Number(doc.amount || doc.total || 0);
+      if (amt > 0) rows.push({ label: 'Amount', value: '\u20B9' + amt.toLocaleString('en-IN') });
+    }
+
+    var html = '';
+    for (var i = 0; i < rows.length; i++) {
+      html += '<div class="detail-row">';
+      html += '<span class="detail-label">' + rows[i].label + '</span>';
+      html += '<span class="detail-value">' + rows[i].value + '</span>';
+      html += '</div>';
+    }
+    document.getElementById('detailSection').innerHTML = html;
+
+    var count = Number(verifyCount || doc.verify_count || 1);
+    document.getElementById('verifyCount').innerHTML = '<i class="fas fa-shield-check"></i> This document has been verified ' + count + (count === 1 ? ' time' : ' times');
+
+    var hospName = doc.hospital_name || 'the issuing hospital';
+    document.getElementById('footerNote').textContent = 'This document was generated by ' + hospName + ' and verified through MediHost\u2122 secure document registry.';
+  }
+
+  function showError() {
+    document.getElementById('errorState').style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>
