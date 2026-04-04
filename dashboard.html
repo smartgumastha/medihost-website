@@ -189,6 +189,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <a href="/" class="nav-brand"><div class="nav-icon">M</div><div class="nav-word">Medi<em>Host</em></div></a>
 </div>
 <div class="nav-right">
+<div id="dashLangToggle" onclick="toggleDashLangDropdown()" style="display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:var(--bg2);cursor:pointer;font-size:12px;color:var(--text2);border:1px solid var(--border);">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+<span id="dashLangLabel">English</span>
+<span style="font-size:10px;opacity:0.6;">&#9662;</span>
+</div>
 <div class="nav-user" onclick="toggleDropdown()">
 <div class="nav-avatar" id="nav-avatar">M</div>
 <span class="nav-uname" id="nav-uname">Partner</span>
@@ -375,6 +380,103 @@ var partnerId = '';
 var pricingPlans = [];
 var selectedNewPlan = '';
 var partnerModules = [];
+var dashLang = localStorage.getItem('medihost_dash_lang') || 'en';
+
+var DASH_LANGUAGES = [
+  {code:'en', name:'English', nativeName:'English'},
+  {code:'hi', name:'Hindi', nativeName:'\u0939\u093F\u0928\u094D\u0926\u0940'},
+  {code:'bn', name:'Bengali', nativeName:'\u09AC\u09BE\u0982\u09B2\u09BE'},
+  {code:'mr', name:'Marathi', nativeName:'\u092E\u0930\u093E\u0920\u0940'},
+  {code:'te', name:'Telugu', nativeName:'\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41'},
+  {code:'ta', name:'Tamil', nativeName:'\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD'},
+  {code:'gu', name:'Gujarati', nativeName:'\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0'},
+  {code:'ur', name:'Urdu', nativeName:'\u0627\u0631\u062F\u0648'},
+  {code:'kn', name:'Kannada', nativeName:'\u0C95\u0CA8\u0CCD\u0CA8\u0CA1'},
+  {code:'ml', name:'Malayalam', nativeName:'\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02'}
+];
+
+// --- Notification system ---
+var DASH_NOTIF_COLORS = {
+  error:   { bg:'#fef2f2', border:'#fca5a5', strip:'#dc2626', icon:'!',  iconBg:'#fef2f2', iconColor:'#dc2626', titleColor:'#dc2626', btnBg:'#dc2626' },
+  success: { bg:'#f0fdf4', border:'#6ee7b7', strip:'#059669', icon:'\u2713', iconBg:'#f0fdf4', iconColor:'#059669', titleColor:'#059669', btnBg:'#059669' },
+  warning: { bg:'#fffbeb', border:'#fcd34d', strip:'#d97706', icon:'\u26A0', iconBg:'#fffbeb', iconColor:'#d97706', titleColor:'#d97706', btnBg:'#d97706' },
+  info:    { bg:'#eff6ff', border:'#93c5fd', strip:'#2563eb', icon:'i',  iconBg:'#eff6ff', iconColor:'#2563eb', titleColor:'#2563eb', btnBg:'#2563eb' }
+};
+
+function showNotification(type, title, message) {
+  var c = DASH_NOTIF_COLORS[type] || DASH_NOTIF_COLORS.info;
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.2);z-index:10000;display:flex;align-items:center;justify-content:center;';
+  var card = document.createElement('div');
+  card.style.cssText = 'max-width:380px;width:90%;background:#fff;border-radius:12px;border:1.5px solid ' + c.border + ';overflow:hidden;';
+  var strip = document.createElement('div');
+  strip.style.cssText = 'height:4px;background:' + c.strip + ';';
+  var body = document.createElement('div');
+  body.style.cssText = 'padding:24px 20px 20px;text-align:center;';
+  var iconCircle = document.createElement('div');
+  iconCircle.style.cssText = 'width:44px;height:44px;border-radius:50%;background:' + c.iconBg + ';color:' + c.iconColor + ';display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 12px;border:2px solid ' + c.border + ';';
+  iconCircle.textContent = c.icon;
+  var titleEl = document.createElement('div');
+  titleEl.style.cssText = 'font-size:16px;font-weight:500;color:' + c.titleColor + ';margin-bottom:6px;';
+  titleEl.textContent = title;
+  var msgEl = document.createElement('div');
+  msgEl.style.cssText = 'font-size:14px;color:#64748b;line-height:1.6;max-width:320px;margin:0 auto 20px;';
+  msgEl.textContent = message;
+  var btn = document.createElement('button');
+  btn.style.cssText = 'width:100%;padding:10px;border-radius:8px;background:' + c.btnBg + ';color:#fff;font-size:14px;font-weight:500;border:none;cursor:pointer;height:44px;font-family:var(--f);';
+  btn.textContent = 'OK';
+  btn.onclick = function() { document.body.removeChild(overlay); };
+  body.appendChild(iconCircle);
+  body.appendChild(titleEl);
+  body.appendChild(msgEl);
+  body.appendChild(btn);
+  card.appendChild(strip);
+  card.appendChild(body);
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+}
+
+function toggleDashLangDropdown() {
+  var dd = document.getElementById('dashLangDropdown');
+  if (dd) { dd.style.display = dd.style.display === 'block' ? 'none' : 'block'; return; }
+  var toggle = document.getElementById('dashLangToggle');
+  var rect = toggle.getBoundingClientRect();
+  dd = document.createElement('div');
+  dd.id = 'dashLangDropdown';
+  dd.style.cssText = 'position:fixed;top:' + (rect.bottom + 4) + 'px;right:' + (window.innerWidth - rect.right) + 'px;background:#fff;border:1.5px solid var(--border);border-radius:8px;box-shadow:var(--shadow2);max-height:300px;overflow-y:auto;z-index:10001;min-width:200px;';
+  for (var i = 0; i < DASH_LANGUAGES.length; i++) {
+    (function(lang) {
+      var opt = document.createElement('div');
+      opt.style.cssText = 'padding:10px 16px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s;';
+      opt.onmouseover = function() { opt.style.background = 'var(--bg2)'; };
+      opt.onmouseout = function() { opt.style.background = '#fff'; };
+      var label = document.createElement('span');
+      label.innerHTML = '<span style="font-weight:600;">' + lang.nativeName + '</span> <span style="font-size:12px;color:var(--text3);margin-left:6px;">' + lang.name + '</span>';
+      opt.appendChild(label);
+      if (lang.code === dashLang) {
+        var check = document.createElement('span');
+        check.style.cssText = 'color:var(--mint);font-weight:700;font-size:14px;';
+        check.textContent = '\u2713';
+        opt.appendChild(check);
+      }
+      opt.onclick = function() {
+        dashLang = lang.code;
+        localStorage.setItem('medihost_dash_lang', lang.code);
+        var lbl = document.getElementById('dashLangLabel');
+        if (lbl) lbl.textContent = lang.nativeName;
+        dd.style.display = 'none';
+      };
+      dd.appendChild(opt);
+    })(DASH_LANGUAGES[i]);
+  }
+  document.body.appendChild(dd);
+  document.addEventListener('click', function closeDashLangDD(e) {
+    if (!dd.contains(e.target) && !toggle.contains(e.target)) {
+      dd.style.display = 'none';
+      document.removeEventListener('click', closeDashLangDD);
+    }
+  });
+}
 
 // ============================================================
 // AUTH + INIT
@@ -412,7 +514,7 @@ function init() {
         loadPartnerModules();
     })
     .catch(function() {
-        showToast('Connection error. Please refresh.', true);
+        showNotification('error', 'Connection error', 'Could not connect to the server. Please refresh the page.');
     });
 }
 
@@ -555,10 +657,10 @@ function saveProfileFrom(prefix, errorId, btnId) {
     var city = document.getElementById(prefix + '-city').value.trim();
     var pincode = document.getElementById(prefix + '-pincode').value.replace(/\D/g, '');
 
-    if (!business) { showError(errorId, 'Business name is required'); return; }
-    if (!owner) { showError(errorId, 'Owner name is required'); return; }
-    if (!city) { showError(errorId, 'City is required'); return; }
-    if (pincode && pincode.length !== 6) { showError(errorId, 'Enter a valid 6-digit pincode'); return; }
+    if (!business) { showNotification('error', 'Business name is required', 'Please enter your business name to continue.'); return; }
+    if (!owner) { showNotification('error', 'Owner name is required', 'Please enter the owner name to continue.'); return; }
+    if (!city) { showNotification('error', 'City is required', 'Please enter your city to continue.'); return; }
+    if (pincode && pincode.length !== 6) { showNotification('error', 'Invalid pincode', 'Please enter a valid 6-digit pincode.'); return; }
 
     var btn = document.getElementById(btnId);
     btn.disabled = true;
@@ -577,7 +679,7 @@ function saveProfileFrom(prefix, errorId, btnId) {
         btn.disabled = false;
         btn.textContent = 'Save Changes';
         if (!res) return;
-        if (!res.ok) { showError(errorId, res.data.message || res.data.error || 'Failed to save'); return; }
+        if (!res.ok) { showNotification('error', 'Failed to save', res.data.message || res.data.error || 'Please check all fields and try again.'); return; }
         partner = res.data.partner;
         renderDashboard();
         if (prefix === 'ef') toggleEditForm();
@@ -586,7 +688,7 @@ function saveProfileFrom(prefix, errorId, btnId) {
     .catch(function() {
         btn.disabled = false;
         btn.textContent = 'Save Changes';
-        showError(errorId, 'Connection error, please try again');
+        showNotification('error', 'Connection error', 'Could not reach the server. Please try again.');
     });
 }
 
@@ -711,7 +813,7 @@ function savePlan(ctx) {
         btn.disabled = false;
         btn.textContent = 'Confirm Plan Change';
         if (!res) return;
-        if (!res.ok) { showToast(res.data.message || 'Failed to update plan', true); return; }
+        if (!res.ok) { showNotification('error', 'Failed to update plan', res.data.message || 'Please try again or contact support.'); return; }
         partner = res.data.partner;
         renderDashboard();
         updatePlanDisplay();
@@ -721,7 +823,7 @@ function savePlan(ctx) {
     .catch(function() {
         btn.disabled = false;
         btn.textContent = 'Confirm Plan Change';
-        showToast('Connection error', true);
+        showNotification('error', 'Connection error', 'Could not reach the server. Please try again.');
     });
 }
 
