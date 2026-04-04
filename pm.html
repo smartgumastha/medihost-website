@@ -98,7 +98,7 @@ main{max-width:1180px;margin:0 auto;padding:20px 24px}
 .cld h3{font-size:14px;font-weight:600;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
 .cle{padding:5px 0;font-size:13px;display:flex;align-items:center;gap:7px}
 .clt{padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
-.clt-fixed{background:#052e16;color:#4ade80}.clt-closed{background:#1e1b4b;color:#818cf8}.clt-unblocked{background:#172554;color:#60a5fa}
+.clt-fixed{background:#052e16;color:#4ade80}.clt-closed{background:#1e1b4b;color:#818cf8}.clt-unblocked{background:#172554;color:#60a5fa}.clt-ship{background:#1e3a5f;color:#38bdf8}.clt-idea{background:#3b1f5e;color:#c084fc}
 
 /* add form */
 .af{display:none;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:16px}
@@ -155,16 +155,32 @@ var DEF_B = [
   {id:"b1",name:"HMS Backbone",color:"#ef4444",icon:"\ud83c\udfe5",tasks:[
     {id:"t1",name:"V44 apiRequest\u2192api.get fix",status:"done",pri:"critical",type:"code",fix:"Apr 5",res:"Verified \u2014 never broken"},
     {id:"t2",name:"Test full OPD flow E2E",status:"ready",pri:"critical",type:"code"},
-    {id:"t3",name:"Collection reports",status:"todo",pri:"high",type:"code",dep:["t2"]},
+    {id:"t3",name:"Collection reports",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"API-first + billCache fallback, daily+monthly"},
     {id:"t4",name:"Prescription gen + print",status:"todo",pri:"high",type:"code",dep:["t2"]},
-    {id:"t5",name:"Multi-branch support",status:"todo",pri:"high",type:"code",dep:["t2"]},
+    {id:"t5",name:"Multi-branch support",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"hospital_branches CRUD, branch dropdown on bills, branch name on prints"},
     {id:"t6",name:"Pharmacy stock mgmt",status:"todo",pri:"medium",type:"code",dep:["t4"]},
     {id:"t7",name:"LIS \u2192 billing integration",status:"todo",pri:"medium",type:"code",dep:["t2"]},
     {id:"t8",name:"Appointment \u2192 queue auto-link",status:"todo",pri:"medium",type:"code",dep:["t2"]},
     {id:"t63",name:"i18n notification system",status:"done",pri:"high",type:"code",fix:"Apr 5",res:"showNotification + t() + LANG_EN 150+ keys"},
     {id:"t64",name:"Error mapping + handlePgError",status:"done",pri:"high",type:"code",fix:"Apr 5",res:"errors.js + PG error handler"},
     {id:"t65",name:"Triage queue module",status:"todo",pri:"medium",type:"code",dep:["t2"]},
-    {id:"t66",name:"EMR template builder",status:"todo",pri:"medium",type:"code",dep:["t4"]}
+    {id:"t66",name:"EMR template builder",status:"todo",pri:"medium",type:"code",dep:["t4"]},
+    {id:"t90",name:"Billing v2 \u2014 28+ field saveBill",status:"done",pri:"critical",type:"code",fix:"Apr 4",res:"saveBill sends all v2 fields incl branch, GST, wallet, patient demographics"},
+    {id:"t91",name:"Bill print \u2014 3 formats, 3 styles",status:"done",pri:"critical",type:"code",fix:"Apr 4",res:"A4/A5/Thermal \u00d7 Grid/Clean/Compact, action bar overrides"},
+    {id:"t92",name:"QR code on all bills",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"api.qrserver.com QR, medihost.in/verify/:hash public page"},
+    {id:"t93",name:"Patient Ledger (Katha Book)",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"Search, summary cards, chronological table, receive payment, print"},
+    {id:"t94",name:"Advance/Wallet system",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"Deposit, balance, history, refund, wallet on bill form"},
+    {id:"t95",name:"Billing Settings + logo/signature",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"Logo upload, signature upload, tagline, GSTIN, reg no, signatory, terms"},
+    {id:"t96",name:"Payments receive + advance routes",status:"done",pri:"high",type:"code",fix:"Apr 4",res:"POST payments/receive, payments/advance, billing-settings"},
+    {id:"t97",name:"showToast\u2192showNotification billing",status:"done",pri:"medium",type:"code",fix:"Apr 4",res:"10 replacements + 7 i18n keys"},
+    {id:"t98",name:"Sidebar billing sub-items",status:"done",pri:"medium",type:"code",fix:"Apr 4",res:"Ledger, Wallet, Settings, Collections in all billing roles"},
+    {id:"t99",name:"Smart Break widget mockup",status:"done",pri:"low",type:"code",fix:"Apr 4",res:"Animated mascot concept"},
+    {id:"t100",name:"Logo persistence across sessions",status:"inp",pri:"high",type:"code",note:"Base64 in JSONB may be too large \u2014 need file upload endpoint"},
+    {id:"t101",name:"Telugu + Hindi translations (210 keys)",status:"todo",pri:"high",type:"code",dep:["t63"]},
+    {id:"t102",name:"Bilingual bill labels",status:"todo",pri:"medium",type:"code",dep:["t101"]},
+    {id:"t103",name:"HMS Dashboard upgrade",status:"todo",pri:"medium",type:"code",note:"Collection breakdown, recent bills, professional stat cards"},
+    {id:"t104",name:"Bill number prefix from settings",status:"todo",pri:"medium",type:"code",note:"Use billing_settings.bill_number_prefix instead of hardcoded MH"},
+    {id:"t105",name:"Smart Break widget implementation",status:"todo",pri:"low",type:"code",note:"Walking mascot with tips/ads/training/internal comms"}
   ]},
   {id:"b2",name:"MediHost Platform",color:"#3b82f6",icon:"\ud83c\udf10",tasks:[
     {id:"t9",name:"Admin pricing save fix",status:"done",pri:"critical",type:"code",fix:"Apr 5",res:"subscription_plan \u2192 plan_tier"},
@@ -249,7 +265,21 @@ var DEF_B = [
   ]}
 ];
 
-var DEF_CL = [{date:"Apr 5 Night",entries:[
+var DEF_CL = [{date:"Apr 4 Night",entries:[
+  {tag:"ship",text:"Billing v2 complete \u2014 25+ commits across 3 repos"},
+  {tag:"ship",text:"Bill print: 3 formats (A4/A5/Thermal) \u00d7 3 styles (Grid/Clean/Compact)"},
+  {tag:"ship",text:"QR code verification system \u2014 medihost.in/verify/:hash"},
+  {tag:"ship",text:"Patient Ledger (Katha Book) \u2014 full running account"},
+  {tag:"ship",text:"Advance/Wallet \u2014 deposit, deduct, refund"},
+  {tag:"ship",text:"Branches CRUD \u2014 create, edit, delete, dropdown on bills"},
+  {tag:"ship",text:"Billing Settings \u2014 logo, signature, tagline, GSTIN, terms"},
+  {tag:"ship",text:"Payments receive + advance + billing-settings API routes"},
+  {tag:"fixed",text:"Bill creation: 36-column INSERT, correct column names"},
+  {tag:"fixed",text:"Ledger: mergeParams, type casting, String() for hospitalId"},
+  {tag:"fixed",text:"Sidebar: billing sub-items added to all roles"},
+  {tag:"fixed",text:"Action bar: client-side print, no backend 404"},
+  {tag:"idea",text:"Smart Break widget \u2014 animated mascot for tips/ads/training/comms"}
+]},{date:"Apr 5 Night",entries:[
   {tag:"closed",text:"t1 \u2014 V44 apiRequest\u2192api.get fix verified, never broken"},
   {tag:"fixed",text:"t9 \u2014 Admin pricing save fix (subscription_plan \u2192 plan_tier)"},
   {tag:"fixed",text:"t45 \u2014 Module gating fix (shared modules.js + dedup)"}
