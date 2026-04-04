@@ -144,10 +144,12 @@ h1,h2,h3{font-family:var(--heading);color:var(--dark);line-height:1.2}
     .then(function(data) {
       document.getElementById('loadingState').style.display = 'none';
 
-      if (data.success && data.document) {
-        showVerified(data.document, data.verify_count);
-      } else if (data.success && data.hospital_name) {
-        showVerified(data, data.verify_count);
+      if (data.verified && data.document) {
+        showVerified(data.document, data.verified_count || data.verify_count);
+      } else if (data.verified && data.hospital_name) {
+        showVerified(data, data.verified_count || data.verify_count);
+      } else if (data.success && data.document) {
+        showVerified(data.document, data.verified_count || data.verify_count);
       } else {
         showError();
       }
