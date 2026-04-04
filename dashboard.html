@@ -374,6 +374,7 @@ var partner = null;
 var partnerId = '';
 var pricingPlans = [];
 var selectedNewPlan = '';
+var partnerModules = [];
 
 // ============================================================
 // AUTH + INIT
@@ -408,6 +409,7 @@ function init() {
         partnerId = String(partner.id);
         renderDashboard();
         loadPricing();
+        loadPartnerModules();
     })
     .catch(function() {
         showToast('Connection error. Please refresh.', true);
@@ -604,6 +606,46 @@ function loadPricing() {
         }
     })
     .catch(function() {});
+}
+
+function loadPartnerModules() {
+    authFetch(API + '/presence/partners/' + partnerId + '/modules', { method: 'GET' })
+    .then(function(res) {
+        if (!res || !res.ok) return;
+        partnerModules = res.data.modules || [];
+        gateSidebarByModules();
+    })
+    .catch(function() {});
+}
+
+function gateSidebarByModules() {
+    var moduleIds = partnerModules.map(function(m) { return m.id; });
+    // Map sidebar data-page to required module ID
+    var pageToModule = {
+        website: 'website',
+        domain: 'website',
+        google: 'website',
+        social: 'ai_marketing',
+        analytics: 'reports'
+    };
+    document.querySelectorAll('.sidebar-nav a[data-page]').forEach(function(a) {
+        var page = a.getAttribute('data-page');
+        var requiredModule = pageToModule[page];
+        if (requiredModule && moduleIds.indexOf(requiredModule) === -1) {
+            a.style.opacity = '0.4';
+            a.style.pointerEvents = 'none';
+            a.title = 'Upgrade your plan to unlock this feature';
+            // Remove existing badge and add locked badge
+            var badge = a.querySelector('.badge-soon');
+            if (badge) badge.textContent = 'Locked';
+            else {
+                var span = document.createElement('span');
+                span.className = 'badge-soon';
+                span.textContent = 'Locked';
+                a.appendChild(span);
+            }
+        }
+    });
 }
 
 function updatePlanDisplay() {
