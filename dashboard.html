@@ -162,6 +162,69 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 .page-section.active{display:block;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
+/* WEBSITE GENERATOR */
+.ws-generate{text-align:center;padding:40px 20px}
+.ws-generate .ws-icon{font-size:64px;margin-bottom:16px}
+.ws-generate h2{font-size:24px;font-weight:800;color:var(--dark);margin-bottom:8px}
+.ws-generate p{font-size:14px;color:var(--text3);max-width:460px;margin:0 auto 24px}
+.ws-gen-btn{padding:14px 32px;background:linear-gradient(135deg,var(--mint),#0FA67A);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--f);box-shadow:0 4px 20px rgba(15,166,122,.3);transition:all .3s}
+.ws-gen-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(15,166,122,.4)}
+.ws-gen-loading{display:none;flex-direction:column;align-items:center;gap:16px;padding:60px 20px}
+.ws-gen-loading.show{display:flex}
+.ws-gen-steps{font-size:13px;color:var(--text3);min-height:20px}
+
+.ws-editor{display:grid;grid-template-columns:1fr 380px;gap:20px;min-height:650px}
+@media(max-width:900px){.ws-editor{grid-template-columns:1fr;}.ws-preview-wrap{order:2}}
+.ws-preview-wrap{position:relative}
+.ws-phone-frame{background:#1a1a1a;border-radius:24px;padding:8px;box-shadow:0 8px 40px rgba(0,0,0,.15);max-width:390px;margin:0 auto}
+.ws-phone-notch{height:24px;background:#1a1a1a;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:center}
+.ws-phone-notch::after{content:'';width:60px;height:4px;background:#333;border-radius:2px}
+.ws-phone-iframe{width:100%;height:600px;border:none;border-radius:0 0 16px 16px;background:#fff}
+.ws-preview-badge{text-align:center;margin-top:10px;font-size:11px;color:var(--text3);font-weight:600}
+
+.ws-panel{background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.ws-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+.ws-tab{flex:1;padding:12px 8px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--text3);transition:all .2s;border-bottom:2px solid transparent}
+.ws-tab:hover{color:var(--text)}
+.ws-tab.active{color:var(--mint);border-bottom-color:var(--mint);background:var(--mint-l)}
+.ws-tab-content{display:none;padding:20px;overflow-y:auto;flex:1}
+.ws-tab-content.active{display:block}
+
+.ws-themes{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.ws-swatch{width:44px;height:44px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .2s;position:relative}
+.ws-swatch:hover{transform:scale(1.1)}
+.ws-swatch.active{border-color:var(--dark);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--dark)}
+.ws-swatch-label{font-size:9px;text-align:center;margin-top:4px;color:var(--text3);font-weight:600;text-transform:capitalize}
+
+.ws-field{margin-bottom:16px}
+.ws-field label{display:block;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.ws-field input,.ws-field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--f);outline:none;color:var(--text);transition:border-color .2s;resize:vertical}
+.ws-field input:focus,.ws-field textarea:focus{border-color:var(--mint)}
+
+.ws-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ws-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--mint-l);color:var(--mint);font-size:11px;font-weight:600;border-radius:99px}
+.ws-pill button{background:none;border:none;color:var(--mint);cursor:pointer;font-size:14px;line-height:1;padding:0}
+.ws-pill-add{padding:4px 10px;background:var(--bg2);color:var(--text3);font-size:11px;font-weight:600;border-radius:99px;border:1px dashed var(--border2);cursor:pointer}
+
+.ws-section-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.ws-section-row:last-child{border-bottom:none}
+.ws-section-row label{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+.ws-section-row label .ico{font-size:16px}
+.ws-toggle{position:relative;width:44px;height:24px;background:var(--border);border-radius:99px;cursor:pointer;transition:background .2s}
+.ws-toggle.on{background:var(--mint)}
+.ws-toggle::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ws-toggle.on::after{transform:translateX(20px)}
+
+.ws-actions{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0}
+.ws-btn-publish{flex:1;padding:12px;background:var(--mint);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--f);transition:all .2s}
+.ws-btn-publish:hover{background:var(--mint2)}
+.ws-btn-draft{padding:12px 16px;background:#fff;color:var(--text2);border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)}
+
+.ws-live{text-align:center;padding:20px}
+.ws-live-url{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--bg2);border-radius:10px;font-size:15px;font-weight:700;color:var(--mint);margin:12px 0}
+.ws-live-actions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.ws-live-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);border:none;transition:all .2s}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
@@ -216,7 +279,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <ul class="sidebar-nav">
 <li><a href="javascript:void(0)" class="active" data-page="dashboard" onclick="showPage('dashboard')"><span class="ico">&#9632;</span> Dashboard</a></li>
 <li><a href="javascript:void(0)" data-page="profile" onclick="showPage('profile')"><span class="ico">&#9787;</span> My Profile</a></li>
-<li><a href="javascript:void(0)" data-page="website" onclick="showPage('website')"><span class="ico">&#9733;</span> My Website <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="website" onclick="showPage('website');renderWebsitePage()"><span class="ico">&#9733;</span> My Website</a></li>
 <li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain');renderDomainPage()"><span class="ico">&#9741;</span> Domain</a></li>
 <li><a href="javascript:void(0)" data-page="google" onclick="showPage('google')"><span class="ico">G</span> Google Business <span class="badge-soon">Soon</span></a></li>
 <li><a href="javascript:void(0)" data-page="social" onclick="showPage('social')"><span class="ico">&#9829;</span> Social Media <span class="badge-soon">Soon</span></a></li>
@@ -362,7 +425,151 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 </div>
 
 <!-- ===================== COMING SOON PAGES ===================== -->
-<div class="page-section" id="page-website"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9733;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">My Website</h2><p style="color:var(--text3)">Your auto-generated website is coming soon. We'll notify you when it's ready!</p></div></div></div>
+<div class="page-section" id="page-website">
+<div class="main-inner" style="max-width:1100px">
+
+<!-- STATE 1: Generate -->
+<div id="ws-state-generate">
+<div class="card">
+<div class="ws-generate">
+  <div class="ws-icon">&#10024;</div>
+  <h2>AI Website Generator</h2>
+  <p>Our AI will create a stunning, professional website for your practice in seconds. Just click the button — we'll use your profile information to build everything automatically.</p>
+  <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--mint-l);border-radius:99px;font-size:12px;font-weight:600;color:var(--mint);margin-bottom:20px" id="ws-practice-badge">Clinic</div>
+  <br>
+  <button class="ws-gen-btn" onclick="startWebsiteGeneration()">&#10024; Generate My Website</button>
+</div>
+<div class="ws-gen-loading" id="ws-gen-loading">
+  <div class="spinner lg dark"></div>
+  <div style="font-size:18px;font-weight:700;color:var(--dark)">AI is building your website...</div>
+  <div class="ws-gen-steps" id="ws-gen-steps">Analyzing your practice type...</div>
+</div>
+</div>
+</div>
+
+<!-- STATE 2: Editor -->
+<div id="ws-state-editor" style="display:none">
+<div class="ws-editor">
+  <!-- Preview -->
+  <div class="ws-preview-wrap">
+    <div class="ws-phone-frame">
+      <div class="ws-phone-notch"></div>
+      <iframe id="ws-preview-iframe" class="ws-phone-iframe" src="about:blank"></iframe>
+    </div>
+    <div class="ws-preview-badge">&#128241; Live Preview — exactly how patients see it</div>
+  </div>
+  <!-- Customize Panel -->
+  <div class="ws-panel">
+    <div class="ws-tabs">
+      <div class="ws-tab active" onclick="switchWsTab(0)">&#127912; Theme</div>
+      <div class="ws-tab" onclick="switchWsTab(1)">&#9998; Content</div>
+      <div class="ws-tab" onclick="switchWsTab(2)">&#128247; Photos</div>
+      <div class="ws-tab" onclick="switchWsTab(3)">&#9776; Sections</div>
+    </div>
+    <!-- Theme Tab -->
+    <div class="ws-tab-content active" id="ws-tab-0">
+      <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:12px">Choose your brand color</div>
+      <div class="ws-themes" id="ws-theme-swatches"></div>
+      <div style="margin-top:20px;padding:16px;background:var(--bg2);border-radius:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:8px">Preview</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span id="ws-theme-preview-btn" style="padding:8px 16px;color:#fff;border-radius:8px;font-size:12px;font-weight:700">Book Appointment</span>
+          <span id="ws-theme-preview-link" style="padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;border:2px solid">Contact Us</span>
+        </div>
+      </div>
+    </div>
+    <!-- Content Tab -->
+    <div class="ws-tab-content" id="ws-tab-1">
+      <div class="ws-field">
+        <label>Tagline / Heading</label>
+        <input type="text" id="ws-tagline" placeholder="Your Trusted Healthcare Partner" oninput="updatePreviewDebounced()">
+      </div>
+      <div class="ws-field">
+        <label>About Your Practice</label>
+        <textarea id="ws-about" rows="3" placeholder="Tell patients about your clinic..." oninput="updatePreviewDebounced()"></textarea>
+      </div>
+      <div class="ws-field">
+        <label>Feature Highlights</label>
+        <div class="ws-pills" id="ws-features-pills"></div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <input type="text" id="ws-feature-input" placeholder="Add a feature..." style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--f);outline:none">
+          <button onclick="addFeaturePill()" style="padding:8px 14px;background:var(--mint);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">Add</button>
+        </div>
+      </div>
+      <div class="ws-field">
+        <label>Stats (shown on website)</label>
+        <div id="ws-stats-list"></div>
+        <button onclick="addStatRow()" style="margin-top:8px;padding:6px 12px;background:var(--bg2);color:var(--text2);border:1px dashed var(--border2);border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--f)">+ Add Stat</button>
+      </div>
+      <div class="ws-field">
+        <label>Contact Address</label>
+        <textarea id="ws-address" rows="2" placeholder="Full clinic address..." oninput="updatePreviewDebounced()"></textarea>
+      </div>
+    </div>
+    <!-- Photos Tab -->
+    <div class="ws-tab-content" id="ws-tab-2">
+      <div class="ws-field">
+        <label>Clinic Logo</label>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div id="ws-logo-preview" style="width:64px;height:64px;background:var(--bg2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:var(--mint);border:1.5px solid var(--border)">M</div>
+          <div>
+            <button onclick="document.getElementById('ws-logo-upload').click()" style="padding:8px 16px;background:var(--mint-l);color:var(--mint);border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">Upload Logo</button>
+            <input type="file" id="ws-logo-upload" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+            <p style="font-size:10px;color:var(--text3);margin-top:4px">PNG or JPG, recommended 200x200px</p>
+          </div>
+        </div>
+      </div>
+      <div class="ws-field">
+        <label>Clinic Photos</label>
+        <p style="font-size:11px;color:var(--text3);margin-bottom:8px">Add photos of your clinic, reception, equipment, or team</p>
+        <div id="ws-photos-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px"></div>
+        <button onclick="document.getElementById('ws-photos-upload').click()" style="width:100%;padding:20px;background:var(--bg2);border:2px dashed var(--border2);border-radius:10px;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)">+ Add Photos</button>
+        <input type="file" id="ws-photos-upload" accept="image/*" multiple style="display:none" onchange="handlePhotosUpload(this)">
+      </div>
+    </div>
+    <!-- Sections Tab -->
+    <div class="ws-tab-content" id="ws-tab-3">
+      <p style="font-size:12px;color:var(--text3);margin-bottom:14px">Toggle sections on or off. Your website updates in real-time.</p>
+      <div id="ws-sections-list"></div>
+    </div>
+    <!-- Actions -->
+    <div class="ws-actions">
+      <button class="ws-btn-draft" onclick="saveWebsiteDraft()">Save Draft</button>
+      <button class="ws-btn-publish" onclick="publishWebsite()">&#127793; Publish Website</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- STATE 3: Published -->
+<div id="ws-state-live" style="display:none">
+<div class="card">
+<div class="ws-live">
+  <div style="font-size:64px;margin-bottom:8px">&#127881;</div>
+  <h2 style="font-size:24px;font-weight:800;color:var(--dark);margin-bottom:4px">Your Website is Live!</h2>
+  <p style="font-size:14px;color:var(--text3);margin-bottom:8px">Patients can now find and book appointments with you online.</p>
+  <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#ecfdf5;border-radius:99px;font-size:11px;font-weight:700;color:#059669;margin-bottom:12px">&#9679; Live</div>
+  <div class="ws-live-url">
+    <span>&#127760;</span>
+    <a id="ws-live-link" href="#" target="_blank" style="color:var(--mint)"></a>
+  </div>
+  <div id="ws-live-qr" style="margin:16px auto;width:140px;height:140px;background:var(--bg2);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border)">
+    <span style="font-size:11px;color:var(--text3)">QR Code</span>
+  </div>
+  <div class="ws-live-actions">
+    <button class="ws-live-btn" style="background:var(--mint);color:#fff" onclick="showWebsiteEditor()">&#9998; Edit Website</button>
+    <button class="ws-live-btn" style="background:#25D366;color:#fff" onclick="shareWebsiteWhatsApp()">&#128172; Share on WhatsApp</button>
+    <button class="ws-live-btn" style="background:var(--bg2);color:var(--text)" onclick="copyWebsiteLink()">&#128203; Copy Link</button>
+  </div>
+  <div style="margin-top:20px;padding:16px;background:var(--bg2);border-radius:10px;font-size:12px;color:var(--text3)">
+    <span id="ws-live-published-at"></span>
+  </div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
 <div class="page-section" id="page-domain">
 <div class="main-inner">
 
@@ -640,9 +847,9 @@ function renderChecklist() {
         { done: status === 'plan_selected' || status === 'active', text: 'Plan selected: ' + formatPlan(plan) },
         { done: false, text: 'Google Business connected', action: 'connectGoogle', label: 'Connect' },
         { done: false, text: 'Facebook page connected', action: 'connectFacebook', label: 'Connect' },
-        { done: false, text: 'Website generated', soon: true },
+        { done: !!partner.website_published, text: 'Website generated', action: partner.website_published ? null : 'gotoWebsite', label: 'Create' },
         { done: !!(partner.selected_domain), text: 'Custom domain' + (partner.selected_domain ? ': ' + partner.selected_domain : ''), action: partner.selected_domain ? null : 'gotoDomain', label: 'Set up' },
-        { done: false, text: 'Go live!', soon: true }
+        { done: !!partner.website_published && !!(partner.selected_domain), text: 'Go live!', action: (partner.website_published && partner.selected_domain) ? null : null, label: '' }
     ];
 
     var doneCount = 0;
@@ -788,7 +995,6 @@ function gateSidebarByModules() {
     var moduleIds = partnerModules.map(function(m) { return m.id; });
     // Map sidebar data-page to required module ID
     var pageToModule = {
-        website: 'website',
         google: 'website',
         social: 'ai_marketing',
         analytics: 'reports'
@@ -984,6 +1190,7 @@ function clearError(id) {
 // ============================================================
 
 function gotoDomain() { showPage('domain'); renderDomainPage(); }
+function gotoWebsite() { showPage('website'); renderWebsitePage(); }
 
 function renderDomainPage() {
     if (!partner) return;
@@ -1238,6 +1445,497 @@ function copyToClipboard(text) {
         document.execCommand('copy');
         document.body.removeChild(t);
         showToast('Copied: ' + text);
+    }
+}
+
+// ============================================================
+// AI WEBSITE GENERATOR
+// ============================================================
+var wsContent = null;
+var wsTheme = 'blue';
+var wsFeatures = [];
+var wsStats = {};
+var wsSections = { hero:true, stats:true, doctors:true, services:true, packages:true, reviews:true, booking:true, contact:true, whatsapp:true };
+var wsPhotos = [];
+var wsLogoUrl = '';
+var wsPreviewTimer = null;
+var THEMES = {
+    blue: { color:'#2563eb', label:'Blue' },
+    teal: { color:'#0d9488', label:'Teal' },
+    purple: { color:'#7c3aed', label:'Purple' },
+    coral: { color:'#ea580c', label:'Coral' },
+    green: { color:'#16a34a', label:'Green' },
+    mint: { color:'#0FA67A', label:'Mint' }
+};
+
+function renderWebsitePage() {
+    if (!partner) return;
+    var content = partner.website_content;
+
+    // Check if practice badge needs updating
+    var badge = document.getElementById('ws-practice-badge');
+    if (badge) badge.textContent = formatType(partner.partner_type || 'clinic');
+
+    if (partner.website_published && content) {
+        // State 3: Published
+        showWebsiteState('live');
+        var domain = partner.selected_domain || (partner.slug ? partner.slug + '.medihost.in' : 'medihost.in');
+        var link = document.getElementById('ws-live-link');
+        link.textContent = domain;
+        link.href = 'https://' + domain;
+        document.getElementById('ws-live-published-at').textContent = 'Last published: ' + new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'});
+    } else if (content && content.tagline) {
+        // State 2: Has content but not published
+        loadWebsiteEditor(content);
+        showWebsiteState('editor');
+    } else {
+        // State 1: No content yet
+        showWebsiteState('generate');
+    }
+}
+
+function showWebsiteState(state) {
+    document.getElementById('ws-state-generate').style.display = state === 'generate' ? 'block' : 'none';
+    document.getElementById('ws-state-editor').style.display = state === 'editor' ? 'block' : 'none';
+    document.getElementById('ws-state-live').style.display = state === 'live' ? 'block' : 'none';
+}
+
+function startWebsiteGeneration() {
+    document.querySelector('.ws-generate').style.display = 'none';
+    var loading = document.getElementById('ws-gen-loading');
+    loading.classList.add('show');
+
+    var steps = [
+        'Analyzing your practice type...',
+        'Generating compelling tagline...',
+        'Writing about your practice...',
+        'Selecting features & highlights...',
+        'Building sections & layout...',
+        'Applying theme & styling...',
+        'Finalizing your website...'
+    ];
+    var stepEl = document.getElementById('ws-gen-steps');
+    var i = 0;
+    var interval = setInterval(function() {
+        i++;
+        if (i < steps.length) {
+            stepEl.textContent = steps[i];
+        } else {
+            clearInterval(interval);
+            var content = generateWebsiteContent(partner);
+            partner.website_content = content;
+            wsContent = content;
+            loadWebsiteEditor(content);
+            showWebsiteState('editor');
+            showToast('Website generated! Customize and publish when ready.');
+        }
+    }, 400);
+}
+
+function generateWebsiteContent(p) {
+    var type = p.partner_type || 'clinic';
+    var name = p.business_name || 'My Clinic';
+    var city = p.city || 'your city';
+    var owner = p.owner_name || '';
+
+    var templates = {
+        clinic: {
+            tagline: 'Your Trusted Healthcare Partner in ' + city,
+            about: name + ' provides comprehensive healthcare services with experienced doctors and modern facilities. Our team is dedicated to delivering personalized care for you and your family. Book your appointment today and experience healthcare that puts you first.',
+            features: ['Experienced Doctors', 'Modern Equipment', 'Affordable Care', 'Easy Appointments', 'Friendly Staff'],
+            stats: { 'Happy Patients': '5,000+', 'Years Experience': '10+', 'Doctors': '5+', 'Specialties': '8+' }
+        },
+        hospital: {
+            tagline: 'Advanced Medical Care, Compassionate Service in ' + city,
+            about: name + ' is a leading healthcare institution offering world-class medical facilities, emergency care, and specialized departments. With a team of renowned specialists and state-of-the-art technology, we are committed to excellence in patient care.',
+            features: ['24/7 Emergency', 'Multi-Specialty', 'ICU & Critical Care', 'Advanced Diagnostics', 'Pharmacy'],
+            stats: { 'Beds': '100+', 'Doctors': '25+', 'Departments': '15+', 'Surgeries': '5,000+' }
+        },
+        diagnostic_lab: {
+            tagline: 'Accurate Diagnostics, Fast Results in ' + city,
+            about: name + ' offers NABL-certified diagnostic testing with home sample collection facility. Get accurate results with quick turnaround time. Reports delivered directly to your WhatsApp.',
+            features: ['NABL Certified', 'Home Collection', 'WhatsApp Reports', '200+ Tests', 'Same Day Results'],
+            stats: { 'Tests Available': '200+', 'Reports Delivered': '10,000+', 'Home Collections': '5,000+', 'Avg TAT': '6 hrs' }
+        },
+        physiotherapy: {
+            tagline: 'Expert Physiotherapy & Rehabilitation in ' + city,
+            about: name + ' specializes in physiotherapy and rehabilitation services. Our experienced physiotherapists use evidence-based techniques and modern equipment to help you recover faster and move better.',
+            features: ['Expert Physios', 'Modern Equipment', 'Home Visits', 'Sports Rehab', 'Pain Management'],
+            stats: { 'Patients Treated': '3,000+', 'Recovery Rate': '95%', 'Therapists': '8+', 'Years Experience': '12+' }
+        },
+        dental: {
+            tagline: 'Beautiful Smiles, Expert Dental Care in ' + city,
+            about: name + ' offers complete dental care from routine check-ups to advanced cosmetic procedures. Our gentle approach and modern technology ensure a comfortable experience for patients of all ages.',
+            features: ['Painless Dentistry', 'Cosmetic Procedures', 'Orthodontics', 'Implants', 'Child-Friendly'],
+            stats: { 'Smiles Created': '8,000+', 'Dentists': '5+', 'Procedures': '20+', 'Years Experience': '15+' }
+        },
+        pharmacy: {
+            tagline: 'Your Neighborhood Pharmacy in ' + city,
+            about: name + ' is your trusted pharmacy offering genuine medicines, health products, and expert advice. We offer home delivery and accept digital prescriptions for your convenience.',
+            features: ['Genuine Medicines', 'Home Delivery', 'Digital Prescriptions', 'Health Products', 'Expert Advice'],
+            stats: { 'Products': '5,000+', 'Deliveries': '10,000+', 'Customers': '3,000+', 'Pharmacists': '3+' }
+        },
+        nursing_home: {
+            tagline: 'Compassionate Care & Comfort in ' + city,
+            about: name + ' provides quality inpatient care with experienced nursing staff and modern facilities. We specialize in post-operative recovery, elderly care, and chronic disease management.',
+            features: ['24/7 Nursing', 'Post-Op Care', 'Elderly Care', 'Diet Management', 'Visiting Doctors'],
+            stats: { 'Beds': '30+', 'Nurses': '15+', 'Recoveries': '2,000+', 'Years': '10+' }
+        },
+        eye_clinic: {
+            tagline: 'Clear Vision, Expert Eye Care in ' + city,
+            about: name + ' is your destination for comprehensive eye care. From routine eye exams to advanced surgeries like LASIK and cataract removal, our ophthalmologists deliver exceptional results.',
+            features: ['LASIK Surgery', 'Cataract Treatment', 'Retina Care', 'Pediatric Eye Care', 'Contact Lenses'],
+            stats: { 'Surgeries': '5,000+', 'Patients': '15,000+', 'Specialists': '5+', 'Success Rate': '99%' }
+        }
+    };
+
+    var t = templates[type] || templates.clinic;
+    return {
+        tagline: t.tagline,
+        about: t.about,
+        features: t.features,
+        stats: t.stats,
+        contact: { address: p.address || p.city || city },
+        sections: { hero:true, stats:true, doctors:true, services:true, packages:true, reviews:true, booking:true, contact:true, whatsapp:true }
+    };
+}
+
+function loadWebsiteEditor(content) {
+    wsContent = content;
+    wsTheme = partner.website_theme || 'blue';
+    wsFeatures = (content.features || []).slice();
+    wsStats = Object.assign({}, content.stats || {});
+    wsSections = Object.assign({ hero:true, stats:true, doctors:true, services:true, packages:true, reviews:true, booking:true, contact:true, whatsapp:true }, content.sections || {});
+
+    // Fill form fields
+    document.getElementById('ws-tagline').value = content.tagline || '';
+    document.getElementById('ws-about').value = content.about || '';
+    document.getElementById('ws-address').value = (content.contact && content.contact.address) || partner.city || '';
+
+    // Render theme swatches
+    var swatchHtml = '';
+    Object.keys(THEMES).forEach(function(key) {
+        swatchHtml += '<div style="text-align:center"><div class="ws-swatch' + (wsTheme === key ? ' active' : '') + '" style="background:' + THEMES[key].color + '" onclick="selectWsTheme(\'' + key + '\')"></div><div class="ws-swatch-label">' + THEMES[key].label + '</div></div>';
+    });
+    document.getElementById('ws-theme-swatches').innerHTML = swatchHtml;
+    updateThemePreviewBtns();
+
+    // Render feature pills
+    renderFeaturePills();
+
+    // Render stats
+    renderStatsEditor();
+
+    // Render sections toggles
+    renderSectionsEditor();
+
+    // Logo preview
+    var logoEl = document.getElementById('ws-logo-preview');
+    if (partner.website_logo_url) {
+        logoEl.innerHTML = '<img src="' + partner.website_logo_url + '" style="width:100%;height:100%;object-fit:cover;border-radius:12px">';
+    } else {
+        logoEl.textContent = (partner.business_name || 'M').charAt(0).toUpperCase();
+    }
+
+    // Update preview
+    updatePreview();
+}
+
+function switchWsTab(idx) {
+    document.querySelectorAll('.ws-tab').forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+    document.querySelectorAll('.ws-tab-content').forEach(function(c, i) { c.classList.toggle('active', i === idx); });
+}
+
+function selectWsTheme(theme) {
+    wsTheme = theme;
+    document.querySelectorAll('.ws-swatch').forEach(function(s) { s.classList.remove('active'); });
+    event.target.closest('.ws-swatch') && event.target.closest('.ws-swatch').classList.add('active');
+    // Re-render swatches to update active state
+    var swatchHtml = '';
+    Object.keys(THEMES).forEach(function(key) {
+        swatchHtml += '<div style="text-align:center"><div class="ws-swatch' + (wsTheme === key ? ' active' : '') + '" style="background:' + THEMES[key].color + '" onclick="selectWsTheme(\'' + key + '\')"></div><div class="ws-swatch-label">' + THEMES[key].label + '</div></div>';
+    });
+    document.getElementById('ws-theme-swatches').innerHTML = swatchHtml;
+    updateThemePreviewBtns();
+    updatePreview();
+}
+
+function updateThemePreviewBtns() {
+    var c = THEMES[wsTheme] ? THEMES[wsTheme].color : '#2563eb';
+    var btn = document.getElementById('ws-theme-preview-btn');
+    var link = document.getElementById('ws-theme-preview-link');
+    if (btn) { btn.style.background = c; }
+    if (link) { link.style.borderColor = c; link.style.color = c; }
+}
+
+function renderFeaturePills() {
+    var html = '';
+    wsFeatures.forEach(function(f, i) {
+        html += '<span class="ws-pill">' + f + ' <button onclick="removeFeature(' + i + ')">&#10005;</button></span>';
+    });
+    document.getElementById('ws-features-pills').innerHTML = html;
+}
+
+function addFeaturePill() {
+    var input = document.getElementById('ws-feature-input');
+    var val = input.value.trim();
+    if (!val) return;
+    wsFeatures.push(val);
+    input.value = '';
+    renderFeaturePills();
+    updatePreviewDebounced();
+}
+
+function removeFeature(idx) {
+    wsFeatures.splice(idx, 1);
+    renderFeaturePills();
+    updatePreviewDebounced();
+}
+
+function renderStatsEditor() {
+    var html = '';
+    var keys = Object.keys(wsStats);
+    keys.forEach(function(key, i) {
+        html += '<div style="display:flex;gap:6px;margin-bottom:6px;align-items:center">';
+        html += '<input type="text" value="' + key + '" onchange="updateStatKey(this,' + i + ')" style="flex:1;padding:8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--f);outline:none">';
+        html += '<input type="text" value="' + wsStats[key] + '" onchange="updateStatVal(this,' + i + ')" style="width:80px;padding:8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--f);outline:none;font-weight:700">';
+        html += '<button onclick="removeStat(' + i + ')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px;padding:4px">&#10005;</button>';
+        html += '</div>';
+    });
+    document.getElementById('ws-stats-list').innerHTML = html;
+}
+
+function updateStatKey(el, idx) {
+    var keys = Object.keys(wsStats);
+    var vals = Object.values(wsStats);
+    var oldKey = keys[idx];
+    var newKey = el.value.trim();
+    if (newKey && newKey !== oldKey) {
+        var newStats = {};
+        keys.forEach(function(k, i) { newStats[i === idx ? newKey : k] = vals[i]; });
+        wsStats = newStats;
+        updatePreviewDebounced();
+    }
+}
+
+function updateStatVal(el, idx) {
+    var keys = Object.keys(wsStats);
+    wsStats[keys[idx]] = el.value;
+    updatePreviewDebounced();
+}
+
+function addStatRow() {
+    wsStats['New Stat'] = '0';
+    renderStatsEditor();
+}
+
+function removeStat(idx) {
+    var keys = Object.keys(wsStats);
+    delete wsStats[keys[idx]];
+    renderStatsEditor();
+    updatePreviewDebounced();
+}
+
+function renderSectionsEditor() {
+    var sections = [
+        { key:'hero', label:'Hero Banner', icon:'&#9733;', locked:true },
+        { key:'stats', label:'Statistics', icon:'&#9670;' },
+        { key:'doctors', label:'Our Doctors', icon:'&#9764;' },
+        { key:'services', label:'Services & Tests', icon:'&#9881;' },
+        { key:'packages', label:'Health Packages', icon:'&#127873;' },
+        { key:'reviews', label:'Patient Reviews', icon:'&#11088;' },
+        { key:'booking', label:'Book Appointment', icon:'&#128197;' },
+        { key:'contact', label:'Contact & Map', icon:'&#128205;' },
+        { key:'whatsapp', label:'WhatsApp Widget', icon:'&#128172;' }
+    ];
+    var html = '';
+    sections.forEach(function(s) {
+        var on = wsSections[s.key] !== false;
+        html += '<div class="ws-section-row">';
+        html += '<label><span class="ico">' + s.icon + '</span> ' + s.label + (s.locked ? ' <span style="font-size:9px;color:var(--text3)">(always on)</span>' : '') + '</label>';
+        if (!s.locked) {
+            html += '<div class="ws-toggle' + (on ? ' on' : '') + '" onclick="toggleWsSection(\'' + s.key + '\',this)"></div>';
+        }
+        html += '</div>';
+    });
+    document.getElementById('ws-sections-list').innerHTML = html;
+}
+
+function toggleWsSection(key, el) {
+    wsSections[key] = !wsSections[key];
+    el.classList.toggle('on');
+    updatePreviewDebounced();
+}
+
+function handleLogoUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        wsLogoUrl = e.target.result;
+        document.getElementById('ws-logo-preview').innerHTML = '<img src="' + wsLogoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:12px">';
+        updatePreview();
+    };
+    reader.readAsDataURL(input.files[0]);
+    // TODO: Upload to server and get URL back
+}
+
+function handlePhotosUpload(input) {
+    if (!input.files) return;
+    for (var i = 0; i < input.files.length && wsPhotos.length < 5; i++) {
+        (function(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                wsPhotos.push(e.target.result);
+                renderPhotosGrid();
+            };
+            reader.readAsDataURL(file);
+        })(input.files[i]);
+    }
+    // TODO: Upload to server
+}
+
+function renderPhotosGrid() {
+    var html = '';
+    wsPhotos.forEach(function(src, i) {
+        html += '<div style="position:relative;padding-top:100%;border-radius:8px;overflow:hidden;border:1px solid var(--border)">';
+        html += '<img src="' + src + '" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">';
+        html += '<button onclick="wsPhotos.splice(' + i + ',1);renderPhotosGrid()" style="position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;font-size:12px;cursor:pointer;line-height:1">&#10005;</button>';
+        html += '</div>';
+    });
+    document.getElementById('ws-photos-grid').innerHTML = html;
+}
+
+// Preview management
+function updatePreviewDebounced() {
+    clearTimeout(wsPreviewTimer);
+    wsPreviewTimer = setTimeout(updatePreview, 500);
+}
+
+function updatePreview() {
+    var previewData = {
+        id: partner.id || 0,
+        business_name: partner.business_name || 'My Clinic',
+        owner_name: partner.owner_name || '',
+        phone: partner.phone || '',
+        email: partner.email || '',
+        city: partner.city || '',
+        state: partner.state || '',
+        latitude: partner.latitude || '17.3850',
+        longitude: partner.longitude || '78.4867',
+        selected_domain: partner.selected_domain || '',
+        website_theme: wsTheme,
+        website_logo_url: wsLogoUrl || partner.website_logo_url || '',
+        website_favicon_url: partner.website_favicon_url || '',
+        website_meta_title: (partner.business_name || 'Clinic') + ' — ' + (partner.city || ''),
+        website_meta_description: document.getElementById('ws-about').value.substring(0, 160),
+        website_content: {
+            tagline: document.getElementById('ws-tagline').value || '',
+            about: document.getElementById('ws-about').value || '',
+            features: wsFeatures,
+            stats: wsStats,
+            contact: { address: document.getElementById('ws-address').value || '' },
+            sections: wsSections
+        }
+    };
+
+    localStorage.setItem('medihost_website_preview', JSON.stringify(previewData));
+
+    var iframe = document.getElementById('ws-preview-iframe');
+    if (iframe.src === 'about:blank' || !iframe.src.includes('preview')) {
+        iframe.src = 'site.html?domain=preview';
+    } else {
+        // Trigger storage event in iframe
+        try {
+            iframe.contentWindow.localStorage.setItem('medihost_website_preview', JSON.stringify(previewData));
+            if (iframe.contentWindow.renderSite) {
+                iframe.contentWindow.siteData = previewData;
+                iframe.contentWindow.setTheme(wsTheme);
+                iframe.contentWindow.renderSite();
+            }
+        } catch(e) {
+            iframe.src = 'site.html?domain=preview';
+        }
+    }
+}
+
+function buildContentObject() {
+    return {
+        tagline: document.getElementById('ws-tagline').value || '',
+        about: document.getElementById('ws-about').value || '',
+        features: wsFeatures,
+        stats: wsStats,
+        contact: { address: document.getElementById('ws-address').value || '' },
+        sections: wsSections
+    };
+}
+
+function saveWebsiteDraft() {
+    var content = buildContentObject();
+    partner.website_content = content;
+    partner.website_theme = wsTheme;
+
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify({
+            website_content: content,
+            website_theme: wsTheme,
+            website_meta_title: (partner.business_name || '') + ' — ' + (partner.city || ''),
+            website_meta_description: (content.about || '').substring(0, 160)
+        })
+    })
+    .then(function(res) {
+        showToast(res && res.ok ? 'Draft saved!' : 'Draft saved locally');
+    })
+    .catch(function() {
+        showToast('Draft saved locally');
+    });
+}
+
+function publishWebsite() {
+    var content = buildContentObject();
+    partner.website_content = content;
+    partner.website_theme = wsTheme;
+    partner.website_published = true;
+
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify({
+            website_content: content,
+            website_theme: wsTheme,
+            website_published: true,
+            website_meta_title: (partner.business_name || '') + ' — Best ' + formatType(partner.partner_type || 'clinic') + ' in ' + (partner.city || ''),
+            website_meta_description: (content.about || '').substring(0, 160)
+        })
+    })
+    .then(function(res) {
+        showToast('Website published!');
+        renderWebsitePage();
+        renderChecklist();
+    })
+    .catch(function() {
+        showToast('Published locally — will sync when connected');
+        renderWebsitePage();
+    });
+}
+
+function showWebsiteEditor() {
+    loadWebsiteEditor(partner.website_content);
+    showWebsiteState('editor');
+}
+
+function shareWebsiteWhatsApp() {
+    var domain = partner.selected_domain || (partner.slug ? partner.slug + '.medihost.in' : 'medihost.in');
+    var text = encodeURIComponent('Check out our clinic website: https://' + domain);
+    window.open('https://wa.me/?text=' + text, '_blank');
+}
+
+function copyWebsiteLink() {
+    var domain = partner.selected_domain || (partner.slug ? partner.slug + '.medihost.in' : 'medihost.in');
+    var url = 'https://' + domain;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(function() { showToast('Link copied!'); });
+    } else {
+        showToast('Link: ' + url);
     }
 }
 

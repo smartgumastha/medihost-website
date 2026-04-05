@@ -642,6 +642,20 @@ if (!domain && hostname !== 'medihost.in' && hostname !== 'www.medihost.in' && h
 }
 if (!domain) domain = params.get('domain') || 'testclinicin.com';
 
+// Preview mode — read from localStorage instead of API
+if (domain === 'preview') {
+    var previewStr = localStorage.getItem('medihost_website_preview');
+    if (previewStr) {
+        try {
+            var previewData = JSON.parse(previewStr);
+            siteData = previewData;
+            hospitalId = siteData.id || 0;
+            setTheme(siteData.website_theme || 'blue');
+            renderSite();
+            // Don't load doctors/products in preview mode — use mock data
+        } catch(e) { console.error('Preview parse error', e); }
+    }
+} else
 // Load site
 fetch('/api/storefront/site?domain=' + encodeURIComponent(domain))
 .then(function(r) { if (!r.ok) throw new Error('not found'); return r.json(); })
@@ -655,6 +669,18 @@ fetch('/api/storefront/site?domain=' + encodeURIComponent(domain))
 })
 .catch(function() {
   document.getElementById('loadingState').innerHTML = '<div class="coming-soon"><h1>Website Coming Soon</h1><p>This clinic\'s website is being set up. Check back shortly!</p><a href="https://medihost.in" style="margin-top:2rem;display:inline-block;color:' + THEMES.blue + ';font-weight:600;">Powered by MediHost</a></div>';
+});
+
+// Live-reload preview when dashboard updates localStorage
+window.addEventListener('storage', function(e) {
+    if (e.key === 'medihost_website_preview') {
+        try {
+            var d = JSON.parse(e.newValue);
+            siteData = d;
+            setTheme(d.website_theme || 'blue');
+            renderSite();
+        } catch(ex) {}
+    }
 });
 
 function renderSite() {
