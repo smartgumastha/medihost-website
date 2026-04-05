@@ -1170,6 +1170,59 @@ function authFetch(url, opts) {
     });
 }
 
+// ============================================================
+// RBAC — Role-Based Access Control
+// ============================================================
+var userRole = 'HOSPITAL_ADMIN'; // default
+
+// Role → allowed dashboard pages
+var ROLE_PAGES = {
+    HOSPITAL_ADMIN: ['dashboard','profile','website','domain','doctors','products','marketing','analytics','plan'],
+    SUPER_ADMIN: ['dashboard','profile','website','domain','doctors','products','marketing','analytics','plan'],
+    MANAGER: ['dashboard','profile','doctors','products','analytics','plan'],
+    DOCTOR: ['dashboard','profile','doctors'],
+    RECEPTIONIST: ['dashboard','profile'],
+    NURSE: ['dashboard','profile'],
+    PHARMACIST: ['dashboard','profile','products'],
+    LAB_TECHNICIAN: ['dashboard','profile','products'],
+    BILLING: ['dashboard','profile','analytics']
+};
+
+function applyRBAC() {
+    // Detect role from HMS login data or partner object
+    var loginDataStr = localStorage.getItem('mw_login_data');
+    if (loginDataStr) {
+        try {
+            var loginData = JSON.parse(loginDataStr);
+            userRole = loginData.role || 'HOSPITAL_ADMIN';
+        } catch(e) {}
+    }
+    // Partner owner always gets full access
+    if (partner && partner.is_owner) userRole = 'HOSPITAL_ADMIN';
+    // If logged in via medihost_token (not HMS), assume owner
+    if (!loginDataStr && localStorage.getItem('medihost_token')) userRole = 'HOSPITAL_ADMIN';
+
+    var allowedPages = ROLE_PAGES[userRole] || ROLE_PAGES.HOSPITAL_ADMIN;
+
+    // Show/hide sidebar items
+    document.querySelectorAll('.sidebar-nav a[data-page]').forEach(function(a) {
+        var page = a.getAttribute('data-page');
+        var li = a.closest('li');
+        if (!li) return;
+        if (allowedPages.indexOf(page) === -1) {
+            li.style.display = 'none';
+        } else {
+            li.style.display = '';
+        }
+    });
+
+    // Show role badge in welcome
+    if (userRole !== 'HOSPITAL_ADMIN' && userRole !== 'SUPER_ADMIN') {
+        var badge = document.getElementById('badge-type');
+        if (badge) badge.textContent = userRole.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, function(c){return c.toUpperCase()});
+    }
+}
+
 function init() {
     var token = localStorage.getItem('medihost_token');
     if (!token) { window.location.href = '/login'; return; }
@@ -1189,6 +1242,7 @@ function init() {
         if (!p) { window.location.href = '/login'; return; }
         partner = p;
         partnerId = String(partner.id || '');
+        applyRBAC();
         renderDashboard();
         loadPricing();
         loadPartnerModules();
@@ -1201,6 +1255,7 @@ function init() {
             try {
                 partner = JSON.parse(cached);
                 partnerId = String(partner.id || '');
+                applyRBAC();
                 renderDashboard();
                 showToast('Loaded from cache. Some features may be limited.');
             } catch(e) {
