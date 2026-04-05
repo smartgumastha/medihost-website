@@ -36,25 +36,35 @@ var MEDIHOST = {
     return !!this.getToken();
   },
 
+  // Use relative /api/ path to go through Vercel proxy (avoids CORS)
+  // Falls back to direct API_BASE for non-medihost domains
+  _apiUrl: function(path) {
+    var host = window.location.hostname;
+    if (host === 'medihost.in' || host === 'www.medihost.in' || host === 'localhost' || host === '127.0.0.1') {
+      return path; // Vercel proxies /api/* to Railway backend
+    }
+    return this.API_BASE + path;
+  },
+
   apiGet: function(path) {
     var headers = { 'Content-Type': 'application/json' };
     var token = this.getToken();
     if (token) headers['Authorization'] = 'Bearer ' + token;
-    return fetch(this.API_BASE + path, { method: 'GET', headers: headers }).then(function(r) { return r.json(); });
+    return fetch(this._apiUrl(path), { method: 'GET', headers: headers }).then(function(r) { return r.json(); });
   },
 
   apiPost: function(path, body) {
     var headers = { 'Content-Type': 'application/json' };
     var token = this.getToken();
     if (token) headers['Authorization'] = 'Bearer ' + token;
-    return fetch(this.API_BASE + path, { method: 'POST', headers: headers, body: JSON.stringify(body) }).then(function(r) { return r.json(); });
+    return fetch(this._apiUrl(path), { method: 'POST', headers: headers, body: JSON.stringify(body) }).then(function(r) { return r.json(); });
   },
 
   apiPut: function(path, body) {
     var headers = { 'Content-Type': 'application/json' };
     var token = this.getToken();
     if (token) headers['Authorization'] = 'Bearer ' + token;
-    return fetch(this.API_BASE + path, { method: 'PUT', headers: headers, body: JSON.stringify(body) }).then(function(r) { return r.json(); });
+    return fetch(this._apiUrl(path), { method: 'PUT', headers: headers, body: JSON.stringify(body) }).then(function(r) { return r.json(); });
   },
 
   adminGet: function(path) {
