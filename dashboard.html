@@ -269,6 +269,47 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 .doc-empty h3{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px}
 .doc-empty p{font-size:13px;color:var(--text3);max-width:360px;margin:0 auto 20px}
 
+/* PRODUCTS / TESTS MANAGEMENT */
+.prod-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.prod-header h3{font-size:18px;font-weight:800;color:var(--dark)}
+.prod-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.prod-tab{padding:7px 14px;border-radius:99px;font-size:12px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;background:#fff;color:var(--text2)}
+.prod-tab:hover{border-color:var(--mint)}
+.prod-tab.active{background:var(--mint);color:#fff;border-color:var(--mint)}
+.prod-search{display:flex;gap:8px;margin-bottom:16px}
+.prod-search input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--f);outline:none}
+.prod-search input:focus{border-color:var(--mint)}
+.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:768px){.prod-grid{grid-template-columns:1fr}}
+.prod-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:16px;transition:all .2s;position:relative}
+.prod-card:hover{border-color:var(--mint);box-shadow:var(--shadow)}
+.prod-card.inactive{opacity:.5}
+.prod-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.prod-card-name{font-size:14px;font-weight:700;color:var(--dark)}
+.prod-card-cat{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.prod-card-type{padding:3px 8px;border-radius:99px;font-size:10px;font-weight:700;flex-shrink:0}
+.prod-type-test{background:#dbeafe;color:#2563eb}
+.prod-type-package{background:var(--purple-l);color:var(--purple)}
+.prod-type-consultation{background:var(--mint-l);color:var(--mint)}
+.prod-card-desc{font-size:12px;color:var(--text3);margin-bottom:8px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.prod-card-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;font-size:11px;color:var(--text2)}
+.prod-card-meta span{display:flex;align-items:center;gap:3px}
+.prod-card-pricing{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.prod-card-price{font-size:18px;font-weight:800;color:var(--mint)}
+.prod-card-mrp{font-size:13px;color:var(--text3);text-decoration:line-through}
+.prod-card-off{font-size:10px;font-weight:700;color:#059669;background:#ecfdf5;padding:2px 6px;border-radius:99px}
+.prod-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.prod-card-source{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px}
+.prod-source-self{background:#ecfdf5;color:#059669}
+.prod-source-hemato{background:#fef2f2;color:#dc2626}
+.prod-card-actions{display:flex;gap:6px}
+.prod-featured{position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;background:#fffbeb;color:#d97706}
+.prod-price-edit{display:flex;gap:6px;align-items:center;margin-top:8px}
+.prod-price-edit input{width:80px;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-weight:700;font-family:var(--f);outline:none;text-align:right}
+.prod-price-edit input:focus{border-color:var(--mint)}
+.prod-empty{text-align:center;padding:48px 20px}
+.prod-empty .ico{font-size:56px;margin-bottom:12px}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
@@ -325,6 +366,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <li><a href="javascript:void(0)" data-page="profile" onclick="showPage('profile')"><span class="ico">&#9787;</span> My Profile</a></li>
 <li><a href="javascript:void(0)" data-page="website" onclick="showPage('website');renderWebsitePage()"><span class="ico">&#9733;</span> My Website</a></li>
 <li><a href="javascript:void(0)" data-page="doctors" onclick="showPage('doctors');renderDoctorsPage()"><span class="ico">&#9764;</span> My Doctors</a></li>
+<li><a href="javascript:void(0)" data-page="products" onclick="showPage('products');renderProductsPage()"><span class="ico">&#128138;</span> Tests & Services</a></li>
 <li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain');renderDomainPage()"><span class="ico">&#9741;</span> Domain</a></li>
 <li><a href="javascript:void(0)" data-page="google" onclick="showPage('google')"><span class="ico">G</span> Google Business <span class="badge-soon">Soon</span></a></li>
 <li><a href="javascript:void(0)" data-page="social" onclick="showPage('social')"><span class="ico">&#9829;</span> Social Media <span class="badge-soon">Soon</span></a></li>
@@ -480,6 +522,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
   <button class="doc-add-btn" onclick="openDoctorModal()">&#43; Add Doctor</button>
 </div>
 <div id="doctors-list-container"></div>
+</div>
+</div>
+
+<!-- PRODUCTS PAGE -->
+<div class="page-section" id="page-products">
+<div class="main-inner" style="max-width:1000px">
+<div class="prod-header">
+  <h3>&#128138; Tests & Services</h3>
+  <div style="display:flex;gap:8px">
+    <button onclick="openProductModal()" style="padding:8px 16px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:4px">&#43; Custom Package</button>
+  </div>
+</div>
+<div class="prod-tabs" id="prod-tabs"></div>
+<div class="prod-search">
+  <input type="text" id="prod-search-input" placeholder="Search tests, packages, services..." oninput="filterProducts()">
+</div>
+<div id="prod-stats" style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap"></div>
+<div class="prod-grid" id="prod-grid"></div>
 </div>
 </div>
 
@@ -698,6 +758,115 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <div class="page-section" id="page-social"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9829;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Social Media</h2><p style="color:var(--text3)">Facebook &amp; Instagram page management coming soon.</p></div></div></div>
 <div class="page-section" id="page-analytics"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9670;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Analytics</h2><p style="color:var(--text3)">Profile views, booking stats, and website analytics will appear here after go-live.</p></div></div></div>
 
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="doc-modal-overlay" id="prod-modal-overlay" onclick="if(event.target===this)closeProductModal()">
+<div class="doc-modal">
+  <div class="doc-modal-header">
+    <h3 id="prod-modal-title">Add Custom Package</h3>
+    <button class="doc-modal-close" onclick="closeProductModal()">&#10005;</button>
+  </div>
+  <div class="doc-modal-body">
+    <div class="form-group">
+      <label>Test / Package Name *</label>
+      <input type="text" id="prod-name" placeholder="Full Body Checkup">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Type *</label>
+        <select id="prod-type">
+          <option value="test">Lab Test</option>
+          <option value="package">Health Package</option>
+          <option value="consultation">Consultation</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="prod-category">
+          <option value="Blood Tests">Blood Tests</option>
+          <option value="Thyroid">Thyroid</option>
+          <option value="Diabetes">Diabetes</option>
+          <option value="Cardiac">Cardiac</option>
+          <option value="Liver">Liver</option>
+          <option value="Kidney">Kidney</option>
+          <option value="Full Body">Full Body</option>
+          <option value="Vitamins">Vitamins</option>
+          <option value="Hormones">Hormones</option>
+          <option value="Allergy">Allergy</option>
+          <option value="Imaging">Imaging</option>
+          <option value="Consultation">Consultation</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="prod-desc" rows="2" placeholder="What this test/package includes..." style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--f);outline:none;resize:vertical"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>MRP (&#8377;) *</label>
+        <input type="number" id="prod-mrp" placeholder="999" min="0">
+      </div>
+      <div class="form-group">
+        <label>Your Price (&#8377;) *</label>
+        <input type="number" id="prod-price" placeholder="599" min="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Parameters Count</label>
+        <input type="number" id="prod-params" placeholder="72" min="0">
+      </div>
+      <div class="form-group">
+        <label>Report TAT (hours)</label>
+        <input type="number" id="prod-tat" placeholder="24" min="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Sample Type</label>
+        <select id="prod-sample">
+          <option value="">N/A</option>
+          <option value="Blood">Blood</option>
+          <option value="Urine">Urine</option>
+          <option value="Stool">Stool</option>
+          <option value="Swab">Swab</option>
+          <option value="Sputum">Sputum</option>
+          <option value="Multiple">Multiple Samples</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fasting Required</label>
+        <select id="prod-fasting">
+          <option value="false">No</option>
+          <option value="true">Yes (8-12 hrs)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fulfillment</label>
+        <select id="prod-source">
+          <option value="self">Self (own lab/clinic)</option>
+          <option value="hemato">Hemato Network Lab</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Featured</label>
+        <select id="prod-featured">
+          <option value="false">No</option>
+          <option value="true">Yes — show on homepage</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="doc-modal-footer">
+    <button class="btn-cancel" onclick="closeProductModal()">Cancel</button>
+    <button class="btn-save" onclick="saveProductFromModal()">Save Product</button>
+  </div>
+</div>
 </div>
 
 <!-- DOCTOR MODAL -->
@@ -1610,6 +1779,256 @@ function copyToClipboard(text) {
         document.body.removeChild(t);
         showToast('Copied: ' + text);
     }
+}
+
+// ============================================================
+// PRODUCT / TEST MANAGEMENT (Shopify-style catalog)
+// ============================================================
+var prodProducts = [];
+var prodEditingId = null;
+var prodActiveTab = 'all';
+var prodSearchQuery = '';
+
+// Master catalog — like Shopify's product catalog
+var MASTER_CATALOG = [
+    { id:'mc-1', name:'Complete Blood Count (CBC)', product_type:'test', category:'Blood Tests', description:'Measures red blood cells, white blood cells, hemoglobin, hematocrit, and platelets.', mrp:599, price:299, parameters_count:26, sample_type:'Blood', report_tat_hours:6, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-2', name:'Thyroid Profile (T3, T4, TSH)', product_type:'test', category:'Thyroid', description:'Complete thyroid function test including T3, T4 and TSH levels.', mrp:899, price:399, parameters_count:5, sample_type:'Blood', report_tat_hours:12, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-3', name:'Full Body Checkup', product_type:'package', category:'Full Body', description:'Comprehensive health screening with 72+ parameters including CBC, lipid profile, liver, kidney, thyroid, diabetes, vitamins.', mrp:2499, price:999, parameters_count:72, sample_type:'Blood', report_tat_hours:24, fasting_required:true, fasting_hours:12, is_featured:true, source:'self', active:true },
+    { id:'mc-4', name:'Lipid Profile', product_type:'test', category:'Cardiac', description:'Total cholesterol, HDL, LDL, VLDL, triglycerides. Essential cardiac risk assessment.', mrp:699, price:349, parameters_count:8, sample_type:'Blood', report_tat_hours:6, fasting_required:true, fasting_hours:12, is_featured:false, source:'self', active:true },
+    { id:'mc-5', name:'Liver Function Test (LFT)', product_type:'test', category:'Liver', description:'SGOT, SGPT, bilirubin, albumin, alkaline phosphatase and more.', mrp:799, price:399, parameters_count:12, sample_type:'Blood', report_tat_hours:8, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-6', name:'Kidney Function Test (KFT)', product_type:'test', category:'Kidney', description:'Blood urea, creatinine, uric acid, BUN, electrolytes.', mrp:799, price:399, parameters_count:10, sample_type:'Blood', report_tat_hours:8, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-7', name:'HbA1c (Glycated Hemoglobin)', product_type:'test', category:'Diabetes', description:'3-month average blood sugar level. Gold standard for diabetes monitoring.', mrp:599, price:349, parameters_count:1, sample_type:'Blood', report_tat_hours:6, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-8', name:'Vitamin D + B12', product_type:'test', category:'Vitamins', description:'Essential vitamin levels. Common deficiency markers in Indian population.', mrp:1799, price:799, parameters_count:2, sample_type:'Blood', report_tat_hours:24, fasting_required:false, is_featured:true, source:'self', active:true },
+    { id:'mc-9', name:'Diabetes Screening', product_type:'package', category:'Diabetes', description:'Fasting glucose, PP glucose, HbA1c, insulin, lipid profile, kidney function.', mrp:1999, price:599, parameters_count:22, sample_type:'Blood', report_tat_hours:12, fasting_required:true, fasting_hours:12, is_featured:true, source:'self', active:true },
+    { id:'mc-10', name:'Cardiac Risk Panel', product_type:'package', category:'Cardiac', description:'Lipid profile, hs-CRP, homocysteine, Lp(a), apolipoprotein A & B, ECG.', mrp:3499, price:1499, parameters_count:18, sample_type:'Blood', report_tat_hours:24, fasting_required:true, is_featured:false, source:'self', active:true },
+    { id:'mc-11', name:'Women\'s Health Package', product_type:'package', category:'Full Body', description:'CBC, thyroid, iron, calcium, vitamin D, B12, hormones, pap smear.', mrp:2999, price:1299, parameters_count:45, sample_type:'Multiple', report_tat_hours:48, fasting_required:true, is_featured:true, source:'self', active:true },
+    { id:'mc-12', name:'Senior Citizen Checkup', product_type:'package', category:'Full Body', description:'Comprehensive screening for 60+ including cardiac, diabetes, kidney, liver, bone density markers.', mrp:5999, price:2499, parameters_count:90, sample_type:'Multiple', report_tat_hours:48, fasting_required:true, is_featured:true, source:'self', active:true },
+    { id:'mc-13', name:'Allergy Panel (Food + Inhalant)', product_type:'test', category:'Allergy', description:'IgE based allergy testing for 30 common food and inhalant allergens.', mrp:3999, price:1999, parameters_count:30, sample_type:'Blood', report_tat_hours:72, fasting_required:false, is_featured:false, source:'hemato', active:true },
+    { id:'mc-14', name:'Vitamin Panel (Complete)', product_type:'test', category:'Vitamins', description:'Vitamin A, B1, B2, B6, B12, C, D, E, K, Folate.', mrp:4999, price:2499, parameters_count:10, sample_type:'Blood', report_tat_hours:48, fasting_required:false, is_featured:false, source:'hemato', active:false },
+    { id:'mc-15', name:'Hormone Panel (Male)', product_type:'package', category:'Hormones', description:'Testosterone, FSH, LH, prolactin, estradiol, DHEA-S, cortisol.', mrp:3499, price:1799, parameters_count:7, sample_type:'Blood', report_tat_hours:48, fasting_required:true, is_featured:false, source:'hemato', active:false },
+    { id:'mc-16', name:'General Physician Consultation', product_type:'consultation', category:'Consultation', description:'In-clinic consultation with experienced general physician.', mrp:500, price:500, parameters_count:0, sample_type:'', report_tat_hours:0, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-17', name:'Specialist Consultation', product_type:'consultation', category:'Consultation', description:'In-clinic consultation with specialist doctor.', mrp:800, price:800, parameters_count:0, sample_type:'', report_tat_hours:0, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-18', name:'Urine Routine & Microscopy', product_type:'test', category:'Other', description:'Physical, chemical and microscopic examination of urine.', mrp:299, price:149, parameters_count:15, sample_type:'Urine', report_tat_hours:4, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-19', name:'ESR (Erythrocyte Sedimentation Rate)', product_type:'test', category:'Blood Tests', description:'Measures inflammation in the body. Used to monitor infections and autoimmune conditions.', mrp:199, price:99, parameters_count:1, sample_type:'Blood', report_tat_hours:4, fasting_required:false, is_featured:false, source:'self', active:true },
+    { id:'mc-20', name:'Iron Studies', product_type:'test', category:'Blood Tests', description:'Serum iron, TIBC, transferrin saturation, ferritin. Complete iron deficiency assessment.', mrp:1299, price:649, parameters_count:4, sample_type:'Blood', report_tat_hours:12, fasting_required:true, is_featured:false, source:'self', active:true }
+];
+
+function renderProductsPage() {
+    if (!partner) return;
+    // Load from API or use master catalog
+    var hId = partner.id || partnerId;
+    fetch('/api/storefront/' + hId + '/products')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+        if (data && data.products && data.products.length) {
+            prodProducts = data.products.map(function(p) { p.active = true; p.source = p.source || 'self'; return p; });
+        } else {
+            if (prodProducts.length === 0) prodProducts = MASTER_CATALOG.map(function(p) { return Object.assign({}, p); });
+        }
+        renderProductTabs();
+        renderProductStats();
+        filterProducts();
+    })
+    .catch(function() {
+        if (prodProducts.length === 0) prodProducts = MASTER_CATALOG.map(function(p) { return Object.assign({}, p); });
+        renderProductTabs();
+        renderProductStats();
+        filterProducts();
+    });
+}
+
+function renderProductTabs() {
+    var cats = ['all'];
+    var catCounts = { all: prodProducts.length };
+    prodProducts.forEach(function(p) {
+        var t = p.product_type || 'test';
+        if (cats.indexOf(t) === -1) cats.push(t);
+        catCounts[t] = (catCounts[t] || 0) + 1;
+    });
+    var labels = { all:'All', test:'Lab Tests', package:'Packages', consultation:'Consultations' };
+    var html = '';
+    cats.forEach(function(c) {
+        html += '<div class="prod-tab' + (prodActiveTab === c ? ' active' : '') + '" onclick="prodActiveTab=\'' + c + '\';renderProductTabs();filterProducts()">' + (labels[c]||c) + ' (' + (catCounts[c]||0) + ')</div>';
+    });
+    document.getElementById('prod-tabs').innerHTML = html;
+}
+
+function renderProductStats() {
+    var active = prodProducts.filter(function(p) { return p.active !== false; }).length;
+    var self = prodProducts.filter(function(p) { return p.source === 'self' && p.active !== false; }).length;
+    var hemato = prodProducts.filter(function(p) { return p.source === 'hemato' && p.active !== false; }).length;
+    var featured = prodProducts.filter(function(p) { return p.is_featured && p.active !== false; }).length;
+    document.getElementById('prod-stats').innerHTML =
+        '<div style="padding:8px 14px;background:var(--mint-l);border-radius:8px;font-size:12px;font-weight:600;color:var(--mint)">' + active + ' Active</div>' +
+        '<div style="padding:8px 14px;background:var(--bg2);border-radius:8px;font-size:12px;font-weight:600;color:var(--text2)">' + self + ' Self-fulfilled</div>' +
+        '<div style="padding:8px 14px;background:#fef2f2;border-radius:8px;font-size:12px;font-weight:600;color:#dc2626">' + hemato + ' Hemato Network</div>' +
+        '<div style="padding:8px 14px;background:#fffbeb;border-radius:8px;font-size:12px;font-weight:600;color:#d97706">' + featured + ' Featured</div>';
+}
+
+function filterProducts() {
+    var search = (document.getElementById('prod-search-input').value || '').toLowerCase();
+    var filtered = prodProducts.filter(function(p) {
+        if (prodActiveTab !== 'all' && p.product_type !== prodActiveTab) return false;
+        if (search && p.name.toLowerCase().indexOf(search) === -1 && (p.category||'').toLowerCase().indexOf(search) === -1) return false;
+        return true;
+    });
+    renderProductGrid(filtered);
+}
+
+function renderProductGrid(products) {
+    if (!products.length) {
+        document.getElementById('prod-grid').innerHTML = '<div class="prod-empty" style="grid-column:span 2"><div class="ico">&#128138;</div><h3>No products found</h3><p>Try a different search or add custom packages.</p></div>';
+        return;
+    }
+    var typeClasses = { test:'prod-type-test', package:'prod-type-package', consultation:'prod-type-consultation' };
+    var typeLabels = { test:'Test', package:'Package', consultation:'Consult' };
+    var html = '';
+    products.forEach(function(p) {
+        var off = p.mrp > p.price ? Math.round((1 - p.price/p.mrp) * 100) : 0;
+        var isActive = p.active !== false;
+        html += '<div class="prod-card' + (isActive ? '' : ' inactive') + '">';
+        if (p.is_featured) html += '<div class="prod-featured">&#11088; Featured</div>';
+        html += '<div class="prod-card-top">';
+        html += '<div><div class="prod-card-name">' + p.name + '</div><div class="prod-card-cat">' + (p.category || '') + '</div></div>';
+        html += '<span class="prod-card-type ' + (typeClasses[p.product_type]||'prod-type-test') + '">' + (typeLabels[p.product_type]||'Test') + '</span>';
+        html += '</div>';
+        if (p.description) html += '<div class="prod-card-desc">' + p.description + '</div>';
+        html += '<div class="prod-card-meta">';
+        if (p.parameters_count) html += '<span>&#128300; ' + p.parameters_count + ' params</span>';
+        if (p.report_tat_hours) html += '<span>&#9201; ' + p.report_tat_hours + 'h TAT</span>';
+        if (p.sample_type) html += '<span>&#129656; ' + p.sample_type + '</span>';
+        if (p.fasting_required) html += '<span>&#127860; Fasting</span>';
+        html += '</div>';
+        html += '<div class="prod-card-pricing">';
+        html += '<span class="prod-card-price">&#8377;' + p.price + '</span>';
+        if (p.mrp > p.price) html += '<span class="prod-card-mrp">&#8377;' + p.mrp + '</span>';
+        if (off > 0) html += '<span class="prod-card-off">' + off + '% off</span>';
+        html += '</div>';
+        html += '<div class="prod-card-bottom">';
+        html += '<span class="prod-card-source ' + (p.source==='hemato'?'prod-source-hemato':'prod-source-self') + '">' + (p.source==='hemato'?'&#128308; Hemato Network':'&#128994; Self') + '</span>';
+        html += '<div class="prod-card-actions">';
+        html += '<button class="doc-edit-btn" onclick="editProduct(\'' + p.id + '\')">&#9998;</button>';
+        html += '<button class="doc-edit-btn" onclick="toggleProductActive(\'' + p.id + '\')" title="' + (isActive?'Disable':'Enable') + '">' + (isActive?'&#128064;':'&#128683;') + '</button>';
+        html += '<button class="doc-edit-btn" onclick="toggleProductFeatured(\'' + p.id + '\')" title="' + (p.is_featured?'Unfeature':'Feature') + '">' + (p.is_featured?'&#11088;':'&#9734;') + '</button>';
+        html += '</div></div>';
+        // Inline price edit
+        html += '<div class="prod-price-edit">';
+        html += '<label style="font-size:10px;color:var(--text3);font-weight:600">YOUR PRICE:</label>';
+        html += '<span style="font-size:13px;color:var(--text3)">&#8377;</span>';
+        html += '<input type="number" value="' + p.price + '" onchange="updateProductPrice(\'' + p.id + '\',this.value)" style="width:70px">';
+        html += '</div>';
+        html += '</div>';
+    });
+    document.getElementById('prod-grid').innerHTML = html;
+}
+
+function updateProductPrice(id, newPrice) {
+    var p = prodProducts.find(function(x){return x.id===id});
+    if (p) {
+        p.price = parseInt(newPrice) || 0;
+        renderProductStats();
+        showToast('Price updated to \u20b9' + p.price);
+        saveProductsToBackend();
+    }
+}
+
+function toggleProductActive(id) {
+    var p = prodProducts.find(function(x){return x.id===id});
+    if (p) {
+        p.active = !p.active;
+        filterProducts();
+        renderProductStats();
+        showToast(p.name + (p.active ? ' enabled' : ' disabled'));
+        saveProductsToBackend();
+    }
+}
+
+function toggleProductFeatured(id) {
+    var p = prodProducts.find(function(x){return x.id===id});
+    if (p) {
+        p.is_featured = !p.is_featured;
+        filterProducts();
+        renderProductStats();
+        showToast(p.is_featured ? p.name + ' added to featured' : 'Removed from featured');
+        saveProductsToBackend();
+    }
+}
+
+function openProductModal(product) {
+    prodEditingId = product ? product.id : null;
+    document.getElementById('prod-modal-title').textContent = product ? 'Edit Product' : 'Add Custom Package';
+    document.getElementById('prod-name').value = product ? product.name : '';
+    document.getElementById('prod-type').value = product ? (product.product_type || 'test') : 'package';
+    document.getElementById('prod-category').value = product ? (product.category || 'Other') : 'Full Body';
+    document.getElementById('prod-desc').value = product ? (product.description || '') : '';
+    document.getElementById('prod-mrp').value = product ? (product.mrp || '') : '';
+    document.getElementById('prod-price').value = product ? (product.price || '') : '';
+    document.getElementById('prod-params').value = product ? (product.parameters_count || '') : '';
+    document.getElementById('prod-tat').value = product ? (product.report_tat_hours || '') : '';
+    document.getElementById('prod-sample').value = product ? (product.sample_type || '') : '';
+    document.getElementById('prod-fasting').value = product ? String(!!product.fasting_required) : 'false';
+    document.getElementById('prod-source').value = product ? (product.source || 'self') : 'self';
+    document.getElementById('prod-featured').value = product ? String(!!product.is_featured) : 'false';
+    document.getElementById('prod-modal-overlay').classList.add('show');
+}
+
+function closeProductModal() {
+    document.getElementById('prod-modal-overlay').classList.remove('show');
+    prodEditingId = null;
+}
+
+function saveProductFromModal() {
+    var name = document.getElementById('prod-name').value.trim();
+    var price = parseInt(document.getElementById('prod-price').value) || 0;
+    var mrp = parseInt(document.getElementById('prod-mrp').value) || price;
+    if (!name) { showToast('Enter product name', true); return; }
+    if (!price) { showToast('Enter price', true); return; }
+
+    var product = {
+        id: prodEditingId || ('prod-' + Date.now()),
+        name: name,
+        product_type: document.getElementById('prod-type').value,
+        category: document.getElementById('prod-category').value,
+        description: document.getElementById('prod-desc').value,
+        mrp: mrp,
+        price: price,
+        parameters_count: parseInt(document.getElementById('prod-params').value) || 0,
+        report_tat_hours: parseInt(document.getElementById('prod-tat').value) || 0,
+        sample_type: document.getElementById('prod-sample').value,
+        fasting_required: document.getElementById('prod-fasting').value === 'true',
+        source: document.getElementById('prod-source').value,
+        is_featured: document.getElementById('prod-featured').value === 'true',
+        active: true
+    };
+
+    if (prodEditingId) {
+        var idx = prodProducts.findIndex(function(p){return p.id===prodEditingId});
+        if (idx > -1) prodProducts[idx] = product;
+        showToast('Product updated!');
+    } else {
+        prodProducts.push(product);
+        showToast('Product added!');
+    }
+
+    closeProductModal();
+    renderProductTabs();
+    renderProductStats();
+    filterProducts();
+    saveProductsToBackend();
+}
+
+function editProduct(id) {
+    var p = prodProducts.find(function(x){return x.id===id});
+    if (p) openProductModal(p);
+}
+
+function saveProductsToBackend() {
+    // TODO: Replace with dedicated products API
+    // POST /api/storefront/{hospitalId}/products (bulk save)
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify({ products: prodProducts.filter(function(p){return p.active!==false}) })
+    }).catch(function() {});
 }
 
 // ============================================================
