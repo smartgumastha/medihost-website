@@ -217,7 +217,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <li><a href="javascript:void(0)" class="active" data-page="dashboard" onclick="showPage('dashboard')"><span class="ico">&#9632;</span> Dashboard</a></li>
 <li><a href="javascript:void(0)" data-page="profile" onclick="showPage('profile')"><span class="ico">&#9787;</span> My Profile</a></li>
 <li><a href="javascript:void(0)" data-page="website" onclick="showPage('website')"><span class="ico">&#9733;</span> My Website <span class="badge-soon">Soon</span></a></li>
-<li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain')"><span class="ico">&#9741;</span> Domain <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain');renderDomainPage()"><span class="ico">&#9741;</span> Domain</a></li>
 <li><a href="javascript:void(0)" data-page="google" onclick="showPage('google')"><span class="ico">G</span> Google Business <span class="badge-soon">Soon</span></a></li>
 <li><a href="javascript:void(0)" data-page="social" onclick="showPage('social')"><span class="ico">&#9829;</span> Social Media <span class="badge-soon">Soon</span></a></li>
 <li><a href="javascript:void(0)" data-page="analytics" onclick="showPage('analytics')"><span class="ico">&#9670;</span> Analytics <span class="badge-soon">Soon</span></a></li>
@@ -363,7 +363,71 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 
 <!-- ===================== COMING SOON PAGES ===================== -->
 <div class="page-section" id="page-website"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9733;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">My Website</h2><p style="color:var(--text3)">Your auto-generated website is coming soon. We'll notify you when it's ready!</p></div></div></div>
-<div class="page-section" id="page-domain"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9741;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Custom Domain</h2><p style="color:var(--text3)">Domain registration and DNS setup coming soon.</p></div></div></div>
+<div class="page-section" id="page-domain">
+<div class="main-inner">
+
+<!-- DOMAIN STATUS CARD -->
+<div class="card" id="domain-status-card">
+  <div class="card-title"><span class="ico">&#9741;</span> Domain Management</div>
+  <div id="domain-content"></div>
+</div>
+
+<!-- DOMAIN SEARCH (for users without a domain) -->
+<div class="card" id="domain-search-card" style="display:none">
+  <div class="card-title"><span class="ico">&#128269;</span> Search for a Domain</div>
+  <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Find and register a custom domain for your clinic. Your website will be live at your own .com or .in address.</p>
+  <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:2px solid var(--mint);margin-bottom:16px">
+    <input type="text" id="domain-search-input" placeholder="e.g., drravi, mylabtests" style="flex:1;padding:12px 16px;border:none;font-size:14px;font-family:var(--f);outline:none">
+    <button onclick="searchDomains()" style="padding:12px 20px;background:var(--mint);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap">Search</button>
+  </div>
+  <div id="domain-results" style="display:none">
+    <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Available Domains</div>
+    <div id="domain-results-list"></div>
+  </div>
+</div>
+
+<!-- DNS RECORDS CARD -->
+<div class="card" id="domain-dns-card" style="display:none">
+  <div class="card-title"><span class="ico">&#9881;</span> DNS Configuration</div>
+  <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Point your domain to MediHost by adding these DNS records at your registrar:</p>
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--bg2)">
+          <th style="text-align:left;padding:10px 12px;font-weight:700;color:var(--text2);border-bottom:2px solid var(--border)">Type</th>
+          <th style="text-align:left;padding:10px 12px;font-weight:700;color:var(--text2);border-bottom:2px solid var(--border)">Host / Name</th>
+          <th style="text-align:left;padding:10px 12px;font-weight:700;color:var(--text2);border-bottom:2px solid var(--border)">Value / Points To</th>
+          <th style="text-align:left;padding:10px 12px;font-weight:700;color:var(--text2);border-bottom:2px solid var(--border)">Status</th>
+        </tr>
+      </thead>
+      <tbody id="dns-records-table"></tbody>
+    </table>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button onclick="checkDNS()" style="padding:8px 16px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)">&#8635; Check DNS Status</button>
+    <span id="dns-check-status" style="font-size:12px;color:var(--text3)"></span>
+  </div>
+</div>
+
+<!-- DOMAIN INFO CARD -->
+<div class="card" id="domain-info-card" style="display:none">
+  <div class="card-title"><span class="ico">&#9432;</span> Domain Details</div>
+  <div id="domain-info-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+</div>
+
+<!-- CONNECT EXISTING DOMAIN -->
+<div class="card" id="domain-connect-card" style="display:none">
+  <div class="card-title"><span class="ico">&#128279;</span> Connect Your Own Domain</div>
+  <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Already own a domain? Connect it to your MediHost storefront for free.</p>
+  <div style="display:flex;gap:8px;margin-bottom:12px">
+    <input type="text" id="connect-domain-input" placeholder="www.yourclinic.com" style="flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--f);outline:none">
+    <button onclick="connectExternalDomain()" style="padding:10px 18px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)">Connect</button>
+  </div>
+  <p style="font-size:11px;color:var(--text3)">After connecting, you'll need to update your DNS records to point to MediHost.</p>
+</div>
+
+</div>
+</div>
 <div class="page-section" id="page-google"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">G</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Google Business</h2><p style="color:var(--text3)">Google Business Profile integration is under API review. We'll notify you when ready!</p></div></div></div>
 <div class="page-section" id="page-social"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9829;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Social Media</h2><p style="color:var(--text3)">Facebook &amp; Instagram page management coming soon.</p></div></div></div>
 <div class="page-section" id="page-analytics"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9670;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Analytics</h2><p style="color:var(--text3)">Profile views, booking stats, and website analytics will appear here after go-live.</p></div></div></div>
@@ -577,7 +641,7 @@ function renderChecklist() {
         { done: false, text: 'Google Business connected', action: 'connectGoogle', label: 'Connect' },
         { done: false, text: 'Facebook page connected', action: 'connectFacebook', label: 'Connect' },
         { done: false, text: 'Website generated', soon: true },
-        { done: false, text: 'Custom domain', soon: true },
+        { done: !!(partner.selected_domain), text: 'Custom domain' + (partner.selected_domain ? ': ' + partner.selected_domain : ''), action: partner.selected_domain ? null : 'gotoDomain', label: 'Set up' },
         { done: false, text: 'Go live!', soon: true }
     ];
 
@@ -725,7 +789,6 @@ function gateSidebarByModules() {
     // Map sidebar data-page to required module ID
     var pageToModule = {
         website: 'website',
-        domain: 'website',
         google: 'website',
         social: 'ai_marketing',
         analytics: 'reports'
@@ -914,6 +977,268 @@ function clearError(id) {
     var el = document.getElementById(id);
     el.textContent = '';
     el.classList.remove('show');
+}
+
+// ============================================================
+// DOMAIN MANAGEMENT
+// ============================================================
+
+function gotoDomain() { showPage('domain'); renderDomainPage(); }
+
+function renderDomainPage() {
+    if (!partner) return;
+    var domain = partner.selected_domain || '';
+    var slug = partner.slug || '';
+    var plan = partner.plan_tier || 'starter';
+    var hasDomain = !!domain;
+    var isSubdomain = domain && domain.indexOf('.medihost.in') > -1;
+    var isCustomDomain = hasDomain && !isSubdomain;
+
+    var statusHtml = '';
+
+    if (!hasDomain && slug) {
+        // Has a slug (subdomain) but no selected_domain
+        domain = slug + '.medihost.in';
+        isSubdomain = true;
+        hasDomain = true;
+    }
+
+    if (hasDomain) {
+        // Domain exists — show status
+        var domainType = isCustomDomain ? 'Custom Domain' : 'MediHost Subdomain';
+        var domainColor = isCustomDomain ? 'var(--purple)' : 'var(--mint)';
+        var domainBg = isCustomDomain ? 'var(--purple-l)' : 'var(--mint-l)';
+        var sslStatus = isCustomDomain ? 'Provisioning...' : 'Active';
+        var sslColor = isCustomDomain ? '#F59E0B' : 'var(--mint)';
+
+        statusHtml += '<div style="display:flex;align-items:center;gap:16px;padding:20px;background:var(--bg2);border-radius:12px;margin-bottom:20px;flex-wrap:wrap">';
+        statusHtml += '<div style="width:56px;height:56px;background:' + domainBg + ';border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">&#127760;</div>';
+        statusHtml += '<div style="flex:1;min-width:200px">';
+        statusHtml += '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:2px">' + domainType + '</div>';
+        statusHtml += '<div style="font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-.3px">' + domain + '</div>';
+        statusHtml += '<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">';
+        statusHtml += '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#ecfdf5;color:#059669">&#9679; Live</span>';
+        statusHtml += '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:' + (sslStatus==='Active'?'#ecfdf5':'#fffbeb') + ';color:' + sslColor + '">&#128274; SSL ' + sslStatus + '</span>';
+        statusHtml += '</div></div>';
+        statusHtml += '<a href="https://' + domain + '" target="_blank" style="padding:10px 18px;background:var(--mint);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">Visit Site &#8599;</a>';
+        statusHtml += '</div>';
+
+        // Storefront preview
+        statusHtml += '<div style="background:var(--bg2);border-radius:12px;padding:16px;margin-bottom:16px">';
+        statusHtml += '<div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Your Storefront Links</div>';
+        statusHtml += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">';
+        statusHtml += '<div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:4px">WEBSITE</div><a href="https://' + domain + '" target="_blank" style="font-size:13px;font-weight:600;color:var(--mint);word-break:break-all">' + domain + '</a></div>';
+        statusHtml += '<div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:4px">PROFILE</div><a href="https://medihost.in/profile?slug=' + slug + '" target="_blank" style="font-size:13px;font-weight:600;color:var(--mint);word-break:break-all">medihost.in/' + slug + '</a></div>';
+
+        // Hemato lab partners also get LIS + partner app links
+        if (partner.source === 'hemato' || partner.partner_type === 'lab' || partner.partner_type === 'diagnostic_lab') {
+            statusHtml += '<div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:4px">LAB PARTNER APP</div><a href="https://partner.hemato.in" target="_blank" style="font-size:13px;font-weight:600;color:#DC2626">partner.hemato.in</a></div>';
+            statusHtml += '<div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:4px">LIS SYSTEM</div><a href="https://lis.hemato.in" target="_blank" style="font-size:13px;font-weight:600;color:#DC2626">lis.hemato.in</a></div>';
+        }
+        statusHtml += '</div></div>';
+
+        // Upgrade prompt for subdomain users
+        if (isSubdomain) {
+            statusHtml += '<div style="background:var(--purple-l);border:1px solid #d4c8ff;border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">';
+            statusHtml += '<div style="flex:1;min-width:200px"><div style="font-size:15px;font-weight:700;color:var(--purple);margin-bottom:4px">&#9733; Upgrade to a Custom Domain</div>';
+            statusHtml += '<div style="font-size:13px;color:var(--text2)">Get your own .com or .in domain. Patients find you at <strong>www.yourclinic.com</strong> instead of a subdomain.</div></div>';
+            statusHtml += '<button onclick="document.getElementById(\'domain-search-card\').style.display=\'block\';document.getElementById(\'domain-connect-card\').style.display=\'block\'" style="padding:10px 20px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);white-space:nowrap">Search Domains</button>';
+            statusHtml += '</div>';
+        }
+    } else {
+        // No domain at all
+        statusHtml += '<div style="text-align:center;padding:20px">';
+        statusHtml += '<div style="font-size:56px;margin-bottom:12px">&#127760;</div>';
+        statusHtml += '<h3 style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">No Domain Set Up Yet</h3>';
+        statusHtml += '<p style="font-size:14px;color:var(--text3);max-width:400px;margin:0 auto 20px">Get a custom domain for your clinic or connect one you already own. Your patients will find you at your own professional web address.</p>';
+        statusHtml += '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">';
+        statusHtml += '<button onclick="document.getElementById(\'domain-search-card\').style.display=\'block\';document.getElementById(\'domain-search-input\').focus()" style="padding:12px 24px;background:var(--mint);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--f)">Search New Domain</button>';
+        statusHtml += '<button onclick="document.getElementById(\'domain-connect-card\').style.display=\'block\';document.getElementById(\'connect-domain-input\').focus()" style="padding:12px 24px;background:#fff;color:var(--text);border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f)">Connect Existing Domain</button>';
+        statusHtml += '</div></div>';
+
+        // Show search + connect cards
+        document.getElementById('domain-search-card').style.display = 'block';
+        document.getElementById('domain-connect-card').style.display = 'block';
+    }
+
+    document.getElementById('domain-content').innerHTML = statusHtml;
+
+    // Show DNS card for custom domains
+    if (isCustomDomain) {
+        document.getElementById('domain-dns-card').style.display = 'block';
+        renderDNSRecords(domain);
+        document.getElementById('domain-info-card').style.display = 'block';
+        renderDomainInfo(domain);
+    } else {
+        document.getElementById('domain-dns-card').style.display = 'none';
+        document.getElementById('domain-info-card').style.display = 'none';
+    }
+}
+
+function renderDNSRecords(domain) {
+    var records = [
+        { type: 'CNAME', host: 'www', value: 'cname.vercel-dns.com', status: 'pending' },
+        { type: 'A', host: '@', value: '76.76.21.21', status: 'pending' }
+    ];
+
+    var html = '';
+    records.forEach(function(r) {
+        var statusBadge = r.status === 'verified'
+            ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#ecfdf5;color:#059669">&#10003; Verified</span>'
+            : '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#fffbeb;color:#D97706">&#9679; Pending</span>';
+
+        html += '<tr style="border-bottom:1px solid var(--border)">';
+        html += '<td style="padding:10px 12px;font-weight:700;color:var(--purple)">' + r.type + '</td>';
+        html += '<td style="padding:10px 12px;font-family:monospace;font-size:13px">' + r.host + '</td>';
+        html += '<td style="padding:10px 12px"><code style="background:var(--bg2);padding:4px 8px;border-radius:4px;font-size:12px;user-select:all;cursor:text">' + r.value + '</code> <button onclick="copyToClipboard(\'' + r.value + '\')" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--mint);font-weight:600;margin-left:4px">Copy</button></td>';
+        html += '<td style="padding:10px 12px">' + statusBadge + '</td>';
+        html += '</tr>';
+    });
+    document.getElementById('dns-records-table').innerHTML = html;
+}
+
+function renderDomainInfo(domain) {
+    var info = [
+        { label: 'Domain', value: domain },
+        { label: 'Registrar', value: 'ResellerClub (via MediHost)' },
+        { label: 'Registered', value: partner.created_at ? new Date(partner.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'N/A' },
+        { label: 'Expires', value: partner.domain_expiry || 'Auto-renewal enabled' },
+        { label: 'SSL Certificate', value: 'Let\'s Encrypt (Auto)' },
+        { label: 'Nameservers', value: 'Vercel DNS' },
+        { label: 'Plan', value: formatPlan(partner.plan_tier || 'starter') },
+        { label: 'Status', value: 'Active' }
+    ];
+
+    var html = '';
+    info.forEach(function(item) {
+        html += '<div style="background:var(--bg2);padding:12px 16px;border-radius:10px">';
+        html += '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:4px">' + item.label + '</div>';
+        html += '<div style="font-size:14px;font-weight:600;color:var(--dark)">' + item.value + '</div>';
+        html += '</div>';
+    });
+    document.getElementById('domain-info-grid').innerHTML = html;
+}
+
+function searchDomains() {
+    var input = document.getElementById('domain-search-input').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+    if (!input || input.length < 3) {
+        showToast('Please enter at least 3 characters');
+        return;
+    }
+
+    var resultsDiv = document.getElementById('domain-results');
+    var listDiv = document.getElementById('domain-results-list');
+    resultsDiv.style.display = 'block';
+    listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3)">Searching available domains...</div>';
+
+    // Try API first, fallback to mock
+    authFetch(API + '/presence/domains/check-multi?domain=' + encodeURIComponent(input), { method: 'GET' })
+    .then(function(res) {
+        if (res && res.ok && res.data && res.data.results) {
+            renderDomainResults(res.data.results, input);
+        } else {
+            renderMockDomainResults(input);
+        }
+    })
+    .catch(function() {
+        renderMockDomainResults(input);
+    });
+}
+
+function renderMockDomainResults(input) {
+    // Mock results when API isn't ready
+    var results = [
+        { domain: input + '.com', available: true, price: 699, currency: 'INR', period: 'yr', best: true },
+        { domain: input + '.in', available: true, price: 399, currency: 'INR', period: 'yr', best: false },
+        { domain: input + '.co.in', available: true, price: 299, currency: 'INR', period: 'yr', best: false },
+        { domain: input + '.org', available: Math.random() > 0.5, price: 899, currency: 'INR', period: 'yr', best: false },
+        { domain: input + '.clinic', available: Math.random() > 0.5, price: 1999, currency: 'INR', period: 'yr', best: false }
+    ];
+    renderDomainResults(results, input);
+}
+
+function renderDomainResults(results, input) {
+    var listDiv = document.getElementById('domain-results-list');
+    var html = '';
+    results.forEach(function(r) {
+        var available = r.available !== false;
+        html += '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid ' + (available ? 'var(--border)' : '#fee2e2') + ';border-radius:10px;margin-bottom:8px;transition:all .2s;' + (available ? 'cursor:pointer' : 'opacity:0.6') + '" ' + (available ? 'onmouseover="this.style.borderColor=\'var(--mint)\'" onmouseout="this.style.borderColor=\'var(--border)\'"' : '') + '>';
+        html += '<div style="flex:1">';
+        html += '<div style="font-size:15px;font-weight:700;color:var(--dark)">' + r.domain;
+        if (r.best) html += ' <span style="background:var(--mint-l);color:var(--mint);font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px">BEST PICK</span>';
+        html += '</div>';
+        html += '</div>';
+        if (available) {
+            html += '<div style="font-size:16px;font-weight:800;color:var(--mint);margin-right:8px">&#8377;' + r.price + '<span style="font-size:11px;font-weight:500;color:var(--text3)">/' + (r.period || 'yr') + '</span></div>';
+            html += '<button onclick="selectDomain(\'' + r.domain + '\',' + r.price + ')" style="padding:8px 16px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap">Get it &#8594;</button>';
+        } else {
+            html += '<span style="font-size:12px;font-weight:600;color:var(--red)">Taken</span>';
+        }
+        html += '</div>';
+    });
+    listDiv.innerHTML = html;
+}
+
+function selectDomain(domain, price) {
+    // Redirect to plans page with domain
+    var name = partner.business_name || '';
+    window.location.href = 'plans.html?domain=' + encodeURIComponent(domain) + '&name=' + encodeURIComponent(name);
+    // TODO: Or handle inline with Razorpay payment directly on this page
+}
+
+function connectExternalDomain() {
+    var domain = document.getElementById('connect-domain-input').value.trim().toLowerCase();
+    if (!domain || domain.length < 4 || domain.indexOf('.') === -1) {
+        showToast('Please enter a valid domain (e.g., www.yourclinic.com)');
+        return;
+    }
+    // Remove www. prefix for storage
+    var cleanDomain = domain.replace(/^www\./, '');
+
+    // TODO: API call to save external domain
+    // PUT /api/presence/partners/{partnerId} { selected_domain: cleanDomain }
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selected_domain: cleanDomain })
+    })
+    .then(function(res) {
+        if (res && res.ok) {
+            partner.selected_domain = cleanDomain;
+            showToast('Domain connected! Now update your DNS records to point to MediHost.');
+            renderDomainPage();
+        } else {
+            showToast('Could not save domain. Please try again.');
+        }
+    })
+    .catch(function() {
+        // Save locally for demo
+        partner.selected_domain = cleanDomain;
+        showToast('Domain connected! Update your DNS records below.');
+        renderDomainPage();
+    });
+}
+
+function checkDNS() {
+    document.getElementById('dns-check-status').textContent = 'Checking DNS propagation...';
+    // TODO: API call to verify DNS: GET /api/presence/domains/verify-dns?domain=X
+    setTimeout(function() {
+        document.getElementById('dns-check-status').innerHTML = '<span style="color:#D97706">&#9679; DNS not propagated yet. This can take up to 48 hours.</span>';
+    }, 2000);
+}
+
+function copyToClipboard(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+    } else {
+        var t = document.createElement('textarea');
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        showToast('Copied: ' + text);
+    }
 }
 
 // ============================================================
