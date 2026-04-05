@@ -273,6 +273,12 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
       <div class="sidebar-item" data-view="curate" onclick="navigate('curate')"><i class="fas fa-puzzle-piece"></i> Curate Plans</div>
       <div class="sidebar-item" data-view="offers" onclick="navigate('offers')"><i class="fas fa-ticket"></i> Offers</div>
       <div class="sidebar-item" data-view="triggers" onclick="navigate('triggers')"><i class="fas fa-bullseye"></i> Triggers</div>
+      <div style="padding:18px 20px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-400)"><i class="fas fa-droplet" style="color:#DC2626;margin-right:4px"></i> Hemato</div>
+      <div class="sidebar-item" data-view="hemato-dash" onclick="navigate('hemato-dash')"><i class="fas fa-chart-line"></i> Hemato Dashboard</div>
+      <div class="sidebar-item" data-view="hemato-phlebo" onclick="navigate('hemato-phlebo')"><i class="fas fa-motorcycle"></i> Phlebo Enquiries</div>
+      <div class="sidebar-item" data-view="hemato-labs" onclick="navigate('hemato-labs')"><i class="fas fa-flask"></i> Lab Enquiries</div>
+      <div class="sidebar-item" data-view="hemato-phlebo-approved" onclick="navigate('hemato-phlebo-approved')"><i class="fas fa-user-check"></i> Approved Phlebos</div>
+      <div class="sidebar-item" data-view="hemato-labs-approved" onclick="navigate('hemato-labs-approved')"><i class="fas fa-building"></i> Approved Labs</div>
     </nav>
     <div class="sidebar-footer">
       <button onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -358,6 +364,73 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
         <div id="triggersContainer"></div>
       </div>
 
+      <!-- HEMATO DASHBOARD VIEW -->
+      <div class="view" id="view-hemato-dash">
+        <div class="metric-grid" id="hematoDashMetrics" style="grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;"></div>
+        <div class="charts-row" style="margin-bottom:24px;">
+          <div class="chart-card"><h4><i class="fas fa-chart-area" style="color:#DC2626;margin-right:6px"></i>Applications Over Time</h4><div class="chart-wrap"><canvas id="hematoChartTimeline"></canvas></div></div>
+          <div class="chart-card"><h4><i class="fas fa-map-marker-alt" style="color:#DC2626;margin-right:6px"></i>Applications by Area</h4><div class="chart-wrap"><canvas id="hematoChartArea"></canvas></div></div>
+        </div>
+        <div class="data-card">
+          <div class="data-card-header"><h4><i class="fas fa-clock" style="color:var(--amber);margin-right:6px"></i>Recent Applications (Pending Review)</h4></div>
+          <div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Type</th><th>Name</th><th>Phone</th><th>City</th><th>Applied</th><th>Actions</th></tr></thead><tbody id="hematoRecentTable"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- HEMATO PHLEBO ENQUIRIES VIEW -->
+      <div class="view" id="view-hemato-phlebo">
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="filters-row">
+              <input class="filter-input" type="text" id="phleboSearch" placeholder="Search name, phone, area..." oninput="debouncePhlebos()">
+              <select class="filter-select" id="phleboFilterStatus" onchange="loadPhlebos()"><option value="">All Status</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+              <select class="filter-select" id="phleboFilterCity" onchange="loadPhlebos()"><option value="">All Cities</option><option value="Hyderabad">Hyderabad</option><option value="Secunderabad">Secunderabad</option></select>
+            </div>
+          </div>
+          <div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Status</th><th>Name</th><th>Phone</th><th>City</th><th>Areas</th><th>Experience</th><th>Applied</th><th>Actions</th></tr></thead><tbody id="phleboTable"></tbody></table></div>
+          <div class="pagination" id="phleboPagination"></div>
+        </div>
+      </div>
+
+      <!-- HEMATO LAB ENQUIRIES VIEW -->
+      <div class="view" id="view-hemato-labs">
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="filters-row">
+              <input class="filter-input" type="text" id="labSearch" placeholder="Search lab name, owner, phone..." oninput="debounceLabs()">
+              <select class="filter-select" id="labFilterStatus" onchange="loadLabEnquiries()"><option value="">All Status</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+              <select class="filter-select" id="labFilterNabl" onchange="loadLabEnquiries()"><option value="">NABL Status</option><option value="yes">NABL Certified</option><option value="no">Not Certified</option><option value="in_process">In Process</option></select>
+            </div>
+          </div>
+          <div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Status</th><th>Lab Name</th><th>Owner</th><th>City</th><th>NABL</th><th>Type</th><th>Applied</th><th>Actions</th></tr></thead><tbody id="labEnquiryTable"></tbody></table></div>
+          <div class="pagination" id="labPagination"></div>
+        </div>
+      </div>
+
+      <!-- HEMATO APPROVED PHLEBOS VIEW -->
+      <div class="view" id="view-hemato-phlebo-approved">
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="filters-row">
+              <input class="filter-input" type="text" id="approvedPhleboSearch" placeholder="Search approved phlebotomists..." oninput="debounceApprovedPhlebos()">
+            </div>
+          </div>
+          <div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Active</th><th>Name</th><th>Phone</th><th>Zones</th><th>Collections</th><th>Rating</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="approvedPhleboTable"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- HEMATO APPROVED LABS VIEW -->
+      <div class="view" id="view-hemato-labs-approved">
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="filters-row">
+              <input class="filter-input" type="text" id="approvedLabSearch" placeholder="Search approved labs..." oninput="debounceApprovedLabs()">
+            </div>
+          </div>
+          <div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Active</th><th>Lab Name</th><th>Subdomain</th><th>NABL</th><th>Orders</th><th>Rating</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="approvedLabTable"></tbody></table></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -420,7 +493,7 @@ function navigate(view) {
   if (viewEl) viewEl.classList.add('active');
   var sidebarItem = document.querySelector('.sidebar-item[data-view="' + view + '"]');
   if (sidebarItem) sidebarItem.classList.add('active');
-  var titles = { dashboard: 'Dashboard', partners: 'Partners', detail: 'Partner Detail', pricing: 'Pricing Control', curate: 'Curate Plans', offers: 'Offers & Coupons', triggers: 'Conversion Triggers' };
+  var titles = { dashboard: 'Dashboard', partners: 'Partners', detail: 'Partner Detail', pricing: 'Pricing Control', curate: 'Curate Plans', offers: 'Offers & Coupons', triggers: 'Conversion Triggers', 'hemato-dash': 'Hemato Dashboard', 'hemato-phlebo': 'Phlebo Enquiries', 'hemato-labs': 'Lab Enquiries', 'hemato-phlebo-approved': 'Approved Phlebotomists', 'hemato-labs-approved': 'Approved Labs' };
   document.getElementById('viewTitle').textContent = titles[view] || view;
   updateHeaderActions(view);
   if (view === 'dashboard') loadDashboard();
@@ -429,6 +502,11 @@ function navigate(view) {
   else if (view === 'offers') loadOffers();
   else if (view === 'curate') loadCuratePracticeTypes();
   else if (view === 'triggers') loadTriggers();
+  else if (view === 'hemato-dash') loadHematoDashboard();
+  else if (view === 'hemato-phlebo') loadPhlebos();
+  else if (view === 'hemato-labs') loadLabEnquiries();
+  else if (view === 'hemato-phlebo-approved') loadApprovedPhlebos();
+  else if (view === 'hemato-labs-approved') loadApprovedLabs();
   closeSidebar();
 }
 
@@ -440,6 +518,12 @@ function updateHeaderActions(view) {
     el.innerHTML = '<button class="btn btn-green" onclick="openCreateOfferModal()"><i class="fas fa-plus"></i> Create offer</button>';
   } else if (view === 'detail') {
     el.innerHTML = '<button class="btn btn-outline" onclick="navigate(\'partners\')"><i class="fas fa-arrow-left"></i> Back</button>';
+  } else if (view === 'hemato-dash') {
+    el.innerHTML = '<a href="https://partner.hemato.in" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-flask"></i> Lab App</a> <a href="https://phlebo.hemato.in" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-motorcycle"></i> Phlebo App</a> <a href="https://hemato.in" target="_blank" class="btn btn-sm" style="background:#DC2626;color:#fff"><i class="fas fa-droplet"></i> hemato.in</a>';
+  } else if (view === 'hemato-phlebo' || view === 'hemato-phlebo-approved') {
+    el.innerHTML = '<a href="https://phlebo.hemato.in" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-external-link-alt"></i> Open Phlebo App</a>';
+  } else if (view === 'hemato-labs' || view === 'hemato-labs-approved') {
+    el.innerHTML = '<a href="https://partner.hemato.in" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-external-link-alt"></i> Open Lab Partner App</a>';
   } else {
     el.innerHTML = '';
   }
@@ -1110,6 +1194,285 @@ function renderCuratePreview() {
     html += '</tbody></table>';
     document.getElementById('ctPrevTable').innerHTML = html;
   });
+}
+
+// ==================== HEMATO — MOCK DATA ====================
+var mockPhlebos = [
+  { id: 1, name: 'Rajesh Kumar', phone: '9876543210', email: 'rajesh@gmail.com', city: 'Hyderabad', areas: ['Madhapur','Gachibowli','Kondapur'], experience: 3, status: 'pending', applied: '2026-04-01', gender: 'Male', aadhaar: '1234 5678 9012', address: '12-3-45, Madhapur', pincode: '500081', availability: 'Full-time', shift: 'Morning', vehicle: 'Two Wheeler', bank: 'SBI', skills: ['Venipuncture','Pediatric Collection'] },
+  { id: 2, name: 'Srinivas Reddy', phone: '9123456789', email: 'srini@gmail.com', city: 'Hyderabad', areas: ['Ameerpet','Begumpet'], experience: 5, status: 'approved', applied: '2026-03-28', gender: 'Male', aadhaar: '9876 5432 1098', address: '4-5-67, Ameerpet', pincode: '500016', availability: 'Full-time', shift: 'Flexible', vehicle: 'Two Wheeler', bank: 'HDFC', skills: ['Venipuncture','Geriatric Collection','Point-of-Care Testing'] },
+  { id: 3, name: 'Priya Sharma', phone: '9988776655', email: 'priya@gmail.com', city: 'Secunderabad', areas: ['Secunderabad','Begumpet','ECIL'], experience: 2, status: 'pending', applied: '2026-04-03', gender: 'Female', aadhaar: '5678 1234 9012', address: '8-9-10, Secunderabad', pincode: '500003', availability: 'Part-time', shift: 'Afternoon', vehicle: 'None', bank: 'ICICI', skills: ['Venipuncture','Capillary Collection'] },
+  { id: 4, name: 'Ahmed Khan', phone: '9112233445', email: 'ahmed@gmail.com', city: 'Hyderabad', areas: ['Dilsukhnagar','LB Nagar','Uppal'], experience: 4, status: 'rejected', applied: '2026-03-20', gender: 'Male', aadhaar: '3456 7890 1234', address: '11-22-33, Dilsukhnagar', pincode: '500060', availability: 'Weekends Only', shift: 'Morning', vehicle: 'Four Wheeler', bank: 'Axis', skills: ['Venipuncture'] },
+  { id: 5, name: 'Lakshmi Devi', phone: '9001122334', email: 'lakshmi@gmail.com', city: 'Hyderabad', areas: ['Kukatpally','Miyapur'], experience: 1, status: 'pending', applied: '2026-04-04', gender: 'Female', aadhaar: '7890 1234 5678', address: '44-55-66, Kukatpally', pincode: '500072', availability: 'Full-time', shift: 'Evening', vehicle: 'Two Wheeler', bank: 'SBI', skills: ['Venipuncture','Pediatric Collection','Capillary Collection'] }
+];
+
+var mockLabEnquiries = [
+  { id: 1, labName: 'LifeCare Diagnostics', owner: 'Dr. Ramesh', phone: '9876500001', email: 'lifecare@gmail.com', city: 'Hyderabad', labType: 'Pathology', nabl: 'yes', license: 'AP-LAB-2024-001', status: 'pending', applied: '2026-04-02', address: '10-2-3, Banjara Hills', pincode: '500034', established: 2018, serviceRadius: 15, categories: ['Hematology','Biochemistry','Microbiology'], homeCollection: true, hours: '7AM - 9PM', subdomain: 'lifecare' },
+  { id: 2, labName: 'MedScan Labs', owner: 'Dr. Suresh', phone: '9876500002', email: 'medscan@gmail.com', city: 'Hyderabad', labType: 'Both', nabl: 'yes', license: 'AP-LAB-2023-045', status: 'approved', applied: '2026-03-15', address: '5-6-7, Jubilee Hills', pincode: '500033', established: 2015, serviceRadius: 20, categories: ['Hematology','Biochemistry','Radiology/Imaging','Serology'], homeCollection: true, hours: '6AM - 10PM', subdomain: 'medscan' },
+  { id: 3, labName: 'QuickTest Path', owner: 'Anand Rao', phone: '9876500003', email: 'quicktest@gmail.com', city: 'Hyderabad', labType: 'Pathology', nabl: 'in_process', license: 'AP-LAB-2025-112', status: 'pending', applied: '2026-04-04', address: '22-33-44, Madhapur', pincode: '500081', established: 2022, serviceRadius: 8, categories: ['Hematology','Clinical Pathology'], homeCollection: false, hours: '8AM - 6PM', subdomain: 'quicktest' },
+  { id: 4, labName: 'Precision Diagnostics', owner: 'Dr. Kavitha', phone: '9876500004', email: 'precision@gmail.com', city: 'Secunderabad', labType: 'Pathology', nabl: 'no', license: 'AP-LAB-2024-078', status: 'rejected', applied: '2026-03-10', address: '8-9-10, Secunderabad', pincode: '500003', established: 2020, serviceRadius: 10, categories: ['Biochemistry','Serology'], homeCollection: true, hours: '7AM - 8PM', subdomain: '' }
+];
+
+// ==================== HEMATO DASHBOARD ====================
+var hematoTimelineChart = null;
+var hematoAreaChart = null;
+
+function loadHematoDashboard() {
+  var pendingP = mockPhlebos.filter(function(p){return p.status==='pending'}).length;
+  var approvedP = mockPhlebos.filter(function(p){return p.status==='approved'}).length;
+  var rejectedP = mockPhlebos.filter(function(p){return p.status==='rejected'}).length;
+  var pendingL = mockLabEnquiries.filter(function(l){return l.status==='pending'}).length;
+  var approvedL = mockLabEnquiries.filter(function(l){return l.status==='approved'}).length;
+  var rejectedL = mockLabEnquiries.filter(function(l){return l.status==='rejected'}).length;
+
+  document.getElementById('hematoDashMetrics').innerHTML =
+    '<div class="metric-card"><div class="metric-top"><span class="metric-label">Phlebo Applications</span><span class="metric-icon" style="background:#FEF2F2;color:#DC2626"><i class="fas fa-motorcycle"></i></span></div><div class="metric-val">' + mockPhlebos.length + '</div><div class="metric-sub"><span style="color:var(--amber)">' + pendingP + ' pending</span> · ' + approvedP + ' approved · ' + rejectedP + ' rejected</div></div>' +
+    '<div class="metric-card"><div class="metric-top"><span class="metric-label">Lab Applications</span><span class="metric-icon" style="background:#EFF6FF;color:#3B82F6"><i class="fas fa-flask"></i></span></div><div class="metric-val">' + mockLabEnquiries.length + '</div><div class="metric-sub"><span style="color:var(--amber)">' + pendingL + ' pending</span> · ' + approvedL + ' approved · ' + rejectedL + ' rejected</div></div>' +
+    '<div class="metric-card"><div class="metric-top"><span class="metric-label">Active Phlebotomists</span><span class="metric-icon" style="background:#ECFDF5;color:#059669"><i class="fas fa-user-check"></i></span></div><div class="metric-val">' + approvedP + '</div><div class="metric-sub">Collecting today</div></div>' +
+    '<div class="metric-card"><div class="metric-top"><span class="metric-label">Active Labs</span><span class="metric-icon" style="background:#F5F3FF;color:#8B5CF6"><i class="fas fa-building"></i></span></div><div class="metric-val">' + approvedL + '</div><div class="metric-sub">On platform</div></div>';
+
+  // Timeline chart
+  if (hematoTimelineChart) hematoTimelineChart.destroy();
+  hematoTimelineChart = new Chart(document.getElementById('hematoChartTimeline'), {
+    type: 'line',
+    data: {
+      labels: ['Mar 1','Mar 8','Mar 15','Mar 22','Mar 29','Apr 5'],
+      datasets: [
+        { label: 'Phlebotomists', data: [1,2,3,3,4,5], borderColor: '#DC2626', backgroundColor: 'rgba(220,38,38,0.1)', fill: true, tension: 0.4 },
+        { label: 'Labs', data: [0,1,1,2,3,4], borderColor: '#3B82F6', backgroundColor: 'rgba(59,130,246,0.1)', fill: true, tension: 0.4 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
+  });
+
+  // Area chart
+  if (hematoAreaChart) hematoAreaChart.destroy();
+  hematoAreaChart = new Chart(document.getElementById('hematoChartArea'), {
+    type: 'bar',
+    data: {
+      labels: ['Madhapur','Banjara Hills','Ameerpet','Kukatpally','Secunderabad','Dilsukhnagar'],
+      datasets: [{ label: 'Applications', data: [3,2,2,2,2,1], backgroundColor: '#DC2626', borderRadius: 6 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+  });
+
+  // Recent pending
+  var pending = mockPhlebos.filter(function(p){return p.status==='pending'}).concat(mockLabEnquiries.filter(function(l){return l.status==='pending'}));
+  pending.sort(function(a,b){ return new Date(b.applied) - new Date(a.applied); });
+  document.getElementById('hematoRecentTable').innerHTML = pending.map(function(item) {
+    var type = item.labName ? 'Lab' : 'Phlebo';
+    var name = item.labName || item.name;
+    var phone = item.phone;
+    var city = item.city;
+    var typeBg = type === 'Lab' ? 'background:#EFF6FF;color:#3B82F6' : 'background:#FEF2F2;color:#DC2626';
+    return '<tr><td><span style="padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;' + typeBg + '">' + type + '</span></td><td style="font-weight:600">' + name + '</td><td>' + phone + '</td><td>' + city + '</td><td>' + item.applied + '</td><td><button class="btn btn-sm btn-outline" onclick="navigate(\'' + (type==='Lab'?'hemato-labs':'hemato-phlebo') + '\')">Review →</button></td></tr>';
+  }).join('');
+}
+
+// ==================== PHLEBO ENQUIRIES ====================
+var phleboDebounce = null;
+function debouncePhlebos() { clearTimeout(phleboDebounce); phleboDebounce = setTimeout(loadPhlebos, 300); }
+
+function loadPhlebos() {
+  var search = (document.getElementById('phleboSearch').value || '').toLowerCase();
+  var statusFilter = document.getElementById('phleboFilterStatus').value;
+  var cityFilter = document.getElementById('phleboFilterCity').value;
+
+  var filtered = mockPhlebos.filter(function(p) {
+    if (statusFilter && p.status !== statusFilter) return false;
+    if (cityFilter && p.city !== cityFilter) return false;
+    if (search && p.name.toLowerCase().indexOf(search) === -1 && p.phone.indexOf(search) === -1 && p.areas.join(' ').toLowerCase().indexOf(search) === -1) return false;
+    return true;
+  });
+
+  var statusColors = { pending: 'background:#FFFBEB;color:#D97706', approved: 'background:#ECFDF5;color:#059669', rejected: 'background:#FEF2F2;color:#EF4444' };
+
+  document.getElementById('phleboTable').innerHTML = filtered.map(function(p) {
+    var sc = statusColors[p.status] || '';
+    return '<tr>' +
+      '<td><span style="padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;' + sc + '">' + p.status + '</span></td>' +
+      '<td style="font-weight:600">' + p.name + '</td>' +
+      '<td>' + p.phone + '</td>' +
+      '<td>' + p.city + '</td>' +
+      '<td style="font-size:11px">' + p.areas.slice(0,2).join(', ') + (p.areas.length > 2 ? ' +' + (p.areas.length-2) : '') + '</td>' +
+      '<td>' + p.experience + ' yrs</td>' +
+      '<td>' + p.applied + '</td>' +
+      '<td><div style="display:flex;gap:4px">' +
+        '<button class="btn btn-sm btn-outline" onclick="viewPhleboDetail(' + p.id + ')"><i class="fas fa-eye"></i></button>' +
+        (p.status === 'pending' ? '<button class="btn btn-sm btn-green" onclick="approvePhlebo(' + p.id + ')"><i class="fas fa-check"></i></button><button class="btn btn-sm btn-red" onclick="rejectPhlebo(' + p.id + ')"><i class="fas fa-times"></i></button>' : '') +
+      '</div></td></tr>';
+  }).join('');
+}
+
+function viewPhleboDetail(id) {
+  var p = mockPhlebos.find(function(x){return x.id===id});
+  if (!p) return;
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Full Name</label><p style="font-weight:600;margin-top:2px">' + p.name + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Phone</label><p style="margin-top:2px">' + p.phone + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Email</label><p style="margin-top:2px">' + p.email + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Gender</label><p style="margin-top:2px">' + p.gender + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Aadhaar</label><p style="margin-top:2px">' + p.aadhaar + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">City</label><p style="margin-top:2px">' + p.city + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Address</label><p style="margin-top:2px">' + p.address + ', ' + p.pincode + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Experience</label><p style="margin-top:2px">' + p.experience + ' years</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Availability</label><p style="margin-top:2px">' + p.availability + ' — ' + p.shift + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Vehicle</label><p style="margin-top:2px">' + p.vehicle + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Bank</label><p style="margin-top:2px">' + p.bank + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Preferred Zones</label><p style="margin-top:2px">' + p.areas.map(function(a){return '<span style="display:inline-block;padding:2px 8px;margin:2px;border-radius:6px;background:#FEF2F2;color:#DC2626;font-size:11px;font-weight:600">'+a+'</span>'}).join('') + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Skills</label><p style="margin-top:2px">' + p.skills.map(function(s){return '<span style="display:inline-block;padding:2px 8px;margin:2px;border-radius:6px;background:#ECFDF5;color:#059669;font-size:11px;font-weight:600">'+s+'</span>'}).join('') + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Status</label><p style="margin-top:2px;font-weight:700;text-transform:uppercase;color:' + (p.status==='approved'?'#059669':p.status==='rejected'?'#EF4444':'#D97706') + '">' + p.status + '</p></div>' +
+  '</div>';
+  var footer = p.status === 'pending' ?
+    '<button class="btn btn-outline" onclick="closeModal()">Close</button> <button class="btn btn-green" onclick="approvePhlebo(' + p.id + ');closeModal()"><i class="fas fa-check"></i> Approve</button> <button class="btn btn-red" onclick="rejectPhlebo(' + p.id + ');closeModal()"><i class="fas fa-times"></i> Reject</button>' :
+    '<button class="btn btn-outline" onclick="closeModal()">Close</button>';
+  openModal('Phlebotomist Application — ' + p.name, html, footer);
+}
+
+function approvePhlebo(id) {
+  var p = mockPhlebos.find(function(x){return x.id===id});
+  if (p) { p.status = 'approved'; loadPhlebos(); showToast('Approved ' + p.name + '! WhatsApp notification sent.', 'success'); }
+  // TODO: API call to PATCH /api/hemato/phlebo/:id/status { status: 'approved' }
+}
+
+function rejectPhlebo(id) {
+  var p = mockPhlebos.find(function(x){return x.id===id});
+  if (p) { p.status = 'rejected'; loadPhlebos(); showToast('Rejected ' + p.name, 'error'); }
+  // TODO: API call to PATCH /api/hemato/phlebo/:id/status { status: 'rejected' }
+}
+
+// ==================== LAB ENQUIRIES ====================
+var labDebounce = null;
+function debounceLabs() { clearTimeout(labDebounce); labDebounce = setTimeout(loadLabEnquiries, 300); }
+
+function loadLabEnquiries() {
+  var search = (document.getElementById('labSearch').value || '').toLowerCase();
+  var statusFilter = document.getElementById('labFilterStatus').value;
+  var nablFilter = document.getElementById('labFilterNabl').value;
+
+  var filtered = mockLabEnquiries.filter(function(l) {
+    if (statusFilter && l.status !== statusFilter) return false;
+    if (nablFilter && l.nabl !== nablFilter) return false;
+    if (search && l.labName.toLowerCase().indexOf(search) === -1 && l.owner.toLowerCase().indexOf(search) === -1 && l.phone.indexOf(search) === -1) return false;
+    return true;
+  });
+
+  var statusColors = { pending: 'background:#FFFBEB;color:#D97706', approved: 'background:#ECFDF5;color:#059669', rejected: 'background:#FEF2F2;color:#EF4444' };
+  var nablColors = { yes: 'background:#ECFDF5;color:#059669', no: 'background:#FEF2F2;color:#EF4444', in_process: 'background:#FFFBEB;color:#D97706' };
+  var nablLabels = { yes: 'Certified', no: 'No', in_process: 'In Process' };
+
+  document.getElementById('labEnquiryTable').innerHTML = filtered.map(function(l) {
+    return '<tr>' +
+      '<td><span style="padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;' + (statusColors[l.status]||'') + '">' + l.status + '</span></td>' +
+      '<td style="font-weight:600">' + l.labName + '</td>' +
+      '<td>' + l.owner + '</td>' +
+      '<td>' + l.city + '</td>' +
+      '<td><span style="padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;' + (nablColors[l.nabl]||'') + '">' + (nablLabels[l.nabl]||l.nabl) + '</span></td>' +
+      '<td>' + l.labType + '</td>' +
+      '<td>' + l.applied + '</td>' +
+      '<td><div style="display:flex;gap:4px">' +
+        '<button class="btn btn-sm btn-outline" onclick="viewLabDetail(' + l.id + ')"><i class="fas fa-eye"></i></button>' +
+        (l.status === 'pending' ? '<button class="btn btn-sm btn-green" onclick="approveLab(' + l.id + ')"><i class="fas fa-check"></i></button><button class="btn btn-sm btn-red" onclick="rejectLab(' + l.id + ')"><i class="fas fa-times"></i></button>' : '') +
+      '</div></td></tr>';
+  }).join('');
+}
+
+function viewLabDetail(id) {
+  var l = mockLabEnquiries.find(function(x){return x.id===id});
+  if (!l) return;
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Lab Name</label><p style="font-weight:600;margin-top:2px">' + l.labName + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Owner</label><p style="margin-top:2px">' + l.owner + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Phone</label><p style="margin-top:2px">' + l.phone + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Email</label><p style="margin-top:2px">' + l.email + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Lab Type</label><p style="margin-top:2px">' + l.labType + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Established</label><p style="margin-top:2px">' + l.established + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Address</label><p style="margin-top:2px">' + l.address + ', ' + l.city + ' - ' + l.pincode + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">NABL</label><p style="margin-top:2px;font-weight:600;color:' + (l.nabl==='yes'?'#059669':l.nabl==='no'?'#EF4444':'#D97706') + '">' + (l.nabl==='yes'?'Certified':l.nabl==='no'?'Not Certified':'In Process') + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">License</label><p style="margin-top:2px">' + l.license + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Service Radius</label><p style="margin-top:2px">' + l.serviceRadius + ' km</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Operating Hours</label><p style="margin-top:2px">' + l.hours + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Home Collection</label><p style="margin-top:2px">' + (l.homeCollection ? '✅ Yes' : '❌ No') + '</p></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Subdomain</label><p style="margin-top:2px">' + (l.subdomain ? l.subdomain + '.medihost.in' : 'Not assigned') + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Test Categories</label><p style="margin-top:2px">' + l.categories.map(function(c){return '<span style="display:inline-block;padding:2px 8px;margin:2px;border-radius:6px;background:#EFF6FF;color:#3B82F6;font-size:11px;font-weight:600">'+c+'</span>'}).join('') + '</p></div>' +
+    '<div style="grid-column:span 2"><label style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px">Status</label><p style="margin-top:2px;font-weight:700;text-transform:uppercase;color:' + (l.status==='approved'?'#059669':l.status==='rejected'?'#EF4444':'#D97706') + '">' + l.status + '</p></div>' +
+  '</div>';
+  var footer = l.status === 'pending' ?
+    '<button class="btn btn-outline" onclick="closeModal()">Close</button> <button class="btn btn-green" onclick="approveLab(' + l.id + ');closeModal()"><i class="fas fa-check"></i> Approve & Assign Storefront</button> <button class="btn btn-red" onclick="rejectLab(' + l.id + ');closeModal()"><i class="fas fa-times"></i> Reject</button>' :
+    '<button class="btn btn-outline" onclick="closeModal()">Close</button>';
+  openModal('Lab Application — ' + l.labName, html, footer);
+}
+
+function approveLab(id) {
+  var l = mockLabEnquiries.find(function(x){return x.id===id});
+  if (l) { l.status = 'approved'; loadLabEnquiries(); showToast('Approved ' + l.labName + '! Storefront: ' + (l.subdomain||l.labName.toLowerCase().replace(/\s/g,'')) + '.medihost.in', 'success'); }
+  // TODO: API call to PATCH /api/hemato/lab/:id/status { status: 'approved' }
+}
+
+function rejectLab(id) {
+  var l = mockLabEnquiries.find(function(x){return x.id===id});
+  if (l) { l.status = 'rejected'; loadLabEnquiries(); showToast('Rejected ' + l.labName, 'error'); }
+  // TODO: API call to PATCH /api/hemato/lab/:id/status { status: 'rejected' }
+}
+
+// ==================== APPROVED PHLEBOS ====================
+var approvedPhleboDebounce = null;
+function debounceApprovedPhlebos() { clearTimeout(approvedPhleboDebounce); approvedPhleboDebounce = setTimeout(loadApprovedPhlebos, 300); }
+
+function loadApprovedPhlebos() {
+  var search = (document.getElementById('approvedPhleboSearch').value || '').toLowerCase();
+  var approved = mockPhlebos.filter(function(p) {
+    if (p.status !== 'approved') return false;
+    if (search && p.name.toLowerCase().indexOf(search) === -1 && p.phone.indexOf(search) === -1) return false;
+    return true;
+  });
+
+  document.getElementById('approvedPhleboTable').innerHTML = approved.length ? approved.map(function(p) {
+    return '<tr>' +
+      '<td><label style="cursor:pointer"><input type="checkbox" checked onchange="togglePhleboActive(' + p.id + ',this.checked)" style="accent-color:#059669"> <span style="font-size:11px;font-weight:600;color:#059669">Active</span></label></td>' +
+      '<td style="font-weight:600">' + p.name + '</td>' +
+      '<td>' + p.phone + '</td>' +
+      '<td style="font-size:11px">' + p.areas.join(', ') + '</td>' +
+      '<td style="font-weight:600">' + Math.floor(Math.random()*50+10) + '</td>' +
+      '<td>⭐ ' + (4 + Math.random()).toFixed(1) + '</td>' +
+      '<td>' + p.applied + '</td>' +
+      '<td><button class="btn btn-sm btn-outline" onclick="viewPhleboDetail(' + p.id + ')"><i class="fas fa-eye"></i> View</button></td></tr>';
+  }).join('') : '<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8">No approved phlebotomists yet</td></tr>';
+}
+
+function togglePhleboActive(id, active) {
+  showToast(active ? 'Phlebotomist activated' : 'Phlebotomist deactivated', active ? 'success' : 'error');
+  // TODO: API call
+}
+
+// ==================== APPROVED LABS ====================
+var approvedLabDebounce = null;
+function debounceApprovedLabs() { clearTimeout(approvedLabDebounce); approvedLabDebounce = setTimeout(loadApprovedLabs, 300); }
+
+function loadApprovedLabs() {
+  var search = (document.getElementById('approvedLabSearch').value || '').toLowerCase();
+  var approved = mockLabEnquiries.filter(function(l) {
+    if (l.status !== 'approved') return false;
+    if (search && l.labName.toLowerCase().indexOf(search) === -1 && l.owner.toLowerCase().indexOf(search) === -1) return false;
+    return true;
+  });
+
+  document.getElementById('approvedLabTable').innerHTML = approved.length ? approved.map(function(l) {
+    var sub = l.subdomain || l.labName.toLowerCase().replace(/\s/g,'');
+    return '<tr>' +
+      '<td><label style="cursor:pointer"><input type="checkbox" checked onchange="toggleLabActive(' + l.id + ',this.checked)" style="accent-color:#059669"> <span style="font-size:11px;font-weight:600;color:#059669">Active</span></label></td>' +
+      '<td style="font-weight:600">' + l.labName + '</td>' +
+      '<td><a style="color:#3B82F6;font-weight:600;font-size:12px" href="https://' + sub + '.medihost.in" target="_blank">' + sub + '.medihost.in</a></td>' +
+      '<td><span style="padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;background:#ECFDF5;color:#059669">Certified</span></td>' +
+      '<td style="font-weight:600">' + Math.floor(Math.random()*200+20) + '</td>' +
+      '<td>⭐ ' + (4 + Math.random()).toFixed(1) + '</td>' +
+      '<td>' + l.applied + '</td>' +
+      '<td><button class="btn btn-sm btn-outline" onclick="viewLabDetail(' + l.id + ')"><i class="fas fa-eye"></i> View</button></td></tr>';
+  }).join('') : '<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8">No approved labs yet</td></tr>';
+}
+
+function toggleLabActive(id, active) {
+  showToast(active ? 'Lab activated' : 'Lab deactivated', active ? 'success' : 'error');
+  // TODO: API call
 }
 </script>
 </body>
