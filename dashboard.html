@@ -357,7 +357,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <span class="plan-badge" id="badge-plan">Starter Plan</span>
 </div>
 </div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
 <button class="btn-upgrade" id="btn-upgrade" onclick="showPage('plan')" style="display:none">Upgrade Plan</button>
+<button onclick="openClinicSoftware()" style="padding:12px 24px;background:#fff;color:var(--mint);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:8px;transition:all .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">&#127973; Open Clinic Software</button>
+</div>
 </div>
 
 <!-- Setup Progress -->
@@ -893,12 +896,12 @@ function authFetch(url, opts) {
 
 function init() {
     var token = localStorage.getItem('medihost_token');
-    if (!token) { window.location.href = 'onboard.html'; return; }
+    if (!token) { window.location.href = '/login'; return; }
 
     authFetch(API + '/presence/auth/me', { method: 'GET' })
     .then(function(res) {
         if (!res) return;
-        if (!res.ok || !res.data.success) { window.location.href = 'onboard.html'; return; }
+        if (!res.ok || !res.data.success) { window.location.href = '/login'; return; }
         partner = res.data.partner;
         partnerId = String(partner.id);
         renderDashboard();
@@ -1262,7 +1265,47 @@ function showPage(page) {
 function logout() {
     localStorage.removeItem('medihost_token');
     localStorage.removeItem('medihost_partner_id');
-    window.location.href = 'onboard.html';
+    window.location.href = '/login';
+}
+
+function openClinicSoftware() {
+    // Bridge to HMS — fetch HMS token and redirect with auto-login
+    if (!partner || !partner.hospital_id) {
+        // No hospital yet — need to complete onboarding first
+        showNotification('info', 'Setup Required', 'Complete your clinic setup first. We\'ll create your clinic software account automatically.');
+        return;
+    }
+    var btn = event.target.closest('button');
+    var origText = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner"></span> Opening...';
+    btn.disabled = true;
+
+    authFetch(API + '/presence/partner-auth/hms-token', { method: 'POST', body: '{}' })
+    .then(function(res) {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        if (res && res.data && res.data.success && res.data.hms_token) {
+            var loginData = encodeURIComponent(JSON.stringify({
+                token: res.data.hms_token,
+                hospitalId: String(res.data.hospital_id),
+                userid: String(res.data.user_id),
+                first_name: res.data.first_name || '',
+                last_name: res.data.last_name || '',
+                email: partner.email || '',
+                role: 'HOSPITAL_ADMIN',
+                role_id: 2
+            }));
+            var dest = 'https://app.hemato.in';
+            window.open(dest + '?mw_token=' + encodeURIComponent(res.data.hms_token) + '&mw_hospital_id=' + encodeURIComponent(res.data.hospital_id) + '&mw_login_data=' + loginData, '_blank');
+        } else {
+            window.open('https://app.hemato.in', '_blank');
+        }
+    })
+    .catch(function() {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        window.open('https://app.hemato.in', '_blank');
+    });
 }
 
 // Close dropdown on outside click

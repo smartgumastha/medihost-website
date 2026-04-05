@@ -454,30 +454,13 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         setTimeout(function() {
           if (redirectUrl) {
             window.location.href = redirectUrl;
-          } else if (data.partner && data.partner.hospital_id) {
-            // Partner has HMS hospital — fetch HMS token, pass via URL params (cross-domain)
-            MEDIHOST.apiPost('/api/presence/partner-auth/hms-token', {}).then(function(hmsData) {
-              var dest = product.redirectUrl || MEDIHOST.APP_URL;
-              if (hmsData.success && hmsData.hms_token) {
-                var loginData = encodeURIComponent(JSON.stringify({
-                  token: hmsData.hms_token,
-                  hospitalId: String(hmsData.hospital_id),
-                  userid: String(hmsData.user_id),
-                  first_name: hmsData.first_name || '',
-                  last_name: hmsData.last_name || '',
-                  email: data.partner.email,
-                  role: 'HOSPITAL_ADMIN',
-                  role_id: 2
-                }));
-                window.location.href = dest + '?mw_token=' + encodeURIComponent(hmsData.hms_token) + '&mw_hospital_id=' + encodeURIComponent(hmsData.hospital_id) + '&mw_login_data=' + loginData;
-              } else {
-                window.location.href = dest;
-              }
-            }).catch(function() {
-              window.location.href = product.redirectUrl || MEDIHOST.APP_URL;
-            });
+          } else if (productKey === 'medihost' || productKey === 'admin') {
+            // Admin login — go to admin panel
+            window.location.href = '/admin';
           } else {
-            window.location.href = '/onboard.html';
+            // All partner logins → go to dashboard (home base)
+            // Dashboard has link to open HMS when needed
+            window.location.href = '/dashboard';
           }
         }, 1200);
       } else {

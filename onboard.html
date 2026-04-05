@@ -822,26 +822,16 @@ function completeSetup() {
     MEDIHOST.apiPost('/api/presence/onboard/complete', onboardBody).then(function(onboardData) {
       btn.disabled = false;
       if (onboardData.success) {
-        MEDIHOST.toast('Clinic setup complete! Redirecting...');
+        MEDIHOST.toast('Clinic setup complete! Redirecting to your dashboard...');
         setTimeout(function() {
-          if (onboardData.hms_token) {
-            var loginData = encodeURIComponent(JSON.stringify({
-              token: onboardData.hms_token,
-              hospitalId: String(onboardData.hospital_id),
-              userid: String(onboardData.user_id || ''),
-              name: onboardData.partner_name || '',
-              role: 'HOSPITAL_ADMIN'
-            }));
-            window.location.href = MEDIHOST.APP_URL + '?mw_token=' + encodeURIComponent(onboardData.hms_token) + '&mw_hospital_id=' + encodeURIComponent(onboardData.hospital_id) + '&mw_login_data=' + loginData;
-          } else {
-            window.location.href = MEDIHOST.APP_URL;
-          }
+          // Redirect to dashboard — HMS is accessible from there
+          window.location.href = '/dashboard';
         }, 1500);
       } else if (onboardData.error && onboardData.error.indexOf('already provisioned') !== -1) {
-        // Already onboarded — just redirect
+        // Already onboarded — go to dashboard
         MEDIHOST.toast('Clinic already set up! Redirecting...');
         setTimeout(function() {
-          window.location.href = MEDIHOST.APP_URL;
+          window.location.href = '/dashboard';
         }, 1000);
       } else {
         resetBtn();
