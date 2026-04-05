@@ -459,13 +459,16 @@ var chartPlanInstance = null;
 var chartSourceInstance = null;
 
 // ==================== AUTH ====================
-// Auto-login if user is already authenticated as admin
+// Auto-login only if redirected from main login (check URL param or role)
 (function checkAutoLogin() {
-  var token = localStorage.getItem('medihost_token');
+  var params = new URLSearchParams(window.location.search);
+  var autoLogin = params.get('auto');
   var role = localStorage.getItem('medihost_user_role');
-  if (token && (role === 'SUPER_ADMIN' || role === 'HOSPITAL_ADMIN')) {
+  if (autoLogin === '1' && role === 'SUPER_ADMIN') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('shell').classList.add('show');
+    // Clean URL
+    window.history.replaceState({}, '', window.location.pathname);
     navigate('dashboard');
   }
 })();

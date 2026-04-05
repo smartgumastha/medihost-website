@@ -508,7 +508,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         if (redirectUrl) {
           window.location.href = redirectUrl;
         } else if (role === 'SUPER_ADMIN') {
-          window.location.href = '/admin';
+          window.location.href = '/admin?auto=1';
         } else {
           // All roles go to dashboard — RBAC handles visibility
           window.location.href = '/dashboard';
