@@ -225,6 +225,50 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 .ws-live-actions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
 .ws-live-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);border:none;transition:all .2s}
 
+/* DOCTOR MANAGEMENT */
+.doc-mgmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.doc-mgmt-header h3{font-size:18px;font-weight:800;color:var(--dark)}
+.doc-add-btn{padding:10px 20px;background:var(--mint);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:6px;transition:all .2s}
+.doc-add-btn:hover{background:var(--mint2);transform:translateY(-1px)}
+.doc-list{display:grid;grid-template-columns:1fr;gap:14px}
+.doc-card-mgmt{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:20px;display:flex;gap:16px;align-items:flex-start;transition:all .2s}
+.doc-card-mgmt:hover{border-color:var(--mint);box-shadow:var(--shadow)}
+.doc-avatar-mgmt{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0}
+.doc-card-body{flex:1;min-width:0}
+.doc-card-name{font-size:16px;font-weight:700;color:var(--dark)}
+.doc-card-spec{font-size:13px;color:var(--text3);margin-top:2px}
+.doc-card-meta{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap}
+.doc-card-meta span{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:4px}
+.doc-card-meta span strong{color:var(--dark)}
+.doc-card-langs{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.doc-card-langs span{padding:2px 8px;background:var(--mint-l);color:var(--mint);font-size:10px;font-weight:600;border-radius:99px}
+.doc-card-schedule{margin-top:8px;font-size:11px;color:var(--text3);line-height:1.8}
+.doc-card-actions{display:flex;gap:8px;flex-shrink:0;align-self:center}
+.doc-edit-btn{padding:8px 14px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f);transition:all .2s}
+.doc-edit-btn:hover{border-color:var(--mint);color:var(--mint)}
+.doc-del-btn{padding:8px 10px;background:#fff;color:var(--red);border:1px solid #fecaca;border-radius:8px;font-size:12px;cursor:pointer;transition:all .2s}
+.doc-del-btn:hover{background:#fef2f2}
+
+/* Doctor Form Modal */
+.doc-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.doc-modal-overlay.show{display:flex}
+.doc-modal{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.doc-modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.doc-modal-header h3{font-size:18px;font-weight:800;color:var(--dark)}
+.doc-modal-close{background:none;border:none;font-size:24px;color:var(--text3);cursor:pointer;padding:4px}
+.doc-modal-body{padding:24px}
+.doc-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+.doc-sched-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.doc-sched-row input,.doc-sched-row select{padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--f);outline:none}
+.doc-sched-row input:focus,.doc-sched-row select:focus{border-color:var(--mint)}
+.doc-lang-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.doc-lang-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;border:1.5px solid var(--border);color:var(--text2)}
+.doc-lang-pill.selected{background:var(--mint-l);border-color:var(--mint);color:var(--mint)}
+.doc-empty{text-align:center;padding:48px 20px}
+.doc-empty .ico{font-size:56px;margin-bottom:12px}
+.doc-empty h3{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.doc-empty p{font-size:13px;color:var(--text3);max-width:360px;margin:0 auto 20px}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
@@ -280,6 +324,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <li><a href="javascript:void(0)" class="active" data-page="dashboard" onclick="showPage('dashboard')"><span class="ico">&#9632;</span> Dashboard</a></li>
 <li><a href="javascript:void(0)" data-page="profile" onclick="showPage('profile')"><span class="ico">&#9787;</span> My Profile</a></li>
 <li><a href="javascript:void(0)" data-page="website" onclick="showPage('website');renderWebsitePage()"><span class="ico">&#9733;</span> My Website</a></li>
+<li><a href="javascript:void(0)" data-page="doctors" onclick="showPage('doctors');renderDoctorsPage()"><span class="ico">&#9764;</span> My Doctors</a></li>
 <li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain');renderDomainPage()"><span class="ico">&#9741;</span> Domain</a></li>
 <li><a href="javascript:void(0)" data-page="google" onclick="showPage('google')"><span class="ico">G</span> Google Business <span class="badge-soon">Soon</span></a></li>
 <li><a href="javascript:void(0)" data-page="social" onclick="showPage('social')"><span class="ico">&#9829;</span> Social Media <span class="badge-soon">Soon</span></a></li>
@@ -421,6 +466,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <button class="btn-save-plan" id="btn-save-plan-page" onclick="savePlan('page')">Confirm Plan Change</button>
 </div>
 </div>
+</div>
+</div>
+
+<!-- DOCTORS PAGE -->
+<div class="page-section" id="page-doctors">
+<div class="main-inner">
+<div class="doc-mgmt-header">
+  <h3>&#9764; My Doctors</h3>
+  <button class="doc-add-btn" onclick="openDoctorModal()">&#43; Add Doctor</button>
+</div>
+<div id="doctors-list-container"></div>
 </div>
 </div>
 
@@ -639,6 +695,71 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <div class="page-section" id="page-social"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9829;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Social Media</h2><p style="color:var(--text3)">Facebook &amp; Instagram page management coming soon.</p></div></div></div>
 <div class="page-section" id="page-analytics"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9670;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Analytics</h2><p style="color:var(--text3)">Profile views, booking stats, and website analytics will appear here after go-live.</p></div></div></div>
 
+</div>
+
+<!-- DOCTOR MODAL -->
+<div class="doc-modal-overlay" id="doc-modal-overlay" onclick="if(event.target===this)closeDoctorModal()">
+<div class="doc-modal">
+  <div class="doc-modal-header">
+    <h3 id="doc-modal-title">Add Doctor</h3>
+    <button class="doc-modal-close" onclick="closeDoctorModal()">&#10005;</button>
+  </div>
+  <div class="doc-modal-body">
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input type="text" id="doc-name" placeholder="Dr. Ravi Kumar">
+    </div>
+    <div class="form-group">
+      <label>Specialization *</label>
+      <select id="doc-spec">
+        <option value="">Select specialization</option>
+        <option value="General Physician">General Physician</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Orthopedic Surgeon">Orthopedic Surgeon</option>
+        <option value="Pediatrician">Pediatrician</option>
+        <option value="Gynecologist">Gynecologist</option>
+        <option value="ENT Specialist">ENT Specialist</option>
+        <option value="Ophthalmologist">Ophthalmologist</option>
+        <option value="Neurologist">Neurologist</option>
+        <option value="Psychiatrist">Psychiatrist</option>
+        <option value="Pulmonologist">Pulmonologist</option>
+        <option value="Gastroenterologist">Gastroenterologist</option>
+        <option value="Urologist">Urologist</option>
+        <option value="Endocrinologist">Endocrinologist</option>
+        <option value="Dentist">Dentist</option>
+        <option value="Physiotherapist">Physiotherapist</option>
+        <option value="Pathologist">Pathologist</option>
+        <option value="Radiologist">Radiologist</option>
+        <option value="General Surgeon">General Surgeon</option>
+        <option value="Oncologist">Oncologist</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Experience (years) *</label>
+        <input type="number" id="doc-exp" placeholder="10" min="0" max="60">
+      </div>
+      <div class="form-group">
+        <label>Consultation Fee (&#8377;) *</label>
+        <input type="number" id="doc-fee" placeholder="500" min="0">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Languages Spoken</label>
+      <div class="doc-lang-pills" id="doc-lang-pills"></div>
+    </div>
+    <div class="form-group">
+      <label>Schedule</label>
+      <div id="doc-schedule-rows"></div>
+      <button onclick="addScheduleRow()" style="margin-top:8px;padding:6px 12px;background:var(--bg2);color:var(--text2);border:1px dashed var(--border2);border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--f)">+ Add Schedule</button>
+    </div>
+  </div>
+  <div class="doc-modal-footer">
+    <button class="btn-cancel" onclick="closeDoctorModal()">Cancel</button>
+    <button class="btn-save" onclick="saveDoctorFromModal()">Save Doctor</button>
+  </div>
+</div>
 </div>
 
 <!-- TOAST -->
@@ -1446,6 +1567,228 @@ function copyToClipboard(text) {
         document.body.removeChild(t);
         showToast('Copied: ' + text);
     }
+}
+
+// ============================================================
+// DOCTOR MANAGEMENT
+// ============================================================
+var docDoctors = [];
+var docEditingId = null;
+var DOC_LANGUAGES = ['English','Hindi','Telugu','Tamil','Kannada','Malayalam','Bengali','Marathi','Gujarati','Urdu','Punjabi'];
+var DOC_COLORS = ['#2563eb','#7c3aed','#0d9488','#ea580c','#dc2626','#16a34a'];
+
+function renderDoctorsPage() {
+    if (!partner) return;
+    var container = document.getElementById('doctors-list-container');
+    container.innerHTML = '<div style="text-align:center;padding:40px"><div class="spinner dark lg"></div><p style="margin-top:12px;font-size:13px;color:var(--text3)">Loading doctors...</p></div>';
+
+    // Try to load from API
+    var hId = partner.id || partnerId;
+    fetch('/api/storefront/' + hId + '/doctors')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+        if (data && data.doctors && data.doctors.length) {
+            docDoctors = data.doctors;
+        } else {
+            // Use mock data if API returns empty
+            if (docDoctors.length === 0) loadMockDoctors();
+        }
+        renderDoctorsList();
+    })
+    .catch(function() {
+        if (docDoctors.length === 0) loadMockDoctors();
+        renderDoctorsList();
+    });
+}
+
+function loadMockDoctors() {
+    docDoctors = [
+        { id:'doc-1', full_name:'Dr. ' + (partner.owner_name || 'Owner'), specialization:'General Physician', experience_years:10, consultation_fee:500, languages:['English','Hindi','Telugu'], schedules:[{session_label:'Mon-Sat',slot_start:'09:00',slot_end:'13:00'},{session_label:'Mon-Fri',slot_start:'17:00',slot_end:'20:00'}] }
+    ];
+}
+
+function renderDoctorsList() {
+    var container = document.getElementById('doctors-list-container');
+    if (!docDoctors.length) {
+        container.innerHTML = '<div class="doc-empty"><div class="ico">&#128104;&#8205;&#9877;&#65039;</div><h3>No Doctors Added Yet</h3><p>Add your doctors so patients can see them on your website and book appointments.</p><button class="doc-add-btn" onclick="openDoctorModal()">&#43; Add Your First Doctor</button></div>';
+        return;
+    }
+    var html = '<div class="doc-list">';
+    docDoctors.forEach(function(d, i) {
+        var initials = d.full_name.replace(/^Dr\.?\s*/i,'').split(' ').map(function(w){return w[0]||''}).join('').substring(0,2).toUpperCase();
+        var color = DOC_COLORS[i % DOC_COLORS.length];
+        var scheduleHtml = '';
+        if (d.schedules && d.schedules.length) {
+            d.schedules.forEach(function(s) { scheduleHtml += s.session_label + ': ' + s.slot_start + ' - ' + s.slot_end + '<br>'; });
+        }
+        html += '<div class="doc-card-mgmt">';
+        html += '<div class="doc-avatar-mgmt" style="background:' + color + '">' + initials + '</div>';
+        html += '<div class="doc-card-body">';
+        html += '<div class="doc-card-name">' + d.full_name + '</div>';
+        html += '<div class="doc-card-spec">' + (d.specialization || 'General Physician') + '</div>';
+        html += '<div class="doc-card-meta">';
+        html += '<span>&#128188; <strong>' + (d.experience_years || 0) + '</strong> yrs exp</span>';
+        html += '<span>&#8377; <strong>' + (d.consultation_fee || 500) + '</strong> fee</span>';
+        html += '</div>';
+        if (d.languages && d.languages.length) {
+            html += '<div class="doc-card-langs">';
+            d.languages.forEach(function(l) { html += '<span>' + l + '</span>'; });
+            html += '</div>';
+        }
+        if (scheduleHtml) html += '<div class="doc-card-schedule">' + scheduleHtml + '</div>';
+        html += '</div>';
+        html += '<div class="doc-card-actions">';
+        html += '<button class="doc-edit-btn" onclick="editDoctor(\'' + d.id + '\')">&#9998; Edit</button>';
+        html += '<button class="doc-del-btn" onclick="deleteDoctor(\'' + d.id + '\')">&#128465;</button>';
+        html += '</div>';
+        html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function openDoctorModal(doctor) {
+    docEditingId = doctor ? doctor.id : null;
+    document.getElementById('doc-modal-title').textContent = doctor ? 'Edit Doctor' : 'Add Doctor';
+    document.getElementById('doc-name').value = doctor ? doctor.full_name : '';
+    document.getElementById('doc-spec').value = doctor ? (doctor.specialization || '') : '';
+    document.getElementById('doc-exp').value = doctor ? (doctor.experience_years || '') : '';
+    document.getElementById('doc-fee').value = doctor ? (doctor.consultation_fee || '') : '';
+
+    // Render language pills
+    var selectedLangs = doctor ? (doctor.languages || []) : [];
+    var langHtml = '';
+    DOC_LANGUAGES.forEach(function(lang) {
+        var sel = selectedLangs.indexOf(lang) > -1;
+        langHtml += '<div class="doc-lang-pill' + (sel ? ' selected' : '') + '" onclick="this.classList.toggle(\'selected\')">' + lang + '</div>';
+    });
+    document.getElementById('doc-lang-pills').innerHTML = langHtml;
+
+    // Render schedule rows
+    var scheds = doctor ? (doctor.schedules || []) : [{session_label:'Mon-Sat',slot_start:'09:00',slot_end:'13:00'}];
+    renderScheduleRows(scheds);
+
+    document.getElementById('doc-modal-overlay').classList.add('show');
+}
+
+function closeDoctorModal() {
+    document.getElementById('doc-modal-overlay').classList.remove('show');
+    docEditingId = null;
+}
+
+function renderScheduleRows(schedules) {
+    var html = '';
+    var days = ['Mon-Fri','Mon-Sat','Mon-Sun','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Morning','Afternoon','Evening'];
+    schedules.forEach(function(s, i) {
+        html += '<div class="doc-sched-row">';
+        html += '<select id="sched-day-' + i + '" style="flex:1">';
+        days.forEach(function(d) { html += '<option value="' + d + '"' + (s.session_label === d ? ' selected' : '') + '>' + d + '</option>'; });
+        html += '</select>';
+        html += '<input type="time" id="sched-start-' + i + '" value="' + (s.slot_start || '09:00') + '" style="width:100px">';
+        html += '<span style="color:var(--text3);font-size:12px">to</span>';
+        html += '<input type="time" id="sched-end-' + i + '" value="' + (s.slot_end || '17:00') + '" style="width:100px">';
+        html += '<button onclick="removeScheduleRow(this)" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">&#10005;</button>';
+        html += '</div>';
+    });
+    document.getElementById('doc-schedule-rows').innerHTML = html;
+}
+
+function addScheduleRow() {
+    var container = document.getElementById('doc-schedule-rows');
+    var idx = container.children.length;
+    var days = ['Mon-Fri','Mon-Sat','Mon-Sun','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Morning','Afternoon','Evening'];
+    var html = '<div class="doc-sched-row">';
+    html += '<select id="sched-day-' + idx + '" style="flex:1">';
+    days.forEach(function(d) { html += '<option value="' + d + '">' + d + '</option>'; });
+    html += '</select>';
+    html += '<input type="time" id="sched-start-' + idx + '" value="09:00" style="width:100px">';
+    html += '<span style="color:var(--text3);font-size:12px">to</span>';
+    html += '<input type="time" id="sched-end-' + idx + '" value="17:00" style="width:100px">';
+    html += '<button onclick="removeScheduleRow(this)" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">&#10005;</button>';
+    html += '</div>';
+    container.insertAdjacentHTML('beforeend', html);
+}
+
+function removeScheduleRow(btn) {
+    btn.closest('.doc-sched-row').remove();
+}
+
+function saveDoctorFromModal() {
+    var name = document.getElementById('doc-name').value.trim();
+    var spec = document.getElementById('doc-spec').value;
+    var exp = parseInt(document.getElementById('doc-exp').value) || 0;
+    var fee = parseInt(document.getElementById('doc-fee').value) || 500;
+
+    if (!name) { showToast('Please enter doctor name', true); return; }
+    if (!spec) { showToast('Please select specialization', true); return; }
+
+    // Collect languages
+    var langs = [];
+    document.querySelectorAll('#doc-lang-pills .doc-lang-pill.selected').forEach(function(el) { langs.push(el.textContent.trim()); });
+
+    // Collect schedules
+    var schedules = [];
+    var rows = document.querySelectorAll('#doc-schedule-rows .doc-sched-row');
+    rows.forEach(function(row, i) {
+        var dayEl = row.querySelector('select');
+        var startEl = row.querySelectorAll('input[type="time"]')[0];
+        var endEl = row.querySelectorAll('input[type="time"]')[1];
+        if (dayEl && startEl && endEl) {
+            schedules.push({ session_label: dayEl.value, slot_start: startEl.value, slot_end: endEl.value });
+        }
+    });
+
+    var doctor = {
+        id: docEditingId || ('doc-' + Date.now()),
+        full_name: name,
+        specialization: spec,
+        experience_years: exp,
+        consultation_fee: fee,
+        languages: langs,
+        schedules: schedules
+    };
+
+    if (docEditingId) {
+        // Update existing
+        var idx = docDoctors.findIndex(function(d) { return d.id === docEditingId; });
+        if (idx > -1) docDoctors[idx] = doctor;
+        showToast('Doctor updated!');
+    } else {
+        // Add new
+        docDoctors.push(doctor);
+        showToast('Doctor added!');
+    }
+
+    // TODO: API call to save doctor
+    // POST /api/presence/partners/{partnerId}/doctors (create)
+    // PUT /api/presence/partners/{partnerId}/doctors/{doctorId} (update)
+    // For now, save to partner.website_content as well
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify({ doctors: docDoctors })
+    }).catch(function() {});
+
+    closeDoctorModal();
+    renderDoctorsList();
+}
+
+function editDoctor(id) {
+    var doc = docDoctors.find(function(d) { return d.id === id; });
+    if (doc) openDoctorModal(doc);
+}
+
+function deleteDoctor(id) {
+    var doc = docDoctors.find(function(d) { return d.id === id; });
+    if (!doc) return;
+    if (!confirm('Delete ' + doc.full_name + '? This cannot be undone.')) return;
+    docDoctors = docDoctors.filter(function(d) { return d.id !== id; });
+    renderDoctorsList();
+    showToast('Doctor removed');
+    // TODO: DELETE /api/presence/partners/{partnerId}/doctors/{id}
+    authFetch(API + '/presence/partners/' + partnerId, {
+        method: 'PUT',
+        body: JSON.stringify({ doctors: docDoctors })
+    }).catch(function() {});
 }
 
 // ============================================================
