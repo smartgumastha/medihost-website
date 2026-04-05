@@ -1056,7 +1056,7 @@ function authFetch(url, opts) {
         if (r.status === 401) {
             localStorage.removeItem('medihost_token');
             localStorage.removeItem('medihost_partner_id');
-            window.location.href = 'onboard.html';
+            window.location.href = '/login';
             return null;
         }
         return r.json().then(function(d) { return { ok: r.ok, data: d }; });
@@ -1070,15 +1070,38 @@ function init() {
     authFetch(API + '/presence/auth/me', { method: 'GET' })
     .then(function(res) {
         if (!res) return;
-        if (!res.ok || !res.data.success) { window.location.href = '/login'; return; }
-        partner = res.data.partner;
-        partnerId = String(partner.id);
+        // Handle different response formats
+        var p = null;
+        if (res.data && res.data.partner) {
+            p = res.data.partner;
+        } else if (res.data && res.data.data && res.data.data.partner) {
+            p = res.data.data.partner;
+        } else if (res.data && res.data.id) {
+            p = res.data; // Response IS the partner object
+        }
+        if (!p) { window.location.href = '/login'; return; }
+        partner = p;
+        partnerId = String(partner.id || '');
         renderDashboard();
         loadPricing();
         loadPartnerModules();
     })
-    .catch(function() {
-        showNotification('error', 'Connection error', 'Could not connect to the server. Please refresh the page.');
+    .catch(function(err) {
+        console.error('Init error:', err);
+        // Try to render with cached partner data
+        var cached = localStorage.getItem('medihost_partner');
+        if (cached) {
+            try {
+                partner = JSON.parse(cached);
+                partnerId = String(partner.id || '');
+                renderDashboard();
+                showToast('Loaded from cache. Some features may be limited.');
+            } catch(e) {
+                showNotification('error', 'Connection error', 'Could not connect to the server. Please refresh the page.');
+            }
+        } else {
+            showNotification('error', 'Connection error', 'Could not connect to the server. Please refresh the page.');
+        }
     });
 }
 
