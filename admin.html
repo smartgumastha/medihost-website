@@ -449,7 +449,7 @@ h1,h2,h3,h4{font-family:var(--heading);color:var(--dark);line-height:1.2}
 
 <script src="shared.js"></script>
 <script>
-var API_BASE = MEDIHOST.API_BASE;
+var API_BASE = (window.location.hostname === 'medihost.in' || window.location.hostname === 'www.medihost.in' || window.location.hostname === 'localhost') ? '' : MEDIHOST.API_BASE;
 var ADMIN_KEY = MEDIHOST.ADMIN_KEY;
 var ADMIN_PASSWORD = MEDIHOST.ADMIN_KEY;
 var currentView = 'dashboard';
