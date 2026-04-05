@@ -428,43 +428,28 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
   btn.disabled = true;
   btnText.innerHTML = '<span class="spinner"></span> Signing in...';
 
+  // Try partner login first, then HMS staff login as fallback
   MEDIHOST.apiPost('/api/presence/partner-auth/login', { email: emailVal, password: passVal })
     .then(function(data) {
-      btn.disabled = false;
-      btnText.textContent = 'Sign in';
       if (data.success) {
-        MEDIHOST.saveAuth(data.token, data.partner);
-        try {
-          var name = data.partner.owner_name || data.partner.business_name || emailVal;
-          localStorage.setItem('medihost_last_user', JSON.stringify({ name: name, email: emailVal, product: productKey }));
-          if (document.getElementById('remember').checked) {
-            localStorage.setItem('medihost_remember_email', emailVal);
-          } else {
-            localStorage.removeItem('medihost_remember_email');
-          }
-        } catch(e) {}
-
-        // Show success
-        document.getElementById('loginForm').style.display = 'none';
-        document.querySelector('.login-heading').style.display = 'none';
-        document.querySelector('.login-sub').style.display = 'none';
-        document.querySelectorAll('.social-btn,.divider,.form-meta,.login-footer').forEach(function(e) { e.style.display = 'none'; });
-        document.getElementById('successCheck').classList.add('show');
-
-        setTimeout(function() {
-          if (redirectUrl) {
-            window.location.href = redirectUrl;
-          } else if (productKey === 'medihost' || productKey === 'admin') {
-            // Admin login — go to admin panel
-            window.location.href = '/admin';
-          } else {
-            // All partner logins → go to dashboard (home base)
-            // Dashboard has link to open HMS when needed
-            window.location.href = '/dashboard';
-          }
-        }, 1200);
+        handleLoginSuccess(data, emailVal);
       } else {
-        showAlert(data.error || 'Invalid email or password', 'error');
+        // Partner login failed — try HMS staff login
+        return MEDIHOST.apiPost('/api/presence/partner-auth/staff-login', { email: emailVal, password: passVal })
+          .then(function(staffData) {
+            if (staffData && staffData.success) {
+              handleLoginSuccess(staffData, emailVal);
+            } else {
+              btn.disabled = false;
+              btnText.textContent = 'Sign in';
+              showAlert(data.error || 'Invalid email or password', 'error');
+            }
+          })
+          .catch(function() {
+            btn.disabled = false;
+            btnText.textContent = 'Sign in';
+            showAlert(data.error || 'Invalid email or password', 'error');
+          });
       }
     })
     .catch(function() {
@@ -472,6 +457,64 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
       btnText.textContent = 'Sign in';
       showAlert('Network error. Please check your connection.', 'error');
     });
+
+  function handleLoginSuccess(data, email) {
+      var btn = document.getElementById('submitBtn');
+      var btnText = document.getElementById('submitText');
+      btn.disabled = false;
+      btnText.textContent = 'Sign in';
+
+      MEDIHOST.saveAuth(data.token, data.partner || data.user || {});
+
+      // Detect role and store it
+      var role = 'HOSPITAL_ADMIN';
+      if (data.partner && data.partner.role) role = data.partner.role;
+      if (data.user && data.user.role) role = data.user.role;
+      if (data.role) role = data.role;
+      localStorage.setItem('medihost_user_role', role);
+
+      // Store HMS login data if available
+      if (data.hms_token || data.hospital_id) {
+        localStorage.setItem('mw_login_data', JSON.stringify({
+          token: data.hms_token || data.token,
+          hospitalId: String(data.hospital_id || ''),
+          userid: String(data.user_id || data.userid || ''),
+          first_name: data.first_name || (data.partner ? data.partner.owner_name : '') || '',
+          last_name: data.last_name || '',
+          email: email,
+          role: role,
+          role_id: data.role_id || ''
+        }));
+      }
+
+      try {
+        var name = (data.partner ? data.partner.owner_name || data.partner.business_name : data.first_name) || email;
+        localStorage.setItem('medihost_last_user', JSON.stringify({ name: name, email: email, product: productKey, role: role }));
+        if (document.getElementById('remember').checked) {
+          localStorage.setItem('medihost_remember_email', email);
+        } else {
+          localStorage.removeItem('medihost_remember_email');
+        }
+      } catch(e) {}
+
+      // Show success
+      document.getElementById('loginForm').style.display = 'none';
+      document.querySelector('.login-heading').style.display = 'none';
+      document.querySelector('.login-sub').style.display = 'none';
+      document.querySelectorAll('.social-btn,.divider,.form-meta,.login-footer').forEach(function(e) { e.style.display = 'none'; });
+      document.getElementById('successCheck').classList.add('show');
+
+      setTimeout(function() {
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else if (role === 'SUPER_ADMIN') {
+          window.location.href = '/admin';
+        } else {
+          // All roles go to dashboard — RBAC handles visibility
+          window.location.href = '/dashboard';
+        }
+      }, 1200);
+  }
 });
 
 // ==================== FORGOT PASSWORD ====================

@@ -459,9 +459,21 @@ var chartPlanInstance = null;
 var chartSourceInstance = null;
 
 // ==================== AUTH ====================
+// Auto-login if user is already authenticated as admin
+(function checkAutoLogin() {
+  var token = localStorage.getItem('medihost_token');
+  var role = localStorage.getItem('medihost_user_role');
+  if (token && (role === 'SUPER_ADMIN' || role === 'HOSPITAL_ADMIN')) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('shell').classList.add('show');
+    navigate('dashboard');
+  }
+})();
+
 function doLogin() {
   var pass = document.getElementById('adminPass').value;
   if (pass === ADMIN_PASSWORD) {
+    localStorage.setItem('medihost_user_role', 'SUPER_ADMIN');
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('shell').classList.add('show');
     navigate('dashboard');
@@ -475,6 +487,7 @@ function doLogout() {
   document.getElementById('shell').classList.remove('show');
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('adminPass').value = '';
+  localStorage.removeItem('medihost_user_role');
 }
 
 // ==================== API ====================

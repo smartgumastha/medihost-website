@@ -1189,18 +1189,24 @@ var ROLE_PAGES = {
 };
 
 function applyRBAC() {
-    // Detect role from HMS login data or partner object
+    // Detect role from multiple sources
+    // 1. Check stored role from login
+    var storedRole = localStorage.getItem('medihost_user_role');
+    if (storedRole) userRole = storedRole;
+
+    // 2. Check HMS login data
     var loginDataStr = localStorage.getItem('mw_login_data');
     if (loginDataStr) {
         try {
             var loginData = JSON.parse(loginDataStr);
-            userRole = loginData.role || 'HOSPITAL_ADMIN';
+            if (loginData.role) userRole = loginData.role;
         } catch(e) {}
     }
-    // Partner owner always gets full access
+
+    // 3. Partner owner always gets full access
     if (partner && partner.is_owner) userRole = 'HOSPITAL_ADMIN';
-    // If logged in via medihost_token (not HMS), assume owner
-    if (!loginDataStr && localStorage.getItem('medihost_token')) userRole = 'HOSPITAL_ADMIN';
+    // 4. If logged in via medihost_token only (no role stored), assume owner
+    if (!storedRole && !loginDataStr && localStorage.getItem('medihost_token')) userRole = 'HOSPITAL_ADMIN';
 
     var allowedPages = ROLE_PAGES[userRole] || ROLE_PAGES.HOSPITAL_ADMIN;
 
