@@ -428,60 +428,74 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
   btn.disabled = true;
   btnText.innerHTML = '<span class="spinner"></span> Signing in...';
 
-  // Try partner login first, then HMS login as fallback
-  MEDIHOST.apiPost('/api/presence/partner-auth/login', { email: emailVal, password: passVal })
-    .then(function(data) {
-      if (data.success) {
-        handleLoginSuccess(data, emailVal);
-      } else {
-        // Partner login failed — try HMS direct login (/api/auth/login)
-        return fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: emailVal, password: passVal })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(hmsResp) {
-          // HMS returns { success:true, data: { token, hospital_id, role, ... } } or data directly
-          var hmsData = hmsResp.data || hmsResp;
-          if (hmsData && hmsData.token) {
-            // Convert HMS response to standard format for handleLoginSuccess
-            handleLoginSuccess({
-              success: true,
-              token: hmsData.token,
-              hms_token: hmsData.token,
-              hospital_id: hmsData.hospital_id || hmsData.hospitalId,
-              user_id: hmsData.userid || hmsData.user_id,
-              first_name: hmsData.first_name || '',
-              last_name: hmsData.last_name || '',
-              role: hmsData.role || 'HOSPITAL_ADMIN',
-              role_id: hmsData.role_id || '',
-              partner: {
-                id: hmsData.hospital_id || hmsData.hospitalId,
-                owner_name: (hmsData.first_name || '') + ' ' + (hmsData.last_name || ''),
-                business_name: hmsData.hospital_name || hmsData.first_name || emailVal,
-                email: hmsData.email || emailVal,
-                role: hmsData.role || 'HOSPITAL_ADMIN'
-              }
-            }, emailVal);
-          } else {
-            btn.disabled = false;
-            btnText.textContent = 'Sign in';
-            showAlert(data.error || 'Invalid email or password', 'error');
-          }
-        })
-        .catch(function() {
-          btn.disabled = false;
-          btnText.textContent = 'Sign in';
-          showAlert(data.error || 'Invalid email or password', 'error');
-        });
-      }
+  // Try partner login first
+  tryPartnerLogin(emailVal, passVal)
+    .then(function(result) {
+      if (result) { handleLoginSuccess(result, emailVal); return; }
+      // Partner login failed — try HMS login
+      return tryHMSLogin(emailVal, passVal);
     })
-    .catch(function() {
+    .then(function(result) {
+      if (result) { handleLoginSuccess(result, emailVal); return; }
+      // Both failed
       btn.disabled = false;
       btnText.textContent = 'Sign in';
-      showAlert('Network error. Please check your connection.', 'error');
+      showAlert('Invalid email or password', 'error');
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btnText.textContent = 'Sign in';
+      showAlert('Login failed. Please try again.', 'error');
+      console.error('Login error:', err);
     });
+
+  function tryPartnerLogin(email, pass) {
+    return fetch('/api/presence/partner-auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: pass })
+    })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (data && data.success && data.token) return data;
+      return null;
+    })
+    .catch(function() { return null; });
+  }
+
+  function tryHMSLogin(email, pass) {
+    return fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: pass })
+    })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(resp) {
+      if (!resp) return null;
+      var d = resp.data || resp;
+      if (!d || !d.token) return null;
+      // Convert HMS response to standard format
+      return {
+        success: true,
+        token: d.token,
+        hms_token: d.token,
+        hospital_id: d.hospital_id || d.hospitalId || '',
+        user_id: d.userid || d.user_id || '',
+        first_name: d.first_name || '',
+        last_name: d.last_name || '',
+        role: d.role || 'HOSPITAL_ADMIN',
+        role_id: d.role_id || '',
+        partner: {
+          id: d.hospital_id || d.hospitalId || '',
+          owner_name: ((d.first_name || '') + ' ' + (d.last_name || '')).trim(),
+          business_name: d.hospital_name || d.first_name || email,
+          email: d.email || email,
+          role: d.role || 'HOSPITAL_ADMIN'
+        }
+      };
+    })
+    .catch(function() { return null; });
+  }
 
   function handleLoginSuccess(data, email) {
       var btn = document.getElementById('submitBtn');
