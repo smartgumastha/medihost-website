@@ -1330,14 +1330,73 @@ function viewPhleboDetail(id) {
 
 function approvePhlebo(id) {
   var p = mockPhlebos.find(function(x){return x.id===id});
-  if (p) { p.status = 'approved'; loadPhlebos(); showToast('Approved ' + p.name + '! WhatsApp notification sent.', 'success'); }
-  // TODO: API call to PATCH /api/hemato/phlebo/:id/status { status: 'approved' }
+  if (!p) return;
+  openModal('Approve Phlebotomist',
+    '<div style="text-align:center;padding:8px 0">' +
+      '<div style="font-size:48px;margin-bottom:12px">🏍️</div>' +
+      '<h3 style="font-size:18px;font-weight:700;margin-bottom:4px">Approve ' + p.name + '?</h3>' +
+      '<p style="font-size:13px;color:#64748b;margin-bottom:20px">This will activate their Phlebo Partner App account and start assigning collections.</p>' +
+      '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-align:left;margin-bottom:16px">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">' +
+          '<div><span style="color:#94a3b8;font-size:11px">Phone</span><br><strong>' + p.phone + '</strong></div>' +
+          '<div><span style="color:#94a3b8;font-size:11px">Experience</span><br><strong>' + p.experience + ' years</strong></div>' +
+          '<div><span style="color:#94a3b8;font-size:11px">Vehicle</span><br><strong>' + p.vehicle + '</strong></div>' +
+          '<div><span style="color:#94a3b8;font-size:11px">Availability</span><br><strong>' + p.availability + '</strong></div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-align:left;margin-bottom:16px">' +
+        '<label style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Assign to Zones</label>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:4px">' + p.areas.map(function(a){return '<span style="padding:4px 10px;border-radius:6px;background:#FEF2F2;color:#DC2626;font-size:11px;font-weight:600">'+a+'</span>'}).join('') + '</div>' +
+      '</div>' +
+      '<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px;text-align:left;font-size:12px;color:#065f46">' +
+        '<strong>On approval:</strong>' +
+        '<ul style="margin:6px 0 0 16px;line-height:1.8">' +
+          '<li>Phlebo App login activated (phlebo.hemato.in)</li>' +
+          '<li>Start receiving collection assignments</li>' +
+          '<li>Connected to labs in assigned zones</li>' +
+          '<li>WhatsApp notification with login credentials</li>' +
+        '</ul>' +
+      '</div>' +
+    '</div>',
+    '<button class="btn btn-outline" onclick="closeModal()">Cancel</button> <button class="btn btn-green" onclick="confirmApprovePhlebo(' + p.id + ')"><i class="fas fa-check"></i> Confirm & Activate</button>'
+  );
+}
+
+function confirmApprovePhlebo(id) {
+  var p = mockPhlebos.find(function(x){return x.id===id});
+  if (!p) return;
+  p.status = 'approved';
+  closeModal();
+  loadPhlebos();
+  showToast('Approved ' + p.name + '! Phlebo App access granted — credentials sent via WhatsApp', 'success');
+  // TODO: API calls:
+  // 1. PATCH /api/hemato/phlebo/:id/status { status: 'approved' }
+  // 2. POST /api/hemato/phlebo/:id/create-account (creates login for phlebo.hemato.in)
+  // 3. POST /api/hemato/notify { phone: p.phone, type: 'phlebo_approved' }
 }
 
 function rejectPhlebo(id) {
   var p = mockPhlebos.find(function(x){return x.id===id});
-  if (p) { p.status = 'rejected'; loadPhlebos(); showToast('Rejected ' + p.name, 'error'); }
-  // TODO: API call to PATCH /api/hemato/phlebo/:id/status { status: 'rejected' }
+  if (!p) return;
+  openModal('Reject Phlebotomist',
+    '<div style="padding:8px 0">' +
+      '<p style="font-size:14px;margin-bottom:16px">Reject <strong>' + p.name + '</strong>? Please provide a reason:</p>' +
+      '<textarea id="rejectPhleboReason" rows="3" style="width:100%;padding:10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;outline:none;resize:vertical" placeholder="e.g., Insufficient experience, missing documents..."></textarea>' +
+    '</div>',
+    '<button class="btn btn-outline" onclick="closeModal()">Cancel</button> <button class="btn btn-red" onclick="confirmRejectPhlebo(' + p.id + ')"><i class="fas fa-times"></i> Confirm Reject</button>'
+  );
+}
+
+function confirmRejectPhlebo(id) {
+  var p = mockPhlebos.find(function(x){return x.id===id});
+  if (!p) return;
+  var reason = (document.getElementById('rejectPhleboReason') || {}).value || 'Application does not meet requirements';
+  p.status = 'rejected';
+  p.rejectReason = reason;
+  closeModal();
+  loadPhlebos();
+  showToast('Rejected ' + p.name + ' — Reason sent via WhatsApp', 'error');
+  // TODO: PATCH /api/hemato/phlebo/:id/status { status: 'rejected', reason: reason }
 }
 
 // ==================== LAB ENQUIRIES ====================
@@ -1404,14 +1463,117 @@ function viewLabDetail(id) {
 
 function approveLab(id) {
   var l = mockLabEnquiries.find(function(x){return x.id===id});
-  if (l) { l.status = 'approved'; loadLabEnquiries(); showToast('Approved ' + l.labName + '! Storefront: ' + (l.subdomain||l.labName.toLowerCase().replace(/\s/g,'')) + '.medihost.in', 'success'); }
-  // TODO: API call to PATCH /api/hemato/lab/:id/status { status: 'approved' }
+  if (!l) return;
+  var slug = l.subdomain || l.labName.toLowerCase().replace(/[^a-z0-9]/g,'');
+  var html = '<div style="text-align:center;padding:8px 0">' +
+    '<div style="font-size:48px;margin-bottom:12px">🎉</div>' +
+    '<h3 style="font-size:18px;font-weight:700;margin-bottom:4px">Approve ' + l.labName + '</h3>' +
+    '<p style="font-size:13px;color:#64748b;margin-bottom:20px">This will create a partner account, assign a storefront, and notify the lab owner.</p>' +
+    '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-align:left;margin-bottom:16px">' +
+      '<label style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Storefront Subdomain</label>' +
+      '<div style="display:flex;align-items:center;gap:0;border:1.5px solid #e2e8f0;border-radius:8px;overflow:hidden">' +
+        '<input type="text" id="labSubdomain" value="' + slug + '" style="flex:1;padding:10px 12px;border:none;font-size:14px;font-weight:600;outline:none;font-family:monospace">' +
+        '<span style="padding:10px 12px;background:#f1f5f9;font-size:13px;color:#64748b;white-space:nowrap;border-left:1px solid #e2e8f0">.medihost.in</span>' +
+      '</div>' +
+      '<p style="font-size:11px;color:#94a3b8;margin-top:6px">This will be the lab\'s live storefront URL</p>' +
+    '</div>' +
+    '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-align:left;margin-bottom:16px">' +
+      '<label style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Assign Plan</label>' +
+      '<select id="labPlan" style="width:100%;padding:10px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;outline:none;font-family:Inter,sans-serif">' +
+        '<option value="starter">Starter (Free — Subdomain only)</option>' +
+        '<option value="professional">Professional (Custom domain)</option>' +
+        '<option value="business">Business (Full features)</option>' +
+        '<option value="enterprise">Enterprise (White label)</option>' +
+      '</select>' +
+    '</div>' +
+    '<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px;text-align:left;font-size:12px;color:#065f46">' +
+      '<strong>On approval, the system will:</strong>' +
+      '<ul style="margin:6px 0 0 16px;line-height:1.8">' +
+        '<li>Create partner account with login credentials</li>' +
+        '<li>Generate storefront at <strong id="previewUrl">' + slug + '.medihost.in</strong></li>' +
+        '<li>Grant access to Lab Partner App (partner.hemato.in)</li>' +
+        '<li>Grant access to LIS (lis.hemato.in)</li>' +
+        '<li>List lab on hemato.in marketplace</li>' +
+        '<li>Send WhatsApp notification with credentials</li>' +
+      '</ul>' +
+    '</div>' +
+  '</div>';
+  var footer = '<button class="btn btn-outline" onclick="closeModal()">Cancel</button> <button class="btn btn-green" onclick="confirmApproveLab(' + l.id + ')"><i class="fas fa-check"></i> Confirm & Create Storefront</button>';
+  openModal('Approve Lab Partner', html, footer);
+
+  // Live preview subdomain
+  var subInput = document.getElementById('labSubdomain');
+  if (subInput) {
+    subInput.addEventListener('input', function() {
+      var preview = document.getElementById('previewUrl');
+      if (preview) preview.textContent = this.value + '.medihost.in';
+    });
+  }
+}
+
+function confirmApproveLab(id) {
+  var l = mockLabEnquiries.find(function(x){return x.id===id});
+  if (!l) return;
+  var subdomain = document.getElementById('labSubdomain').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
+  var plan = document.getElementById('labPlan').value;
+  if (!subdomain) { showToast('Please enter a valid subdomain', 'error'); return; }
+
+  l.status = 'approved';
+  l.subdomain = subdomain;
+  l.plan = plan;
+  closeModal();
+
+  // TODO: Replace with actual API calls:
+  // 1. PATCH /api/hemato/lab/:id/status { status: 'approved' }
+  // 2. POST /api/presence/partners/create { business_name: l.labName, owner_name: l.owner, phone: l.phone, email: l.email, city: l.city, selected_domain: subdomain + '.medihost.in', plan: plan, source: 'hemato' }
+  // 3. POST /api/hemato/notify { phone: l.phone, type: 'lab_approved', subdomain: subdomain }
+  // This creates the partner record that site.html uses via GET /api/storefront/site?domain=subdomain.medihost.in
+
+  loadLabEnquiries();
+  showToast('Lab approved! Storefront live at ' + subdomain + '.medihost.in — Credentials sent via WhatsApp', 'success');
+
+  // Show confirmation modal
+  setTimeout(function() {
+    openModal('Lab Onboarded Successfully',
+      '<div style="text-align:center;padding:16px">' +
+        '<div style="font-size:56px;margin-bottom:12px">✅</div>' +
+        '<h3 style="font-size:18px;font-weight:700;margin-bottom:12px">' + l.labName + ' is now live!</h3>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;margin-bottom:16px">' +
+          '<div style="background:#f8fafc;padding:12px;border-radius:8px"><div style="font-size:10px;color:#94a3b8;font-weight:600;text-transform:uppercase;margin-bottom:4px">Storefront</div><a href="https://' + subdomain + '.medihost.in" target="_blank" style="color:#3b82f6;font-weight:600;font-size:13px">' + subdomain + '.medihost.in</a></div>' +
+          '<div style="background:#f8fafc;padding:12px;border-radius:8px"><div style="font-size:10px;color:#94a3b8;font-weight:600;text-transform:uppercase;margin-bottom:4px">Lab Partner App</div><a href="https://partner.hemato.in" target="_blank" style="color:#3b82f6;font-weight:600;font-size:13px">partner.hemato.in</a></div>' +
+          '<div style="background:#f8fafc;padding:12px;border-radius:8px"><div style="font-size:10px;color:#94a3b8;font-weight:600;text-transform:uppercase;margin-bottom:4px">LIS Access</div><a href="https://lis.hemato.in" target="_blank" style="color:#3b82f6;font-weight:600;font-size:13px">lis.hemato.in</a></div>' +
+          '<div style="background:#f8fafc;padding:12px;border-radius:8px"><div style="font-size:10px;color:#94a3b8;font-weight:600;text-transform:uppercase;margin-bottom:4px">Plan</div><span style="font-weight:600;font-size:13px;text-transform:capitalize">' + plan + '</span></div>' +
+        '</div>' +
+        '<p style="font-size:12px;color:#64748b">Login credentials have been sent to ' + l.phone + ' via WhatsApp</p>' +
+      '</div>',
+      '<button class="btn btn-outline" onclick="closeModal()">Close</button> <a href="https://' + subdomain + '.medihost.in" target="_blank" class="btn btn-green"><i class="fas fa-external-link-alt"></i> View Storefront</a>'
+    );
+  }, 500);
 }
 
 function rejectLab(id) {
   var l = mockLabEnquiries.find(function(x){return x.id===id});
-  if (l) { l.status = 'rejected'; loadLabEnquiries(); showToast('Rejected ' + l.labName, 'error'); }
-  // TODO: API call to PATCH /api/hemato/lab/:id/status { status: 'rejected' }
+  if (!l) return;
+  openModal('Reject Lab Application',
+    '<div style="padding:8px 0">' +
+      '<p style="font-size:14px;margin-bottom:16px">Reject <strong>' + l.labName + '</strong>? Please provide a reason:</p>' +
+      '<textarea id="rejectLabReason" rows="3" style="width:100%;padding:10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;outline:none;resize:vertical" placeholder="e.g., Missing NABL certification, incomplete documents..."></textarea>' +
+    '</div>',
+    '<button class="btn btn-outline" onclick="closeModal()">Cancel</button> <button class="btn btn-red" onclick="confirmRejectLab(' + l.id + ')"><i class="fas fa-times"></i> Confirm Reject</button>'
+  );
+}
+
+function confirmRejectLab(id) {
+  var l = mockLabEnquiries.find(function(x){return x.id===id});
+  if (!l) return;
+  var reason = (document.getElementById('rejectLabReason') || {}).value || 'Application does not meet requirements';
+  l.status = 'rejected';
+  l.rejectReason = reason;
+  closeModal();
+  loadLabEnquiries();
+  showToast('Rejected ' + l.labName + ' — Reason sent via WhatsApp', 'error');
+  // TODO: API call to PATCH /api/hemato/lab/:id/status { status: 'rejected', reason: reason }
+  // TODO: Send WhatsApp notification with rejection reason
 }
 
 // ==================== APPROVED PHLEBOS ====================
