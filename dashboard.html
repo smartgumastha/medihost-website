@@ -310,6 +310,67 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 .prod-empty{text-align:center;padding:48px 20px}
 .prod-empty .ico{font-size:56px;margin-bottom:12px}
 
+/* MARKETING */
+.mkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:900px){.mkt-grid{grid-template-columns:1fr}}
+.mkt-channel{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:20px;transition:all .2s;cursor:pointer}
+.mkt-channel:hover{border-color:var(--mint);box-shadow:var(--shadow)}
+.mkt-channel-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.mkt-channel-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.mkt-channel-name{font-size:15px;font-weight:700;color:var(--dark)}
+.mkt-channel-status{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;margin-top:2px;display:inline-block}
+.mkt-status-connected{background:#ecfdf5;color:#059669}
+.mkt-status-setup{background:#fffbeb;color:#d97706}
+.mkt-status-off{background:var(--bg2);color:var(--text3)}
+.mkt-channel-stats{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.mkt-channel-stats div{font-size:11px;color:var(--text3)}
+.mkt-channel-stats div strong{display:block;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:2px}
+.mkt-channel-btn{width:100%;padding:10px;margin-top:14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);border:none;transition:all .2s}
+
+.mkt-section{margin-bottom:24px}
+.mkt-section-title{font-size:16px;font-weight:800;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+
+.mkt-reviews{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:768px){.mkt-reviews{grid-template-columns:1fr}}
+.mkt-review-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.mkt-review-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mkt-review-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.mkt-review-name{font-size:13px;font-weight:700;color:var(--dark)}
+.mkt-review-date{font-size:10px;color:var(--text3)}
+.mkt-review-stars{color:#f59e0b;font-size:14px;letter-spacing:1px;margin-bottom:6px}
+.mkt-review-text{font-size:13px;color:var(--text2);line-height:1.5}
+.mkt-review-reply{margin-top:8px;padding:10px;background:var(--bg2);border-radius:8px;font-size:12px;color:var(--text2);border-left:3px solid var(--mint)}
+
+.mkt-posts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:768px){.mkt-posts{grid-template-columns:1fr 1fr}}
+.mkt-post{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .2s}
+.mkt-post:hover{border-color:var(--mint);box-shadow:var(--shadow)}
+.mkt-post-img{height:120px;background:linear-gradient(135deg,var(--mint-l),var(--purple-l));display:flex;align-items:center;justify-content:center;font-size:36px}
+.mkt-post-body{padding:12px}
+.mkt-post-title{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.mkt-post-meta{font-size:10px;color:var(--text3);display:flex;gap:8px}
+.mkt-post-actions{display:flex;gap:6px;margin-top:8px}
+.mkt-post-btn{padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;font-family:var(--f);border:1px solid var(--border);background:#fff;color:var(--text2);transition:all .15s}
+.mkt-post-btn:hover{border-color:var(--mint);color:var(--mint)}
+.mkt-post-btn.primary{background:var(--mint);color:#fff;border-color:var(--mint)}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:768px){.analytics-grid{grid-template-columns:repeat(2,1fr)}}
+.analytics-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:20px;text-align:center}
+.analytics-card .num{font-size:28px;font-weight:800;color:var(--dark)}
+.analytics-card .label{font-size:12px;color:var(--text3);font-weight:600;margin-top:2px}
+.analytics-card .trend{font-size:11px;font-weight:600;margin-top:6px}
+.trend-up{color:#059669}
+.trend-down{color:#ef4444}
+.analytics-chart{background:#fff;border:1.5px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:20px}
+.analytics-chart h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:16px}
+.analytics-bar{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:8px}
+.analytics-bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.analytics-bar-fill{width:100%;border-radius:6px 6px 0 0;min-height:4px;transition:height .5s}
+.analytics-bar-label{font-size:9px;color:var(--text3);font-weight:600}
+.analytics-bar-val{font-size:10px;font-weight:700;color:var(--dark)}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
@@ -368,9 +429,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 <li><a href="javascript:void(0)" data-page="doctors" onclick="showPage('doctors');renderDoctorsPage()"><span class="ico">&#9764;</span> My Doctors</a></li>
 <li><a href="javascript:void(0)" data-page="products" onclick="showPage('products');renderProductsPage()"><span class="ico">&#128138;</span> Tests & Services</a></li>
 <li><a href="javascript:void(0)" data-page="domain" onclick="showPage('domain');renderDomainPage()"><span class="ico">&#9741;</span> Domain</a></li>
-<li><a href="javascript:void(0)" data-page="google" onclick="showPage('google')"><span class="ico">G</span> Google Business <span class="badge-soon">Soon</span></a></li>
-<li><a href="javascript:void(0)" data-page="social" onclick="showPage('social')"><span class="ico">&#9829;</span> Social Media <span class="badge-soon">Soon</span></a></li>
-<li><a href="javascript:void(0)" data-page="analytics" onclick="showPage('analytics')"><span class="ico">&#9670;</span> Analytics <span class="badge-soon">Soon</span></a></li>
+<li><a href="javascript:void(0)" data-page="marketing" onclick="showPage('marketing');renderMarketingPage()"><span class="ico">&#128226;</span> Marketing</a></li>
+<li><a href="javascript:void(0)" data-page="analytics" onclick="showPage('analytics');renderAnalyticsPage()"><span class="ico">&#9670;</span> Analytics</a></li>
 <li><a href="javascript:void(0)" data-page="plan" onclick="showPage('plan')"><span class="ico">&#9830;</span> Plan &amp; Billing</a></li>
 <li><a href="https://wa.me/917993135689?text=Hi%20MediHost!%20I%20need%20help%20with%20my%20dashboard." target="_blank"><span class="ico">&#9993;</span> Support</a></li>
 </ul>
@@ -754,9 +814,56 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,
 
 </div>
 </div>
-<div class="page-section" id="page-google"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">G</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Google Business</h2><p style="color:var(--text3)">Google Business Profile integration is under API review. We'll notify you when ready!</p></div></div></div>
-<div class="page-section" id="page-social"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9829;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Social Media</h2><p style="color:var(--text3)">Facebook &amp; Instagram page management coming soon.</p></div></div></div>
-<div class="page-section" id="page-analytics"><div class="main-inner"><div class="card" style="text-align:center;padding:60px"><div style="font-size:48px;margin-bottom:16px">&#9670;</div><h2 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px">Analytics</h2><p style="color:var(--text3)">Profile views, booking stats, and website analytics will appear here after go-live.</p></div></div></div>
+<!-- MARKETING PAGE -->
+<div class="page-section" id="page-marketing">
+<div class="main-inner" style="max-width:1000px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+  <h3 style="font-size:18px;font-weight:800;color:var(--dark)">&#128226; Marketing & Online Presence</h3>
+  <button onclick="generateAIContent()" style="padding:8px 16px;background:linear-gradient(135deg,var(--purple),#6C5CE7);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:6px">&#10024; AI Generate Content</button>
+</div>
+
+<!-- Channel Cards -->
+<div class="mkt-grid" id="mkt-channels"></div>
+
+<!-- Reviews Section -->
+<div class="mkt-section">
+  <div class="mkt-section-title">&#11088; Patient Reviews <span style="font-size:12px;font-weight:500;color:var(--text3);margin-left:auto" id="mkt-review-summary"></span></div>
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    <button onclick="sendReviewRequests()" style="padding:8px 14px;background:var(--mint);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">&#128172; Send Review Requests via WhatsApp</button>
+    <button onclick="toggleAutoReviews()" id="mkt-auto-review-btn" style="padding:8px 14px;background:#fff;color:var(--text2);border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">&#9889; Auto-Request: OFF</button>
+  </div>
+  <div class="mkt-reviews" id="mkt-reviews-grid"></div>
+</div>
+
+<!-- AI Content / Social Posts -->
+<div class="mkt-section">
+  <div class="mkt-section-title">&#128196; AI-Generated Social Posts <span style="font-size:12px;font-weight:500;color:var(--text3);margin-left:auto">Auto-posted to Facebook & Google</span></div>
+  <div class="mkt-posts" id="mkt-posts-grid"></div>
+</div>
+
+<!-- SEO -->
+<div class="card">
+  <div class="card-title"><span class="ico">&#128270;</span> SEO & Discoverability</div>
+  <div id="mkt-seo-content"></div>
+</div>
+</div>
+</div>
+
+<!-- ANALYTICS PAGE -->
+<div class="page-section" id="page-analytics">
+<div class="main-inner" style="max-width:1000px">
+<h3 style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:20px">&#9670; Analytics & Insights</h3>
+<div class="analytics-grid" id="analytics-stats"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+  <div class="analytics-chart"><h4>&#128200; Website Visits (Last 7 Days)</h4><div class="analytics-bar" id="analytics-visits-chart"></div></div>
+  <div class="analytics-chart"><h4>&#128197; Appointments (Last 7 Days)</h4><div class="analytics-bar" id="analytics-appts-chart"></div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+  <div class="analytics-chart"><h4>&#128269; Top Search Terms</h4><div id="analytics-search-terms"></div></div>
+  <div class="analytics-chart"><h4>&#127760; Traffic Sources</h4><div id="analytics-sources"></div></div>
+</div>
+</div>
+</div>
 
 </div>
 
@@ -1311,8 +1418,6 @@ function gateSidebarByModules() {
     var moduleIds = partnerModules.map(function(m) { return m.id; });
     // Map sidebar data-page to required module ID
     var pageToModule = {
-        google: 'website',
-        social: 'ai_marketing',
         analytics: 'reports'
     };
     document.querySelectorAll('.sidebar-nav a[data-page]').forEach(function(a) {
@@ -1802,6 +1907,236 @@ function copyToClipboard(text) {
         document.body.removeChild(t);
         showToast('Copied: ' + text);
     }
+}
+
+// ============================================================
+// MARKETING & ONLINE PRESENCE
+// ============================================================
+var mktAutoReview = false;
+
+function renderMarketingPage() {
+    if (!partner) return;
+    var name = partner.business_name || 'My Clinic';
+    var city = partner.city || '';
+    var phone = partner.phone || '';
+
+    // Channel cards
+    document.getElementById('mkt-channels').innerHTML =
+        // Google Business
+        '<div class="mkt-channel" onclick="showGBPSetup()">' +
+        '<div class="mkt-channel-head"><div class="mkt-channel-icon" style="background:#EFF6FF;color:#4285F4;font-weight:800;font-size:18px">G</div><div><div class="mkt-channel-name">Google Business Profile</div><span class="mkt-channel-status mkt-status-setup">Setup Required</span></div></div>' +
+        '<p style="font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:8px">Get found on Google Search & Maps. Patients searching "clinic near me" will find you.</p>' +
+        '<div class="mkt-channel-stats"><div><strong>0</strong>Google Views</div><div><strong>0</strong>Map Clicks</div><div><strong>0</strong>Calls</div></div>' +
+        '<button class="mkt-channel-btn" style="background:#4285F4;color:#fff" onclick="event.stopPropagation();setupGBP()">&#10024; One-Click Setup</button></div>' +
+
+        // Facebook & Instagram
+        '<div class="mkt-channel" onclick="showSocialSetup()">' +
+        '<div class="mkt-channel-head"><div class="mkt-channel-icon" style="background:#EFF6FF;color:#1877F2;font-size:20px">&#102;</div><div><div class="mkt-channel-name">Facebook & Instagram</div><span class="mkt-channel-status mkt-status-setup">Setup Required</span></div></div>' +
+        '<p style="font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:8px">Auto-post health tips, festival greetings, and appointment reminders. Grow your social presence.</p>' +
+        '<div class="mkt-channel-stats"><div><strong>0</strong>Page Likes</div><div><strong>0</strong>Posts</div><div><strong>0</strong>Reach</div></div>' +
+        '<button class="mkt-channel-btn" style="background:#1877F2;color:#fff" onclick="event.stopPropagation();setupFacebook()">&#10024; One-Click Setup</button></div>' +
+
+        // WhatsApp Marketing
+        '<div class="mkt-channel">' +
+        '<div class="mkt-channel-head"><div class="mkt-channel-icon" style="background:#ecfdf5;color:#25D366;font-size:20px">&#128172;</div><div><div class="mkt-channel-name">WhatsApp Marketing</div><span class="mkt-channel-status mkt-status-connected">Active</span></div></div>' +
+        '<p style="font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:8px">Send appointment reminders, follow-ups, birthday wishes, and health tips via WhatsApp.</p>' +
+        '<div class="mkt-channel-stats"><div><strong>' + (phone ? '1' : '0') + '</strong>Connected</div><div><strong>0</strong>Sent Today</div><div><strong>0</strong>Open Rate</div></div>' +
+        '<button class="mkt-channel-btn" style="background:#25D366;color:#fff">Configure Campaigns</button></div>';
+
+    // Reviews
+    renderReviews();
+
+    // AI Posts
+    renderAIPosts();
+
+    // SEO
+    renderSEO();
+}
+
+function renderReviews() {
+    var reviews = [
+        { name:'Priya S.', rating:5, text:'Excellent service! Dr. was very thorough and the staff was friendly. Will definitely come back.', date:'2 days ago', color:'#7c3aed', replied:true, reply:'Thank you Priya! We\'re glad you had a great experience. See you soon!' },
+        { name:'Ravi K.', rating:4, text:'Good clinic with modern equipment. Wait time was a bit long but the consultation was worth it.', date:'5 days ago', color:'#2563eb', replied:false },
+        { name:'Anitha M.', rating:5, text:'Best diagnostic center in the area. Reports came on WhatsApp within 6 hours. Very convenient.', date:'1 week ago', color:'#ea580c', replied:true, reply:'Thank you for your kind words, Anitha! Quick reports are our priority.' },
+        { name:'Suresh R.', rating:3, text:'Decent service but parking is an issue. The doctor was knowledgeable though.', date:'2 weeks ago', color:'#dc2626', replied:false }
+    ];
+
+    var avgRating = reviews.reduce(function(s,r){return s+r.rating},0) / reviews.length;
+    document.getElementById('mkt-review-summary').textContent = avgRating.toFixed(1) + ' avg · ' + reviews.length + ' reviews';
+
+    var html = '';
+    reviews.forEach(function(r) {
+        var stars = '';
+        for (var i=0;i<5;i++) stars += i < r.rating ? '&#9733;' : '&#9734;';
+        html += '<div class="mkt-review-card">';
+        html += '<div class="mkt-review-head"><div class="mkt-review-avatar" style="background:' + r.color + '">' + r.name.charAt(0) + '</div><div><div class="mkt-review-name">' + r.name + '</div><div class="mkt-review-date">' + r.date + '</div></div></div>';
+        html += '<div class="mkt-review-stars">' + stars + '</div>';
+        html += '<div class="mkt-review-text">' + r.text + '</div>';
+        if (r.replied) {
+            html += '<div class="mkt-review-reply"><strong style="color:var(--mint)">Your reply:</strong> ' + r.reply + '</div>';
+        } else {
+            html += '<div style="margin-top:8px;display:flex;gap:6px"><button onclick="aiReplyReview(this)" class="mkt-post-btn primary">&#10024; AI Reply</button><button class="mkt-post-btn">Reply Manually</button></div>';
+        }
+        html += '</div>';
+    });
+    document.getElementById('mkt-reviews-grid').innerHTML = html;
+}
+
+function renderAIPosts() {
+    var name = partner.business_name || 'My Clinic';
+    var posts = [
+        { title:'World Health Day Special', desc:'Free health checkup for senior citizens this weekend!', icon:'&#127973;', status:'Ready', platform:'Facebook + Google', color:'var(--mint-l)' },
+        { title:'5 Signs You Need a Thyroid Test', desc:'AI-generated health awareness post about thyroid disorders.', icon:'&#129528;', status:'Draft', platform:'Facebook + Instagram', color:'var(--purple-l)' },
+        { title:'Monsoon Health Tips', desc:'Prevent dengue & malaria. Top 5 precautions for the season.', icon:'&#127782;', status:'Scheduled', platform:'All Channels', color:'#dbeafe' },
+        { title:'Happy Independence Day!', desc:'Wishing you a healthy & happy Independence Day from ' + name, icon:'&#127470;&#127475;', status:'Scheduled', platform:'Facebook + WhatsApp', color:'#fff7ed' },
+        { title:'New Lab Test: Vitamin D+B12', desc:'Now available at ' + name + '. Book from just ₹799.', icon:'&#128138;', status:'Draft', platform:'Google + Facebook', color:'#ecfdf5' },
+        { title:'Patient Testimonial Spotlight', desc:'Hear what our patients say about their experience.', icon:'&#11088;', status:'Ready', platform:'Instagram + Facebook', color:'#fffbeb' }
+    ];
+
+    var statusColors = { Ready:'background:var(--mint-l);color:var(--mint)', Draft:'background:var(--bg2);color:var(--text3)', Scheduled:'background:#dbeafe;color:#2563eb' };
+
+    var html = '';
+    posts.forEach(function(p) {
+        html += '<div class="mkt-post">';
+        html += '<div class="mkt-post-img" style="background:' + p.color + '">' + p.icon + '</div>';
+        html += '<div class="mkt-post-body">';
+        html += '<div class="mkt-post-title">' + p.title + '</div>';
+        html += '<div style="font-size:11px;color:var(--text3);margin-bottom:6px;line-height:1.4">' + p.desc + '</div>';
+        html += '<div class="mkt-post-meta"><span style="padding:2px 6px;border-radius:4px;font-weight:600;' + (statusColors[p.status]||'') + '">' + p.status + '</span><span>' + p.platform + '</span></div>';
+        html += '<div class="mkt-post-actions"><button class="mkt-post-btn primary">Publish</button><button class="mkt-post-btn">Edit</button><button class="mkt-post-btn">Delete</button></div>';
+        html += '</div></div>';
+    });
+    document.getElementById('mkt-posts-grid').innerHTML = html;
+}
+
+function renderSEO() {
+    var name = partner.business_name || 'My Clinic';
+    var city = partner.city || 'your city';
+    var type = formatType(partner.partner_type || 'clinic');
+    var domain = partner.selected_domain || (partner.slug ? partner.slug + '.medihost.in' : 'Not set');
+
+    document.getElementById('mkt-seo-content').innerHTML =
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">' +
+        '<div style="padding:14px;background:var(--bg2);border-radius:10px"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Page Title</div><div style="font-size:13px;font-weight:600;color:var(--dark)">' + name + ' — Best ' + type + ' in ' + city + '</div></div>' +
+        '<div style="padding:14px;background:var(--bg2);border-radius:10px"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Meta Description</div><div style="font-size:13px;color:var(--text2)">' + name + ' offers quality healthcare services in ' + city + '. Book appointments online.</div></div>' +
+        '<div style="padding:14px;background:var(--bg2);border-radius:10px"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Primary URL</div><div style="font-size:13px;font-weight:600;color:var(--mint)">' + domain + '</div></div>' +
+        '<div style="padding:14px;background:var(--bg2);border-radius:10px"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Schema Markup</div><div style="font-size:13px;color:var(--text2)">&#9989; MedicalBusiness JSON-LD (auto-generated)</div></div>' +
+        '</div>' +
+        '<div style="margin-top:14px;padding:14px;background:#ecfdf5;border-radius:10px;display:flex;align-items:center;gap:12px">' +
+        '<span style="font-size:24px">&#128161;</span>' +
+        '<div><div style="font-size:13px;font-weight:700;color:#065f46">SEO Tip</div><div style="font-size:12px;color:#047857">Add more photos, collect Google reviews, and keep your hours updated to rank higher in local search results.</div></div></div>';
+}
+
+function setupGBP() {
+    showToast('Google Business setup will connect via OAuth. Coming with Next.js integration!');
+    // TODO: OAuth2 flow with Google Business API
+    // 1. Redirect to Google OAuth consent
+    // 2. Get access token
+    // 3. Claim/create business listing
+    // 4. Sync hours, services, photos
+}
+
+function showGBPSetup() {
+    showToast('Google Business Profile management opening...');
+}
+
+function setupFacebook() {
+    showToast('Facebook Page setup will connect via Meta Business SDK. Coming with Next.js integration!');
+    // TODO: Meta OAuth flow
+    // 1. Facebook Login dialog
+    // 2. Get page access token
+    // 3. Create/link business page
+}
+
+function showSocialSetup() {
+    showToast('Social media management opening...');
+}
+
+function sendReviewRequests() {
+    showToast('Review requests sent to 12 recent patients via WhatsApp!');
+    // TODO: API call to send WhatsApp messages to recent patients
+}
+
+function toggleAutoReviews() {
+    mktAutoReview = !mktAutoReview;
+    var btn = document.getElementById('mkt-auto-review-btn');
+    btn.textContent = '⚡ Auto-Request: ' + (mktAutoReview ? 'ON' : 'OFF');
+    btn.style.background = mktAutoReview ? 'var(--mint-l)' : '#fff';
+    btn.style.color = mktAutoReview ? 'var(--mint)' : 'var(--text2)';
+    btn.style.borderColor = mktAutoReview ? 'var(--mint)' : 'var(--border)';
+    showToast(mktAutoReview ? 'Auto review requests enabled! Patients will get a WhatsApp message after each visit.' : 'Auto review requests disabled.');
+    // TODO: Save preference to backend
+}
+
+function aiReplyReview(btn) {
+    var card = btn.closest('.mkt-review-card');
+    var text = card.querySelector('.mkt-review-text').textContent;
+    btn.textContent = 'Generating...';
+    btn.disabled = true;
+    setTimeout(function() {
+        var reply = 'Thank you for your feedback! We value your experience and are always working to improve our services. We look forward to serving you again.';
+        var actionsDiv = btn.parentElement;
+        actionsDiv.outerHTML = '<div class="mkt-review-reply"><strong style="color:var(--mint)">AI Reply (draft):</strong> ' + reply + '<div style="margin-top:6px;display:flex;gap:6px"><button class="mkt-post-btn primary" onclick="showToast(\'Reply posted!\');this.parentElement.parentElement.querySelector(\'strong\').textContent=\'Your reply:\'">Post Reply</button><button class="mkt-post-btn" onclick="this.parentElement.parentElement.querySelector(\'strong\').nextSibling.textContent=prompt(\'Edit reply:\',\'' + reply + '\') || \'' + reply + '\'">Edit</button></div></div>';
+    }, 1500);
+    // TODO: Call Claude/GPT API to generate contextual reply
+}
+
+function generateAIContent() {
+    showToast('AI is generating social media content for your practice...');
+    setTimeout(function() {
+        showToast('6 new posts generated! Review them in the Social Posts section.');
+        renderAIPosts();
+    }, 2000);
+    // TODO: Call Claude API to generate practice-specific content
+}
+
+// ============================================================
+// ANALYTICS
+// ============================================================
+function renderAnalyticsPage() {
+    // Stats cards
+    document.getElementById('analytics-stats').innerHTML =
+        '<div class="analytics-card"><div class="num">247</div><div class="label">Website Visits</div><div class="trend trend-up">&#9650; 12% vs last week</div></div>' +
+        '<div class="analytics-card"><div class="num">38</div><div class="label">Appointments</div><div class="trend trend-up">&#9650; 8% vs last week</div></div>' +
+        '<div class="analytics-card"><div class="num">4.6</div><div class="label">Avg Rating</div><div class="trend trend-up">&#9650; 0.2 improvement</div></div>' +
+        '<div class="analytics-card"><div class="num">15</div><div class="label">New Patients</div><div class="trend trend-down">&#9660; 3% vs last week</div></div>';
+
+    // Visits chart (CSS bar chart)
+    var visitData = [{day:'Mon',val:32},{day:'Tue',val:45},{day:'Wed',val:28},{day:'Thu',val:52},{day:'Fri',val:41},{day:'Sat',val:38},{day:'Sun',val:11}];
+    var maxVal = Math.max.apply(null, visitData.map(function(d){return d.val}));
+    var vHtml = '';
+    visitData.forEach(function(d) {
+        var h = Math.round((d.val/maxVal)*100);
+        vHtml += '<div class="analytics-bar-item"><div class="analytics-bar-val">' + d.val + '</div><div class="analytics-bar-fill" style="height:' + h + '%;background:var(--mint)"></div><div class="analytics-bar-label">' + d.day + '</div></div>';
+    });
+    document.getElementById('analytics-visits-chart').innerHTML = vHtml;
+
+    // Appointments chart
+    var apptData = [{day:'Mon',val:8},{day:'Tue',val:12},{day:'Wed',val:6},{day:'Thu',val:14},{day:'Fri',val:10},{day:'Sat',val:9},{day:'Sun',val:2}];
+    var maxA = Math.max.apply(null, apptData.map(function(d){return d.val}));
+    var aHtml = '';
+    apptData.forEach(function(d) {
+        var h = Math.round((d.val/maxA)*100);
+        aHtml += '<div class="analytics-bar-item"><div class="analytics-bar-val">' + d.val + '</div><div class="analytics-bar-fill" style="height:' + h + '%;background:var(--purple)"></div><div class="analytics-bar-label">' + d.day + '</div></div>';
+    });
+    document.getElementById('analytics-appts-chart').innerHTML = aHtml;
+
+    // Search terms
+    var terms = [{term:'clinic near me',count:45},{term:(partner.business_name||'clinic').toLowerCase(),count:32},{term:'blood test ' + (partner.city||'').toLowerCase(),count:28},{term:'doctor appointment',count:22},{term:'health checkup',count:18}];
+    var tHtml = '';
+    terms.forEach(function(t,i) {
+        var w = Math.round((t.count/terms[0].count)*100);
+        tHtml += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:12px;color:var(--text3);width:20px;font-weight:700">' + (i+1) + '</span><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">' + t.term + '</div><div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + w + '%;background:var(--mint);border-radius:3px"></div></div></div><span style="font-size:12px;font-weight:700;color:var(--dark)">' + t.count + '</span></div>';
+    });
+    document.getElementById('analytics-search-terms').innerHTML = tHtml;
+
+    // Traffic sources
+    var sources = [{name:'Google Search',pct:42,color:'#4285F4'},{name:'Direct',pct:28,color:'var(--mint)'},{name:'WhatsApp',pct:18,color:'#25D366'},{name:'Facebook',pct:8,color:'#1877F2'},{name:'Other',pct:4,color:'var(--text3)'}];
+    var sHtml = '';
+    sources.forEach(function(s) {
+        sHtml += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:10px;height:10px;border-radius:50%;background:' + s.color + ';flex-shrink:0"></div><div style="flex:1;font-size:13px;font-weight:600;color:var(--dark)">' + s.name + '</div><span style="font-size:13px;font-weight:700;color:var(--dark)">' + s.pct + '%</span></div>';
+    });
+    document.getElementById('analytics-sources').innerHTML = sHtml;
 }
 
 // ============================================================
